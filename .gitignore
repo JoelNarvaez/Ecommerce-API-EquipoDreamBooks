@@ -1,0 +1,56 @@
+
+# Node.js / Backend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Enviroment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Compiled output
+dist/
+build/
+coverage/
+
+# Logs
+logs/
+*.log
+*.tmp
+*.out
+*.pid
+
+# Database dumps
+*.sql
+*.sqlite
+*.db
+
+
+# Frontend
+/frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Cache
+.cache/
+.temp/
+tmp/
+.DS_Store
+
+
+# OS / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+
+
+# Other sensitive or generated files
+/uploads/
+pdfs/
+notes/
