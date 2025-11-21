@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamBooks | Contacto</title>
+    <title>DreamBooks | Inicio</title>
     <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="/Frontend/css/estilos.css">
-    <link rel="stylesheet" href="/Frontend/css/contacto.css">
     <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
 <body class="sin-hero">
@@ -36,44 +35,26 @@
         </nav>
     <div class="separador-header"></div>
     </header>
-
-
-    <main>
-<section class="contacto-section">
-        <div class="contacto-container">
-          <div class="contacto-image">
-               <img src="/Frontend/imagenes/contacto.png" alt="Contacto">
-          </div>
-          <div class="contacto-content">
-             <h2>Contacto</h2>
-             <p>En DreamBooks nos interesa escucharte y resolver tus dudas. Puedes contactarnos en línea o asistir directamente a nuestro establecimiento. <br>Encuéntranos en: <br> <br> </p>
-            <div class="contacto-info">
-                <div class="info-columna">
-                    <p><i class="fa-solid fa-location-dot"></i>Calle Nieto #555 Col. Centro</p>
-                    <p><i class="fa-solid fa-phone"></i>Tel: 449-019-24-52</p>
-                    
-                    
-                </div>
-                <div class="info-columna">
-                    <p><i class="fa-solid fa-envelope"></i>libreria_dreambooks@gmail.com</p>
-                    
-                </div>
-            </div>
-                <form class="contacto-form">
-                    <div class="form-row">
-                        <input type="text" placeholder="Giselle Macías" required>
-                        <input type="email" placeholder="giselle.macias@gmail.com" required>
-                    </div>
-                    <textarea placeholder="Mensaje" rows="5" required></textarea>
-                    <button type="submit">Enviar</button>
-                </form>
-          </div>
+<main>
+    <!-- Form del login -->
+    <div id="login-container" class="login">
+        <div class="login-image">
+            <img src="/Frontend/imagenes/fondo-preguntas-2.jpg" alt="Libros">
         </div>
-    </section>
-    <div class="mapa">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3702.474870549467!2d-102.30635968802115!3d21.877782279909187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee871dd69677%3A0xf6c47e97deb7cb1b!2sNieto%2C%20Aguascalientes%2C%20Ags.!5e0!3m2!1sen!2smx!4v1763368495953!5m2!1sen!2smx" width="100%" height="540vh" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    </main>
+        <div class="login-content">
+            <img src="/Frontend/imagenes/logo-header-fondo.png" alt="DreamBooks">
+            <h2>Iniciar Sesión</h2>
+            <form id="formLogin">
+
+                <input type="text" id="login" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit" class="login-modal-button">Enviar</button>
+            </form>
+        </div>
+  </div>
+
+</main>
+ 
 
     <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">
@@ -103,27 +84,13 @@
 
 </div>
 
-      <!-- Modal de Login -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <form id="formLogin">
-                <input type="text" id="nombreLogin" placeholder="Nombre Completo" required>
-                <input type="text" id="login" placeholder="Usuario" required>
-                <input type="password" id="password" placeholder="Contraseña" required>
-                <button type="submit" class="login-modal-button">Enviar</button>
-            </form>
-        </div>
-  </div>
-
 <footer class="footer">
     <div class="footer-contenedor">
         <div class="footer-contenido">
             <div class="footer-info">
             <h2>DreamBooks</h2>
             <p>"Sueña despierto"</p>
-            <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
+            <img src="/Frontend/imagenes/logo-header.png" alt="Digital Academy">
             </div>
             <div class="footer-redes">
                 <h4>Síguenos en redes sociales</h4>
@@ -141,11 +108,11 @@
             </div>
             <div class="menu-footer-contenedor">
                 <ul class="menu-footer">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#">Libros</a></li>
-                    <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="#">Libros</a></li>
+                        <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
             </ul>
             </div>
             <div class="footer-suscripcion">
@@ -166,9 +133,9 @@
         </div>
     </div>
 </footer>
-    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script src="/Frontend/js/app.js"></script>
-    <script src="/Frontend/js/preguntas_freucentes.js"></script>
+    <script src="/Frontend/js/inicio.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </body>

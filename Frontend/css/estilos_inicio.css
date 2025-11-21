@@ -88,7 +88,7 @@ main{
 .categorias-titulo {
     text-align: center;                 /* Centra el título */
     font-size: 2.5rem;                  /* Tamaño de fuente grande */
-    color: #703030;                   /* Color gris oscuro */
+    color: #703030;                  
     margin-bottom: 40px;                /* Espacio debajo del título */
 
 }
