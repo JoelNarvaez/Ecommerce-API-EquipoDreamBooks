@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="/Frontend/css/estilos.css">
-    <link rel="stylesheet" href="/Frontend/css/login.css">
+    <link rel="stylesheet" href="/Frontend/css/registro.css">
     <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
 <body class="sin-hero">
@@ -37,31 +37,52 @@
     <div class="separador-header"></div>
     </header>
 <main>
-    <!-- Form del login -->
-    <div id="login-container" class="login">
-        <div class="login-content">
+    <!-- Form del registro -->
+    <div id="registro-contenedor" class="registro">
+        <div class="registro-content">
             <img src="/Frontend/imagenes/logo-header-fondo.png" alt="DreamBooks">
-            <h2>Iniciar Sesión</h2>
-            <form id="formLogin">
+            <h2>Crear Cuenta</h2>
+            <form id="form-registro">
+                <div class="input-container">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="nombre-registro" placeholder="Nombre(s)" required>
+                </div>
+                 <div class="input-container">
+                    <i class="fa-solid fa-user"></i>
+                <input type="text" id="apellidos-registro" placeholder="Apellidos" required>
+                </div>
                 <div class="input-container">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="text" id="email" placeholder="Email" required>
+                    <input type="text" id="email-registro" placeholder="Email" required>
                 </div>
                 <div class="input-container">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <input type="password" id="password-registro" placeholder="Contraseña" required>
                 </div>
-                <button type="submit" class="login-button">Iniciar Sesión</button>
+                <div class="input-container">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="number" id="telefono" placeholder="Teléfono" required>
+                </div>
+                <div class="input-container pais-container">
+                    <i class="fa-solid fa-globe"></i>
+                    <label for="cars">País:</label>
+                    <select id="pais" name="pais" class="pais-opciones">
+                        <option value="mexico">México</option>
+                        <option value="eua">Estados Unidos</option>
+                        <option value="canada">Canadá</option>
+                        <option value="españa">España</option>
+                        <option value="colombia">Colombia</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <button type="submit" class="account-button">Crear cuenta</button>
             </form>
-            <a href="#">¿Olvidaste tu contraseña?</a>
-            <div class="registro-opcion">
-                <p>¿No tienes una cuenta?</p>
-                <a href="registro.html">Regístrate</a>
-            </div>
         </div>
-        <div class="login-image">
-            <img src="/Frontend/imagenes/libros-amarillos.jpeg" alt="Libros">
+        <div class="registro-image">
+            <img src="/Frontend/imagenes/libros-azules.jpg" alt="Libros">
         </div>
+
   </div>
 
 </main>
