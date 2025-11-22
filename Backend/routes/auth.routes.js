@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { login } = require('../controllers/auth.controller.js');
-const { verifyToken } = require('../middleware/auth.middleware.js');
+const { login } = require('../controllers/auth/login.controller.js');
+const { verifyCaptcha } = require('../middlewares/captcha.middleware.js');
 
 
-router.post('/login', verifyToken, login);
+router.post("/login", verifyCaptcha , login);
 
 // router.get('/validate-token', verifyToken, authController.validateToken);
 

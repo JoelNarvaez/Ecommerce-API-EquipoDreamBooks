@@ -1,54 +1,66 @@
 const jwt = require('jsonwebtoken');
+const { obtenerUserPorId } = require("../../models/usersModel");
 
-// Clave secreta para firmar el token JWT
 const JWT_SECRET = process.env.JWT_SECRET;
-
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    // Validar que se envíen los datos necesarios
-    if (!username || !password) {
+    // Validación de datos
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Usuario y contraseña son requeridos'
+        message: "Email y contraseña son requeridos"
       });
     }
 
-    // Validar credenciales
-    if (username === VALID_USER.username && password === VALID_USER.password) {
-      // Generar token JWT
-      const token = jwt.sign(
-        { 
-          username: username,
-          userId: 1 // En producción, esto vendría de la base de datos
-        },
-        JWT_SECRET,
-        { 
-          expiresIn: '24h' // El token expira en 24 horas
-        }
-      );
+    // Buscar usuario en BD
+    const user = await obtenerUserPorId(email);
 
-      return res.status(200).json({
-        success: true,
-        message: 'Login exitoso Nombre: Joel Narvaez Martinez',
-        token: token,
-        user: {
-          username: username
-        }
-      });
-    } else {
+    if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Credenciales inválidas'
+        message: "Usuario no encontrado"
       });
     }
+
+    // Validar contraseña (sin hash por ahora)
+    if (password !== user.contraseña) {
+      return res.status(401).json({
+        success: false,
+        message: "Contraseña incorrecta"
+      });
+    }
+
+    // Generar token
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        rol: user.rol
+      },
+      JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Inicio de sesión exitoso",
+      token,
+      user: {
+        id: user.id,
+        nombre: user.nombre,
+        email: user.email,
+        rol: user.rol
+      }
+    });
+
   } catch (error) {
-    console.error('Error en login:', error);
+    console.error("Error en login:", error);
     return res.status(500).json({
       success: false,
-      message: 'Error interno del servidor'
+      message: "Error interno del servidor"
     });
   }
 };
@@ -56,4 +68,3 @@ const login = async (req, res) => {
 module.exports = {
   login
 };
-

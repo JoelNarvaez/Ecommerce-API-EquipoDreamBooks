@@ -1,4 +1,5 @@
-const pool = require('../config/conexion');
+// Importar pool desde config/db (ruta corregida)
+const pool = require('../config/db');
 
 // Obtener usuario por email (para login)
 async function obtenerUserPorId(email) {
@@ -31,7 +32,7 @@ async function actualizarIntentosFallidos(email, intentos) {
 }
 
 // Bloquear usuario temporalmente
-async function bloquearkUser(email, dateTime) {
+async function bloquearUser(email, dateTime) {
     await pool.query(
         `UPDATE usuarios 
         SET bloqueado_hasta = ?
@@ -40,7 +41,7 @@ async function bloquearkUser(email, dateTime) {
     );
 }
 
-// Reiniciar intentos fallidos (cuando inicia sesión correctamente)
+// Reiniciar intentos fallidos
 async function resetearIntentos(email) {
     await pool.query(
         `UPDATE usuarios
@@ -55,6 +56,6 @@ module.exports = {
     obtenerUserPorId,
     crearUser,
     actualizarIntentosFallidos,
-    bloquearkUser,
+    bloquearUser,
     resetearIntentos
 };
