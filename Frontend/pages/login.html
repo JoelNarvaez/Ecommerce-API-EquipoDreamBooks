@@ -1,153 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamBooks | Inicio</title>
-    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="/Frontend/css/estilos.css">
-    <link rel="stylesheet" href="/Frontend/css/login.css">
-    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
-</head>
-<body class="sin-hero">
+    <link
+      rel="shortcut icon"
+      href="/Frontend/imagenes/favicon-sf.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="/Frontend/css/estilos.css" />
+    <link rel="stylesheet" href="/Frontend/css/login.css" />
+    <script
+      src="https://kit.fontawesome.com/0209f1a64b.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="sin-hero">
     <header>
-        <nav class="header-general">
-            <div class="menu-izq">
-                <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
-            </div>
-            <div class="menu-centro">
-                <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#">Libros</a></li>
-                    <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
-                </ul>
-            </div>
-            <div class="menu-der">
-                <ul>
-                    <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
-                    <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
-                    <li><i class="fa-solid fa-cart-shopping"></i></li>
-                </ul>  
-            </div>  
-        </nav>
-    <div class="separador-header"></div>
+      <nav class="header-general">
+        <div class="menu-izq">
+          <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo" />
+        </div>
+        <div class="menu-centro">
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="#">Libros</a></li>
+            <li>
+              <a href="preguntas_frecuentes.html">Preguntas frecuentes</a>
+            </li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="nosotros.html">Sobre Nosotros</a></li>
+          </ul>
+        </div>
+        <div class="menu-der">
+          <ul>
+            <li>
+              <a href="login.html"
+                ><button class="button-acceder">Acceder</button></a
+              >
+            </li>
+            <li>
+              <i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i>
+            </li>
+            <li><i class="fa-solid fa-cart-shopping"></i></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="separador-header"></div>
     </header>
-<main>
-    <!-- Form del login -->
-    <div id="login-container" class="login">
+    <main>
+      <!-- Form del login -->
+      <div id="login-container" class="login">
         <div class="login-content">
-            <img src="/Frontend/imagenes/logo-header-fondo.png" alt="DreamBooks">
-            <h2>Iniciar Sesión</h2>
-            <form id="formLogin">
-                <div class="input-container">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="text" id="email" placeholder="Email" required>
-                </div>
-                <div class="input-container">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="password" placeholder="Contraseña" required>
-                </div>
-                <button type="submit" class="login-button">Iniciar Sesión</button>
-            </form>
-            <a href="#">¿Olvidaste tu contraseña?</a>
-            <div class="registro-opcion">
-                <p>¿No tienes una cuenta?</p>
-                <a href="registro.html">Regístrate</a>
+          <img
+            src="/Frontend/imagenes/logo-header-fondo.png"
+            alt="DreamBooks"
+          />
+          <h2>Iniciar Sesión</h2>
+          <form id="formLogin">
+            <div class="input-container">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="text" id="email" placeholder="Email" required />
             </div>
+            <div class="input-container">
+              <i class="fa-solid fa-lock"></i>
+              <input
+                type="password"
+                id="password"
+                placeholder="Contraseña"
+                required
+              />
+            </div>
+            <div
+              class="cf-turnstile"
+              data-sitekey="0x4AAAAAACBRJLJVxIBDFKI7"
+              data-theme="light"
+            ></div>
+            <button type="submit" class="login-button">Iniciar Sesión</button>
+          </form>
+          <a href="#">¿Olvidaste tu contraseña?</a>
+          <div class="registro-opcion">
+            <p>¿No tienes una cuenta?</p>
+            <a href="registro.html">Regístrate</a>
+          </div>
         </div>
         <div class="login-image">
-            <img src="/Frontend/imagenes/libros-amarillos.jpeg" alt="Libros">
+          <img src="/Frontend/imagenes/libros-amarillos.jpeg" alt="Libros" />
         </div>
-  </div>
-
-</main>
- 
+      </div>
+    </main>
 
     <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">
-        <i class="fa-solid fa-universal-access"></i> 
+      <i class="fa-solid fa-universal-access"></i>
     </button>
     <!-- Panel lateral de accesibilidad -->
-<div id="panelAccesibilidad" class="accesibilidad-panel">
+    <div id="panelAccesibilidad" class="accesibilidad-panel">
+      <h2>Accesibilidad</h2>
 
-    <h2>Accesibilidad</h2>
-
-    <!-- Tema claro/oscuro -->
-    <div class="opcion">
+      <!-- Tema claro/oscuro -->
+      <div class="opcion">
         <span>Tema:</span>
         <button id="btnTema" class="tema-btn">
-            <i id="iconTema" class="fa-solid fa-moon"></i>
+          <i id="iconTema" class="fa-solid fa-moon"></i>
         </button>
-    </div>
+      </div>
 
-    <!-- Tamaño de texto -->
-    <div class="opcion">
+      <!-- Tamaño de texto -->
+      <div class="opcion">
         <span>Tamaño de texto:</span>
         <div class="texto-controles">
-            <button id="textoMenos">A-</button>
-            <button id="textoMas">A+</button>
+          <button id="textoMenos">A-</button>
+          <button id="textoMas">A+</button>
         </div>
+      </div>
     </div>
 
-</div>
-
-<footer class="footer">
-    <div class="footer-contenedor">
+    <footer class="footer">
+      <div class="footer-contenedor">
         <div class="footer-contenido">
-            <div class="footer-info">
+          <div class="footer-info">
             <h2>DreamBooks</h2>
             <p>"Sueña despierto"</p>
-            <img src="/Frontend/imagenes/logo-header.png" alt="Digital Academy">
+            <img
+              src="/Frontend/imagenes/logo-header.png"
+              alt="Digital Academy"
+            />
+          </div>
+          <div class="footer-redes">
+            <h4>Síguenos en redes sociales</h4>
+            <div class="redes-sociales">
+              <a
+                href="https://www.facebook.com/share/1Li3KJci2q/"
+                class="red-social"
+              >
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42"
+                class="red-social"
+              >
+                <i class="fa-brands fa-instagram"></i>
+              </a>
             </div>
-            <div class="footer-redes">
-                <h4>Síguenos en redes sociales</h4>
-                <div class="redes-sociales">    
-                    <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
-                <div class="info-contacto">
-                    
-                </div>
-            </div>
-            <div class="menu-footer-contenedor">
-                <ul class="menu-footer">
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="#">Libros</a></li>
-                        <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
-                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+            <div class="info-contacto"></div>
+          </div>
+          <div class="menu-footer-contenedor">
+            <ul class="menu-footer">
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="#">Libros</a></li>
+              <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+              <li><a href="nosotros.html">Sobre Nosotros</a></li>
             </ul>
-            </div>
-            <div class="footer-suscripcion">
-                <form class="form-suscripcion-footer" action="">
-                    <div class="suscripcion-contenedor">
-                        <h3>Suscríbete</h3>
-                        <label for="fname">Correo electrónico:</label><br>
-                        <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
-                        <input type="submit" id="enviar-suscripcion" value="Enviar">
-                    </div>
-                    
-                </form>
-            </div>
+          </div>
+          <div class="footer-suscripcion">
+            <form class="form-suscripcion-footer" action="">
+              <div class="suscripcion-contenedor">
+                <h3>Suscríbete</h3>
+                <label for="fname">Correo electrónico:</label><br />
+                <input
+                  type="text"
+                  id="correo-suscripcion"
+                  placeholder="elizabeth.nieto@gmail.com"
+                /><br />
+                <input type="submit" id="enviar-suscripcion" value="Enviar" />
+              </div>
+            </form>
+          </div>
         </div>
         <div class="footer-copyright">
-            <p>&copy; 2025. Todos los derechos reservados.</p>
-            <p>Este es un proyecto académico para la materia de programación web</p>
+          <p>&copy; 2025. Todos los derechos reservados.</p>
+          <p>
+            Este es un proyecto académico para la materia de programación web
+          </p>
         </div>
-    </div>
-</footer>
+      </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script src="/Frontend/js/app.js"></script>
     <script src="/Frontend/js/inicio.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
-</body>
+    
+  </body>
 </html>
