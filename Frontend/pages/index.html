@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamBooks | Inicio</title>
+    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/Frontend/css/estilos_inicio.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos.css">
+    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
+</head>
+<body class="con-hero">
+    <header class="header-general">
+        <div class="hero">
+            <video autoplay loop muted plays-inline class="back-video">
+                <source src="/Frontend/videos/video_hero.mp4" type="video/mp4">
+            </video>
+            <nav>
+                <div class="menu-izq">
+                    <img class="logo" src="/Frontend/imagenes/logo-header.png" alt="logo">
+                </div>
+                <div class="menu-centro">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="#">Libros</a></li>
+                        <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                 </ul>
+                </div>
+                <div class="menu-der">
+                    <ul>
+                        <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                        <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
+                        <li><i class="fa-solid fa-cart-shopping"></i></li>
+                    </ul>  
+                </div>  
+            </nav>
+            <div class="content">
+                <h1>DreamBooks Librería</h1>
+                <a href="#">Explore</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Secciones de la página de inicio -->
+    <main>
+        <!-- section.servicios.servicios-section -->
+    <section class="categorias-section"> 
+       <!-- div.servicios-container -->
+       <div class="categorias-container">
+           <h1 class="categorias-titulo">Nuestras Colecciones</h1>
+           <div class="categorias-grid">
+               <div class="categoria-card">
+                    <a href="#"><img src="/Frontend/imagenes/libros-icono.png" alt="Libros">
+                    <h3>Todos los libros</h3></a>
+                </div>
+                <div class="categoria-card">
+                    <a href="#"><img src="/Frontend/imagenes/ciencia-ficcion-icono.png" alt="Ciencia Ficción">
+                    <h3>Libros de Ciencia Ficción</h3></a>
+                </div>
+                <div class="categoria-card">
+                    <a href="#"><img src="/Frontend/imagenes/romance-icono.png" alt="Libros Romance">
+                    <h3>Libros de Romance</h3></a>
+                </div>
+                <div class="categoria-card">
+                    <a href="#"><img src="/Frontend/imagenes/infantil-icono.png" alt="Libros infantiles">
+                    <h3>Libros infantiles</h3></a>
+                </div>
+           </div>
+       </div>
+    </section>
+
+    <section class="slider-section">
+        <div class="slider-contenedor">
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img src="/Frontend/imagenes/slider1.png" alt=""></div>
+                    <div class="swiper-slide"><img src="/Frontend/imagenes/slider2.png" alt=""></div>
+                    <div class="swiper-slide"><img src="/Frontend/imagenes/slider3.jpg" alt=""></div>
+                    ...
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container top-products">
+        <h1 class="top-products-title">Mejores Libros</h1>
+        <div class="container-options">
+            <span class="active">Recomendados</span>
+            <span>Más recientes</span>
+            <span>Mejores vendidos</span>
+        </div>
+        <div class="container-products">
+            <div class="card-product">
+                <img src="/Frontend/imagenes/Harry.png" alt="Libro1">
+                <h3>Harry Potter</h3>
+                <span>
+                    <a href="#" class="carrito-compra"><i class="fa-solid fa-cart-shopping"></i></a>
+                </span>
+                <p class="price">$350.00</p>
+            </div>
+             <div class="card-product">
+                <img src="/Frontend/imagenes/Harry.png" alt="Libro1">
+                <h3>Harry Potter</h3>
+                <span>
+                    <a href="#" class="carrito-compra"><i class="fa-solid fa-cart-shopping"></i></a>
+                </span>
+                <p class="price">$350.00</p>
+            </div>
+             <div class="card-product">
+                <img src="/Frontend/imagenes/Harry.png" alt="Libro1">
+                <h3>Harry Potter</h3>
+                <span>
+                    <a href="#" class="carrito-compra"><i class="fa-solid fa-cart-shopping"></i></a>
+                </span>
+                <p class="price">$350.00</p>
+            </div>
+        </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Accesibilidad -->
+    <button id="btnAccesibilidad" class="accesibilidad-btn">
+        <i class="fa-solid fa-universal-access"></i> 
+    </button>
+    <!-- Panel lateral de accesibilidad -->
+<div id="panelAccesibilidad" class="accesibilidad-panel">
+
+    <h2>Accesibilidad</h2>
+
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+        <span>Tema:</span>
+        <button id="btnTema" class="tema-btn">
+            <i id="iconTema" class="fa-solid fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Tamaño de texto -->
+    <div class="opcion">
+        <span>Tamaño de texto:</span>
+        <div class="texto-controles">
+            <button id="textoMenos">A-</button>
+            <button id="textoMas">A+</button>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="footer-contenedor">
+        <div class="footer-contenido">
+            <div class="footer-info">
+            <h2>DreamBooks</h2>
+            <p>"Sueña despierto"</p>
+            <img src="/Frontend/imagenes/logo-header.png" alt="Digital Academy">
+            </div>
+            <div class="footer-redes">
+                <h4>Síguenos en redes sociales</h4>
+                <div class="redes-sociales">    
+                    <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+                <div class="info-contacto">
+                    
+                </div>
+            </div>
+            <div class="menu-footer-contenedor">
+                <ul class="menu-footer">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="#">Libros</a></li>
+                        <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+            </ul>
+            </div>
+            <div class="footer-suscripcion">
+                <form class="form-suscripcion-footer" action="">
+                    <div class="suscripcion-contenedor">
+                        <h3>Suscríbete</h3>
+                        <label for="fname">Correo electrónico:</label><br>
+                        <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
+                        <input type="submit" id="enviar-suscripcion" value="Enviar">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025. Todos los derechos reservados.</p>
+            <p>Este es un proyecto académico para la materia de programación web</p>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script src="/Frontend/js/app.js"></script>
+    <script src="/Frontend/js/inicio.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+</body>
+</html>

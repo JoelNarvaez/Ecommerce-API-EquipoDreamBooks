@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamBooks | Preguntas frecuentes</title>
+    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/Frontend/css/estilos.css">
+    <link rel="stylesheet" href="/Frontend/css/preguntas_frecuentes.css">
+    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
+</head>
+<body class="sin-hero">
+    <header>
+        <nav class="header-general">
+            <div class="menu-izq">
+                <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
+            </div>
+            <div class="menu-centro">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#">Libros</a></li>
+                    <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="menu-der">
+                <ul>
+                    <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                    <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
+                    <li><i class="fa-solid fa-cart-shopping"></i></li>
+                </ul>  
+            </div>  
+        </nav>
+        <div class="separador-header"></div>
+    </header>
+
+
+    <main>
+        <section class= "preguntas-frecuentes">
+            <div class="preguntas-frecuentes-box">
+                <div class="acordeon-preguntas">
+                    <h3>Preguntas frecuentes</h3><br>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">1. ¿Es necesario tener una cuenta para comprar un libro? </div>
+                        <div class="contenido-preguntas">
+                            <p>Sí, es indispensable la creación de una cuenta para realizar compras. Ingrese al botón de acceder, si no tiene una cuenta, lo(a) guiamos para que cree una fácilmente, 
+                                si ya tiene una, inicie sesión con su usuario y contraseña.</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">2. ¿Cuáles métodos de pago se aceptan?</div>
+                        <div class="contenido-preguntas">
+                            <p>Se aceptan pagos con tarjeta, en Oxxo y por transferencia.</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">3. ¿Cuánto tarda en llegar un libro? </div>
+                        <div class="contenido-preguntas">
+                            <p>La entrega varía, teniendo un plazo de dos días hasta una semana.</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">4. ¿Se aceptan cambios y/o devoluciones?</div>
+                        <div class="contenido-preguntas">
+                            <p>La devoluión o el cambio es posible siempre y caundo se cuente con el ticket y el libro no haya sido desempaquetado.</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">5. ¿Se puede pedir un libro que está agotado?</div>
+                        <div class="contenido-preguntas">
+                            <p>No es posible, pero a través de la sección de contacto puede mandar la información del libro y se le enviará una notificación cuando se tenga nuevamente en existencia</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">6. ¿Se puede encargar un libro que no esté en el catálogo de la librería?</div>
+                        <div class="contenido-preguntas">
+                            <p>Sí, puede hacerlo a través de la sección de contacto, enviando un email directamente, llamando al teléfono disponible en la sección de contacto o través de un mensaje en nuestras redes sociales.</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">7. ¿Cuentan con tarjetas de regalo?</div>
+                        <div class="contenido-preguntas">
+                            <p>Actualmente no contamos con tarjetas de regalo.</p>
+                        </div>
+                    </div>
+                    <div class="contenedor-preguntas">
+                        <div class="label-lista">8. ¿Se puede pedir un libro que está agotado?</div>
+                        <div class="contenido-preguntas">
+                            <p>No es posible, pero a través de la sección de contacto puede mandar la información del libro y se le enviará una notificación cuando se tenga nuevamente en existencia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Accesibilidad -->
+    <button id="btnAccesibilidad" class="accesibilidad-btn">
+        <i class="fa-solid fa-universal-access"></i> 
+    </button>
+    <!-- Panel lateral de accesibilidad -->
+<div id="panelAccesibilidad" class="accesibilidad-panel">
+
+    <h2>Accesibilidad</h2>
+
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+        <span>Tema:</span>
+        <button id="btnTema" class="tema-btn">
+            <i id="iconTema" class="fa-solid fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Tamaño de texto -->
+    <div class="opcion">
+        <span>Tamaño de texto:</span>
+        <div class="texto-controles">
+            <button id="textoMenos">A-</button>
+            <button id="textoMas">A+</button>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="footer-contenedor">
+        <div class="footer-contenido">
+            <div class="footer-info">
+            <h2>DreamBooks</h2>
+            <p>"Sueña despierto"</p>
+            <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
+            </div>
+            <div class="footer-redes">
+                <h4>Síguenos en redes sociales</h4>
+                <div class="redes-sociales">    
+                    <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+                <div class="info-contacto">
+                    
+                </div>
+            </div>
+            <div class="menu-footer-contenedor">
+                <ul class="menu-footer">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#">Libros</a></li>
+                    <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+            </ul>
+            </div>
+            <div class="footer-suscripcion">
+                <form class="form-suscripcion-footer" action="">
+                    <div class="suscripcion-contenedor">
+                        <h3>Suscríbete</h3>
+                        <label for="fname">Correo electrónico:</label><br>
+                        <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
+                        <input type="submit" id="enviar-suscripcion" value="Enviar">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025. Todos los derechos reservados.</p>
+            <p>Este es un proyecto académico para la materia de programación web</p>
+        </div>
+    </div>
+</footer>
+    
+    <script src="/Frontend/js/app.js"></script>
+    <script src="/Frontend/js/preguntas_frecuentes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+</body>
+</html>
