@@ -3,37 +3,32 @@ document.getElementById("formLogin").addEventListener("submit", async function (
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-
     const captchaToken = document.querySelector("[name='cf-turnstile-response']").value;
 
-    const data = {
-        email: email,
-        password: password,
-        captchaToken: captchaToken
-    };
+    const data = { email, password, captchaToken };
 
     try {
         const response = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         });
 
         const result = await response.json();
 
-        if (result.success) {
+        // Reiniciar captcha después de cada intento
+        if (typeof turnstile !== "undefined") {
+            turnstile.reset();
+        }
+
+        if (response.ok) {
             Swal.fire({
                 icon: "success",
                 title: "Bienvenido",
                 text: result.user.nombre
             });
 
-            console.log("Token recibido:", result.user);
             localStorage.setItem("token", result.token);
-
-            // window.location.href = "index.html";
 
         } else {
             Swal.fire({
@@ -44,7 +39,6 @@ document.getElementById("formLogin").addEventListener("submit", async function (
         }
 
     } catch (error) {
-        console.error("Error en login:", error);
         Swal.fire({
             icon: "error",
             title: "Error de conexión",
@@ -52,31 +46,3 @@ document.getElementById("formLogin").addEventListener("submit", async function (
         });
     }
 });
-
-
-// <script>
-//     const form = document.getElementById("formulario");
-//     const resultado = document.getElementById("resultado");
-
-//     form.addEventListener("submit", async (e) => {
-//       e.preventDefault();
-
-//       // Obtener token automáticamente del widget
-//       const token = document.querySelector("[name='cf-turnstile-response']").value;
-
-//       const data = {
-//         nombre: form.nombre.value,
-//         token
-//       };
-
-//       const res = await fetch("http://localhost:3000/validate", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(data)
-//       });
-
-//       const json = await res.json();
-
-//       resultado.innerText = JSON.stringify(json, null, 2);
-//     });
-//   </script>

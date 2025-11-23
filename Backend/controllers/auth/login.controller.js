@@ -1,70 +1,67 @@
-const jwt = require('jsonwebtoken');
-const { obtenerUserPorId } = require("../../models/usersModel");
+const bcrypt = require("bcryptjs");
+const { 
+    obtenerUserPorId,
+    actualizarIntentosFallidos,
+    bloquearUser,
+    resetearIntentos
+} = require("../../models/usersModel");
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-const login = async (req, res) => {
-  try {
+exports.login = async (req, res) => {
     const { email, password } = req.body;
 
-    // Validación de datos
     if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Email y contraseña son requeridos"
-      });
+        return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
 
-    // Buscar usuario en BD
+    // Buscar usuario
     const user = await obtenerUserPorId(email);
 
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "Usuario no encontrado"
-      });
+        return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Validar contraseña (sin hash por ahora)
-    if (password !== user.contraseña) {
-      return res.status(401).json({
-        success: false,
-        message: "Contraseña incorrecta"
-      });
+    // esta bloqueado?
+    if (user.bloqueado_hasta && new Date(user.bloqueado_hasta) > new Date()) {
+        return res.status(403).json({
+            message: `Cuenta bloqueada`
+        });
     }
 
-    // Generar token
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        rol: user.rol
-      },
-      JWT_SECRET,
-      { expiresIn: "24h" }
-    );
+    // Comparar 
+    const passwordCorrecta = await bcrypt.compare(password, user.contraseña);
+
+    if (!passwordCorrecta) {
+        const nuevosIntentos = user.intentos_fallidos + 1;
+
+        // Actualizar intentos
+        await actualizarIntentosFallidos(email, nuevosIntentos);
+
+        // llego al limite?
+        if (nuevosIntentos >= 3) {
+            const bloqueo = new Date(Date.now() + 5 * 60 * 1000); // 5 minutos
+            await bloquearUser(email, bloqueo);
+
+            return res.status(403).json({
+                message: "Cuenta bloqueada por 5 minutos."
+            });
+        }
+
+        return res.status(401).json({
+            message: `Credenciales invalidas.`
+        });
+    }
+
+    // contraseña corecta
+    await resetearIntentos(email);
 
     return res.status(200).json({
-      success: true,
-      message: "Inicio de sesión exitoso",
-      token,
-      user: {
-        id: user.id,
-        nombre: user.nombre,
-        email: user.email,
-        rol: user.rol
-      }
+        success: true,
+        message: "Inicio de sesión exitoso",
+        user: {
+            id: user.id,
+            nombre: user.nombre,
+            email: user.email,
+            rol: user.rol
+        }
     });
-
-  } catch (error) {
-    console.error("Error en login:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Error interno del servidor"
-    });
-  }
-};
-
-module.exports = {
-  login
 };

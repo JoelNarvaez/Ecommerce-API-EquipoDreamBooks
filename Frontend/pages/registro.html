@@ -12,60 +12,72 @@
     <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
 <body class="sin-hero">
-    <header>
-        <nav class="header-general">
-            <div class="menu-izq">
-                <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
-            </div>
-            <div class="menu-centro">
-                <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#">Libros</a></li>
-                    <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
-                </ul>
-            </div>
-            <div class="menu-der">
-                <ul>
-                    <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
-                    <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
-                    <li><i class="fa-solid fa-cart-shopping"></i></li>
-                </ul>  
-            </div>  
-        </nav>
+<header>
+    <nav class="header-general">
+        <div class="menu-izq">
+            <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
+        </div>
+        <div class="menu-centro">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Libros</a></li>
+                <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="nosotros.html">Sobre Nosotros</a></li>
+            </ul>
+        </div>
+        <div class="menu-der">
+            <ul>
+                <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                <li><i class="fa-solid fa-magnifying-glass"></i></li>
+                <li><i class="fa-solid fa-cart-shopping"></i></li>
+            </ul>
+        </div>
+    </nav>
     <div class="separador-header"></div>
-    </header>
+</header>
+
 <main>
-    <!-- Form del registro -->
     <div id="registro-contenedor" class="registro">
         <div class="registro-content">
             <img src="/Frontend/imagenes/logo-header-fondo.png" alt="DreamBooks">
             <h2>Crear Cuenta</h2>
+
             <form id="form-registro">
                 <div class="input-container">
                     <i class="fa-solid fa-user"></i>
                     <input type="text" id="nombre-registro" placeholder="Nombre(s)" required>
                 </div>
-                 <div class="input-container">
+
+                <div class="input-container">
                     <i class="fa-solid fa-user"></i>
-                <input type="text" id="apellidos-registro" placeholder="Apellidos" required>
+                    <input type="text" id="apellidos-registro" placeholder="Apellidos" required>
                 </div>
+
                 <div class="input-container">
                     <i class="fa-solid fa-envelope"></i>
                     <input type="text" id="email-registro" placeholder="Email" required>
                 </div>
+
                 <div class="input-container">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" id="password-registro" placeholder="Contraseña" required>
                 </div>
+
+                <!-- CONFIRMAR CONTRASEÑA -->
+                <div class="input-container">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password2-registro" placeholder="Confirmar contraseña" required>
+                </div>
+
                 <div class="input-container">
                     <i class="fa-solid fa-phone"></i>
                     <input type="number" id="telefono" placeholder="Teléfono" required>
                 </div>
+
                 <div class="input-container pais-container">
                     <i class="fa-solid fa-globe"></i>
-                    <label for="cars">País:</label>
+                    <label for="pais">País:</label>
                     <select id="pais" name="pais" class="pais-opciones">
                         <option value="mexico">México</option>
                         <option value="eua">Estados Unidos</option>
@@ -76,99 +88,53 @@
                         <option value="otro">Otro</option>
                     </select>
                 </div>
+
                 <button type="submit" class="account-button">Crear cuenta</button>
             </form>
         </div>
+
         <div class="registro-image">
             <img src="/Frontend/imagenes/libros-azules.jpg" alt="Libros">
         </div>
-
-  </div>
-
+    </div>
 </main>
- 
-
-    <!-- Accesibilidad -->
-    <button id="btnAccesibilidad" class="accesibilidad-btn">
-        <i class="fa-solid fa-universal-access"></i> 
-    </button>
-    <!-- Panel lateral de accesibilidad -->
-<div id="panelAccesibilidad" class="accesibilidad-panel">
-
-    <h2>Accesibilidad</h2>
-
-    <!-- Tema claro/oscuro -->
-    <div class="opcion">
-        <span>Tema:</span>
-        <button id="btnTema" class="tema-btn">
-            <i id="iconTema" class="fa-solid fa-moon"></i>
-        </button>
-    </div>
-
-    <!-- Tamaño de texto -->
-    <div class="opcion">
-        <span>Tamaño de texto:</span>
-        <div class="texto-controles">
-            <button id="textoMenos">A-</button>
-            <button id="textoMas">A+</button>
-        </div>
-    </div>
-
-</div>
 
 <footer class="footer">
     <div class="footer-contenedor">
         <div class="footer-contenido">
             <div class="footer-info">
-            <h2>DreamBooks</h2>
-            <p>"Sueña despierto"</p>
-            <img src="/Frontend/imagenes/logo-header.png" alt="Digital Academy">
+                <h2>DreamBooks</h2>
+                <p>"Sueña despierto"</p>
+                <img src="/Frontend/imagenes/logo-header.png" alt="Digital Academy">
             </div>
             <div class="footer-redes">
-                <h4>Síguenos en redes sociales</h4>
-                <div class="redes-sociales">    
-                    <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
-                <div class="info-contacto">
-                    
+                <h4>Síguenos</h4>
+                <div class="redes-sociales">
+                    <a href="https://www.facebook.com/share/1Li3KJci2q/"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/digital.academy.programacion"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
             <div class="menu-footer-contenedor">
                 <ul class="menu-footer">
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="#">Libros</a></li>
-                        <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
-                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
-            </ul>
-            </div>
-            <div class="footer-suscripcion">
-                <form class="form-suscripcion-footer" action="">
-                    <div class="suscripcion-contenedor">
-                        <h3>Suscríbete</h3>
-                        <label for="fname">Correo electrónico:</label><br>
-                        <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
-                        <input type="submit" id="enviar-suscripcion" value="Enviar">
-                    </div>
-                    
-                </form>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#">Libros</a></li>
+                    <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                </ul>
             </div>
         </div>
+
         <div class="footer-copyright">
             <p>&copy; 2025. Todos los derechos reservados.</p>
-            <p>Este es un proyecto académico para la materia de programación web</p>
+            <p>Proyecto académico de programación web</p>
         </div>
     </div>
 </footer>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-    <script src="/Frontend/js/app.js"></script>
-    <script src="/Frontend/js/inicio.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
+<script src="/Frontend/js/app.js"></script>
+<script src="/Frontend/js/registro.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
