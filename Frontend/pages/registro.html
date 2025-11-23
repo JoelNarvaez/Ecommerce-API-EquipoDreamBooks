@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamBooks | Inicio</title>
+    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/Frontend/css/estilos.css">
+    <link rel="stylesheet" href="/Frontend/css/registro.css">
+    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
+</head>
+<body class="sin-hero">
+<header>
+    <nav class="header-general">
+        <div class="menu-izq">
+            <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
+        </div>
+        <div class="menu-centro">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Libros</a></li>
+                <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="nosotros.html">Sobre Nosotros</a></li>
+            </ul>
+        </div>
+        <div class="menu-der">
+            <ul>
+                <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                <li><i class="fa-solid fa-magnifying-glass"></i></li>
+                <li><i class="fa-solid fa-cart-shopping"></i></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="separador-header"></div>
+</header>
+
+<main>
+    <div id="registro-contenedor" class="registro">
+        <div class="registro-content">
+            <img src="/Frontend/imagenes/logo-header-fondo.png" alt="DreamBooks">
+            <h2>Crear Cuenta</h2>
+
+            <form id="form-registro">
+                <div class="input-container">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="nombre-registro" placeholder="Nombre(s)" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="apellidos-registro" placeholder="Apellidos" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="text" id="email-registro" placeholder="Email" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password-registro" placeholder="Contraseña" required>
+                </div>
+
+                <!-- CONFIRMAR CONTRASEÑA -->
+                <div class="input-container">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password2-registro" placeholder="Confirmar contraseña" required>
+                </div>
+
+                <div class="input-container">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="number" id="telefono" placeholder="Teléfono" required>
+                </div>
+
+                <div class="input-container pais-container">
+                    <i class="fa-solid fa-globe"></i>
+                    <label for="pais">País:</label>
+                    <select id="pais" name="pais" class="pais-opciones">
+                        <option value="mexico">México</option>
+                        <option value="eua">Estados Unidos</option>
+                        <option value="canada">Canadá</option>
+                        <option value="españa">España</option>
+                        <option value="colombia">Colombia</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="account-button">Crear cuenta</button>
+            </form>
+        </div>
+
+        <div class="registro-image">
+            <img src="/Frontend/imagenes/libros-azules.jpg" alt="Libros">
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-contenedor">
+        <div class="footer-contenido">
+            <div class="footer-info">
+                <h2>DreamBooks</h2>
+                <p>"Sueña despierto"</p>
+                <img src="/Frontend/imagenes/logo-header.png" alt="Digital Academy">
+            </div>
+            <div class="footer-redes">
+                <h4>Síguenos</h4>
+                <div class="redes-sociales">
+                    <a href="https://www.facebook.com/share/1Li3KJci2q/"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/digital.academy.programacion"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="menu-footer-contenedor">
+                <ul class="menu-footer">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#">Libros</a></li>
+                    <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; 2025. Todos los derechos reservados.</p>
+            <p>Proyecto académico de programación web</p>
+        </div>
+    </div>
+</footer>
+
+<script src="/Frontend/js/app.js"></script>
+<script src="/Frontend/js/registro.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
