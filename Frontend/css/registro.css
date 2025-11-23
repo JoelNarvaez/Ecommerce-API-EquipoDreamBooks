@@ -1,0 +1,91 @@
+.registro{
+    display: flex;
+    gap:2rem;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+.input-container {
+  display: flex;
+  width: 60%;
+  margin-bottom: 15px;
+}
+
+.registro-image{
+    flex:1.5;
+}
+
+.registro-image img{
+    width: 100%;
+    height: 85vh;
+    object-fit: cover;
+}
+
+.registro-content{
+    width: 100%;
+    flex:1;
+    text-align: center;
+}
+
+.registro-content a{
+    font-family: var(--font-family);
+    color: var(--color-gris);
+}
+
+.registro-content img, h2{
+    margin-bottom: 1rem;
+}
+
+#form-registro  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--color-fondo);
+    width: 100%;
+
+
+}
+
+#form-registro input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.account-button {
+  margin-top: 1rem;
+  width: 30%;
+  padding: 0.8rem;
+  border: none;
+  background-color: var(--color-boton);
+  color:var(--color-boton-texto);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.account-button:hover {
+  background-color: var(--color-gris);
+}
+
+.pais-opciones{
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    padding: 0.5rem;
+    margin-left: 1rem;
+}
+
+.pais-container{
+    display: flex;
+    align-items: center;
+}
+
+
+

@@ -1,0 +1,83 @@
+.contacto-section {
+    font-size: var(--font-size-base);
+    padding: 60px 0;              /* Espaciado vertical arriba y abajo */
+    background-color:#f5f5f5;   /* Fondo gris claro */
+}
+
+.contacto-container{
+    padding: 0 60px;              /* Espaciado horizontal */
+    display: flex;                /* Habilita el modelo de caja flexible*/
+    gap: 40px;                    /* Espacio entre elementos*/
+    align-items: center;          /* Centra verticalemnte los elementos */
+}
+
+.contacto-image{
+    flex: 1;                      /* Toma la mitad del espacio disponible */
+}
+
+.contacto-content{
+    flex: 1;                     /* Toma la otra mitad del espacio disponible */
+}
+
+.contacto-image img{
+    width: 100%;                /* Ancho completo del contenedor */
+    height: 700px;              /* Altura fija */
+    object-fit: cover;          /* Mantiene las porporciones de la imagen */         
+}
+
+.contacto-content h2{
+    font-size: 2.5rem;          /* Tamaño de fuente grande */
+    color: #333333;           /* Color gris oscuro */
+    margin-bottom: 10px;        /* Espacio dejado del título */
+}
+
+.contacto-content p{
+    color: #666666;           /* Color gris medio */
+    margin-bottom: 30px;        /* Espaccio debajo del párrafo */
+    line-height: 1.7rem;
+}
+
+.contacto-info{
+    display: flex;             /* Habilita el modelo de caja flexible */
+    gap: 40px;                 /* Espacio entre columnas */
+}
+
+.info-columna p{
+    margin-bottom: 10px;      /* Espacio debajo de cada párrafo */
+    color: #666666;           /* Color gris medio */
+}
+
+/* Formulario de contacto */
+.form-row{
+    display: flex;              /*Habilita el mdoelo de caja flexible */
+    gap: 20px;                 /* Espacio entre campos */
+    margin-bottom: 20px;       /* Espacio debajo de la fila */
+}
+
+.form-row input {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    flex: 1;                   /* Cada input toma el mismo espacio */
+    padding: 10px;             /* Espaciado interno */
+    border: 1px solid #ddd;  /* Borde gris calor */
+    border-radius: 4px;        /* Bordes redondeados */
+}
+
+.contacto-form textarea{
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    width: 100%;               /* Ancho completo */
+    padding: 10px;             /* Espaciado interno */
+    border: 1px solid #ddd;  /* Borde gris claro */
+    margin-bottom: 20px;        /* Espacio debajo del textarea */
+    border-radius: 4px;         /* Bordes redondeados */
+}
+
+.contacto-form button{
+    background-color: #333333;  /* Fondo gris oscuro */
+    color: white;               /* Texto blnaco */
+    padding: 10px 20px;           /* Espaciado interno */
+    border: none;                 /* Sin borde */
+    border-radius: 8px;           /* Bordes redondeados */
+    margin-left: 50%;
+}

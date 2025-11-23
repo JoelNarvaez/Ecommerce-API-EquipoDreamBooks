@@ -1,0 +1,77 @@
+/* Preguntas frecuentes */
+h3{
+    font-size: var(--font-size-titulos);
+    font-family: var(--font-family);
+    color:var(--color-titulos);
+    margin-top: 2rem;
+}
+
+main{
+     background-image: url(/Frontend/imagenes/fondo-preguntas.jpg);
+}
+.preguntas-frecuentes-box{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 110vh;
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  border-radius: 8px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: white;
+}
+
+
+.acordeon-preguntas{
+  width:90%;
+}
+
+.acordeon-preguntas .contenedor-preguntas{
+  position: relative;
+  margin: 10px 20px;
+}
+
+.acordeon-preguntas .contenedor-preguntas .label-lista{
+  position: relative;
+  padding:10px;
+  background: #ebe4d1;
+  border-radius: 8px;
+  color: var(--color-text-base);
+  cursor: pointer;
+}
+
+.acordeon-preguntas .contenedor-preguntas .label-lista::before{
+ content: '+';
+ position: absolute;
+ top: 50%;
+ right: 20px;
+ transform: translateY(-50%);
+ font-size: 1.5rem;
+}
+
+.acordeon-preguntas .contenedor-preguntas.active .label-lista::before{
+  content:'-';
+}
+
+.acordeon-preguntas .contenedor-preguntas .contenido-preguntas {
+  position: relative;
+  background: white;
+  height: 0;
+  padding: 0; /* ← QUITAMOS EL PADDING AL ESTAR CERRADO */
+  overflow: hidden;
+  transition: height 0.4s ease, padding 0.4s ease;
+}
+
+.acordeon-preguntas .contenedor-preguntas.active .contenido-preguntas {
+  height: auto;
+  max-height: 200px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.preguntas-frecuentes h3{
+  color: #737373;
+  text-align: center;
+  font-size: 2rem;
+}
