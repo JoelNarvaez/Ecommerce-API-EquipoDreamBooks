@@ -5,6 +5,8 @@ const pool = require('./config/db');
 
 // Importar dependencias
 const express = require("express");
+const morgan = require("morgan");
+const path = require("path");
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +29,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5501',
 ];
 
+app.use(morgan('dev'))
 app.use(cors({ 
   origin: function (origin, callback) {
     
@@ -49,6 +52,11 @@ app.use("/api/auth", authRoutes);
 // app.use("/api/orders", orderRoutes);
 // app.use("/api/carts", cartRoutes);
 // app.use("/api/admin", adminRoutes);
+
+
+// archivos publicos para consulta
+const folderPath = path.join(__dirname,"assets/public")
+app.use("/public/images",express.static(folderPath))  // Se asigna alias /public a la ruta guardada en folderpath, express va utilizar esa ruta como estática con el alias con el que se le asigno para poder acceder a todos los archivos dentro de esa ruta
 
 
 // Ruta de salud
