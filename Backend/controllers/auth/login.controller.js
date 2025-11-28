@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { 
-    obtenerUserPorId,
+    obtenerUserPorCorreo,
     actualizarIntentosFallidos,
     bloquearUser,
     resetearIntentos
@@ -14,7 +14,7 @@ exports.login = async (req, res) => {
     }
 
     // Buscar usuario
-    const user = await obtenerUserPorId(email);
+    const user = await obtenerUserPorCorreo(email);
 
     if (!user) {
         return res.status(404).json({ message: "Usuario no encontrado" });

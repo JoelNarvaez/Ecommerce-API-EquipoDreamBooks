@@ -1,8 +1,17 @@
 // Importar pool desde config/db (ruta corregida)
 const pool = require('../config/db');
 
+// Obtener usuario por id (para login)
+async function obtenerUserPorId(idUser) {
+    const [rows] = await pool.query(
+        'SELECT * FROM usuarios WHERE id = ?',
+        [idUser]
+    );
+    return rows[0];
+}
+
 // Obtener usuario por email (para login)
-async function obtenerUserPorId(email) {
+async function obtenerUserPorCorreo(email) {
     const [rows] = await pool.query(
         'SELECT * FROM usuarios WHERE email = ?',
         [email]
@@ -52,10 +61,54 @@ async function resetearIntentos(email) {
     );
 }
 
+// Actualizar usuario como verificado
+async function actualizarUsuarioVerificado(id) {
+    await pool.query(
+        `UPDATE usuarios
+        SET verificado = true
+        WHERE id = ?`,
+        [id]
+    );
+}
+
+// setear token de restablecimiento y su expiración
+async function actualizarTokenExpiracion(idUser, tokenHasheado, fechaExpiracion) {
+    await pool.query(
+        `UPDATE usuarios
+        SET resetPasswordToken = ?,
+            resetPasswordExpires = ?
+        WHERE id = ?`,
+        [tokenHasheado, fechaExpiracion, idUser]
+    );
+}
+
+// Actualizar contraseña del usuario
+async function actualizarContrasenia(idUser, nuevaContraseniaHasheada) {
+    await pool.query(
+        `UPDATE usuarios SET contraseña = ? WHERE id = ?`,
+        [nuevaContraseniaHasheada, idUser]
+    );
+}
+
+// Obtener usuario por token de restablecimiento
+async function obtenerUserPorTokenRestablecimiento(hashedToken) {
+    const [rows] = await pool.query(
+        `SELECT * FROM usuarios WHERE resetPasswordToken = ?`,
+        [hashedToken]
+    );
+
+    return rows[0];
+}
+
 module.exports = {
     obtenerUserPorId,
+    obtenerUserPorCorreo,
     crearUser,
     actualizarIntentosFallidos,
     bloquearUser,
-    resetearIntentos
+    resetearIntentos,
+    actualizarUsuarioVerificado,
+    actualizarTokenExpiracion,
+    obtenerUserPorTokenRestablecimiento,
+    actualizarContrasenia
 };
