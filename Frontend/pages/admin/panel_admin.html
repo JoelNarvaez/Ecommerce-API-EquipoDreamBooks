@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamBook - Panel de Administración</title>
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/panel_admin.css">
+
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/reset.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/layout.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/sidebar.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/main.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/content.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/productos.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/oferta.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/botones.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css">
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
+
 <body>
     <div class="container">
-        <!-- Barra lateral -->
+
+        <!-- -----------------------------------------
+             BARRA LATERAL
+        ------------------------------------------ -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2 class="logo">DreamBook</h2>
@@ -17,288 +32,202 @@
                     <i class="bi bi-list"></i>
                 </button>
             </div>
-            
+
             <nav class="sidebar-nav">
                 <ul class="nav-list">
                     <li class="nav-item active">
-                        <a href="#dashboard" class="nav-link" data-section="dashboard">
+                        <a class="nav-link" data-section="dashboard">
                             <i class="bi bi-speedometer2"></i>
                             <span class="nav-text">Panel</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="#products" class="nav-link" data-section="products">
+                        <a class="nav-link" data-section="products">
                             <i class="bi bi-box-seam"></i>
                             <span class="nav-text">Libros</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="#analytics" class="nav-link" data-section="analytics">
+                        <a class="nav-link" data-section="analytics">
                             <i class="bi bi-graph-up"></i>
                             <span class="nav-text">Gráficas</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#settings" class="nav-link" data-section="settings">
-                            <i class="bi bi-journal-plus"></i>
-                            <span class="nav-text">Alta de libro</span>
                         </a>
                     </li>
                 </ul>
             </nav>
 
             <div class="sidebar-footer">
-                <a href="#profile" class="nav-link" data-section="profile">
+                <a class="nav-link" data-section="profile">
                     <i class="bi bi-person-circle"></i>
                 </a>
             </div>
         </aside>
 
-        <!-- Contenido principal -->
+        <!-- -----------------------------------------
+             CONTENIDO PRINCIPAL
+        ------------------------------------------ -->
         <main class="main-content">
-            <!-- Encabezado -->
+
+            <!-- ENCABEZADO -->
             <header class="header">
                 <div class="header-left">
                     <h1 id="pageTitle">Panel</h1>
                 </div>
+
                 <div class="header-right">
-                    <div class="header-icons"> 
-                        <div class="user-menu">
-                            <button class="user-btn">
-                                <i class="bi bi-person-circle" style="font-size: 35px;"></i>
-                                <span>Administrador</span>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a href="#logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
-                            </div>
+                    <div class="user-menu">
+                        <button class="user-btn">
+                            <i class="bi bi-person-circle" style="font-size: 35px;"></i>
+                            <span>Administrador</span>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <a href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- Secciones de contenido -->
+            <!-- SECCIONES -->
             <div class="content">
-                <!-- Sección Panel -->
+
+                <!-- PANEL -->
                 <section id="dashboard" class="section active">
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="bi bi-cart3"></i>
-                            </div>
+                            <div class="stat-icon"><i class="bi bi-cart3"></i></div>
                             <div class="stat-content">
                                 <h3>Pedidos totales</h3>
-                                <p class="stat-number">5,678</p>
+                                <p class="stat-number">—</p>
                             </div>
                         </div>
 
                         <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="bi bi-cash-coin"></i>
-                            </div>
+                            <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
                             <div class="stat-content">
                                 <h3>Ingresos</h3>
-                                <p class="stat-number">$45,230</p>
+                                <p class="stat-number">—</p>
                             </div>
                         </div>
 
                         <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="bi bi-box"></i>
-                            </div>
+                            <div class="stat-icon"><i class="bi bi-box"></i></div>
                             <div class="stat-content">
                                 <h3>Libros</h3>
-                                <p class="stat-number">342</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <div class="card-header">
-                                <h2>Libros destacados</h2>
-                            </div>
-                            <div class="product-list">
-                                <div class="product-item">
-                                    <div class="product-info">
-                                        <h4>El principito</h4>
-                                    </div>
-                                    <div class="product-bar">
-                                        <div class="bar" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="product-info">
-                                        <h4>Cien años de soledad</h4>
-                                    </div>
-                                    <div class="product-bar">
-                                        <div class="bar" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="product-info">
-                                        <h4>Don Quijote de la Mancha</h4>
-                                    </div>
-                                    <div class="product-bar">
-                                        <div class="bar" style="width: 62%"></div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="product-info">
-                                        <h4>La sombra del viento</h4>
-                                    </div>
-                                    <div class="product-bar">
-                                        <div class="bar" style="width: 56%"></div>
-                                    </div>
-                                </div>
+                                <p class="stat-number">—</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Sección Gráficas -->
+                <!-- GRÁFICAS -->
                 <section id="analytics" class="section">
                     <div class="card">
                         <div class="card-header">
                             <h2>Gráficas</h2>
                         </div>
+                        <p style="padding:20px;color:#666;">No hay datos disponibles.</p>
                     </div>
                 </section>
 
-                <!-- Sección Productos -->
+                <!-- PRODUCTOS (LIBROS) -->
                 <section id="products" class="section">
                     <div class="card">
+
                         <div class="card-header">
                             <h2>Gestión de libros</h2>
+
+                            <div class="actions-header">
                                 <div class="search-box">
-                                    <input type="text" placeholder="Buscar...">
+                                    <input type="text" placeholder="Buscar..." id="search-books">
                                     <i class="bi bi-search"></i>
                                 </div>
-                        </div>
-                        <div class="products-grid">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#888;"><i class="bi bi-book" style="font-size:64px;"></i></div>
-                                    <span class="product-badge">En stock</span>
-                                </div>
-                                <div class="product-details">
-                                    <h3>El principito (Edición ilustrada)</h3>
-                                    <p class="product-price">$14.99</p>
-                                    <p class="product-desc">Clásico atemporal de Antoine de Saint-Exupéry</p>
-                                    <div class="product-actions">
-                                        <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                                        <button class="btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#888;"><i class="bi bi-journal-text" style="font-size:64px;"></i></div>
-                                    <span class="product-badge">En stock</span>
-                                </div>
-                                <div class="product-details">
-                                    <h3>Cien años de soledad</h3>
-                                    <p class="product-price">$18.99</p>
-                                    <p class="product-desc">Edición con prólogo y notas de Gabriel García Márquez</p>
-                                    <div class="product-actions">
-                                        <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                                        <button class="btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#888;"><i class="bi bi-bookmark-x" style="font-size:64px;"></i></div>
-                                    <span class="product-badge out-of-stock">Agotado</span>
-                                </div>
-                                <div class="product-details">
-                                    <h3>Don Quijote de la Mancha</h3>
-                                    <p class="product-price">$22.50</p>
-                                    <p class="product-desc">Edición comentada de Miguel de Cervantes</p>
-                                    <div class="product-actions">
-                                        <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                                        <button class="btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#888;"><i class="bi bi-book-half" style="font-size:64px;"></i></div>
-                                    <span class="product-badge">En stock</span>
-                                </div>
-                                <div class="product-details">
-                                    <h3>La sombra del viento</h3>
-                                    <p class="product-price">$16.50</p>
-                                    <p class="product-desc">Novela de Carlos Ruiz Zafón, edición de bolsillo</p>
-                                    <div class="product-actions">
-                                        <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                                        <button class="btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </div>
+                                <button id="open-add-book" class="btn btn-primary">
+                                    <i class="bi bi-plus-circle"></i> Agregar libro
+                                </button>
                             </div>
                         </div>
+
+                        <!-- GRID DE LIBROS -->
+                        <div class="products-grid" id="books-grid">
+                            <p style="color:#666;">No hay libros registrados.</p>
+                        </div>
+
+                        <!-- Paginación -->
+                        <div id="pagination" style="text-align:center; padding:20px;"></div>
+
                     </div>
                 </section>
 
-                <!-- Sección Alta de Libro -->
-                <section id="settings" class="section">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Alta de libro</h2>
-                        </div>
-                        <div class="settings-form">
-                            <div class="form-group">
-                                <label><i class="bi bi-book"></i> Título</label>
-                                <input id="book-title" type="text" placeholder="Ingresa el título del libro">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="bi bi-person"></i> Autor</label>
-                                <input id="book-author" type="text" placeholder="Ingresa el autor">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="bi bi-currency-dollar"></i> Precio</label>
-                                <input id="book-price" type="number" step="0.01" placeholder="Ingresa el precio">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="bi bi-card-text"></i> Descripción</label>
-                                <textarea id="book-desc" placeholder="Ingresa una descripción"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label><i class="bi bi-image"></i> Imagen del libro</label>
-                                <input id="book-image" type="file" accept="image/*">
-                            </div>
-                            <div class="form-group">
-                                <label>Previsualización</label>
-                                <div id="book-preview" style="width:200px;height:200px;border:1px solid #d9d9d9;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f5f5f5;">
-                                    <i class="bi bi-image" style="font-size:48px;color:#888;"></i>
-                                </div>
-                            </div>
-                            <button id="book-submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Guardar libro</button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Sección Perfil (deshabilitada) -->
+                <!-- PERFIL -->
                 <section id="profile" class="section" style="display:none;">
                     <div class="card">
-                        <div class="card-header">
-                            <h2>Perfil del administrador (deshabilitado)</h2>
-                        </div>
-                        <div class="profile-content">
-                            <div class="profile-header" style="justify-content:center;">
-                                <i class="bi bi-person-circle" style="font-size: 100px; opacity: 0.4;"></i>
-                            </div>
-                            <div style="text-align:center;color:#666;">
-                                El perfil del administrador está deshabilitado actualmente.
-                            </div>
-                        </div>
+                        <div class="card-header"><h2>Perfil</h2></div>
+                        <p style="color:#666;padding:20px;">El perfil está deshabilitado.</p>
                     </div>
                 </section>
+
             </div>
         </main>
     </div>
 
+    <!-- -----------------------------------------
+         MODAL PARA AGREGAR LIBRO
+    ------------------------------------------ -->
+    <div id="modal-add-book" class="modal hidden">
+        <div class="modal-content">
+
+            <button class="modal-close" id="close-add-book">&times;</button>
+            <h2>Agregar libro</h2>
+
+            <div class="settings-form">
+
+                <div class="form-group">
+                    <label>Título</label>
+                    <input id="modal-title" type="text" placeholder="Ingresa el título">
+                </div>
+
+                <div class="form-group">
+                    <label>Autor</label>
+                    <input id="modal-author" type="text" placeholder="Ingresa el autor">
+                </div>
+
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input id="modal-price" type="number" step="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <input id="modal-category" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input id="modal-stock" type="number" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="modal-desc"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Imagen</label>
+                    <input id="modal-image" type="file" accept="image/*">
+                </div>
+
+                <button id="modal-save" class="btn btn-primary">
+                    <i class="bi bi-check2-circle"></i> Guardar libro
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="/Frontend/js/admin/admin.js"></script>
+    <script src="/Frontend/js/admin/consultar.js"></script>
 </body>
 </html>

@@ -1,0 +1,124 @@
+/* ---------------------------------------------------------
+   MODAL FONDO
+--------------------------------------------------------- */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 1;
+    transition: opacity .3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   CONTENIDO DEL MODAL
+--------------------------------------------------------- */
+.modal-content {
+    width: 460px;
+    max-width: 95%;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 30px;
+    position: relative;
+
+    box-shadow: 0px 8px 30px rgba(0,0,0,0.25);
+    animation: modalPop .25s ease-out;
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ---------------------------------------------------------
+   BOTÓN DE CERRAR
+--------------------------------------------------------- */
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #444;
+    transition: .2s;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+/* ---------------------------------------------------------
+   TITULO
+--------------------------------------------------------- */
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #111;
+}
+
+/* ---------------------------------------------------------
+   FORMULARIO
+--------------------------------------------------------- */
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #222;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #cfcfcf;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: 0.2s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #000;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.15);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 75px;
+}
+
+/* ---------------------------------------------------------
+   BOTÓN GUARDAR
+--------------------------------------------------------- */
+#modal-save {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    font-size: 15px;
+    border-radius: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
