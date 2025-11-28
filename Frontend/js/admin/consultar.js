@@ -16,7 +16,6 @@ async function fetchBooks(page = 1, limit = 8) {
 }
 
 
-// RENDERIZAR LIBROS EN LA VISTA
 function renderBooks(books = []) {
     const grid = document.getElementById("books-grid");
 
@@ -40,83 +39,58 @@ function renderBooks(books = []) {
             }
         }
 
-        // Badges
-        let badgesHTML = "";
-
-        // Badge Oferta (si existe)
-        if (book.oferta_tipo) {
-            badgesHTML += `
-                <span class="product-badge oferta">
-                    Oferta
-                </span>
-            `;
-        }
-
-        // Badge Existencia / Agotado
-        badgesHTML += `
-            <span class="product-badge ${book.stock <= 0 ? "agotado" : "existencia"}">
-                ${book.stock <= 0 ? "Agotado" : "En existencia"}
-            </span>
-        `;
-
         const card = document.createElement("div");
         card.classList.add("product-card");
-card.innerHTML = `
-    <div class="product-image">
-        <img src="${book.imagen || "/Frontend/assets/no-image.png"}" alt="${book.titulo}">
-        
-        <!-- SOLO OFFER BADGE ARRIBA -->
-        ${
-            book.oferta_tipo 
-            ? `<span class="offer-top-badge">Oferta</span>` 
-            : ""
-        }
-    </div>
 
-    <div class="product-details">
-
-        <h3>${book.nombre}</h3>
-
-        <!-- PRECIO + DESCUENTO PROFESIONAL -->
-        <div class="price-box">
-            ${
-                book.oferta_tipo
-                ? `
-                    <span class="old-price">$${book.precio}</span>
-                    <span class="new-price">$${precioFinal.toFixed(2)}</span>
-
-                    <div class="discount-tag">
-                        ${
-                            book.oferta_tipo === "monto"
-                            ? `-${book.oferta_valor} MXN`
-                            : `-${book.oferta_valor}%`
-                        }
-                    </div>
-                `
-                : `<span class="new-price">$${book.precio}</span>`
-            }
+        card.innerHTML = `
+        <div class="product-image">
+            <img src="${book.imagen || "/Frontend/assets/no-image.png"}" alt="${book.titulo}">
+            
+            <!-- SOLO OFFER BADGE ARRIBA -->
+            ${ book.oferta_tipo ? `<span class="offer-top-badge">Oferta</span>` : "" }
         </div>
 
-        <!-- ESTADO DE INVENTARIO -->
-        <p class="stock-status ${book.stock <= 0 ? "agotado" : "existencia"}">
-            ${
-                book.stock <= 0
-                ? "Agotado"
-                : `En existencia (${book.stock})`
-            }
-        </p>
+        <div class="product-details">
 
-        <!-- AUTOR -->
-        <p class="product-desc">${book.autor}</p>
+            <h3>${book.nombre}</h3>
 
-        <div class="product-actions">
-            <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
-            <button class="btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
+            <!-- NUEVA LÍNEA: CATEGORÍA -->
+            <p class="product-category">${book.categoria || "Sin categoría"}</p>
+
+            <!-- PRECIO + DESCUENTO PROFESIONAL -->
+            <div class="price-box">
+                ${
+                    book.oferta_tipo
+                    ? `
+                        <span class="old-price">$${book.precio}</span>
+                        <span class="new-price">$${precioFinal.toFixed(2)}</span>
+
+                        <div class="discount-tag">
+                            ${
+                                book.oferta_tipo === "monto"
+                                ? `-${book.oferta_valor} MXN`
+                                : `-${book.oferta_valor}%`
+                            }
+                        </div>
+                    `
+                    : `<span class="new-price">$${book.precio}</span>`
+                }
+            </div>
+
+            <!-- ESTADO DE INVENTARIO -->
+            <p class="stock-status ${book.stock <= 0 ? "agotado" : "existencia"}">
+                ${ book.stock <= 0 ? "Agotado" : `En existencia (${book.stock})` }
+            </p>
+
+            <!-- AUTOR -->
+            <p class="product-desc">${book.autor}</p>
+
+            <div class="product-actions">
+                <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
+            </div>
         </div>
-    </div>
-`;
-
-        
+        `;
 
         grid.appendChild(card);
     });

@@ -1,6 +1,6 @@
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     padding: 20px;
 }
@@ -20,11 +20,12 @@
 .product-image {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 350px;
     background-color: #eaeaea;
     display: flex;
     align-items: center;
     justify-content: center;
+    object-fit: contain;
 }
 /* ------------------------------
     BADGE DE OFERTA (ARRIBA)
@@ -247,4 +248,13 @@
 
 .btn-action.delete:hover i {
     color: #900000;
+}
+
+.product-category {
+    font-size: 13px;
+    color: #555;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    opacity: 0.85;
 }

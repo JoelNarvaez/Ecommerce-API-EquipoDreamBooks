@@ -1,233 +1,278 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamBook - Panel de Administración</title>
 
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/reset.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/layout.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/sidebar.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/main.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/content.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/productos.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/oferta.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/botones.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css">
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/reset.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/layout.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/sidebar.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/main.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/content.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/productos.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/oferta.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/botones.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-
-        <!-- -----------------------------------------
+      <!-- -----------------------------------------
              BARRA LATERAL
         ------------------------------------------ -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2 class="logo">DreamBook</h2>
-                <button class="toggle-btn" id="toggleBtn">
-                    <i class="bi bi-list"></i>
-                </button>
-            </div>
-
-            <nav class="sidebar-nav">
-                <ul class="nav-list">
-                    <li class="nav-item active">
-                        <a class="nav-link" data-section="dashboard">
-                            <i class="bi bi-speedometer2"></i>
-                            <span class="nav-text">Panel</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-section="products">
-                            <i class="bi bi-box-seam"></i>
-                            <span class="nav-text">Libros</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-section="analytics">
-                            <i class="bi bi-graph-up"></i>
-                            <span class="nav-text">Gráficas</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="sidebar-footer">
-                <a class="nav-link" data-section="profile">
-                    <i class="bi bi-person-circle"></i>
-                </a>
-            </div>
-        </aside>
-
-        <!-- -----------------------------------------
-             CONTENIDO PRINCIPAL
-        ------------------------------------------ -->
-        <main class="main-content">
-
-            <!-- ENCABEZADO -->
-            <header class="header">
-                <div class="header-left">
-                    <h1 id="pageTitle">Panel</h1>
-                </div>
-
-                <div class="header-right">
-                    <div class="user-menu">
-                        <button class="user-btn">
-                            <i class="bi bi-person-circle" style="font-size: 35px;"></i>
-                            <span>Administrador</span>
-                        </button>
-
-                        <div class="dropdown-menu">
-                            <a href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- SECCIONES -->
-            <div class="content">
-
-                <!-- PANEL -->
-                <section id="dashboard" class="section active">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="bi bi-cart3"></i></div>
-                            <div class="stat-content">
-                                <h3>Pedidos totales</h3>
-                                <p class="stat-number">—</p>
-                            </div>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
-                            <div class="stat-content">
-                                <h3>Ingresos</h3>
-                                <p class="stat-number">—</p>
-                            </div>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="bi bi-box"></i></div>
-                            <div class="stat-content">
-                                <h3>Libros</h3>
-                                <p class="stat-number">—</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- GRÁFICAS -->
-                <section id="analytics" class="section">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Gráficas</h2>
-                        </div>
-                        <p style="padding:20px;color:#666;">No hay datos disponibles.</p>
-                    </div>
-                </section>
-
-                <!-- PRODUCTOS (LIBROS) -->
-                <section id="products" class="section">
-                    <div class="card">
-
-                        <div class="card-header">
-                            <h2>Gestión de libros</h2>
-
-                            <div class="actions-header">
-                                <div class="search-box">
-                                    <input type="text" placeholder="Buscar..." id="search-books">
-                                    <i class="bi bi-search"></i>
-                                </div>
-
-                                <button id="open-add-book" class="btn btn-primary">
-                                    <i class="bi bi-plus-circle"></i> Agregar libro
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- GRID DE LIBROS -->
-                        <div class="products-grid" id="books-grid">
-                            <p style="color:#666;">No hay libros registrados.</p>
-                        </div>
-
-                        <!-- Paginación -->
-                        <div id="pagination" style="text-align:center; padding:20px;"></div>
-
-                    </div>
-                </section>
-
-                <!-- PERFIL -->
-                <section id="profile" class="section" style="display:none;">
-                    <div class="card">
-                        <div class="card-header"><h2>Perfil</h2></div>
-                        <p style="color:#666;padding:20px;">El perfil está deshabilitado.</p>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- -----------------------------------------
-         MODAL PARA AGREGAR LIBRO
-    ------------------------------------------ -->
-    <div id="modal-add-book" class="modal hidden">
-        <div class="modal-content">
-
-            <button class="modal-close" id="close-add-book">&times;</button>
-            <h2>Agregar libro</h2>
-
-            <div class="settings-form">
-
-                <div class="form-group">
-                    <label>Título</label>
-                    <input id="modal-title" type="text" placeholder="Ingresa el título">
-                </div>
-
-                <div class="form-group">
-                    <label>Autor</label>
-                    <input id="modal-author" type="text" placeholder="Ingresa el autor">
-                </div>
-
-                <div class="form-group">
-                    <label>Precio</label>
-                    <input id="modal-price" type="number" step="0.01">
-                </div>
-
-                <div class="form-group">
-                    <label>Categoría</label>
-                    <input id="modal-category" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label>Stock</label>
-                    <input id="modal-stock" type="number" min="0">
-                </div>
-
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea id="modal-desc"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Imagen</label>
-                    <input id="modal-image" type="file" accept="image/*">
-                </div>
-
-                <button id="modal-save" class="btn btn-primary">
-                    <i class="bi bi-check2-circle"></i> Guardar libro
-                </button>
-            </div>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2 class="logo">DreamBook</h2>
+          <button class="toggle-btn" id="toggleBtn">
+            <i class="bi bi-list"></i>
+          </button>
         </div>
+
+        <nav class="sidebar-nav">
+          <ul class="nav-list">
+            <li class="nav-item active">
+              <a class="nav-link" data-section="dashboard">
+                <i class="bi bi-speedometer2"></i>
+                <span class="nav-text">Panel</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-section="products">
+                <i class="bi bi-box-seam"></i>
+                <span class="nav-text">Libros</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-section="analytics">
+                <i class="bi bi-graph-up"></i>
+                <span class="nav-text">Gráficas</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a class="nav-link" data-section="profile">
+            <i class="bi bi-person-circle"></i>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Contenido principal -->
+      <main class="main-content">
+        <!-- ENCABEZADO -->
+        <header class="header">
+          <div class="header-left">
+            <h1 id="pageTitle">Panel</h1>
+          </div>
+
+          <div class="header-right">
+            <div class="user-menu">
+              <button class="user-btn">
+                <i class="bi bi-person-circle" style="font-size: 35px"></i>
+                <span>Administrador</span>
+              </button>
+
+              <div class="dropdown-menu">
+                <a href="#"
+                  ><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a
+                >
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- SECCIONES -->
+        <div class="content">
+          <!-- PANEL -->
+          <section id="dashboard" class="section active">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-cart3"></i></div>
+                <div class="stat-content">
+                  <h3>Pedidos totales</h3>
+                  <p class="stat-number">—</p>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
+                <div class="stat-content">
+                  <h3>Ingresos</h3>
+                  <p class="stat-number">—</p>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-box"></i></div>
+                <div class="stat-content">
+                  <h3>Libros</h3>
+                  <p class="stat-number">—</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- GRÁFICAS -->
+          <section id="analytics" class="section">
+            <div class="card">
+              <div class="card-header">
+                <h2>Gráficas</h2>
+              </div>
+              <p style="padding: 20px; color: #666">
+                No hay datos disponibles.
+              </p>
+            </div>
+          </section>
+
+          <!-- PRODUCTOS (LIBROS) -->
+          <section id="products" class="section">
+            <div class="card">
+              <div class="card-header">
+                <h2>Gestión de libros</h2>
+
+                <div class="actions-header">
+                  <div class="search-box">
+                    <input
+                      type="text"
+                      placeholder="Buscar..."
+                      id="search-books"
+                    />
+                    <i class="bi bi-search"></i>
+                  </div>
+
+                  <button id="open-add-book" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Agregar libro
+                  </button>
+                </div>
+              </div>
+
+              <!-- GRID DE LIBROS -->
+              <div class="products-grid" id="books-grid">
+                <p style="color: #666">No hay libros registrados.</p>
+              </div>
+
+              <!-- Paginación -->
+              <div
+                id="pagination"
+                style="text-align: center; padding: 20px"
+              ></div>
+            </div>
+          </section>
+
+          <!-- PERFIL -->
+          <section id="profile" class="section" style="display: none">
+            <div class="card">
+              <div class="card-header"><h2>Perfil</h2></div>
+              <p style="color: #666; padding: 20px">
+                El perfil está deshabilitado.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
 
-    <script src="/Frontend/js/admin/admin.js"></script>
-    <script src="/Frontend/js/admin/consultar.js"></script>
-</body>
+<!-- MODAL PARA AGREGAR LIBRO -->
+<div id="modal-add-book" class="modal hidden">
+  <div class="modal-content modal-wide">
+
+    <button class="modal-close" id="close-add-book">&times;</button>
+    <h2>Agregar libro</h2>
+
+    <div class="form-preview-wrapper">
+
+      <!-- FORMULARIO -->
+      <div class="settings-form">
+
+        <div class="form-group">
+          <label>Título</label>
+          <input id="modal-title" type="text" placeholder="Peppa Pig" required/>
+        </div>
+
+        <div class="form-group">
+          <label>Autor</label>
+          <input id="modal-author" type="text" placeholder="Juan Perez" required/>
+        </div>
+
+        <div class="form-group">
+          <label>Precio</label>
+          <input id="modal-price" type="number" step="0.01" placeholder="Ej. 270" required/>
+        </div>
+
+        <div class="form-group">
+          <label>Categoría</label>
+          <input id="modal-category" type="text" placeholder="Ej. Romance" required/>
+        </div>
+
+        <div class="form-group">
+          <label>Stock</label>
+          <input id="modal-stock" type="number" min="0" placeholder="7" required/>
+        </div>
+
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="modal-desc" placeholder="Libro infantil sobre una serie" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Imagen</label>
+          <input id="modal-image" type="file" accept="image/*" required/>
+        </div>
+
+        <button id="modal-save" class="btn btn-primary">
+          <i class="bi bi-check2-circle"></i> Guardar libro
+        </button>
+
+      </div>
+
+<!-- VISTA PREVIA -->
+<div class="preview-container">
+  <h3>Vista previa</h3>
+
+  <div class="preview-card">
+
+    <div class="preview-img">
+      <img id="preview-image" src="/Frontend/assets/no-image.png" alt="Vista previa">
+    </div>
+
+    <div class="preview-info">
+
+      <h4 id="preview-title">Título del libro</h4>
+
+      <!-- NUEVO: CATEGORÍA -->
+      <p class="preview-category" id="preview-category">Categoría</p>
+      <p class="preview-author" id="preview-author">Autor</p>
+      <p class="preview-price" id="preview-price">$0.00</p>
+      <p class="preview-stock" id="preview-stock">En existencia (0)</p>
+
+      <p class="preview-desc" id="preview-desc">Descripción del libro...</p>
+
+    </div>
+  </div>
+</div>
+
+    </div> <!-- form-preview-wrapper -->
+  </div>
+</div>
+
+
+<script src="/Frontend/js/admin/admin.js"></script>
+<script src="/Frontend/js/admin/consultar.js"></script>
+<script src="/Frontend/js/admin/vistaPrevia.js"></script>
+<script src="/Frontend/js/admin/agregarLibro.js"></script>
+
+
+
+   
+  </body>
 </html>
