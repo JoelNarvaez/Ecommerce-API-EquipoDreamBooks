@@ -1,4 +1,4 @@
-const { getBooksPaginated } = require("../../models/modelLibros");
+const { getBooksPaginated, addBook } = require("../../models/modelLibros");
 
 exports.getBooks = async (req, res) => {
     try {
@@ -12,5 +12,22 @@ exports.getBooks = async (req, res) => {
         res.json(data);
     } catch (err) {
         res.status(500).json({ error: "Error al obtener libros paginados" });
+    }
+};
+
+exports.addBook = async (req, res) => {
+    try {
+        const data = req.body;
+
+        const nuevoLibro = await addBook(data);
+
+        res.json({
+            ok: true,
+            mensaje: "Libro agregado correctamente",
+            libro: nuevoLibro
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ ok: false, mensaje: "Error al agregar libro" });
     }
 };
