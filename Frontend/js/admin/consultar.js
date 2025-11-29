@@ -1,8 +1,10 @@
-
+// --------------------------------------------------------
 //  OBTENER LIBROS DESDE EL BACKEND
+// --------------------------------------------------------
 async function fetchBooks(page = 1, limit = 8) {
     try {
-        const res = await fetch(`http://localhost:3000/api/admin/books?page=${page}&limit=${limit}`)
+        const res = await fetch(`http://localhost:3000/api/admin/books?page=${page}&limit=${limit}`);
+
         if (!res.ok) throw new Error("Error al obtener libros");
 
         const data = await res.json();
@@ -16,6 +18,9 @@ async function fetchBooks(page = 1, limit = 8) {
 }
 
 
+// --------------------------------------------------------
+//  RENDERIZAR LIBROS
+// --------------------------------------------------------
 function renderBooks(books = []) {
     const grid = document.getElementById("books-grid");
 
@@ -39,25 +44,31 @@ function renderBooks(books = []) {
             }
         }
 
+        // CORRECCIÓN: URL correcta para cargar imagen
+        const imagenURL = book.imagen
+            ? `http://localhost:3000/uploads/${book.imagen}`
+            : "/Frontend/assets/no-image.png";
+
         const card = document.createElement("div");
         card.classList.add("product-card");
 
         card.innerHTML = `
         <div class="product-image">
-            <img src="${book.imagen || "/Frontend/assets/no-image.png"}" alt="${book.titulo}">
+            <img src="${imagenURL}" alt="${book.nombre}">
             
-            <!-- SOLO OFFER BADGE ARRIBA -->
-            ${ book.oferta_tipo ? `<span class="offer-top-badge">Oferta</span>` : "" }
+            <!-- Oferta arriba de la imagen -->
+            ${book.oferta_tipo ? `<span class="offer-top-badge">Oferta</span>` : ""}
         </div>
 
         <div class="product-details">
 
+            <!-- Título -->
             <h3>${book.nombre}</h3>
 
-            <!-- NUEVA LÍNEA: CATEGORÍA -->
+            <!-- Categoría -->
             <p class="product-category">${book.categoria || "Sin categoría"}</p>
 
-            <!-- PRECIO + DESCUENTO PROFESIONAL -->
+            <!-- Precio + Oferta -->
             <div class="price-box">
                 ${
                     book.oferta_tipo
@@ -77,12 +88,12 @@ function renderBooks(books = []) {
                 }
             </div>
 
-            <!-- ESTADO DE INVENTARIO -->
+            <!-- Stock -->
             <p class="stock-status ${book.stock <= 0 ? "agotado" : "existencia"}">
                 ${ book.stock <= 0 ? "Agotado" : `En existencia (${book.stock})` }
             </p>
 
-            <!-- AUTOR -->
+            <!-- Autor -->
             <p class="product-desc">${book.autor}</p>
 
             <div class="product-actions">
@@ -97,7 +108,9 @@ function renderBooks(books = []) {
 }
 
 
-// PAGINACIÓN
+// --------------------------------------------------------
+//  PAGINACIÓN
+// --------------------------------------------------------
 function renderPagination(currentPage, totalPages) {
     const pagination = document.getElementById("pagination");
 

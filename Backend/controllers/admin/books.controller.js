@@ -17,7 +17,15 @@ exports.getBooks = async (req, res) => {
 
 exports.addBook = async (req, res) => {
     try {
+        // Datos del formulario
         const data = req.body;
+
+        // Imagen subida por multer
+        if (req.file) {
+            data.imagen = req.file.filename;
+        } else {
+            data.imagen = null;
+        }
 
         const nuevoLibro = await addBook(data);
 
@@ -26,8 +34,13 @@ exports.addBook = async (req, res) => {
             mensaje: "Libro agregado correctamente",
             libro: nuevoLibro
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ ok: false, mensaje: "Error al agregar libro" });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            ok: false,
+            mensaje: "Error al agregar libro"
+        });
     }
 };
+

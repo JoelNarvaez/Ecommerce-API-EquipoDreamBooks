@@ -44,6 +44,8 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
+// imagenes
+app.use("/uploads", express.static(path.join(__dirname, "assets", "public", "libros")));
 
 // Rutas
 app.use("/api/auth", authRoutes);
