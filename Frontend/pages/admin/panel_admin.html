@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/estadisticas.css" />
 
     <!-- Íconos Bootstrap -->
     <link
@@ -101,32 +102,67 @@
         ============================================== -->
         <div class="content">
           <!-- PANEL -->
-          <section id="dashboard" class="section active">
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-cart3"></i></div>
-                <div class="stat-content">
-                  <h3>Pedidos totales</h3>
-                  <p class="stat-number">—</p>
-                </div>
-              </div>
+<section id="dashboard" class="section active">
+    <div class="stats-grid">
 
-              <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
-                <div class="stat-content">
-                  <h3>Ingresos</h3>
-                  <p class="stat-number">—</p>
-                </div>
-              </div>
-
-              <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-box"></i></div>
-                <div class="stat-content">
-                  <h3>Libros</h3>
-                  <p class="stat-number">—</p>
-                </div>
-              </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-cart3"></i></div>
+            <div class="stat-content">
+                <h3>Pedidos totales</h3>
             </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
+            <div class="stat-content">
+                <h3>Ingresos</h3>
+            </div>
+        </div>
+
+        <!-- ✔ SOLO ESTE TIENE FLECHA Y ID -->
+        <div class="stat-card" id="stat-libros">
+            <div class="stat-icon"><i class="bi bi-box"></i></div>
+            <div class="stat-content">
+                <h3>Libros</h3>
+            </div>
+
+            <!-- FLECHA DE DESPLIEGUE -->
+            <i class="bi bi-chevron-down stat-arrow"></i>
+        </div>
+
+    </div>
+
+
+    <!-- ✅ AQUÍ PONEMOS EL REPORTE -->
+    <div id="dashboard-report" class="hidden">
+        <h2>Reporte de existencias por categoría</h2>
+
+        <div class="category-card">
+            <div class="category-icon category-romance">
+                <i class="bi bi-heart-fill"></i>
+            </div>
+            <div class="category-label">Romance:</div>
+            <span id="stock-romance">0</span>
+        </div>
+
+        <div class="category-card">
+            <div class="category-icon category-scifi">
+                <i class="bi bi-rocket-fill"></i>
+            </div>
+            <div class="category-label">Ciencia ficción:</div> 
+            <span id="stock-scifi">0</span>
+        </div>
+
+        <div class="category-card">
+            <div class="category-icon category-infantil">
+                <i class="bi bi-emoji-smile-fill"></i>
+            </div>
+            <div class="category-label">Infantil:</div>
+            <span id="stock-infantil">0</span>
+        </div>
+    </div>
+</section>
+
           </section>
 
           <!-- GRÁFICAS -->
@@ -464,11 +500,13 @@
       </div>
     </div>
 
-    <script src="/Frontend/js/admin/admin.js"></script>
-    <script src="/Frontend/js/admin/consultar.js"></script>
-    <script src="/Frontend/js/admin/vistaPrevia.js"></script>
-    <script src="/Frontend/js/admin/agregarLibro.js"></script>
-    <script src="/Frontend/js/admin/eliminar.js"></script>
-    <script src="/Frontend/js/admin/editar.js"></script>
+<script src="/Frontend/js/admin/reportes.js"></script>
+<script src="/Frontend/js/admin/admin.js"></script>
+<script src="/Frontend/js/admin/consultar.js"></script>
+<script src="/Frontend/js/admin/vistaPrevia.js"></script>
+<script src="/Frontend/js/admin/agregarLibro.js"></script>
+<script src="/Frontend/js/admin/eliminar.js"></script>
+<script src="/Frontend/js/admin/editar.js"></script>
+
   </body>
 </html>

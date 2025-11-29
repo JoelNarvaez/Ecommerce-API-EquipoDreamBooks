@@ -17,3 +17,83 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* CARD más elegante */
+.clean-report-card {
+  margin-top: 30px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid #e2e2e2;
+  background: #fff;
+}
+
+/* Contenedor */
+.clean-report {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Cada fila categoría */
+.stock-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  transition: all 0.25s;
+}
+
+/* Hover profesional */
+.stock-item:hover {
+  background: #f0f0f0;
+  transform: translateX(4px);
+}
+
+/* Íconos grandes con fondo */
+.stock-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 20px;
+  color: white;
+}
+
+/* Colores por categoría */
+.stock-icon.heart {
+  background: #d63384;
+}
+
+.stock-icon.rocket {
+  background: #0d6efd;
+}
+
+.stock-icon.smile {
+  background: #ffc107;
+}
+
+.clean-report p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+/* Estado oculto */
+.hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: all 0.35s ease;
+}
+
+/* Estado visible */
+.show {
+    opacity: 1;
+    max-height: 800px; /* suficiente para tu contenido */
+    transform: translateY(0);
+    transition: all 0.45s ease;
+}

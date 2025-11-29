@@ -1,4 +1,3 @@
-
 // ===========================================================
 //   MANEJO DE ELIMINACIÓN — STOCK Y LIBRO COMPLETO
 // ===========================================================
@@ -36,13 +35,11 @@ document.addEventListener("click", (e) => {
     }
 });
 
-
 // Cerrar modal con la X
 const closeDeleteModalBtn = document.getElementById("close-delete-modal");
 closeDeleteModalBtn?.addEventListener("click", () => {
     document.getElementById("modal-eliminar").classList.add("hidden");
 });
-
 
 // --------------------------------------------------------
 // ELIMINAR STOCK
@@ -66,14 +63,21 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
 
     if (res.ok) {
         alert("Stock actualizado correctamente");
+
+        // 🔥 Recargar libros
         fetchBooks(1, 8);
+
+        // 🔥 Actualizar reporte automático sin recargar página
+        if (typeof actualizarReporteExistencias === "function") {
+            actualizarReporteExistencias();
+        }
+
     } else {
         alert(data.message);
     }
 
     document.getElementById("modal-eliminar").classList.add("hidden");
 });
-
 
 // --------------------------------------------------------
 // ELIMINAR LIBRO COMPLETO
@@ -90,7 +94,15 @@ document.getElementById("btn-delete-total")?.addEventListener("click", async () 
 
     if (res.ok) {
         alert("Libro eliminado correctamente");
+
+        // 🔥 Recargar los libros
         fetchBooks(1, 8);
+
+        // 🔥 Actualizar reporte automáticamente
+        if (typeof actualizarReporteExistencias === "function") {
+            actualizarReporteExistencias();
+        }
+
     } else {
         alert(data.message);
     }
