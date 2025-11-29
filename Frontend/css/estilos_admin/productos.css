@@ -259,3 +259,44 @@
     font-weight: 600;
     opacity: 0.85;
 }
+
+/* Contenedor de búsqueda + categoría */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Input con icono */
+.search-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+/* Input más grande */
+.search-group input {
+    width: 260px;     /* ← Aumenta el ancho */
+    height: 42px;     /* ← Más alto */
+    padding-left: 40px;
+    font-size: 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+}
+
+/* Icono más alineado */
+.search-icon {
+    left: 12px;
+    font-size: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* Select */
+.filter-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    font-size: 14px;
+}

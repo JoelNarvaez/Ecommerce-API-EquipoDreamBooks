@@ -1,10 +1,13 @@
 // --------------------------------------------------------
-//  OBTENER LIBROS DESDE EL BACKEND
+//  OBTENER LIBROS DESDE EL BACKEND (CON FILTROS)
 // --------------------------------------------------------
 async function fetchBooks(page = 1, limit = 8) {
   try {
+    const searchText = document.getElementById("search-books").value || "";
+    const categoria = document.getElementById("filter-category")?.value || "";
+
     const res = await fetch(
-      `http://localhost:3000/api/admin/books?page=${page}&limit=${limit}`
+      `http://localhost:3000/api/admin/books?page=${page}&limit=${limit}&search=${searchText}&categoria=${categoria}`
     );
 
     if (!res.ok) throw new Error("Error al obtener libros");
@@ -13,6 +16,7 @@ async function fetchBooks(page = 1, limit = 8) {
 
     renderBooks(data.books);
     renderPagination(data.page, data.totalPages);
+
   } catch (error) {
     console.error("Error cargando libros:", error);
   }
@@ -43,80 +47,68 @@ function renderBooks(books = []) {
       }
     }
 
-    // CORRECCIÓN: URL correcta para cargar imagen
+    // URL correcta de imagen
     const imagenURL = book.imagen
       ? `http://localhost:3000/uploads/${book.imagen}`
-      : "/Frontend/assets/no-image.png";
+      : `/Frontend/assets/no-image.png`;
 
     const card = document.createElement("div");
     card.classList.add("product-card");
 
     card.innerHTML = `
-        <div class="product-image">
-            <img src="${imagenURL}" alt="${book.nombre}">
-            
-            <!-- Oferta arriba de la imagen -->
-            ${
-              book.oferta_tipo
-                ? `<span class="offer-top-badge">Oferta</span>`
-                : ""
-            }
-        </div>
+      <div class="product-image">
+          <img src="${imagenURL}" alt="${book.nombre}">
+          ${book.oferta_tipo ? `<span class="offer-top-badge">Oferta</span>` : ""}
+      </div>
 
-        <div class="product-details">
+      <div class="product-details">
+          <h3>${book.nombre}</h3>
+          <p class="product-category">${book.categoria || "Sin categoría"}</p>
 
-            <!-- Título -->
-            <h3>${book.nombre}</h3>
-
-            <!-- Categoría -->
-            <p class="product-category">${book.categoria || "Sin categoría"}</p>
-
-            <!-- Precio + Oferta -->
-            <div class="price-box">
-                ${
-                  book.oferta_tipo
-                    ? `
-                        <span class="old-price">$${book.precio}</span>
-                        <span class="new-price">$${precioFinal.toFixed(
-                          2
-                        )}</span>
-
-                        <div class="discount-tag">
-                            ${
-                              book.oferta_tipo === "monto"
-                                ? `-${book.oferta_valor} MXN`
-                                : `-${book.oferta_valor}%`
-                            }
-                        </div>
+          <div class="price-box">
+              ${
+                book.oferta_tipo
+                  ? `
+                      <span class="old-price">$${book.precio}</span>
+                      <span class="new-price">$${precioFinal.toFixed(2)}</span>
+                      <div class="discount-tag">
+                          ${
+                            book.oferta_tipo === "monto"
+                              ? `-${book.oferta_valor} MXN`
+                              : `-${book.oferta_valor}%`
+                          }
+                      </div>
                     `
-                    : `<span class="new-price">$${book.precio}</span>`
-                }
-            </div>
+                  : `<span class="new-price">$${book.precio}</span>`
+              }
+          </div>
 
-            <!-- Stock -->
-            <p class="stock-status ${
-              book.stock <= 0 ? "agotado" : "existencia"
-            }">
-                ${book.stock <= 0 ? "Agotado" : `En existencia (${book.stock})`}
-            </p>
+          <p class="stock-status ${book.stock <= 0 ? "agotado" : "existencia"}">
+              ${
+                book.stock <= 0
+                  ? "Agotado"
+                  : `En existencia (${book.stock})`
+              }
+          </p>
 
-            <!-- Autor -->
-            <p class="product-desc">${book.autor}</p>
+          <p class="product-desc">${book.autor}</p>
 
-            <div class="product-actions">
-                <button class="btn-action" title="Editar"><i class="bi bi-pencil-square"></i></button>
-                <button class="btn-action btn-eliminar" data-id="${
-                  book.id
-                }" title="Eliminar">
-    <i class="bi bi-trash"></i>
-</button>
-            </div>
-        </div>
-        `;
+          <div class="product-actions">
+              <button class="btn-action" title="Editar">
+                  <i class="bi bi-pencil-square"></i>
+              </button>
+
+              <button class="btn-action btn-eliminar" data-id="${book.id}" title="Eliminar">
+                  <i class="bi bi-trash"></i>
+              </button>
+          </div>
+      </div>
+    `;
 
     grid.appendChild(card);
   });
 }
+
 
 // --------------------------------------------------------
 //  PAGINACIÓN
@@ -133,14 +125,22 @@ function renderPagination(currentPage, totalPages) {
     btn.className = "btn btn-primary";
     btn.style.margin = "5px";
 
-    if (p === currentPage) {
-      btn.style.background = "#222";
-    }
+    if (p === currentPage) btn.style.background = "#222";
 
     btn.addEventListener("click", () => fetchBooks(p, 8));
 
     pagination.appendChild(btn);
   }
 }
+
+
+// --------------------------------------------------------
+//  EVENTOS: BÚSQUEDA + CATEGORÍA
+// --------------------------------------------------------
+document.getElementById("search-books")
+  .addEventListener("input", () => fetchBooks(1, 8));
+
+document.getElementById("filter-category")
+  ?.addEventListener("change", () => fetchBooks(1, 8));
 
 console.log("Panel Admin cargado correctamente.");

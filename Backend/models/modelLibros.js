@@ -1,39 +1,68 @@
 const db = require("../config/db");
 
-// OBTENER LIBROS CON PAGINACIÓN + OFERTAS
-async function getBooksPaginated(page = 1, limit = 10) {
+// OBTENER LIBROS CON PAGINACIÓN + FILTROS + OFERTAS
+async function getBooksPaginated(page = 1, limit = 10, categoria = "", search = "") {
     const offset = (page - 1) * limit;
 
-    // 1. Libros con JOIN de ofertas activas
+    // --- 1. Construcción dinámica de filtros ---
+    let filtros = [];
+    let valores = [];
+
+    // FILTRO DE CATEGORÍA + OFERTA
+    if (categoria) {
+        if (categoria === "oferta") {
+            // Mostrar solo libros con oferta activa
+            filtros.push("o.tipo IS NOT NULL");
+        } else {
+            filtros.push("p.categoria = ?");
+            valores.push(categoria);
+        }
+    }
+
+    // FILTRO DE BÚSQUEDA
+    if (search) {
+        filtros.push("(p.nombre LIKE ? OR p.autor LIKE ?)");
+        valores.push(`%${search}%`);
+        valores.push(`%${search}%`);
+    }
+
+    const whereSQL = filtros.length > 0 ? "WHERE " + filtros.join(" AND ") : "";
+
+    // --- 2. Consulta principal con JOIN a ofertas ---
     const [books] = await db.query(
         `SELECT 
-            p.*, 
-            o.tipo AS oferta_tipo, 
+            p.*,
+            o.tipo AS oferta_tipo,
             o.valor AS oferta_valor
         FROM productos p
         LEFT JOIN ofertas o 
-            ON o.product_id = p.id
+            ON o.product_id = p.id 
             AND o.activa = 1
+        ${whereSQL}
         LIMIT ? OFFSET ?`,
-        [limit, offset]
+        [...valores, limit, offset]
     );
 
-    // 2. Total de libros (sin JOIN)
+    // --- 3. Conteo total con los mismos filtros ---
     const [count] = await db.query(
-        "SELECT COUNT(*) AS total FROM productos"
+        `SELECT COUNT(*) AS total
+         FROM productos p
+         LEFT JOIN ofertas o 
+            ON o.product_id = p.id 
+            AND o.activa = 1
+         ${whereSQL}`,
+        valores
     );
-
-    const totalBooks = count[0].total;
-    const totalPages = Math.ceil(totalBooks / limit);
 
     return {
         page,
         limit,
-        totalBooks,
-        totalPages,
+        totalBooks: count[0].total,
+        totalPages: Math.ceil(count[0].total / limit),
         books,
     };
 }
+
 
 // OBTENER TODOS LOS LIBROS
 async function getAllBooks() {

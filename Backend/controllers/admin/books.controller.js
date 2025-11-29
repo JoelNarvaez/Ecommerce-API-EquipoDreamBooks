@@ -12,16 +12,19 @@ const pool = require("../../config/db");
 exports.getBooks = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const data = await getBooksPaginated(page, limit);
-        res.json(data);
+        const limit = parseInt(req.query.limit) || 8;
+        const categoria = req.query.categoria || "";
+        const search = req.query.search || "";
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Error al obtener libros paginados" });
+        const result = await getBooksPaginated(page, limit, categoria, search);
+
+        res.json(result);
+
+    } catch (error) {
+        console.error("ERROR GET BOOKS:", error);
+        res.status(500).json({ ok: false, error: "Error al obtener libros" });
     }
 };
-
 
 // =============================================================
 // AGREGAR LIBRO
