@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamBook - Panel de Administración</title>
 
+   
+
+
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/reset.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/layout.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/sidebar.css" />
@@ -265,14 +268,154 @@
   </div>
 </div>
 
+<!-- ==============================
+      MODAL ELIMINAR LIBRO/STOCK
+============================== -->
+<div id="modal-eliminar" class="modal hidden">
+  <div class="modal-content modal-wide">
+
+    <button class="modal-close" id="close-delete-modal">&times;</button>
+    <h2>Eliminar libro</h2>
+
+    <div class="form-preview-wrapper">
+
+      <!-- ==========================
+           VISTA PREVIA DEL LIBRO
+      =========================== -->
+      <div class="preview-container">
+        <h3>Vista previa</h3>
+
+        <div class="preview-card">
+
+          <div class="preview-img">
+            <img id="delete-book-image" src="/Frontend/assets/no-image.png" alt="Vista previa">
+          </div>
+
+          <div class="preview-info">
+            <h4 id="delete-book-title">Título del libro</h4>
+            <p class="preview-category" id="delete-book-category">Categoría</p>
+            <p class="preview-author" id="delete-book-author">Autor</p>
+            <p class="preview-price" id="delete-book-price">$0.00</p>
+            <p class="preview-stock" id="delete-book-stock">En existencia (0)</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================
+           CONTROLES DE ELIMINACIÓN
+      =========================== -->
+      <div class="settings-form">
+
+        <div class="form-group">
+          <label>Cantidad a eliminar</label>
+          <input type="number" id="cantidad-eliminar" min="1" class="input" placeholder="Ej. 2" />
+        </div>
+
+        <div class="delete-actions">
+          <button id="btn-confirm-delete" class="btn btn-danger">
+            <i class="bi bi-dash-circle"></i> Eliminar stock
+          </button>
+
+          <button id="btn-delete-total" class="btn btn-dark">
+            <i class="bi bi-trash"></i> Eliminar libro
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+      MODAL EDITAR LIBRO
+============================== -->
+<div id="modal-editar" class="modal hidden">
+  <div class="modal-content modal-wide">
+
+    <button class="modal-close" id="close-edit-modal">&times;</button>
+    <h2>Editar libro</h2>
+
+    <div class="form-preview-wrapper">
+
+      <!-- FORMULARIO -->
+      <div class="settings-form">
+
+        <div class="form-group">
+          <label>Título</label>
+          <input id="edit-title" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label>Autor</label>
+          <input id="edit-author" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label>Precio</label>
+          <input id="edit-price" type="number" step="0.01" />
+        </div>
+
+        <div class="form-group">
+          <label>Categoría</label>
+          <input id="edit-category" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label>Stock</label>
+          <input id="edit-stock" type="number" />
+        </div>
+
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="edit-desc"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Nueva imagen (opcional)</label>
+          <input id="edit-image" type="file" accept="image/*" />
+        </div>
+
+        <button id="btn-save-edit" class="btn btn-primary">
+          <i class="bi bi-save"></i> Guardar cambios
+        </button>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="preview-container">
+        <h3>Vista previa</h3>
+
+        <div class="preview-card">
+
+          <div class="preview-img">
+            <img id="edit-preview-image" src="/Frontend/assets/no-image.png" alt="Vista previa">
+          </div>
+
+          <div class="preview-info">
+            <h4 id="edit-preview-title">Título del libro</h4>
+
+            <p class="preview-category" id="edit-preview-category">Categoría</p>
+            <p class="preview-author" id="edit-preview-author">Autor</p>
+            <p class="preview-price" id="edit-preview-price">$0.00</p>
+            <p class="preview-stock" id="edit-preview-stock">En existencia (0)</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 
 <script src="/Frontend/js/admin/admin.js"></script>
 <script src="/Frontend/js/admin/consultar.js"></script>
 <script src="/Frontend/js/admin/vistaPrevia.js"></script>
-
-
-
-
+<script src="/Frontend/js/admin/agregarLibro.js"></script>
+<script src="/Frontend/js/admin/eliminar.js"></script>
+<script src="/Frontend/js/admin/editar.js"></script>
    
   </body>
 </html>

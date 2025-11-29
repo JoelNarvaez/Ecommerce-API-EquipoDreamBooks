@@ -15,6 +15,7 @@ toggleBtn?.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
 });
 
+
 // --------------------------------------------------------
 // NAVEGACIÓN ENTRE SECCIONES
 // --------------------------------------------------------
@@ -41,6 +42,7 @@ navLinks.forEach(link => {
 // Estado inicial
 document.querySelector('.nav-item')?.classList.add('active');
 
+
 // --------------------------------------------------------
 // MENÚ DEL USUARIO
 // --------------------------------------------------------
@@ -52,6 +54,7 @@ userBtn?.addEventListener('click', (e) => {
     dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
 });
 document.addEventListener('click', () => dropdownMenu.style.display = "none");
+
 
 // --------------------------------------------------------
 // MODAL DE AGREGAR LIBRO

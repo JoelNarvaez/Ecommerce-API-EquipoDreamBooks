@@ -1,19 +1,92 @@
-.user-menu { position: relative; }
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #ffffff;
-    border: 1px solid #d9d9d9;
-    border-radius: 8px;
-    min-width: 150px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    display: none;
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
+/* Menú desplegable */
+.dropdown-menu {
+    position: absolute;
+    top: 48px; /* Separado del botón */
+    right: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    min-width: 180px;
+    padding: 8px 0;
+    display: none;
+
+    /* Sombra elegante */
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.12),
+        0 1px 4px rgba(0, 0, 0, 0.06);
+
+    /* Animación de entrada */
+    animation: dropdownFade 0.18s ease-out;
+    transform-origin: top right;
+}
+
+/* Opciones del menú */
 .dropdown-menu a {
     display: block;
-    padding: 10px 15px;
-    color: #111111;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #222;
+    text-decoration: none;
+    transition: background 0.2s, padding-left 0.2s;
+}
+
+/* Hover elegante */
+.dropdown-menu a:hover {
+    background: #f4f4f4;
+    padding-left: 20px; /* efecto de desplazamiento */
+}
+
+/* Animación: fade + deslizamiento */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+ /* Botón de usuario (Administrador) */
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f7f7f7;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ícono */
+.user-btn i {
+    font-size: 20px;
+    color: #111;
+}
+
+/* Texto */
+.user-btn span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+}
+
+/* Hover */
+.user-btn:hover {
+    background: #ececec;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* Al hacer click (efecto tap) */
+.user-btn:active {
+    background: #e2e2e2;
+    transform: scale(0.97);
 }
