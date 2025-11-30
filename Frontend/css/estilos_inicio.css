@@ -4,7 +4,6 @@ h1{
 }
 
 
-
 .hero{
     width:100%;
     height: 100vh;
@@ -17,8 +16,6 @@ h1{
     clip-path: polygon(0 0, 100% 0, 100% 80%, 52% 100%, 0 80%);
     font-family: 'Quicksand', sans-serif;
 }
-
-
 
 .content{
     text-align: center;
@@ -81,7 +78,7 @@ main{
 
 .categorias-card h3{
     text-align: center;
-    color: #c77965;               /* Color gris oscuro */
+    color: var(--color-titulos);               /* Color gris oscuro */
     margin-bottom: 10px;            /* Espacio debajo del título */
 }
 
