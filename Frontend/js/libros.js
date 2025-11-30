@@ -18,24 +18,21 @@ async function fetchBooks(page = 1, limit = 8) {
         const categoria = categoriasSeleccionadas.join(",");
 
         // Precio
-        const minInput = document.getElementById("precio-min");
-        const maxInput = document.getElementById("precio-max");
+        const min = document.getElementById("precio-min")?.value || "";
+        const max = document.getElementById("precio-max")?.value || "";
 
-        const min = minInput && minInput.value !== "" ? minInput.value : "";
-        const max = maxInput && maxInput.value !== "" ? maxInput.value : "";
-
-        // Stock 
+        // Stock
         let stock = "";
         const chkDisp = document.getElementById("stock-disponible");
         const chkAgot = document.getElementById("stock-agotado");
 
         if (chkDisp?.checked && !chkAgot?.checked) stock = "disponible";
         else if (!chkDisp?.checked && chkAgot?.checked) stock = "agotado";
-        else stock = "";
 
         console.log("➡ Filtros enviados:", { page, search, categoria, min, max, stock, ordenar });
 
-        const url = `http://localhost:3000/api/products/books` +
+        const url =
+            `http://localhost:3000/api/products/books` +
             `?page=${page}` +
             `&limit=${limit}` +
             `&search=${encodeURIComponent(search)}` +
@@ -46,11 +43,7 @@ async function fetchBooks(page = 1, limit = 8) {
             `&orden=${ordenar}`;
 
         const res = await fetch(url);
-
-        if (!res.ok) {
-            console.error("Error HTTP:", res.status);
-            throw new Error("Error al obtener libros");
-        }
+        if (!res.ok) throw new Error("Error al obtener libros");
 
         const data = await res.json();
         console.log("⬅ Datos recibidos:", data);
@@ -63,16 +56,19 @@ async function fetchBooks(page = 1, limit = 8) {
     }
 }
 
+// ===========================
+//   RENDERIZAR LIBROS
+// ===========================
 function renderBooks(books = []) {
     const grid = document.getElementById("books-grid");
 
-    if (books.length === 0) {
+    if (!books || books.length === 0) {
         grid.innerHTML = `<p>No hay libros disponibles.</p>`;
         return;
     }
 
     grid.innerHTML = books.map(book => {
-        const urlImagen = book.imagen 
+        const urlImagen = book.imagen
             ? `http://localhost:3000/uploads/${book.imagen}`
             : "/Frontend/assets/no-image.png";
 
@@ -86,44 +82,39 @@ function renderBooks(books = []) {
             : precio.toFixed(2);
 
         return `
-        <div class="product-card">
+        <a href="/Frontend/pages/detalle-libro.html?id=${book.id}" class="link-card">
+            <div class="product-card">
 
-            <!-- BADGES -->
-            ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
+                ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
+                ${book.stock === 0 ? `<span class="badge-agotado">Agotado</span>` : ""}
 
-            <div class="product-image">
-                <img src="${urlImagen}" alt="${book.nombre}">
-            </div>
-
-            <div class="product-info">
-                <h3>${book.nombre}</h3>
-
-                <!-- AUTOR -->
-                <p class="autor">${book.autor}</p>
-
-                <!-- EDITORIAL -->
-                <p class="editorial"> Editorial: ${book.editorial}</p>
-
-                <!-- PRECIO -->
-                <div class="precio">
-                    ${
-                        tieneOferta
-                        ? `<span class="precio-original">$${precio}</span>
-                           <span class="precio-oferta">$${precioOferta}</span>`
-                        : `<span class="precio-normal">$${precio}</span>`
-                    }
+                <div class="product-image">
+                    <img src="${urlImagen}" alt="${book.nombre}">
                 </div>
 
-                <!-- STOCK -->
-                <p class="stock ${book.stock > 0 ? "stock-disponible" : "stock-agotado"}">
-                    ${book.stock > 0 ? `Disponible (${book.stock})` : "Agotado"}
-                </p>
+                <div class="product-info">
+                    <h3>${book.nombre}</h3>
+                    <p class="autor">${book.autor}</p>
+                    <p class="editorial">${book.editorial}</p>
+
+                    <div class="precio">
+                        ${
+                            tieneOferta
+                                ? `<span class="precio-original">$${precio}</span>
+                                   <span class="precio-oferta">$${precioOferta}</span>`
+                                : `<span class="precio-normal">$${precio}</span>`
+                        }
+                    </div>
+
+                    <p class="${book.stock > 0 ? "stock-disponible" : "stock-agotado"}">
+                        ${book.stock > 0 ? `Disponible (${book.stock})` : "Agotado"}
+                    </p>
+                </div>
+
             </div>
-        </div>`;
+        </a>`;
     }).join("");
 }
-
-
 
 // ===========================
 //   PAGINACIÓN
@@ -175,27 +166,23 @@ function initFiltros() {
         });
     }
 
-    // Categorías
     document
         .querySelectorAll(".filtro-grupo ul input[type='checkbox']")
         .forEach(chk => chk.addEventListener("change", () => fetchBooks(1, 8)));
 
-    // Stock
     const chkDisp = document.getElementById("stock-disponible");
     const chkAgot = document.getElementById("stock-agotado");
 
     if (chkDisp) chkDisp.addEventListener("change", () => fetchBooks(1, 8));
     if (chkAgot) chkAgot.addEventListener("change", () => fetchBooks(1, 8));
 
-    // Ordenar
     if (ordenar) ordenar.addEventListener("change", () => fetchBooks(1, 8));
 }
-
 
 // ===========================
 //   INICIALIZAR
 // ===========================
 document.addEventListener("DOMContentLoaded", () => {
     initFiltros();
-    fetchBooks(1, 8); 
+    fetchBooks(1, 8);
 });

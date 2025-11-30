@@ -1,10 +1,6 @@
-const pool = require("../../config/db");
+const db = require("../../config/db");
+const { getBooksPaginatedAdvanced } = require("../../models/modelLibros");
 
-const {
-    getBooksPaginatedAdvanced
-} = require("../../models/modelLibros");
-
- // obtenemos todos los libros con paginacion avanzada
 exports.getBooks = async (req, res) => {
     try {
         const result = await getBooksPaginatedAdvanced({
@@ -19,44 +15,31 @@ exports.getBooks = async (req, res) => {
         });
 
         res.json(result);
-        
     } catch (error) {
         console.error("❌ ERROR EN getBooks:", error);
-        res.status(500).json({
-            ok: false,
-            message: "Error al obtener libros"
-        });
+        res.status(500).json({ ok: false, message: "Error al obtener libros" });
     }
 };
 
-
-// obtenemos un libro por su id
-exports.obtenerLibro = async (req, res) => {
-    const { id } = req.params;
-
+exports.getBookById = async (req, res) => {
     try {
-        const [rows] = await pool.query(
-            "SELECT * FROM productos WHERE id = ?",
+        const { id } = req.params;
+
+        const [rows] = await db.query(
+            `SELECT p.*, o.tipo AS oferta_tipo, o.valor AS oferta_valor
+             FROM productos p
+             LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
+             WHERE p.id = ?`,
             [id]
         );
 
-        if (rows.length === 0) {
-            return res.status(404).json({
-                ok: false,
-                message: "Libro no encontrado"
-            });
-        }
+        if (rows.length === 0)
+            return res.json({ ok: false, msg: "Libro no encontrado" });
 
-        res.json({
-            ok: true,
-            libro: rows[0]
-        });
+        res.json({ ok: true, book: rows[0] });
 
     } catch (error) {
-        console.error("❌ ERROR obtenerLibro:", error);
-        res.status(500).json({
-            ok: false,
-            message: "Error al obtener libro"
-        });
+        console.error("ERROR en getBookById:", error);
+        res.status(500).json({ ok: false, error: "Error en el servidor" });
     }
 };

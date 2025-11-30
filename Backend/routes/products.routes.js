@@ -4,15 +4,13 @@ const router = express.Router();
 
 const {
     getBooks,       
-    obtenerLibro     
+    getBookById    
 } = require("../controllers/usuario/books.controller.js");
 
 
 router.get("/books", getBooks);
-router.get("/books/:id", obtenerLibro);
-
-module.exports = router;
-
+router.get("/book/:id", getBookById);
 
 
 module.exports = router;
+

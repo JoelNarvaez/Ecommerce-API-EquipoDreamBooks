@@ -186,3 +186,8 @@
 .page-btn.active {
     background: #904c38;
 }
+
+.link-card {
+    text-decoration: none;
+    color: inherit;
+}
