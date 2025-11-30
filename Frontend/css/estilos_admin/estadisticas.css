@@ -1,0 +1,110 @@
+/* TARJETAS DE ESTADÍSTICAS */
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* ÍCONO CÍRCULO */
+.stat-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #000000, #000000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+}
+
+.stat-card:nth-child(2) .stat-icon {
+    background: linear-gradient(135deg, #000000, #000000);
+}
+
+.stat-card:nth-child(3) .stat-icon {
+    background: linear-gradient(135deg, #000000, #000000);
+}
+
+.stat-content h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.stat-card {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 18px;
+    padding: 25px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.06);
+    transition: 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 10px 24px rgba(0,0,0,0.12);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    border-radius: 16px;
+    background: black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.stat-content h3::after {
+    display: none !important;
+}
+/* Estado oculto */
+.hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: all 0.35s ease;
+}
+
+/* Estado visible */
+.show {
+    opacity: 1;
+    max-height: 800px; /* suficiente para tu contenido */
+    transform: translateY(0);
+    transition: all 0.45s ease;
+}
+/* Flecha de despliegue */
+.stat-arrow {
+    margin-left: auto;
+    font-size: 22px;
+    transition: transform 0.3s ease;
+    color: #555;
+}
+
+/* Cuando está desplegado */
+.stat-arrow.rotate {
+    transform: rotate(180deg);
+}

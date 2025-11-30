@@ -53,6 +53,7 @@ userBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
 });
+
 document.addEventListener('click', () => dropdownMenu.style.display = "none");
 
 
@@ -77,3 +78,37 @@ modalAddBook?.addEventListener('click', (e) => {
     }
 });
 
+
+// --------------------------------------------------------
+// DESPLEGAR REPORTE DENTRO DEL PANEL (Libros)
+// --------------------------------------------------------
+// --- Mostrar / ocultar el reporte SOLO desde el card de Libros ---
+// --------------------------------------------------------
+// DESPLEGAR REPORTE DENTRO DEL PANEL (Libros)
+// --------------------------------------------------------
+// --- Mostrar / ocultar el reporte SOLO desde el card de Libros ---
+const librosCard = document.getElementById('stat-libros');
+const dashboardReport = document.getElementById('dashboard-report');
+const arrow = librosCard?.querySelector('.stat-arrow');
+
+// Ocultar al inicio
+dashboardReport.classList.add('hidden');
+
+librosCard.addEventListener('click', () => {
+    
+    // Alternar mostrar/ocultar
+    const showing = dashboardReport.classList.contains('hidden');
+
+    if (showing) {
+        dashboardReport.classList.remove('hidden');
+        dashboardReport.classList.add('show');
+        arrow.classList.add('rotate');  // gira flecha
+    } else {
+        dashboardReport.classList.remove('show');
+        arrow.classList.remove('rotate');  // regresa flecha
+
+        setTimeout(() => {
+            dashboardReport.classList.add('hidden');
+        }, 300);
+    }
+});

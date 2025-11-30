@@ -1,6 +1,8 @@
 let libroEditando = null;
 
-// DETECTAR CLICK EN EL BOTÓN EDITAR
+// ===========================================================
+//   DETECTAR CLICK EN BOTÓN EDITAR
+// ===========================================================
 document.addEventListener("click", async (e) => {
 
     const btn = e.target.closest(".btn-action[title='Editar']");
@@ -50,18 +52,20 @@ document.addEventListener("click", async (e) => {
     document.getElementById("edit-preview-price").textContent = "$" + libro.precio;
     document.getElementById("edit-preview-stock").textContent = "En existencia (" + libro.stock + ")";
 
-    // Abrir modal
+    // Mostrar modal
     document.getElementById("modal-editar").classList.remove("hidden");
 });
 
-
-// CERRAR MODAL
+// ===========================================================
+//   CERRAR MODAL
+// ===========================================================
 document.getElementById("close-edit-modal")?.addEventListener("click", () => {
     document.getElementById("modal-editar").classList.add("hidden");
 });
 
-
-// PREVIEW EN TIEMPO REAL
+// ===========================================================
+//   PREVIEW EN TIEMPO REAL
+// ===========================================================
 function actualizarPreviewEditar() {
     document.getElementById("edit-preview-title").textContent =
         document.getElementById("edit-title").value;
@@ -79,12 +83,11 @@ function actualizarPreviewEditar() {
         "En existencia (" + document.getElementById("edit-stock").value + ")";
 }
 
-// Inputs que actualizan la preview
 ["edit-title", "edit-author", "edit-category", "edit-price", "edit-stock"].forEach(id => {
     document.getElementById(id)?.addEventListener("input", actualizarPreviewEditar);
 });
 
-// Cambiar imagen
+// CAMBIAR IMAGEN
 document.getElementById("edit-image")?.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -92,7 +95,9 @@ document.getElementById("edit-image")?.addEventListener("change", (e) => {
     }
 });
 
-// GUARDAR CAMBIOS
+// ===========================================================
+//   GUARDAR CAMBIOS
+// ===========================================================
 document.getElementById("btn-save-edit")?.addEventListener("click", async () => {
 
     const form = new FormData();
@@ -117,8 +122,18 @@ document.getElementById("btn-save-edit")?.addEventListener("click", async () => 
 
     if (res.ok) {
         alert("Libro actualizado correctamente");
+
+        // Cerrar modal
         document.getElementById("modal-editar").classList.add("hidden");
+
+        // 🔥 Recargar lista de libros
         fetchBooks(1, 8);
+
+        // 🔥 Actualizar reporte sin recargar página
+        if (typeof actualizarReporteExistencias === "function") {
+            actualizarReporteExistencias();
+        }
+
     } else {
         alert("Error al actualizar libro");
     }

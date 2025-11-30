@@ -24,8 +24,18 @@ document.getElementById("modal-save").addEventListener("click", async () => {
 
         if (data.ok) {
             alert("Libro agregado correctamente");
+
+            // 🔥 Recargar libros
             fetchBooks(1, 8);
+
+            // 🔥 Actualizar el reporte sin recargar la página
+            if (typeof actualizarReporteExistencias === "function") {
+                actualizarReporteExistencias();
+            }
+
+            // Cerrar modal
             document.getElementById("modal-add-book").classList.add("hidden");
+
         } else {
             alert("Error al guardar libro");
         }

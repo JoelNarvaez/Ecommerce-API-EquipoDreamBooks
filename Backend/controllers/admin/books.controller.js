@@ -200,3 +200,31 @@ exports.eliminarLibro = async (req, res) => {
         });
     }
 };
+
+// =============================================================
+// REPORTE DE EXISTENCIAS
+// =============================================================
+exports.obtenerReporteExistencias = async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT categoria, SUM(stock) AS total_stock 
+            FROM productos 
+            GROUP BY categoria
+        `);
+
+        const reporte = {};
+        rows.forEach(r => {
+            reporte[r.categoria] = r.total_stock;
+        });
+
+        return res.json({
+            ok: true,
+            categorias: reporte
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ ok: false, message: "Error al obtener reporte" });
+    }
+};
+

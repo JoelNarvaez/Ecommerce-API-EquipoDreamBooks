@@ -6,8 +6,9 @@ const {
     addBook, 
     eliminarStock,
     eliminarLibro,
-    obtenerLibro,      // ⭐ NUEVO
-    editarLibro        // ⭐ NUEVO
+    obtenerLibro,
+    editarLibro,
+    obtenerReporteExistencias   
 } = require("../controllers/admin/books.controller.js");
 
 const upload = require("../middlewares/subirImagen.middleware.js");
@@ -15,12 +16,11 @@ const upload = require("../middlewares/subirImagen.middleware.js");
 // Libros
 router.get("/books", getBooks);
 router.post("/agregar", upload.single("imagen"), addBook);
-
-// Obtener por id
 router.get("/books/:id", obtenerLibro);
-
-// Actualizar Libro
 router.put("/books/:id", upload.single("imagen"), editarLibro);
+
+// Reporte de existencias 
+router.get("/reporte-existencias", obtenerReporteExistencias);
 
 // Eliminar stock
 router.put("/eliminar-stock/:id", eliminarStock);
