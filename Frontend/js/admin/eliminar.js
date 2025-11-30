@@ -4,46 +4,84 @@
 let libroSeleccionado = null;
 let libroPreview = null;
 
-document.addEventListener("click", (e) => {
-    if (e.target.closest(".btn-eliminar")) {
+document.addEventListener("click", async (e) => {
 
-        const btn = e.target.closest(".btn-eliminar");
-        libroSeleccionado = btn.dataset.id;
+    const btn = e.target.closest(".btn-eliminar");
+    if (!btn) return;
 
-        libroPreview = btn.closest(".product-card");
+    libroSeleccionado = btn.dataset.id;
 
-        // Obtener datos del libro desde la tarjeta
-        const img = libroPreview.querySelector(".product-image img")?.src;
-        const title = libroPreview.querySelector("h3")?.textContent;
-        const author = libroPreview.querySelector(".product-desc")?.textContent;
-        const category = libroPreview.querySelector(".product-category")?.textContent;
-        const stock = libroPreview.querySelector(".stock-status")?.textContent;
-        const price = libroPreview.querySelector(".new-price")?.textContent;
+    // Card completa
+    libroPreview = btn.closest(".product-card");
 
-        // Insertar datos en el modal
-        document.getElementById("delete-book-image").src = img;
-        document.getElementById("delete-book-title").textContent = title;
-        document.getElementById("delete-book-author").textContent = author;
-        document.getElementById("delete-book-category").textContent = category;
-        document.getElementById("delete-book-stock").textContent = stock;
-        document.getElementById("delete-book-price").textContent = price;
+    // -----------------------------
+    // Datos principales visibles
+    // -----------------------------
+    const img = libroPreview.querySelector(".product-image img")?.src;
+    const title = libroPreview.querySelector("h3")?.textContent;
+    const author = libroPreview.querySelector(".product-desc")?.textContent;
+    const category = libroPreview.querySelector(".product-category")?.textContent;
+    const stock = libroPreview.querySelector(".stock-status")?.textContent;
+    const price = libroPreview.querySelector(".new-price")?.textContent;
 
-        document.getElementById("cantidad-eliminar").value = "";
+    // Obtener token
+    const token = localStorage.getItem("token");
 
-        // Mostrar modal
-        document.getElementById("modal-eliminar").classList.remove("hidden");
+    // -----------------------------
+    // NUEVOS CAMPOS DESDE BACKEND
+    // -----------------------------
+    const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        alert("Error al cargar datos del libro");
+        return;
     }
+
+    const libro = data.libro;
+
+    // -----------------------------
+    // RELLENAR PREVIEW DEL MODAL
+    // -----------------------------
+    document.getElementById("delete-book-image").src = img;
+    document.getElementById("delete-book-title").textContent = title;
+    document.getElementById("delete-book-author").textContent = author;
+    document.getElementById("delete-book-category").textContent = category;
+    document.getElementById("delete-book-stock").textContent = stock;
+    document.getElementById("delete-book-price").textContent = price;
+
+    // 🔥 Nuevos campos
+    document.getElementById("delete-book-editorial").textContent =
+        libro.editorial ? `Editorial: ${libro.editorial}` : "Editorial: -";
+
+    document.getElementById("delete-book-tipo").textContent =
+        libro.tipo_de_libro ? `Tipo: ${libro.tipo_de_libro}` : "Tipo: -";
+
+    document.getElementById("delete-book-paginas").textContent =
+        libro.paginas ? `Páginas: ${libro.paginas}` : "Páginas: -";
+
+    // Limpiar input
+    document.getElementById("cantidad-eliminar").value = "";
+
+    // Abrir modal
+    document.getElementById("modal-eliminar").classList.remove("hidden");
 });
 
-// Cerrar modal con la X
-const closeDeleteModalBtn = document.getElementById("close-delete-modal");
-closeDeleteModalBtn?.addEventListener("click", () => {
+// ----------------------------------------------------------
+// CERRAR MODAL
+// ----------------------------------------------------------
+document.getElementById("close-delete-modal")?.addEventListener("click", () => {
     document.getElementById("modal-eliminar").classList.add("hidden");
 });
 
-// --------------------------------------------------------
+// ----------------------------------------------------------
 // ELIMINAR STOCK
-// --------------------------------------------------------
+// ----------------------------------------------------------
 document.getElementById("btn-confirm-delete")?.addEventListener("click", async () => {
 
     const cantidad = parseInt(document.getElementById("cantidad-eliminar").value);
@@ -53,9 +91,14 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
         return;
     }
 
+    const token = localStorage.getItem("token");
+
     const res = await fetch(`http://localhost:3000/api/admin/eliminar-stock/${libroSeleccionado}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ cantidad })
     });
 
@@ -63,48 +106,47 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
 
     if (res.ok) {
         alert("Stock actualizado correctamente");
-
-        // 🔥 Recargar libros
         fetchBooks(1, 8);
 
-        // 🔥 Actualizar reporte automático sin recargar página
         if (typeof actualizarReporteExistencias === "function") {
             actualizarReporteExistencias();
         }
 
     } else {
-        alert(data.message);
+        alert(data.message || "Error al actualizar stock");
     }
 
     document.getElementById("modal-eliminar").classList.add("hidden");
 });
 
-// --------------------------------------------------------
+// ----------------------------------------------------------
 // ELIMINAR LIBRO COMPLETO
-// --------------------------------------------------------
+// ----------------------------------------------------------
 document.getElementById("btn-delete-total")?.addEventListener("click", async () => {
 
     if (!confirm("¿Seguro que deseas eliminar este libro permanentemente?")) return;
 
+    const token = localStorage.getItem("token");
+
     const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
     });
 
     const data = await res.json();
 
     if (res.ok) {
         alert("Libro eliminado correctamente");
-
-        // 🔥 Recargar los libros
         fetchBooks(1, 8);
 
-        // 🔥 Actualizar reporte automáticamente
         if (typeof actualizarReporteExistencias === "function") {
             actualizarReporteExistencias();
         }
 
     } else {
-        alert(data.message);
+        alert(data.message || "Error al eliminar libro");
     }
 
     document.getElementById("modal-eliminar").classList.add("hidden");

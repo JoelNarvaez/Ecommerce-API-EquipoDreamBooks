@@ -5,6 +5,12 @@ const priceInput = document.getElementById("modal-price");
 const stockInput = document.getElementById("modal-stock");
 const descInput = document.getElementById("modal-desc");
 const imageInput = document.getElementById("modal-image");
+const categoryInput = document.getElementById("modal-category");
+
+// 🔥 NUEVOS CAMPOS
+const editorialInput = document.getElementById("modal-editorial");
+const tipoInput = document.getElementById("modal-tipo");
+const paginasInput = document.getElementById("modal-paginas");
 
 // Campos de previsualización
 const previewTitle = document.getElementById("preview-title");
@@ -13,8 +19,17 @@ const previewPrice = document.getElementById("preview-price");
 const previewStock = document.getElementById("preview-stock");
 const previewDesc = document.getElementById("preview-desc");
 const previewImage = document.getElementById("preview-image");
+const previewCategory = document.getElementById("preview-category");
 
+// 🔥 NUEVAS PREVIEW
+const previewEditorial = document.getElementById("preview-editorial");
+const previewTipo = document.getElementById("preview-tipo");
+const previewPaginas = document.getElementById("preview-paginas");
+
+
+// --------------------------------------------------------------
 // 🔵 Actualizar título
+// --------------------------------------------------------------
 titleInput.addEventListener("input", () => {
   previewTitle.textContent = titleInput.value || "Título del libro";
 });
@@ -43,9 +58,7 @@ stockInput.addEventListener("input", () => {
   }
 });
 
-const categoryInput = document.getElementById("modal-category");
-const previewCategory = document.getElementById("preview-category");
-
+// 🔵 Actualizar categoría
 categoryInput.addEventListener("input", () => {
   previewCategory.textContent = categoryInput.value || "Categoría";
 });
@@ -67,4 +80,25 @@ imageInput.addEventListener("change", (event) => {
   };
 
   reader.readAsDataURL(file);
+});
+
+
+// --------------------------------------------------------------
+//  NUEVOS CAMPOS — PREVIEW EN TIEMPO REAL
+// --------------------------------------------------------------
+
+// 🔵 Editorial
+editorialInput.addEventListener("input", () => {
+  previewEditorial.textContent = editorialInput.value || "Editorial";
+});
+
+// 🔵 Tipo de libro
+tipoInput.addEventListener("input", () => {
+  previewTipo.textContent = tipoInput.value || "Tipo de libro";
+});
+
+// 🔵 Número de páginas
+paginasInput.addEventListener("input", () => {
+  const num = paginasInput.value;
+  previewPaginas.textContent = num ? `${num} páginas` : "0 páginas";
 });
