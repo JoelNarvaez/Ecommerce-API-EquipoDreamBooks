@@ -1,32 +1,36 @@
-const { 
-    getBooksPaginated, 
-} = require("../../models/modelLibros");
-
 const pool = require("../../config/db");
 
-// =============================================================
-// OBTENER LIBROS PAGINADOS
-// =============================================================
+const {
+    getBooksPaginatedAdvanced
+} = require("../../models/modelLibros");
+
+ // obtenemos todos los libros con paginacion avanzada
 exports.getBooks = async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 8;
-        const categoria = req.query.categoria || "";
-        const search = req.query.search || "";
-
-        const result = await getBooksPaginated(page, limit, categoria, search);
+        const result = await getBooksPaginatedAdvanced({
+            page: Number(req.query.page) || 1,
+            limit: Number(req.query.limit) || 8,
+            categoria: req.query.categoria || "",
+            search: req.query.search || "",
+            min: req.query.min || "",
+            max: req.query.max || "",
+            stock: req.query.stock || "",
+            orden: req.query.orden || "",
+        });
 
         res.json(result);
-
+        
     } catch (error) {
-        console.error("ERROR GET BOOKS:", error);
-        res.status(500).json({ ok: false, error: "Error al obtener libros" });
+        console.error("❌ ERROR EN getBooks:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener libros"
+        });
     }
 };
 
-// =============================================================
-// OBTENER LIBRO POR ID (para editar)
-// =============================================================
+
+// obtenemos un libro por su id
 exports.obtenerLibro = async (req, res) => {
     const { id } = req.params;
 
@@ -37,13 +41,22 @@ exports.obtenerLibro = async (req, res) => {
         );
 
         if (rows.length === 0) {
-            return res.status(404).json({ ok: false, message: "Libro no encontrado" });
+            return res.status(404).json({
+                ok: false,
+                message: "Libro no encontrado"
+            });
         }
 
-        res.json({ ok: true, libro: rows[0] });
+        res.json({
+            ok: true,
+            libro: rows[0]
+        });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ ok: false, message: "Error al obtener libro" });
+        console.error("❌ ERROR obtenerLibro:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener libro"
+        });
     }
 };

@@ -9,6 +9,42 @@
     margin-top: 20px;
 }
 
+/* ================================
+   Paginación 
+================================ */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 40px 0;
+}
+
+.page-btn {
+    background: #c47a62;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.page-btn:hover {
+    background: #a86450;
+    transform: translateY(-2px);
+}
+
+.page-btn.active {
+    background: #8c4f39;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+
 /* ========== FILTROS ========== */
 .filtros {
     background: #f7f2ef;
@@ -63,15 +99,7 @@
     background: #a56e55;
 }
 
-/* ========== GRID DE LIBROS ========== */
-.grid-libros {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 25px;
-    padding-bottom: 40px;
-}
 
-/* Asegura que el contenido no quede pegado arriba */
 .zona-libros {
     padding-top: 10px;
 }
@@ -113,3 +141,54 @@
 .buscador-contenedor button:hover {
     background: #a56e55;
 }
+
+
+/* ================================
+   CENTRAR TODA LA SECCIÓN DE LIBROS
+================================ */
+.layout-libros {
+    max-width: 1500px;      
+    margin: 0 auto;          
+    padding: 0 40px;        
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+}
+
+
+.zona-libros {
+    width: 100%;
+}
+
+.grid-libros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 35px;
+}
+
+
+.pagina-libros {
+    padding-top: 30px;
+}
+
+/* =====================================
+   FILTROS FIJOS Y CENTRADOS 
+===================================== */
+.filtros {
+    position: sticky;
+    top: 120px;      
+    align-self: start;
+    height: fit-content;
+}
+
+.layout-libros {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 300px 1fr; 
+    gap: 40px;
+}
+
+
+
