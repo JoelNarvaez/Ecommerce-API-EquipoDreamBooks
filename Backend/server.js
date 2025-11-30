@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 // Importar rutas
 const authRoutes = require("./routes/auth.routes");
 // const userRoutes = require("./routes/user.routes.js");  
-// const productRoutes = require("./routes/products.routes.js");
+const productRoutes = require("./routes/products.routes.js");
 // const orderRoutes = require("./routes/order.routes.js");
 // const cartRoutes = require("./routes/cart.routes.js");
 const adminRoutes = require("./routes/admin.routes.js");
@@ -50,7 +50,7 @@ app.use("/uploads", express.static(path.join(__dirname, "assets", "public", "lib
 // Rutas
 app.use("/api/auth", authRoutes);
 // app.use("/api/users", userRoutes);
-// app.use("/api/products", productRoutes);
+app.use("/api/products", productRoutes);
 // app.use("/api/orders", orderRoutes);
 // app.use("/api/carts", cartRoutes);
 app.use("/api/admin", adminRoutes);
