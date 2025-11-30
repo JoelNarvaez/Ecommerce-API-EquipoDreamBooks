@@ -5,16 +5,24 @@
 // Función global reutilizable
 async function actualizarReporteExistencias() {
   try {
-    const res = await fetch("http://localhost:3000/api/admin/reporte-existencias");
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
     const data = await res.json();
 
-    if (!data.ok) {
-      console.error("Error en reporte:", data.message);
+    if (!res.ok || !data.ok) {
+      console.error("Error en reporte:", data.message || "Token inválido");
       return;
     }
 
     const categorias = data.categorias || {};
 
+    // Actualizar indicadores del dashboard
     document.getElementById("stock-romance").textContent =
       categorias["Romance"] ?? 0;
 

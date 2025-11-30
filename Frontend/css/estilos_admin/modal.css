@@ -19,23 +19,31 @@
 }
 
 /* ---------------------------------------------------------
-   CONTENIDO DEL MODAL
+   CONTENIDO BASE DEL MODAL
 --------------------------------------------------------- */
 .modal-content {
-    width: 460px;
-    max-width: 95%;
     background: #ffffff;
     border-radius: 14px;
-    padding: 30px;
+    padding: 25px;
     position: relative;
-
-    box-shadow: 0px 8px 30px rgba(0,0,0,0.25);
     animation: modalPop .25s ease-out;
+    box-shadow: 0px 8px 35px rgba(0,0,0,0.25);
 }
 
 @keyframes modalPop {
     from { transform: scale(0.92); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+/* ---------------------------------------------------------
+   MODAL MÁS ANCHO (MEJORADO)
+--------------------------------------------------------- */
+.modal-wide {
+    width: 1050px; /* Más grande, profesional */
+    max-width: 95%;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding-bottom: 30px;
 }
 
 /* ---------------------------------------------------------
@@ -47,10 +55,10 @@
     right: 16px;
     background: none;
     border: none;
-    font-size: 30px;
+    font-size: 28px;
     cursor: pointer;
     color: #444;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .modal-close:hover {
@@ -58,13 +66,23 @@
 }
 
 /* ---------------------------------------------------------
-   TITULO
+   TITULO DEL MODAL
 --------------------------------------------------------- */
 .modal-content h2 {
     margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: 700;
     color: #111;
+}
+
+/* ---------------------------------------------------------
+   GRID DEL FORM + PREVIEW
+--------------------------------------------------------- */
+.form-preview-wrapper {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 25px;
+    margin-top: 10px;
 }
 
 /* ---------------------------------------------------------
@@ -73,7 +91,7 @@
 .settings-form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
 }
 
 .form-group label {
@@ -89,7 +107,7 @@
     width: 100%;
     padding: 10px 14px;
     font-size: 14px;
-    border: 1px solid #cfcfcf;
+    border: 1px solid #dcdcdc;
     border-radius: 8px;
     background: #fafafa;
     transition: 0.2s ease-in-out;
@@ -98,24 +116,22 @@
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #000;
+    border-color: #222;
     background: #fff;
     box-shadow: 0 0 0 2px rgba(0,0,0,0.15);
 }
 
 textarea {
+    min-height: 90px;
     resize: vertical;
-    min-height: 75px;
 }
 
-/* ---------------------------------------------------------
-   BOTÓN GUARDAR
---------------------------------------------------------- */
+/* Botón guardar */
 #modal-save {
     width: 100%;
     padding: 12px;
-    margin-top: 5px;
-    font-size: 15px;
+    margin-top: 10px;
+    font-size: 16px;
     border-radius: 8px;
     display: flex;
     gap: 8px;
@@ -123,100 +139,133 @@ textarea {
     align-items: center;
 }
 
-
-/* Modal más amplio */
-.modal-wide {
-    width: 900px;
-    max-width: 95%;
-}
-
-/* Contenedor FLEX del form + preview */
-.form-preview-wrapper {
-    display: flex;
-    gap: 35px;
-    margin-top: 20px;
-}
-
-/* FORM (izquierda = 60%) */
-.settings-form {
-    flex: 1;
-}
-
-/* PREVIEW (derecha = 40%) */
+/* ---------------------------------------------------------
+   PREVIEW
+--------------------------------------------------------- */
 .preview-container {
-    flex: 0.8;
     background: #f7f7f7;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 20px;
+    height: fit-content;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
 }
 
 .preview-container h3 {
     margin-bottom: 15px;
     font-size: 18px;
+    font-weight: 700;
 }
 
-/* Card de previsualización */
+/* Card */
 .preview-card {
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    padding: 15px;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.12);
 }
+
 /* Imagen */
 .preview-img {
     width: 100%;
-    height: 350px;
-    background: #fdfcfc;
+    height: 500px; /* Más grande */
+    background: #f0efef;
     border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .preview-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover; /* Cambiado para ver la imagen mejor */
     object-position: center;
 }
 
-/* Texto */
+/* Texto preview */
 .preview-title {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 4px;
 }
 
 .preview-author {
-    color: #666;
+    font-size: 0.95rem;
+    color: #555;
     margin-bottom: 8px;
 }
 
+.preview-category {
+    color: #777;
+    margin-bottom: 6px;
+}
+
 .preview-price {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: 1.2rem;
     color: #d60000;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.preview-editorial,
+.preview-tipo,
+.preview-paginas {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #444;
 }
 
 .preview-stock {
     font-weight: 600;
-    color: #11a011;
+    color: #0fa20f;
     margin-bottom: 10px;
 }
 
 .preview-desc {
+    font-size: 0.92rem;
     color: #555;
-    font-size: 0.9rem;
+    margin-top: 10px;
+    line-height: 1.4;
 }
 
-.delete-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+@media (max-width: 900px) {
+    .form-preview-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-wide {
+        width: 95%;
+        height: 95vh;
+        overflow: auto;
+    }
+
+    .preview-img {
+        height: 280px;
+    }
 }
 
-.delete-actions .btn {
-  width: 100%;
+.preview-imgg {
+    width: 100%;
+    height: 480px;
+    border-radius: 12px;
+    background: #f0efef;
+    overflow: hidden;
+    margin-bottom: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.preview-imgg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;     /* 👈 NO SE DEFORMA */
+    object-position: center;
+}
+

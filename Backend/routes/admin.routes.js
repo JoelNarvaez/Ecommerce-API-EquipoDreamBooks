@@ -12,20 +12,29 @@ const {
 } = require("../controllers/admin/books.controller.js");
 
 const upload = require("../middlewares/subirImagen.middleware.js");
+const {verifyToken} = require("../middlewares/authMiddleware.js");
 
-// Libros
-router.get("/books", getBooks);
-router.post("/agregar", upload.single("imagen"), addBook);
-router.get("/books/:id", obtenerLibro);
-router.put("/books/:id", upload.single("imagen"), editarLibro);
+// ========================
+//  Libros CRUD (PROTEGIDO)
+// ========================
+router.get("/books", verifyToken, getBooks);
 
-// Reporte de existencias 
-router.get("/reporte-existencias", obtenerReporteExistencias);
+router.post("/agregar", verifyToken, upload.single("imagen"), addBook);
 
-// Eliminar stock
-router.put("/eliminar-stock/:id", eliminarStock);
+router.get("/books/:id", verifyToken, obtenerLibro);
 
-// Eliminar libro completo
-router.delete("/books/:id", eliminarLibro);
+router.put("/books/:id", verifyToken, upload.single("imagen"), editarLibro);
+
+router.delete("/books/:id", verifyToken, eliminarLibro);
+
+// ========================
+//  Reporte existencias (PROTEGIDO)
+// ========================
+router.get("/reporte-existencias", verifyToken, obtenerReporteExistencias);
+
+// ========================
+//  Eliminar stock (PROTEGIDO)
+// ========================
+router.put("/eliminar-stock/:id", verifyToken, eliminarStock);
 
 module.exports = router;

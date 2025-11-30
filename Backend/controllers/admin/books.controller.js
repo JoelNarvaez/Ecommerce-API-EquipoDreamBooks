@@ -32,7 +32,14 @@ exports.getBooks = async (req, res) => {
 exports.addBook = async (req, res) => {
     try {
         const data = req.body;
+
+        // Imagen si se subió
         data.imagen = req.file ? req.file.filename : null;
+
+        // 🔥 Asegurar que se reciben los 3 nuevos campos
+        data.editorial = data.editorial || null;
+        data.tipo_de_libro = data.tipo_de_libro || null;
+        data.paginas = data.paginas || null;
 
         const nuevoLibro = await addBook(data);
 
@@ -50,7 +57,6 @@ exports.addBook = async (req, res) => {
         });
     }
 };
-
 
 // =============================================================
 // OBTENER LIBRO POR ID (para editar)
@@ -76,20 +82,23 @@ exports.obtenerLibro = async (req, res) => {
     }
 };
 
-
 // =============================================================
 // EDITAR LIBRO
 // =============================================================
 exports.editarLibro = async (req, res) => {
     const { id } = req.params;
 
+    // Leer datos del body
     const { 
         nombre, 
         autor, 
         precio, 
         categoria, 
         stock, 
-        descripcion 
+        descripcion,
+        editorial,
+        tipo_de_libro,
+        paginas
     } = req.body;
 
     try {
@@ -99,7 +108,10 @@ exports.editarLibro = async (req, res) => {
             precio,
             categoria,
             stock,
-            descripcion
+            descripcion,
+            editorial,
+            tipo_de_libro,
+            paginas
         };
 
         // Si el usuario envió una nueva imagen
@@ -122,7 +134,6 @@ exports.editarLibro = async (req, res) => {
         });
     }
 };
-
 
 // =============================================================
 // ELIMINAR STOCK DE UN LIBRO
@@ -167,7 +178,6 @@ exports.eliminarStock = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar stock" });
     }
 };
-
 
 // =============================================================
 // ELIMINAR LIBRO COMPLETO
@@ -227,4 +237,3 @@ exports.obtenerReporteExistencias = async (req, res) => {
         res.status(500).json({ ok: false, message: "Error al obtener reporte" });
     }
 };
-

@@ -1,13 +1,20 @@
 // --------------------------------------------------------
 //  OBTENER LIBROS DESDE EL BACKEND (CON FILTROS)
 // --------------------------------------------------------
-async function fetchBooks(page = 1, limit = 8) {
+async function fetchBooks(page = 1, limit = 10) {
   try {
+    const token = localStorage.getItem("token");
+
     const searchText = document.getElementById("search-books").value || "";
     const categoria = document.getElementById("filter-category")?.value || "";
 
     const res = await fetch(
-      `http://localhost:3000/api/admin/books?page=${page}&limit=${limit}&search=${searchText}&categoria=${categoria}`
+      `http://localhost:3000/api/admin/books?page=${page}&limit=${limit}&search=${searchText}&categoria=${categoria}`,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
     );
 
     if (!res.ok) throw new Error("Error al obtener libros");
@@ -23,7 +30,7 @@ async function fetchBooks(page = 1, limit = 8) {
 }
 
 // --------------------------------------------------------
-//  RENDERIZAR LIBROS
+//  RENDERIZAR LIBROS (ACTUALIZADO)
 // --------------------------------------------------------
 function renderBooks(books = []) {
   const grid = document.getElementById("books-grid");
@@ -36,7 +43,6 @@ function renderBooks(books = []) {
   grid.innerHTML = "";
 
   books.forEach((book) => {
-    // Calcular precio final con oferta
     let precioFinal = book.precio;
 
     if (book.oferta_tipo) {
@@ -47,7 +53,6 @@ function renderBooks(books = []) {
       }
     }
 
-    // URL correcta de imagen
     const imagenURL = book.imagen
       ? `http://localhost:3000/uploads/${book.imagen}`
       : `/Frontend/assets/no-image.png`;
@@ -63,7 +68,7 @@ function renderBooks(books = []) {
 
       <div class="product-details">
           <h3>${book.nombre}</h3>
-          <p class="product-category">${book.categoria || "Sin categoría"}</p>
+          <p class="product-category">${book.categoria}</p>
 
           <div class="price-box">
               ${
@@ -72,11 +77,9 @@ function renderBooks(books = []) {
                       <span class="old-price">$${book.precio}</span>
                       <span class="new-price">$${precioFinal.toFixed(2)}</span>
                       <div class="discount-tag">
-                          ${
-                            book.oferta_tipo === "monto"
-                              ? `-${book.oferta_valor} MXN`
-                              : `-${book.oferta_valor}%`
-                          }
+                          ${book.oferta_tipo === "monto"
+                            ? `-${book.oferta_valor} MXN`
+                            : `-${book.oferta_valor}%` }
                       </div>
                     `
                   : `<span class="new-price">$${book.precio}</span>`
@@ -84,14 +87,13 @@ function renderBooks(books = []) {
           </div>
 
           <p class="stock-status ${book.stock <= 0 ? "agotado" : "existencia"}">
-              ${
-                book.stock <= 0
-                  ? "Agotado"
-                  : `En existencia (${book.stock})`
-              }
+              ${book.stock <= 0 ? "Agotado" : `En existencia (${book.stock})`}
           </p>
 
-          <p class="product-desc">${book.autor}</p>
+          <p class="product-desc"><b>Autor:</b> ${book.autor}</p>
+          <p class="product-desc"><b>Editorial:</b> ${book.editorial}</p>
+          <p class="product-desc"><b>Tipo:</b> ${book.tipo_de_libro}</p>
+          <p class="product-desc"><b>Páginas:</b> ${book.paginas}</p>
 
           <div class="product-actions">
               <button class="btn-action" title="Editar">
@@ -109,38 +111,34 @@ function renderBooks(books = []) {
   });
 }
 
-
 // --------------------------------------------------------
 //  PAGINACIÓN
 // --------------------------------------------------------
 function renderPagination(currentPage, totalPages) {
   const pagination = document.getElementById("pagination");
-
   pagination.innerHTML = "";
 
   for (let p = 1; p <= totalPages; p++) {
     const btn = document.createElement("button");
-
     btn.textContent = p;
     btn.className = "btn btn-primary";
     btn.style.margin = "5px";
 
     if (p === currentPage) btn.style.background = "#222";
 
-    btn.addEventListener("click", () => fetchBooks(p, 8));
+    btn.addEventListener("click", () => fetchBooks(p, 10));
 
     pagination.appendChild(btn);
   }
 }
 
-
 // --------------------------------------------------------
-//  EVENTOS: BÚSQUEDA + CATEGORÍA
+//  EVENTOS
 // --------------------------------------------------------
 document.getElementById("search-books")
-  .addEventListener("input", () => fetchBooks(1, 8));
+  .addEventListener("input", () => fetchBooks(1, 10));
 
 document.getElementById("filter-category")
-  ?.addEventListener("change", () => fetchBooks(1, 8));
+  ?.addEventListener("change", () => fetchBooks(1, 10));
 
 console.log("Panel Admin cargado correctamente.");
