@@ -14,6 +14,7 @@
     --color-boton-texto:#fff;
     --color-boton: #c77965;
     --font-size-base: 1rem;
+    --font-size-header: 1.2rem;
     --line-height:1.6rem;
     --color-footer: #a9806a;
     --font-family: 'Quicksand', sans-serif;
@@ -44,10 +45,11 @@
     border-radius: 8px;
     padding: 15px 8%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);  
-    width: 85%;
-    margin-left: 8%;
+    width: 95%;
+    margin-left: 3%;
     margin-right: 5%;
     margin-top: 1.5rem;
+    font-size: var(--font-size-header);
 }
 .sin-hero li a{
     color:var(--color-header-sin-hero)
@@ -59,8 +61,19 @@
     left: 0;
     background: transparent;
     padding: 20px 8%;
-    color:var(--color-header-con-hero)
+    color:var(--color-header-con-hero);
+    font-size: var(--font-size-header);
 }
+
+.user-name{
+    font-weight: bold;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;        
+}
+
 
 .menu-izq { 
     flex: 1; 
@@ -78,6 +91,7 @@
     flex: 1; 
     display: flex;
     justify-content: flex-end;
+    margin-left: 9rem;
 }
 
 .menu-centro ul,
@@ -126,6 +140,15 @@ nav ul li a:hover {
     padding: 0.6rem;
     color:var(--color-fondo);
 }
+
+.button-logout{
+    border-radius: 8px;
+    border: none;
+    padding: 0.6rem;
+    color:var(--color-fondo);
+    min-width: 4rem;
+}
+
 button{
     background: var(--color-boton);
     font-size: (var(--font-size-base));
@@ -206,76 +229,12 @@ main {
 
 
 
-.menu-derecha {
-  display: flex;
-  align-items: center; 
-  gap: 1rem;
-  padding: 2rem;
-}
 
-#userInfo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; 
-}
 
-.icono-usuario {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 
-.user-name {
-  font-weight: bold;
-  color: #333;
-}
 
-/* Estilo de menú */
-.menu{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-size: 1.4rem;
-}
 
-.menu-central{
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-}
 
-.menu-izquierda{
-    padding: 2rem;
-}
-
-.menu-derecha{
-  padding: 2rem;
-}
-
-.menu-derecha button{
-  padding: 10rem;
-  border-radius: 8px;
-}
-
-#loginBtn{
-    padding: 0.9rem;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    background:#d91f8c;
-    border: none;
-    color:white;
-}
-
-#logoutBtn{
-  padding: 0.9rem;
-  border-radius: 8px;
-  background: #f7ca0f;
-  border: none;
-  color:black;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
 
 /* PANEL DE ACCESIBILIDAD */
 .accesibilidad-panel {
