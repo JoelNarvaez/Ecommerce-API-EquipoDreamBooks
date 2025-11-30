@@ -7,8 +7,8 @@
     <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="/Frontend/css/estilos.css">
-    <link rel="stylesheet" href="/Frontend/css/libros.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/libro.css">
     <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
 <body class="sin-hero">
@@ -43,11 +43,106 @@
     <div class="separador-header"></div>
     </header>
 
+<main class="pagina-libros">
 
-    <main>
-        <div class="contenedor-libros"></div>
-          
-    </main>
+    <!-- 🔍 BUSCADOR SUPERIOR -->
+    <section class="zona-buscador">
+        <div class="buscador-contenedor">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-books" placeholder="Buscar libros...">
+            <button id="btnBuscar"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <!-- 🧱 LAYOUT PRINCIPAL -->
+    <div class="layout-libros">
+
+        <!-- 📌 FILTROS LATERALES -->
+        <aside class="filtros">
+
+            <h3>Filtros</h3>
+
+            <!-- Categorías -->
+            <div class="filtro-grupo">
+                <h4>Categorías</h4>
+                <ul>
+                    <li><label><input type="checkbox" value="Ciencia Ficción"> Ciencia Ficción</label></li>
+                    <li><label><input type="checkbox" value="Romance"> Romance</label></li>
+                    <li><label><input type="checkbox" value="Infantil"> Infantil</label></li>
+                </ul>
+            </div>
+
+            <!-- Filtro por precio -->
+            <div class="filtro-grupo">
+                <h4>Precio</h4>
+
+                <div class="precio-rango">
+
+                    <div class="campo-precio">
+                        <label for="precio-min">Mín</label>
+                        <input type="number" id="precio-min" min="0" value="0">
+                    </div>
+
+                    <span class="separador-precio">-</span>
+
+                    <div class="campo-precio">
+                        <label for="precio-max">Máx</label>
+                        <input type="number" id="precio-max" min="0" value="500">
+                    </div>
+
+                </div>
+
+                <button id="btnAplicarPrecio" class="btn-filtrar-precio">
+                    Aplicar precio
+                </button>
+            </div>
+
+            <!-- ✅ NUEVO FILTRO DE STOCK — BOTONES ACTIVABLES NO DESPLEGABLES -->
+            <div class="filtro-grupo">
+                <h4>Stock</h4>
+
+                <div class="filtro-stock">
+
+                    <label class="opcion-stock">
+                        <input type="checkbox" id="stock-disponible" value="disponible">
+                        <span>Disponible</span>
+                    </label>
+
+                    <label class="opcion-stock">
+                        <input type="checkbox" id="stock-agotado" value="agotado">
+                        <span>Agotado</span>
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- Ordenar -->
+            <div class="filtro-grupo">
+                <h4>Ordenar por</h4>
+                <select id="ordenar">
+                    <option value="">Seleccionar</option>
+                    <option value="novedad">Novedad</option>
+                    <option value="vendidos">Más vendidos</option>
+                    <option value="precioAsc">Precio: menor a mayor</option>
+                    <option value="precioDesc">Precio: mayor a menor</option>
+                    <option value="ofertas">Ofertas</option>
+                </select>
+            </div>
+
+        </aside>
+
+        <!-- 📚 LISTADO DE LIBROS -->
+        <section class="zona-libros">
+            <div id="books-grid" class="grid-libros">
+                <!-- LIBROS DEL BACKEND -->
+            </div>
+
+            <div id="pagination" class="paginacion"></div>
+        </section>
+
+    </div>
+
+</main>
 
     <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">

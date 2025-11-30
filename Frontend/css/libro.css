@@ -1,0 +1,115 @@
+.pagina-libros {
+    padding: 30px 40px;
+}
+
+.layout-libros {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* ========== FILTROS ========== */
+.filtros {
+    background: #f7f2ef;
+    padding: 20px;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.filtro-grupo {
+    margin-bottom: 25px;
+}
+
+.filtro-grupo h4 {
+    margin-bottom: 8px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.filtro-grupo ul {
+    list-style: none;
+    padding-left: 0;
+    line-height: 1.9;
+}
+
+.precio-rango {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.campo-precio label {
+    font-size: 14px;
+}
+
+.campo-precio input {
+    width: 70px;
+    padding: 5px;
+}
+
+.btn-filtrar-precio {
+    width: 100%;
+    background: #bc7f63;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-filtrar-precio:hover {
+    background: #a56e55;
+}
+
+/* ========== GRID DE LIBROS ========== */
+.grid-libros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+/* Asegura que el contenido no quede pegado arriba */
+.zona-libros {
+    padding-top: 10px;
+}
+
+/* ========== BUSCADOR ========== */
+.zona-buscador {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.buscador-contenedor {
+    width: 60%;
+    max-width: 700px;
+    background: #fff;
+    border: 2px solid #d3c2b6;
+    display: flex;
+    padding: 10px 15px;
+    border-radius: 30px;
+    align-items: center;
+    gap: 10px;
+}
+
+.buscador-contenedor input {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.buscador-contenedor button {
+    background: #bc7f63;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.buscador-contenedor button:hover {
+    background: #a56e55;
+}
