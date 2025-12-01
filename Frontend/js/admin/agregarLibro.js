@@ -1,54 +1,105 @@
+console.log("modal-add-book.js cargado ✔");
+
+const inputsPreview = {
+    title: document.getElementById("modal-title"),
+    author: document.getElementById("modal-author"),
+    category: document.getElementById("modal-category"),
+    price: document.getElementById("modal-price"),
+    editorial: document.getElementById("modal-editorial"),
+    tipo: document.getElementById("modal-tipo"),
+    paginas: document.getElementById("modal-paginas"),
+    stock: document.getElementById("modal-stock"),
+    desc: document.getElementById("modal-desc"),
+    image: document.getElementById("modal-image"),
+};
+
+// ELEMENTOS DE PREVIEW
+const preview = {
+    title: document.getElementById("preview-title"),
+    author: document.getElementById("preview-author"),
+    category: document.getElementById("preview-category"),
+    price: document.getElementById("preview-price"),
+    editorial: document.getElementById("preview-editorial"),
+    tipo: document.getElementById("preview-tipo"),
+    paginas: document.getElementById("preview-paginas"),
+    stock: document.getElementById("preview-stock"),
+    desc: document.getElementById("preview-desc"),
+    image: document.getElementById("preview-image")
+};
+
+
+// 🟦 ACTUALIZAR PREVIEW AUTOMÁTICO
+function actualizarPreview() {
+    preview.title.textContent = inputsPreview.title.value || "Título del libro";
+    preview.author.textContent = inputsPreview.author.value || "Autor";
+    preview.category.textContent = inputsPreview.category.value || "Categoría";
+    preview.price.textContent = inputsPreview.price.value ? `$${inputsPreview.price.value}` : "$0.00";
+    preview.editorial.textContent = inputsPreview.editorial.value || "Editorial";
+    preview.tipo.textContent = inputsPreview.tipo.value || "Tipo de libro";
+    preview.paginas.textContent = inputsPreview.paginas.value ? `${inputsPreview.paginas.value} páginas` : "0 páginas";
+    preview.stock.textContent = inputsPreview.stock.value ? `En existencia (${inputsPreview.stock.value})` : "En existencia (0)";
+    preview.desc.textContent = inputsPreview.desc.value || "Descripción del libro...";
+}
+
+
+// 🖼️ Vista previa de imagen
+inputsPreview.image.addEventListener("change", () => {
+    const file = inputsPreview.image.files[0];
+    if (file) preview.image.src = URL.createObjectURL(file);
+});
+
+
+// Escuchar cambios automáticos en todos los inputs
+Object.values(inputsPreview).forEach(input => {
+    if (input.id !== "modal-image") {
+        input.addEventListener("input", actualizarPreview);
+    }
+});
+
+
+// 🟩 GUARDAR LIBRO
 document.getElementById("modal-save").addEventListener("click", async () => {
 
     const form = new FormData();
 
-    form.append("nombre", document.getElementById("modal-title").value);
-    form.append("autor", document.getElementById("modal-author").value);
-    form.append("precio", document.getElementById("modal-price").value);
-    form.append("categoria", document.getElementById("modal-category").value);
-    form.append("stock", document.getElementById("modal-stock").value);
-    form.append("descripcion", document.getElementById("modal-desc").value);
+    form.append("nombre", inputsPreview.title.value);
+    form.append("autor", inputsPreview.author.value);
+    form.append("precio", inputsPreview.price.value);
+    form.append("categoria", inputsPreview.category.value);
+    form.append("stock", inputsPreview.stock.value);
+    form.append("descripcion", inputsPreview.desc.value);
 
-    // 🔥 NUEVOS CAMPOS
-    form.append("editorial", document.getElementById("modal-editorial").value);
-    form.append("tipo_de_libro", document.getElementById("modal-tipo").value);
-    form.append("paginas", document.getElementById("modal-paginas").value);
+    // Nuevos campos
+    form.append("editorial", inputsPreview.editorial.value);
+    form.append("tipo_de_libro", inputsPreview.tipo.value);
+    form.append("paginas", inputsPreview.paginas.value);
 
-    const imagenArchivo = document.getElementById("modal-image").files[0];
-    if (imagenArchivo) {
-        form.append("imagen", imagenArchivo);
-    }
+    const imagenArchivo = inputsPreview.image.files[0];
+    if (imagenArchivo) form.append("imagen", imagenArchivo);
 
-    const token = localStorage.getItem("token");  
+    const token = localStorage.getItem("token");
 
     try {
         const res = await fetch("http://localhost:3000/api/admin/agregar", {
             method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`  
-            },
+            headers: { "Authorization": `Bearer ${token}` },
             body: form
         });
 
         const data = await res.json();
 
         if (data.ok) {
-            alert("Libro agregado correctamente");
+            Swal.fire("✔ Libro agregado", "", "success");
 
-            fetchBooks(1, 8);
-
-            if (typeof actualizarReporteExistencias === "function") {
-                actualizarReporteExistencias();
-            }
-
+            fetchBooks(1, 8); // recargar lista
             document.getElementById("modal-add-book").classList.add("hidden");
 
         } else {
-            alert("Error al guardar libro");
+            Swal.fire("Error", data.message || "No se pudo guardar", "error");
         }
 
     } catch (error) {
         console.error(error);
-        alert("Fallo al guardar libro");
+        Swal.fire("Error del servidor", "No se pudo conectar con el backend", "error");
     }
 });

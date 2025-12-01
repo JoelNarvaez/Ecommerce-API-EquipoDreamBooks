@@ -83,7 +83,7 @@ async function cargarLibro() {
         document.getElementById("paginas").textContent = libro.paginas;
 
     } catch (error) {
-        console.error("❌ Error cargando libro:", error);
+        console.error("Error cargando libro:", error);
     }
 }
 
