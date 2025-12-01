@@ -1,232 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DreamBooks | Contacto</title>
-    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="stylesheet" href="../css/libro.css">
-    <link rel="stylesheet" href="../css/productos.css">
+    <link
+      rel="shortcut icon"
+      href="/Frontend/imagenes/favicon-sf.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="../css/estilos.css" />
+    <link rel="stylesheet" href="../css/libro.css" />
+    <link rel="stylesheet" href="../css/productos.css" />
 
-    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
-</head>
-<body class="sin-hero">
+    <script
+      src="https://kit.fontawesome.com/0209f1a64b.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="sin-hero">
     <header>
-        <nav class="header-general">
-            <div class="menu-izq">
-                <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
-            </div>
-            <div class="menu-centro">
-                <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="/Frontend/pages/libros.html">Libros</a></li>
-                    <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
-                </ul>
-            </div>
-            <div class="menu-der">
-                <ul>
-                    <li id="userInfo" style="display:none;" class="user-info">
-                        <i class="fa-solid fa-book-open-reader user-icon"></i>
-                        <span id="userName" class="user-name"></span>
-                    </li>
-                    <li  id="btnAcceder"><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
-                    <li><button id="btnCerrarSesion" class="button-logout" style="display:none">Salir</button>
-                    </li>
-                    <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
-                    <li><i class="fa-solid fa-cart-shopping"></i></li>
-                </ul>  
-            </div>  
-        </nav>
-    <div class="separador-header"></div>
+      <nav class="header-general">
+        <div class="menu-izq">
+          <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo" />
+        </div>
+        <div class="menu-centro">
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="/Frontend/pages/libros.html">Libros</a></li>
+            <li>
+              <a href="preguntas_frecuentes.html">Preguntas frecuentes</a>
+            </li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="nosotros.html">Sobre Nosotros</a></li>
+          </ul>
+        </div>
+        <div class="menu-der">
+          <ul>
+            <li id="userInfo" style="display: none" class="user-info">
+              <i class="fa-solid fa-book-open-reader user-icon"></i>
+              <span id="userName" class="user-name"></span>
+            </li>
+            <li id="btnAcceder">
+              <a href="login.html"
+                ><button class="button-acceder">Acceder</button></a
+              >
+            </li>
+            <li>
+              <button
+                id="btnCerrarSesion"
+                class="button-logout"
+                style="display: none"
+              >
+                Salir
+              </button>
+            </li>
+            <li>
+              <i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i>
+            </li>
+            <li><i class="fa-solid fa-cart-shopping"></i></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="separador-header"></div>
     </header>
 
-<main class="pagina-libros">
-
-    <!-- buscardor -->
-    <section class="zona-buscador">
+    <main class="pagina-libros">
+      <!-- buscardor -->
+      <section class="zona-buscador">
         <div class="buscador-contenedor">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="search-books" placeholder="Buscar libros...">
-            <button id="btnBuscar"><i class="fa-solid fa-arrow-right"></i></button>
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="search-books" placeholder="Buscar libros..." />
+          <button id="btnBuscar">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
         </div>
-    </section>
+      </section>
 
-    <!--LAYOUT PRINCIPAL -->
-    <div class="layout-libros">
-        
+      <!--LAYOUT PRINCIPAL -->
+      <div class="layout-libros">
         <aside class="filtros">
+          <h3>Filtros</h3>
 
-            <h3>Filtros</h3>
-
-            <!-- Categorías -->
+          <!-- Categorías -->
+          <div class="filtro-grupo">
+            <h4>Categorías</h4>
             <div class="filtro-grupo">
                 <h4>Categorías</h4>
-                <ul>
-                    <li><label><input type="checkbox" value="Ciencia Ficción"> Ciencia Ficción</label></li>
-                    <li><label><input type="checkbox" value="Romance"> Romance</label></li>
-                    <li><label><input type="checkbox" value="Infantil"> Infantil</label></li>
-                </ul>
+                <ul id="lista-categorias"></ul>
             </div>
 
-            <!-- Filtro por precio -->
-            <div class="filtro-grupo">
-                <h4>Precio</h4>
+          </div>
 
-                <div class="precio-rango">
+          <!-- Filtro por precio -->
+          <div class="filtro-grupo">
+            <h4>Precio</h4>
 
-                    <div class="campo-precio">
-                        <label for="precio-min">Mín</label>
-                        <input type="number" id="precio-min" min="0" placeholder="0">
-                    </div>
+            <div class="precio-rango">
+              <div class="campo-precio">
+                <label for="precio-min">Mín</label>
+                <input type="number" id="precio-min" min="0" placeholder="0" />
+              </div>
 
-                    <span class="separador-precio">-</span>
+              <span class="separador-precio">-</span>
 
-                    <div class="campo-precio">
-                        <label for="precio-max">Máx</label>
-                        <input type="number" id="precio-max" min="0" placeholder="500">
-                    </div>
-
-                </div>
-
-                <button id="btnAplicarPrecio" class="btn-filtrar-precio">
-                    Aplicar precio
-                </button>
+              <div class="campo-precio">
+                <label for="precio-max">Máx</label>
+                <input
+                  type="number"
+                  id="precio-max"
+                  min="0"
+                  placeholder="500"
+                />
+              </div>
             </div>
 
-            <!-- Filtro por stock -->
-            <div class="filtro-grupo">
-                <h4>Stock</h4>
+            <button id="btnAplicarPrecio" class="btn-filtrar-precio">
+              Aplicar precio
+            </button>
+          </div>
 
-                <div class="filtro-stock">
+          <!-- Filtro por stock -->
+          <div class="filtro-grupo">
+            <h4>Stock</h4>
 
-                    <label class="opcion-stock">
-                        <input type="checkbox" id="stock-disponible" value="disponible">
-                        <span>Disponible</span>
-                    </label>
+            <div class="filtro-stock">
+              <label class="opcion-stock">
+                <input
+                  type="checkbox"
+                  id="stock-disponible"
+                  value="disponible"
+                />
+                <span>Disponible</span>
+              </label>
 
-                    <label class="opcion-stock">
-                        <input type="checkbox" id="stock-agotado" value="agotado">
-                        <span>Agotado</span>
-                    </label>
-
-                </div>
+              <label class="opcion-stock">
+                <input type="checkbox" id="stock-agotado" value="agotado" />
+                <span>Agotado</span>
+              </label>
             </div>
+          </div>
 
-            <!-- Ordenar -->
-            <div class="filtro-grupo">
-                <h4>Ordenar por</h4>
-                <select id="ordenar">
-                    <option value="">Seleccionar</option>
-                    <option value="novedad">Novedad</option>
-                    <option value="vendidos">Más vendidos</option>
-                    <option value="precioAsc">Precio: menor a mayor</option>
-                    <option value="precioDesc">Precio: mayor a menor</option>
-                    <option value="ofertas">Ofertas</option>
-                </select>
-            </div>
+          <!-- Ordenar -->
+          <div class="filtro-grupo">
+            <h4>Ordenar por</h4>
+            <select id="ordenar">
+              <option value="">Seleccionar</option>
+              <option value="novedad">Novedad</option>
+              <option value="vendidos">Más vendidos</option>
+              <option value="precioAsc">Precio: menor a mayor</option>
+              <option value="precioDesc">Precio: mayor a menor</option>
+              <option value="ofertas">Ofertas</option>
+            </select>
+          </div>
 
+          <div class="filtro-grupo">
+            <button id="btnLimpiarFiltros" class="btn-limpiar-filtros">
+              Limpiar filtros
+            </button>
+          </div>
         </aside>
 
         <!-- LISTADO DE LIBROS -->
         <section class="zona-libros">
-            <div id="books-grid" class="grid-libros">
-            </div>
-            <div id="pagination" class="paginacion"></div>
+          <div id="books-grid" class="grid-libros"></div>
+          <div id="pagination" class="paginacion"></div>
         </section>
-
-    </div>
-
-</main>
+      </div>
+    </main>
 
     <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">
-        <i class="fa-solid fa-universal-access"></i> 
+      <i class="fa-solid fa-universal-access"></i>
     </button>
     <!-- Panel lateral de accesibilidad -->
-<div id="panelAccesibilidad" class="accesibilidad-panel">
+    <div id="panelAccesibilidad" class="accesibilidad-panel">
+      <h2>Accesibilidad</h2>
 
-    <h2>Accesibilidad</h2>
-
-    <!-- Tema claro/oscuro -->
-    <div class="opcion">
+      <!-- Tema claro/oscuro -->
+      <div class="opcion">
         <span>Tema:</span>
         <button id="btnTema" class="tema-btn">
-            <i id="iconTema" class="fa-solid fa-moon"></i>
+          <i id="iconTema" class="fa-solid fa-moon"></i>
         </button>
-    </div>
+      </div>
 
-    <!-- Tamaño de texto -->
-    <div class="opcion">
+      <!-- Tamaño de texto -->
+      <div class="opcion">
         <span>Tamaño de texto:</span>
         <div class="texto-controles">
-            <button id="textoMenos">A-</button>
-            <button id="textoMas">A+</button>
+          <button id="textoMenos">A-</button>
+          <button id="textoMas">A+</button>
         </div>
+      </div>
     </div>
 
-</div>
-
-
-<footer class="footer">
-    <div class="footer-contenedor">
+    <footer class="footer">
+      <div class="footer-contenedor">
         <div class="footer-contenido">
-            <div class="footer-info">
+          <div class="footer-info">
             <h2>DreamBooks</h2>
             <p>"Sueña despierto"</p>
-            <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
+            <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks" />
+          </div>
+          <div class="footer-redes">
+            <h4>Síguenos en redes sociales</h4>
+            <div class="redes-sociales">
+              <a
+                href="https://www.facebook.com/share/1Li3KJci2q/"
+                class="red-social"
+              >
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42"
+                class="red-social"
+              >
+                <i class="fa-brands fa-instagram"></i>
+              </a>
             </div>
-            <div class="footer-redes">
-                <h4>Síguenos en redes sociales</h4>
-                <div class="redes-sociales">    
-                    <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </div>
-                <div class="info-contacto">
-                    
-                </div>
-            </div>
-            <div class="menu-footer-contenedor">
-                <ul class="menu-footer">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#">Libros</a></li>
-                    <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+            <div class="info-contacto"></div>
+          </div>
+          <div class="menu-footer-contenedor">
+            <ul class="menu-footer">
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="#">Libros</a></li>
+              <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+              <li><a href="nosotros.html">Sobre Nosotros</a></li>
             </ul>
-            </div>
-            <div class="footer-suscripcion">
-                <form class="form-suscripcion-footer" action="">
-                    <div class="suscripcion-contenedor">
-                        <h3>Suscríbete</h3>
-                        <label for="fname">Correo electrónico:</label><br>
-                        <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
-                        <input type="submit" id="enviar-suscripcion" value="Enviar">
-                    </div>
-                    
-                </form>
-            </div>
+          </div>
+          <div class="footer-suscripcion">
+            <form class="form-suscripcion-footer" action="">
+              <div class="suscripcion-contenedor">
+                <h3>Suscríbete</h3>
+                <label for="fname">Correo electrónico:</label><br />
+                <input
+                  type="text"
+                  id="correo-suscripcion"
+                  placeholder="elizabeth.nieto@gmail.com"
+                /><br />
+                <input type="submit" id="enviar-suscripcion" value="Enviar" />
+              </div>
+            </form>
+          </div>
         </div>
         <div class="footer-copyright">
-            <p>&copy; 2025. Todos los derechos reservados.</p>
-            <p>Este es un proyecto académico para la materia de programación web</p>
+          <p>&copy; 2025. Todos los derechos reservados.</p>
+          <p>
+            Este es un proyecto académico para la materia de programación web
+          </p>
         </div>
-    </div>
-</footer>
-    
+      </div>
+    </footer>
+
     <script src="/Frontend/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/Frontend/js/manejo-sesion.js"></script>
     <script src="/Frontend/js/libros.js"></script>
-
-  
-</body>
+  </body>
 </html>

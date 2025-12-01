@@ -67,8 +67,12 @@ function renderBooks(books = []) {
       </div>
 
       <div class="product-details">
+
           <h3>${book.nombre}</h3>
-          <p class="product-category">${book.categoria}</p>
+
+          <p class="product-desc">${book.autor}</p>
+
+          <p class="product-desc"><b>Editorial:</b> ${book.editorial}</p>
 
           <div class="price-box">
               ${
@@ -77,23 +81,22 @@ function renderBooks(books = []) {
                       <span class="old-price">$${book.precio}</span>
                       <span class="new-price">$${precioFinal.toFixed(2)}</span>
                       <div class="discount-tag">
-                          ${book.oferta_tipo === "monto"
-                            ? `-${book.oferta_valor} MXN`
-                            : `-${book.oferta_valor}%` }
+                          ${
+                            book.oferta_tipo === "monto"
+                              ? `-${book.oferta_valor} MXN`
+                              : `-${book.oferta_valor}%`
+                          }
                       </div>
                     `
                   : `<span class="new-price">$${book.precio}</span>`
               }
           </div>
 
+          <p class="product-desc"><b>Páginas:</b> ${book.paginas}</p>
+
           <p class="stock-status ${book.stock <= 0 ? "agotado" : "existencia"}">
               ${book.stock <= 0 ? "Agotado" : `En existencia (${book.stock})`}
           </p>
-
-          <p class="product-desc"><b>Autor:</b> ${book.autor}</p>
-          <p class="product-desc"><b>Editorial:</b> ${book.editorial}</p>
-          <p class="product-desc"><b>Tipo:</b> ${book.tipo_de_libro}</p>
-          <p class="product-desc"><b>Páginas:</b> ${book.paginas}</p>
 
           <div class="product-actions">
               <button class="btn-action" title="Editar">
@@ -110,6 +113,7 @@ function renderBooks(books = []) {
     grid.appendChild(card);
   });
 }
+
 
 // --------------------------------------------------------
 //  PAGINACIÓN
@@ -131,6 +135,40 @@ function renderPagination(currentPage, totalPages) {
     pagination.appendChild(btn);
   }
 }
+
+// --------------------------------------------------------
+//  CARGAR CATEGORÍAS DINÁMICAMENTE DESDE EL BACKEND
+// --------------------------------------------------------
+async function cargarCategoriasSelect() {
+  try {
+    const res = await fetch("http://localhost:3000/api/products/categorias");
+    const data = await res.json();
+
+    if (!data.ok) return;
+
+    const select = document.getElementById("filter-category");
+    if (!select) return;
+
+    // Reiniciar select
+    select.innerHTML = `<option value="">Todas</option>`;
+
+    data.categorias.forEach(cat => {
+      select.innerHTML += `
+        <option value="${cat}">${cat}</option>
+      `;
+    });
+
+  } catch (error) {
+    console.error("Error cargando categorías:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarCategoriasSelect(); // ← LLAMAR AQUÍ
+  fetchBooks(1, 10);
+});
+
+
 
 // --------------------------------------------------------
 //  EVENTOS

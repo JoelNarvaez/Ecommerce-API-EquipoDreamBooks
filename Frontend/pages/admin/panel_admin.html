@@ -172,10 +172,6 @@
 
                     <select id="filter-category" class="filter-select">
                       <option value="">Todas</option>
-                      <option value="Romance">Romance</option>
-                      <option value="Infantil">Infantil</option>
-                      <option value="Ciencia ficción">Ciencia ficción</option>
-                      <option value="oferta">Oferta</option>
                     </select>
                   </div>
 
@@ -219,300 +215,363 @@
       </main>
     </div>
 
- <!-- MODAL PARA AGREGAR LIBRO -->
-<div id="modal-add-book" class="modal hidden">
-  <div class="modal-content modal-wide">
+    <!-- MODAL PARA AGREGAR LIBRO -->
+    <div id="modal-add-book" class="modal hidden">
+      <div class="modal-content modal-wide">
+        <button class="modal-close" id="close-add-book">&times;</button>
+        <h2>Agregar libro</h2>
 
-    <button class="modal-close" id="close-add-book">&times;</button>
-    <h2>Agregar libro</h2>
+        <div class="form-preview-wrapper">
+          <!-- FORMULARIO -->
+          <div class="settings-form">
+            <!-- TÍTULO -->
+            <div class="form-group">
+              <label>Título</label>
+              <input
+                id="modal-title"
+                type="text"
+                placeholder="Ej. Peppa Pig"
+                required
+              />
+            </div>
 
-    <div class="form-preview-wrapper">
+            <!-- AUTOR -->
+            <div class="form-group">
+              <label>Autor</label>
+              <input
+                id="modal-author"
+                type="text"
+                placeholder="Ej. Juan Pérez"
+                required
+              />
+            </div>
 
-      <!-- FORMULARIO -->
-      <div class="settings-form">
+            <!-- FILA PRECIO + STOCK -->
+            <div class="form-row">
+              <div class="form-group small">
+                <label>Precio</label>
+                <input
+                  id="modal-price"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="Ej. 199.99"
+                  required
+                />
+              </div>
 
-        <!-- TÍTULO -->
-        <div class="form-group">
-          <label>Título</label>
-          <input id="modal-title" type="text" placeholder="Ej. Peppa Pig" required />
-        </div>
+              <div class="form-group small">
+                <label>Stock</label>
+                <input
+                  id="modal-stock"
+                  type="number"
+                  min="0"
+                  placeholder="Ej. 10"
+                  required
+                />
+              </div>
+            </div>
 
-        <!-- AUTOR -->
-        <div class="form-group">
-          <label>Autor</label>
-          <input id="modal-author" type="text" placeholder="Ej. Juan Pérez" required />
-        </div>
+            <!-- CATEGORÍA -->
+            <div class="form-group">
+              <label>Categoría</label>
+              <input
+                id="modal-category"
+                type="text"
+                placeholder="Ej. Romance / Infantil"
+                required
+              />
+            </div>
 
-        <!-- FILA PRECIO + STOCK -->
-        <div class="form-row">
-          <div class="form-group small">
-            <label>Precio</label>
-            <input id="modal-price" type="number" step="0.01" min="0" placeholder="Ej. 199.99" required />
+            <!-- EDITORIAL -->
+            <div class="form-group">
+              <label>Editorial</label>
+              <input
+                id="modal-editorial"
+                type="text"
+                placeholder="Ej. Alfaguara"
+                required
+              />
+            </div>
+
+            <!-- FILA TIPO + PAGINAS -->
+            <div class="form-row">
+              <div class="form-group small">
+                <label>Tipo de libro</label>
+                <input
+                  id="modal-tipo"
+                  type="text"
+                  placeholder="Ej. Tapa dura / Ebook"
+                  required
+                />
+              </div>
+
+              <div class="form-group small">
+                <label>Páginas</label>
+                <input id="modal-paginas" type="number" placeholder="Ej. 240" required/>
+              </div>
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <div class="form-group">
+              <label>Descripción</label>
+              <textarea
+                id="modal-desc"
+                placeholder="Escribe una breve descripción del libro..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- IMAGEN -->
+            <div class="form-group">
+              <label>Imagen del libro</label>
+              <input id="modal-image" type="file" accept="image/*" required />
+            </div>
+
+            <!-- BOTÓN GUARDAR -->
+            <button id="modal-save" class="btn btn-primary">
+              Guardar libro
+            </button>
           </div>
 
-          <div class="form-group small">
-            <label>Stock</label>
-            <input id="modal-stock" type="number" min="0" placeholder="Ej. 10" required />
+          <!-- PREVIEW -->
+          <div class="preview-container">
+            <h3>Vista previa</h3>
+
+            <div class="preview-card">
+              <div class="preview-img">
+                <img id="preview-image" src="/Frontend/assets/no-image.png" />
+              </div>
+
+              <div class="preview-info">
+                <h4 id="preview-title">Título del libro</h4>
+                <p id="preview-category">Categoría</p>
+                <p id="preview-author">Autor</p>
+                <p id="preview-price">$0.00</p>
+                <p id="preview-editorial">Editorial</p>
+                <p id="preview-tipo">Tipo</p>
+                <p id="preview-paginas">0 páginas</p>
+                <p id="preview-stock">En existencia (0)</p>
+                <p id="preview-desc">Descripción...</p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- CATEGORÍA -->
-        <div class="form-group">
-          <label>Categoría</label>
-          <input id="modal-category" type="text" placeholder="Ej. Romance / Infantil" required />
-        </div>
-
-        <!-- EDITORIAL -->
-        <div class="form-group">
-          <label>Editorial</label>
-          <input id="modal-editorial" type="text" placeholder="Ej. Alfaguara" />
-        </div>
-
-        <!-- FILA TIPO + PAGINAS -->
-        <div class="form-row">
-          <div class="form-group small">
-            <label>Tipo de libro</label>
-            <input id="modal-tipo" type="text" placeholder="Ej. Tapa dura / Ebook" />
-          </div>
-
-          <div class="form-group small">
-            <label>Páginas</label>
-            <input id="modal-paginas" type="number" placeholder="Ej. 240" />
-          </div>
-        </div>
-
-        <!-- DESCRIPCIÓN -->
-        <div class="form-group">
-          <label>Descripción</label>
-          <textarea id="modal-desc" placeholder="Escribe una breve descripción del libro..." required></textarea>
-        </div>
-
-        <!-- IMAGEN -->
-        <div class="form-group">
-          <label>Imagen del libro</label>
-          <input id="modal-image" type="file" accept="image/*" required />
-        </div>
-
-        <!-- BOTÓN GUARDAR -->
-        <button id="modal-save" class="btn btn-primary">Guardar libro</button>
-
       </div>
-
-      <!-- PREVIEW -->
-      <div class="preview-container">
-        <h3>Vista previa</h3>
-
-        <div class="preview-card">
-          <div class="preview-img">
-            <img id="preview-image" src="/Frontend/assets/no-image.png" />
-          </div>
-
-          <div class="preview-info">
-            <h4 id="preview-title">Título del libro</h4>
-            <p id="preview-category">Categoría</p>
-            <p id="preview-author">Autor</p>
-            <p id="preview-price">$0.00</p>
-            <p id="preview-editorial">Editorial</p>
-            <p id="preview-tipo">Tipo</p>
-            <p id="preview-paginas">0 páginas</p>
-            <p id="preview-stock">En existencia (0)</p>
-            <p id="preview-desc">Descripción...</p>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-  </div>
-</div>
-
-<!-- ==============================
+    <!-- ==============================
       MODAL EDITAR LIBRO
 ============================== -->
-<div id="modal-editar" class="modal hidden">
-  <div class="modal-content modal-wide">
+    <div id="modal-editar" class="modal hidden">
+      <div class="modal-content modal-wide">
+        <button class="modal-close" id="close-edit-modal">&times;</button>
+        <h2>Editar libro</h2>
 
-    <button class="modal-close" id="close-edit-modal">&times;</button>
-    <h2>Editar libro</h2>
+        <div class="form-preview-wrapper">
+          <!-- FORMULARIO -->
+          <div class="settings-form">
+            <!-- TÍTULO -->
+            <div class="form-group">
+              <label>Título</label>
+              <input
+                id="edit-title"
+                type="text"
+                placeholder="Ej. Orgullo y prejuicio"
+                required
+              />
+            </div>
 
-    <div class="form-preview-wrapper">
+            <!-- AUTOR -->
+            <div class="form-group">
+              <label>Autor</label>
+              <input
+                id="edit-author"
+                type="text"
+                placeholder="Ej. Jane Austen"
+                required
+              />
+            </div>
 
-      <!-- FORMULARIO -->
-      <div class="settings-form">
+            <!-- PRECIO + STOCK -->
+            <div class="form-row">
+              <div class="form-group small">
+                <label>Precio</label>
+                <input
+                  id="edit-price"
+                  type="number"
+                  step="0.01"
+                  placeholder="Ej. 249.00"
+                  required
+                />
+              </div>
 
-        <!-- TÍTULO -->
-        <div class="form-group">
-          <label>Título</label>
-          <input id="edit-title" type="text" placeholder="Ej. Orgullo y prejuicio" />
-        </div>
+              <div class="form-group small">
+                <label>Stock</label>
+                <input id="edit-stock" type="number" placeholder="Ej. 10" required/>
+              </div>
+            </div>
 
-        <!-- AUTOR -->
-        <div class="form-group">
-          <label>Autor</label>
-          <input id="edit-author" type="text" placeholder="Ej. Jane Austen" />
-        </div>
+            <!-- CATEGORÍA -->
+            <div class="form-group">
+              <label>Categoría</label>
+              <input
+                id="edit-category"
+                type="text"
+                placeholder="Ej. Romance / Infantil"
+                required
+              />
+            </div>
 
-        <!-- PRECIO + STOCK -->
-        <div class="form-row">
-          <div class="form-group small">
-            <label>Precio</label>
-            <input id="edit-price" type="number" step="0.01" placeholder="Ej. 249.00" />
+            <!-- EDITORIAL -->
+            <div class="form-group">
+              <label>Editorial</label>
+              <input
+                id="edit-editorial"
+                type="text"
+                placeholder="Ej. Alfaguara"
+                required
+              />
+            </div>
+
+            <!-- TIPO + PAGINAS -->
+            <div class="form-row">
+              <div class="form-group small">
+                <label>Tipo de libro</label>
+                <input
+                  id="edit-tipo"
+                  type="text"
+                  placeholder="Ej. Tapa blanda"
+                  required
+                />
+              </div>
+
+              <div class="form-group small">
+                <label>Páginas</label>
+                <input id="edit-paginas" type="number" placeholder="Ej. 432" required/>
+              </div>
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <div class="form-group">
+              <label>Descripción</label>
+              <textarea
+                id="edit-desc"
+                placeholder="Actualiza la descripción del libro..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- NUEVA IMAGEN -->
+            <div class="form-group">
+              <label>Nueva imagen (opcional)</label>
+              <input id="edit-image" type="file" accept="image/*" />
+            </div>
+
+            <!-- BOTÓN GUARDAR -->
+            <button id="btn-save-edit" class="btn btn-primary">
+              <i class="bi bi-save"></i> Guardar cambios
+            </button>
           </div>
 
-          <div class="form-group small">
-            <label>Stock</label>
-            <input id="edit-stock" type="number" placeholder="Ej. 10" />
+          <!-- ===== PREVIEW ===== -->
+          <div class="preview-container">
+            <h3>Vista previa</h3>
+
+            <div class="preview-card">
+              <div class="preview-img">
+                <img
+                  id="edit-preview-image"
+                  src="/Frontend/assets/no-image.png"
+                />
+              </div>
+
+              <div class="preview-info">
+                <h4 id="edit-preview-title">Título del libro</h4>
+
+                <p id="edit-preview-category">Categoría</p>
+                <p id="edit-preview-author">Autor</p>
+
+                <p id="edit-preview-price" class="preview-price">$0.00</p>
+
+                <p id="edit-preview-editorial">Editorial</p>
+                <p id="edit-preview-tipo">Tipo</p>
+                <p id="edit-preview-paginas">0 páginas</p>
+
+                <p class="preview-stock ok" id="edit-preview-stock">
+                  En existencia (0)
+                </p>
+
+                <p id="edit-preview-desc" class="preview-desc">
+                  Descripción del libro...
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <!-- CATEGORÍA -->
-        <div class="form-group">
-          <label>Categoría</label>
-          <input id="edit-category" type="text" placeholder="Ej. Romance / Infantil" />
-        </div>
-
-        <!-- EDITORIAL -->
-        <div class="form-group">
-          <label>Editorial</label>
-          <input id="edit-editorial" type="text" placeholder="Ej. Alfaguara" />
-        </div>
-
-        <!-- TIPO + PAGINAS -->
-        <div class="form-row">
-          <div class="form-group small">
-            <label>Tipo de libro</label>
-            <input id="edit-tipo" type="text" placeholder="Ej. Tapa blanda" />
-          </div>
-
-          <div class="form-group small">
-            <label>Páginas</label>
-            <input id="edit-paginas" type="number" placeholder="Ej. 432" />
-          </div>
-        </div>
-
-        <!-- DESCRIPCIÓN -->
-        <div class="form-group">
-          <label>Descripción</label>
-          <textarea id="edit-desc" placeholder="Actualiza la descripción del libro..."></textarea>
-        </div>
-
-        <!-- NUEVA IMAGEN -->
-        <div class="form-group">
-          <label>Nueva imagen (opcional)</label>
-          <input id="edit-image" type="file" accept="image/*" />
-        </div>
-
-        <!-- BOTÓN GUARDAR -->
-        <button id="btn-save-edit" class="btn btn-primary">
-          <i class="bi bi-save"></i> Guardar cambios
-        </button>
-
-      </div>
-
-      <!-- ===== PREVIEW ===== -->
-      <div class="preview-container">
-        <h3>Vista previa</h3>
-
-        <div class="preview-card">
-          <div class="preview-img">
-            <img id="edit-preview-image" src="/Frontend/assets/no-image.png" />
-          </div>
-
-          <div class="preview-info">
-
-            <h4 id="edit-preview-title">Título del libro</h4>
-
-            <p id="edit-preview-category">Categoría</p>
-            <p id="edit-preview-author">Autor</p>
-
-            <p id="edit-preview-price" class="preview-price">$0.00</p>
-
-            <p id="edit-preview-editorial">Editorial</p>
-            <p id="edit-preview-tipo">Tipo</p>
-            <p id="edit-preview-paginas">0 páginas</p>
-
-            <p class="preview-stock ok" id="edit-preview-stock">
-              En existencia (0)
-            </p>
-
-            <p id="edit-preview-desc" class="preview-desc">
-              Descripción del libro...
-            </p>
-
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
- <div id="modal-eliminar" class="modal hidden">
-  <div class="modal-content modal-wide">
-
-    <button class="modal-close" id="close-delete-modal">&times;</button>
-    <h2>Eliminar libro</h2>
-
-    <div class="delete-wrapper">
-
-      <!-- ========== PREVIEW IZQUIERDA ========== -->
-      <div class="delete-preview">
-        <h3>Vista previa</h3>
-
-        <div class="delete-preview-card">
-          
-          <div class="preview-img">
-            <img id="delete-book-image" src="/Frontend/assets/no-image.png" />
-          </div>
-
-          <div class="delete-info">
-            <h4 id="delete-book-title">Título del libro</h4>
-
-            <p id="delete-book-category">Categoría</p>
-            <p id="delete-book-author">Autor</p>
-            <p class="price" id="delete-book-price">$0.00</p>
-
-            <p id="delete-book-editorial"><strong>Editorial:</strong> -</p>
-            <p id="delete-book-tipo"><strong>Tipo:</strong> -</p>
-            <p id="delete-book-paginas"><strong>Páginas:</strong> -</p>
-
-            <p class="stock" id="delete-book-stock">En existencia (0)</p>
-          </div>
-
         </div>
       </div>
-
-      <!-- ========== PANEL DERECHO (ACCIONES) ========== -->
-      <div class="delete-controls">
-
-        <div class="form-group">
-          <label>Cantidad a eliminar</label>
-          <input
-            type="number"
-            id="cantidad-eliminar"
-            min="1"
-            placeholder="Ej. 2"
-          />
-        </div>
-
-        <div class="delete-actions">
-          <button id="btn-confirm-delete" class="btn btn-danger">
-            <i class="bi bi-dash-circle"></i> Eliminar stock
-          </button>
-
-          <button id="btn-delete-total" class="btn btn-dark">
-            <i class="bi bi-trash"></i> Eliminar libro
-          </button>
-        </div>
-
-      </div>
-
     </div>
 
-  </div>
-</div>
+    <div id="modal-eliminar" class="modal hidden">
+      <div class="modal-content modal-wide">
+        <button class="modal-close" id="close-delete-modal">&times;</button>
+        <h2>Eliminar libro</h2>
 
+        <div class="delete-wrapper">
+          <!-- ========== PREVIEW IZQUIERDA ========== -->
+          <div class="delete-preview">
+            <h3>Vista previa</h3>
+
+            <div class="delete-preview-card">
+              <div class="preview-img">
+                <img
+                  id="delete-book-image"
+                  src="/Frontend/assets/no-image.png"
+                />
+              </div>
+
+              <div class="delete-info">
+                <h4 id="delete-book-title">Título del libro</h4>
+
+                <p id="delete-book-category">Categoría</p>
+                <p id="delete-book-author">Autor</p>
+                <p class="price" id="delete-book-price">$0.00</p>
+
+                <p id="delete-book-editorial"><strong>Editorial:</strong> -</p>
+                <p id="delete-book-tipo"><strong>Tipo:</strong> -</p>
+                <p id="delete-book-paginas"><strong>Páginas:</strong> -</p>
+
+                <p class="stock" id="delete-book-stock">En existencia (0)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PANEL DERECHO (ACCIONES) ========== -->
+          <div class="delete-controls">
+            <div class="form-group">
+              <label>Cantidad a eliminar</label>
+              <input
+                type="number"
+                id="cantidad-eliminar"
+                min="1"
+                placeholder="Ej. 2"
+                required
+              />
+            </div>
+
+            <div class="delete-actions">
+              <button id="btn-confirm-delete" class="btn btn-danger">
+                <i class="bi bi-dash-circle"></i> Eliminar stock
+              </button>
+
+              <button id="btn-delete-total" class="btn btn-dark">
+                <i class="bi bi-trash"></i> Eliminar libro
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- SCRIPTS -->
     <script src="/Frontend/js/admin/reportes.js"></script>
@@ -522,5 +581,7 @@
     <script src="/Frontend/js/admin/agregarLibro.js"></script>
     <script src="/Frontend/js/admin/eliminar.js"></script>
     <script src="/Frontend/js/admin/editar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </body>
 </html>

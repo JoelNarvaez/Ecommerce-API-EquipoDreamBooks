@@ -1,194 +1,226 @@
 .pagina-libros {
-    padding: 30px 40px;
+  padding: 30px 40px;
 }
 
 .layout-libros {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 30px;
-    margin-top: 20px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  margin-top: 20px;
 }
 
 /* ================================
    Paginación 
 ================================ */
 .paginacion {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 40px 0;
 }
 
 .page-btn {
-    background: #c47a62;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  background: #c47a62;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .page-btn:hover {
-    background: #a86450;
-    transform: translateY(-2px);
+  background: #a86450;
+  transform: translateY(-2px);
 }
 
 .page-btn.active {
-    background: #8c4f39;
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  background: #8c4f39;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
-
 
 /* ========== FILTROS ========== */
 .filtros {
-    background: #f7f2ef;
-    padding: 20px;
-    border-radius: 10px;
-    height: fit-content;
+  background: #f7f2ef;
+  padding: 20px;
+  border-radius: 10px;
+  height: fit-content;
 }
 
 .filtro-grupo {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .filtro-grupo h4 {
-    margin-bottom: 8px;
-    font-size: 17px;
-    font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #000;
 }
 
 .filtro-grupo ul {
-    list-style: none;
-    padding-left: 0;
-    line-height: 1.9;
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.9;
 }
 
 .precio-rango {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .campo-precio label {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .campo-precio input {
-    width: 70px;
-    padding: 5px;
+  width: 70px;
+  padding: 5px;
 }
 
 .btn-filtrar-precio {
-    width: 100%;
-    background: #bc7f63;
-    color: white;
-    padding: 8px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
+  width: 100%;
+  background: #bc7f63;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 .btn-filtrar-precio:hover {
-    background: #a56e55;
+  background: #a56e55;
 }
 
-
 .zona-libros {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 /* ========== BUSCADOR ========== */
 .zona-buscador {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
 }
 
 .buscador-contenedor {
-    width: 60%;
-    max-width: 700px;
-    background: #fff;
-    border: 2px solid #d3c2b6;
-    display: flex;
-    padding: 10px 15px;
-    border-radius: 30px;
-    align-items: center;
-    gap: 10px;
+  width: 60%;
+  max-width: 700px;
+  background: #fff;
+  border: 2px solid #d3c2b6;
+  display: flex;
+  padding: 10px 15px;
+  border-radius: 30px;
+  align-items: center;
+  gap: 10px;
 }
 
 .buscador-contenedor input {
-    width: 100%;
-    border: none;
-    outline: none;
+  width: 100%;
+  border: none;
+  outline: none;
 }
 
 .buscador-contenedor button {
-    background: #bc7f63;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 50%;
-    cursor: pointer;
+  background: #bc7f63;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .buscador-contenedor button:hover {
-    background: #a56e55;
+  background: #a56e55;
 }
-
 
 /* ================================
    CENTRAR TODA LA SECCIÓN DE LIBROS
 ================================ */
 .layout-libros {
-    max-width: 1500px;      
-    margin: 0 auto;          
-    padding: 0 40px;        
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
 }
 
-
 .zona-libros {
-    width: 100%;
+  width: 100%;
 }
 
 .grid-libros {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 35px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 35px;
 }
 
-
 .pagina-libros {
-    padding-top: 30px;
+  padding-top: 30px;
 }
 
 /* =====================================
    FILTROS FIJOS Y CENTRADOS 
 ===================================== */
 .filtros {
-    position: sticky;
-    top: 120px;      
-    align-self: start;
-    height: fit-content;
+  position: sticky;
+  top: 120px;
+  align-self: start;
+  height: fit-content;
 }
 
 .layout-libros {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: grid;
-    grid-template-columns: 300px 1fr; 
-    gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
 }
 
+/* BOTÓN LIMPIAR FILTROS */
+.btn-limpiar-filtros {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #bc7f63;
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
 
+.btn-limpiar-filtros:hover {
+  background: #a56e55;
+}
+
+.no-books-msg {
+  grid-column: 1 / -1;
+  font-family: "Quicksand", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  color: #444;
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  margin-left: -259px;
+  margin-top: -30px;
+
+  background: none;
+  border: none;
+  box-shadow: none;
+}
 
