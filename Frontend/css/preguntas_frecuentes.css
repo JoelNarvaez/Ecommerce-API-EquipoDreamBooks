@@ -7,7 +7,7 @@ h3{
 }
 
 main{
-     background-image: url(/Frontend/imagenes/fondo-preguntas.jpg);
+  background-image: url(/Frontend/imagenes/fondo-preguntas.jpg);
 }
 .preguntas-frecuentes-box{
   display: flex;
@@ -19,7 +19,7 @@ main{
   border-radius: 8px;
   margin-left: 15%;
   margin-right: 15%;
-  background-color: white;
+  background-color: var(--color-fondo);
 }
 
 
@@ -35,9 +35,9 @@ main{
 .acordeon-preguntas .contenedor-preguntas .label-lista{
   position: relative;
   padding:10px;
-  background: #ebe4d1;
+  background: var(--color-preguntas);
   border-radius: 8px;
-  color: var(--color-text-base);
+  color: var( --color-titulos);
   cursor: pointer;
 }
 
@@ -54,9 +54,13 @@ main{
   content:'-';
 }
 
+.contenido-preguntas p{
+  color: var( --color-texto);
+}
+
 .acordeon-preguntas .contenedor-preguntas .contenido-preguntas {
   position: relative;
-  background: white;
+  background: var(--color-fondo);
   height: 0;
   padding: 0; /* ← QUITAMOS EL PADDING AL ESTAR CERRADO */
   overflow: hidden;
@@ -71,7 +75,7 @@ main{
 }
 
 .preguntas-frecuentes h3{
-  color: #737373;
+  color: var(--color-titulos);
   text-align: center;
   font-size: 2rem;
 }
