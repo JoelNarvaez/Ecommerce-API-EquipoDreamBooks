@@ -227,6 +227,71 @@ async function getReporteExistencias() {
     return reporte;
 }
 
+// =============================================================
+// OBTENER NOVEDADES (Libros más recientes)
+// =============================================================
+async function getNovedades(limit = 20) {
+    const [rows] = await db.query(`
+        SELECT 
+            p.*,
+            o.tipo AS oferta_tipo,
+            o.valor AS oferta_valor,
+            (
+                CASE 
+                    WHEN o.tipo = 'porcentaje' THEN p.precio - (p.precio * (o.valor / 100))
+                    WHEN o.tipo = 'monto' THEN p.precio - o.valor
+                    ELSE p.precio
+                END
+            ) AS precio_final
+        FROM productos p
+        LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
+        ORDER BY p.fecha_creacion DESC
+        LIMIT ?
+    `, [limit]);
+
+    return rows;
+}
+
+
+// =============================================================
+// OBTENER OFERTAS (Libros que tienen descuento activo)
+// =============================================================
+async function getOfertas(limit = 30) {
+    const [rows] = await db.query(`
+        SELECT 
+            p.*,
+            o.tipo AS oferta_tipo,
+            o.valor AS oferta_valor,
+            (
+                CASE 
+                    WHEN o.tipo = 'porcentaje' THEN p.precio - (p.precio * (o.valor / 100))
+                    WHEN o.tipo = 'monto' THEN p.precio - o.valor
+                    ELSE p.precio
+                END
+            ) AS precio_final
+        FROM productos p
+        INNER JOIN ofertas o 
+            ON o.product_id = p.id 
+            AND o.activa = 1
+        ORDER BY o.valor DESC
+        LIMIT ?
+    `, [limit]);
+
+    return rows;
+}
+
+async function getCategoriasDB() {
+    const [rows] = await db.query(`
+        SELECT DISTINCT categoria
+        FROM productos
+        WHERE categoria IS NOT NULL AND categoria <> ''
+        ORDER BY categoria ASC
+    `);
+
+    return rows.map(r => r.categoria);
+}
+
+
 module.exports = {
     getBookById,
     getBooksPaginated,
@@ -234,5 +299,8 @@ module.exports = {
     addBook,
     updateBook,
     deleteBook,
-    getReporteExistencias
+    getReporteExistencias,
+    getNovedades,
+    getOfertas,
+    getCategoriasDB
 };

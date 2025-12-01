@@ -37,4 +37,6 @@ router.get("/reporte-existencias", verifyToken, obtenerReporteExistencias);
 // ========================
 router.put("/eliminar-stock/:id", verifyToken, eliminarStock);
 
+
+
 module.exports = router;

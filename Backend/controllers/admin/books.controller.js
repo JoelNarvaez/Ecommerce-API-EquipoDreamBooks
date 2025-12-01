@@ -173,3 +173,5 @@ exports.obtenerReporteExistencias = async (req, res) => {
         res.status(500).json({ ok: false, message: "Error al obtener reporte" });
     }
 };
+
+

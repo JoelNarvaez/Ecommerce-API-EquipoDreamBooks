@@ -2,7 +2,7 @@
 
 const {
     getBooksPaginatedAdvanced,
-    getBookById
+    getBookById, getCategoriasDB
 } = require("../../models/modelLibros");
 
 // =============================================================
@@ -59,3 +59,61 @@ exports.getBook = async (req, res) => {
         });
     }
 };
+
+exports.getNovedades = async (req, res) => {
+    try {
+        const result = await getBooksPaginatedAdvanced({
+            page: 1,
+            limit: 15,   // <<< SOLO 10
+            orden: "novedad"
+        });
+
+        res.json({
+            ok: true,
+            libros: result.books
+        });
+
+    } catch (error) {
+        console.error("❌ ERROR EN getNovedades:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener novedades"
+        });
+    }
+};
+
+exports.getOfertas = async (req, res) => {
+    try {
+        const result = await getBooksPaginatedAdvanced({
+            page: 1,
+            limit: 30,
+            orden: "ofertas"
+        });
+
+        res.json({ ok: true, libros: result.books });
+    } catch (error) {
+        console.error("❌ ERROR EN getOfertas:", error);
+        res.status(500).json({ ok: false, message: "Error al obtener ofertas" });
+    }
+};
+
+
+exports.getCategorias = async (req, res) => {
+    try {
+        const categorias = await getCategoriasDB();
+
+        res.json({
+            ok: true,
+            categorias
+        });
+
+    } catch (error) {
+        console.error("❌ ERROR getCategorias:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener categorías"
+        });
+    }
+};
+
+
