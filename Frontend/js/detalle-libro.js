@@ -16,12 +16,12 @@ async function cargarLibro() {
 
         console.log("📚 Datos recibidos:", data);
 
-        if (!data.ok || !data.book) {
+        if (!data.ok || !data.libro) {
             document.body.innerHTML = "<h2>Libro no encontrado</h2>";
             return;
         }
 
-        const libro = data.book;
+        const libro = data.libro;
 
         // ======================
         // IMAGEN
@@ -33,7 +33,7 @@ async function cargarLibro() {
         document.getElementById("img-libro").src = imagenURL;
 
         // ======================
-        // TEXTO PRINCIPAL
+        // TEXTO
         // ======================
         document.getElementById("titulo").textContent = libro.nombre;
         document.getElementById("autor").textContent = libro.autor;
@@ -58,9 +58,7 @@ async function cargarLibro() {
                 <span class="precio-original">$${precio.toFixed(2)}</span>
                 <span class="precio-oferta">$${precioFinal.toFixed(2)}</span>
             `
-            : `
-                <span class="precio-normal">$${precio.toFixed(2)}</span>
-            `;
+            : `<span class="precio-normal">$${precio.toFixed(2)}</span>`;
 
         // ======================
         // STOCK

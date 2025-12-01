@@ -1,6 +1,13 @@
-const db = require("../../config/db");
-const { getBooksPaginatedAdvanced } = require("../../models/modelLibros");
+// controllers/usuario/books.controller.js
 
+const {
+    getBooksPaginatedAdvanced,
+    getBookById
+} = require("../../models/modelLibros");
+
+// =============================================================
+// OBTENER LIBROS (TIENDA)
+// =============================================================
 exports.getBooks = async (req, res) => {
     try {
         const result = await getBooksPaginatedAdvanced({
@@ -15,31 +22,40 @@ exports.getBooks = async (req, res) => {
         });
 
         res.json(result);
+
     } catch (error) {
         console.error("❌ ERROR EN getBooks:", error);
-        res.status(500).json({ ok: false, message: "Error al obtener libros" });
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener libros"
+        });
     }
 };
 
-exports.getBookById = async (req, res) => {
+// =============================================================
+// OBTENER LIBRO POR ID
+// =============================================================
+exports.getBook = async (req, res) => {
     try {
-        const { id } = req.params;
+        const libro = await getBookById(req.params.id);
 
-        const [rows] = await db.query(
-            `SELECT p.*, o.tipo AS oferta_tipo, o.valor AS oferta_valor
-             FROM productos p
-             LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
-             WHERE p.id = ?`,
-            [id]
-        );
+        if (!libro) {
+            return res.status(404).json({
+                ok: false,
+                message: "Libro no encontrado"
+            });
+        }
 
-        if (rows.length === 0)
-            return res.json({ ok: false, msg: "Libro no encontrado" });
-
-        res.json({ ok: true, book: rows[0] });
+        res.json({
+            ok: true,
+            libro
+        });
 
     } catch (error) {
-        console.error("ERROR en getBookById:", error);
-        res.status(500).json({ ok: false, error: "Error en el servidor" });
+        console.error("ERROR obtenerLibro:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener libro"
+        });
     }
 };

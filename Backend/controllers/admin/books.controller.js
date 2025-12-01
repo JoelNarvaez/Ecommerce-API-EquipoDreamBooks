@@ -1,14 +1,16 @@
-const { 
-    getBooksPaginated, 
+// controllers/admin/booksAdmin.controller.js
+const {
+    getBooksPaginated,
+    getBookById,
     addBook,
-    deleteBook 
+    updateBook,
+    deleteBook,
+    getReporteExistencias
 } = require("../../models/modelLibros");
 
-const pool = require("../../config/db");
-
-// =============================================================
-// OBTENER LIBROS PAGINADOS
-// =============================================================
+// ------------------------------------------------------------
+// GET BOOKS (ADMIN)
+// ------------------------------------------------------------
 exports.getBooks = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -26,27 +28,22 @@ exports.getBooks = async (req, res) => {
     }
 };
 
-// =============================================================
+// ------------------------------------------------------------
 // AGREGAR LIBRO
-// =============================================================
+// ------------------------------------------------------------
 exports.addBook = async (req, res) => {
     try {
-        const data = req.body;
+        const data = {
+            ...req.body,
+            imagen: req.file ? req.file.filename : null
+        };
 
-        // Imagen si se subió
-        data.imagen = req.file ? req.file.filename : null;
-
-        // 🔥 Asegurar que se reciben los 3 nuevos campos
-        data.editorial = data.editorial || null;
-        data.tipo_de_libro = data.tipo_de_libro || null;
-        data.paginas = data.paginas || null;
-
-        const nuevoLibro = await addBook(data);
+        const nuevo = await addBook(data);
 
         res.json({
             ok: true,
             mensaje: "Libro agregado correctamente",
-            libro: nuevoLibro
+            libro: nuevo
         });
 
     } catch (error) {
@@ -58,23 +55,18 @@ exports.addBook = async (req, res) => {
     }
 };
 
-// =============================================================
-// OBTENER LIBRO POR ID (para editar)
-// =============================================================
+// ------------------------------------------------------------
+// OBTENER LIBRO POR ID
+// ------------------------------------------------------------
 exports.obtenerLibro = async (req, res) => {
-    const { id } = req.params;
-
     try {
-        const [rows] = await pool.query(
-            "SELECT * FROM productos WHERE id = ?",
-            [id]
-        );
+        const libro = await getBookById(req.params.id);
 
-        if (rows.length === 0) {
+        if (!libro) {
             return res.status(404).json({ ok: false, message: "Libro no encontrado" });
         }
 
-        res.json({ ok: true, libro: rows[0] });
+        res.json({ ok: true, libro });
 
     } catch (error) {
         console.error(error);
@@ -82,44 +74,17 @@ exports.obtenerLibro = async (req, res) => {
     }
 };
 
-// =============================================================
+// ------------------------------------------------------------
 // EDITAR LIBRO
-// =============================================================
+// ------------------------------------------------------------
 exports.editarLibro = async (req, res) => {
-    const { id } = req.params;
-
-    // Leer datos del body
-    const { 
-        nombre, 
-        autor, 
-        precio, 
-        categoria, 
-        stock, 
-        descripcion,
-        editorial,
-        tipo_de_libro,
-        paginas
-    } = req.body;
-
     try {
-        let campos = {
-            nombre,
-            autor,
-            precio,
-            categoria,
-            stock,
-            descripcion,
-            editorial,
-            tipo_de_libro,
-            paginas
+        const data = {
+            ...req.body,
+            imagen: req.file ? req.file.filename : undefined
         };
 
-        // Si el usuario envió una nueva imagen
-        if (req.file) {
-            campos.imagen = req.file.filename;
-        }
-
-        await pool.query("UPDATE productos SET ? WHERE id = ?", [campos, id]);
+        await updateBook(req.params.id, data);
 
         res.json({
             ok: true,
@@ -135,42 +100,31 @@ exports.editarLibro = async (req, res) => {
     }
 };
 
-// =============================================================
-// ELIMINAR STOCK DE UN LIBRO
-// =============================================================
+// ------------------------------------------------------------
+// ELIMINAR STOCK
+// ------------------------------------------------------------
 exports.eliminarStock = async (req, res) => {
-    const { id } = req.params;
-    const { cantidad } = req.body;
-
     try {
-        const [rows] = await pool.query(
-            "SELECT stock FROM productos WHERE id = ?", 
-            [id]
-        );
+        const libro = await getBookById(req.params.id);
 
-        if (rows.length === 0) {
+        if (!libro) {
             return res.status(404).json({ message: "Libro no encontrado" });
         }
 
-        const stockActual = rows[0].stock;
+        const cantidad = Number(req.body.cantidad);
 
-        if (cantidad > stockActual) {
+        if (cantidad > libro.stock) {
             return res.status(400).json({
-                message: `Solo hay ${stockActual} unidades disponibles`
+                message: `Solo hay ${libro.stock} unidades disponibles`
             });
         }
 
-        const nuevoStock = stockActual - cantidad;
-
-        await pool.query(
-            "UPDATE productos SET stock = ? WHERE id = ?",
-            [nuevoStock, id]
-        );
+        await updateBook(req.params.id, { stock: libro.stock - cantidad });
 
         res.json({
             ok: true,
             message: "Stock actualizado correctamente",
-            nuevoStock
+            nuevoStock: libro.stock - cantidad
         });
 
     } catch (error) {
@@ -179,58 +133,40 @@ exports.eliminarStock = async (req, res) => {
     }
 };
 
-// =============================================================
-// ELIMINAR LIBRO COMPLETO
-// =============================================================
+// ------------------------------------------------------------
+// ELIMINAR LIBRO
+// ------------------------------------------------------------
 exports.eliminarLibro = async (req, res) => {
-    const { id } = req.params;
-
     try {
-        const [rows] = await pool.query(
-            "SELECT id FROM productos WHERE id = ?",
-            [id]
-        );
+        const libro = await getBookById(req.params.id);
 
-        if (rows.length === 0) {
+        if (!libro) {
             return res.status(404).json({ message: "Libro no encontrado" });
         }
 
-        await deleteBook(id);
+        await deleteBook(req.params.id);
 
-        return res.json({
+        res.json({
             ok: true,
             message: "Libro eliminado correctamente"
         });
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({
+        res.status(500).json({
             ok: false,
             message: "Error al eliminar libro"
         });
     }
 };
 
-// =============================================================
-// REPORTE DE EXISTENCIAS
-// =============================================================
+// ------------------------------------------------------------
+// REPORTE EXISTENCIAS
+// ------------------------------------------------------------
 exports.obtenerReporteExistencias = async (req, res) => {
     try {
-        const [rows] = await pool.query(`
-            SELECT categoria, SUM(stock) AS total_stock 
-            FROM productos 
-            GROUP BY categoria
-        `);
-
-        const reporte = {};
-        rows.forEach(r => {
-            reporte[r.categoria] = r.total_stock;
-        });
-
-        return res.json({
-            ok: true,
-            categorias: reporte
-        });
+        const reporte = await getReporteExistencias();
+        res.json({ ok: true, categorias: reporte });
 
     } catch (error) {
         console.error(error);

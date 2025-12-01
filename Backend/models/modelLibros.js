@@ -1,156 +1,35 @@
+// models/modelLibros.js
 const db = require("../config/db");
 
-async function getBooksPaginatedAdvanced({
-    page = 1,
-    limit = 8,
-    search = "",
-    categoria = "",
-    min = "",
-    max = "",
-    stock = "",
-    orden = ""
-}) {
-
-    const _limit = Number(limit);
-    const _offset = (Number(page) - 1) * _limit;
-
-    let filtros = [];
-    let valores = [];
-
-    // filtrado por categoría
-    if (categoria) {
-        const arr = categoria.split(",");
-        const placeholders = arr.map(() => "p.categoria = ?").join(" OR ");
-        filtros.push(`(${placeholders})`);
-        valores.push(...arr);
-    }
-
-    // busqueda por nombre o autor
-    if (search) {
-        filtros.push("(p.nombre LIKE ? OR p.autor LIKE ?)");
-        valores.push(`%${search}%`, `%${search}%`);
-    }
-
-    // filtrado por precio
-    const precioFinalSQL = `
-        (
-            CASE 
-                WHEN o.tipo = 'porcentaje' THEN p.precio - (p.precio * (o.valor / 100))
-                WHEN o.tipo = 'monto' THEN p.precio - o.valor
-                ELSE p.precio
-            END
-        )
-    `;
-
-    if (min !== "") {
-        filtros.push(`${precioFinalSQL} >= ?`);
-        valores.push(min);
-    }
-
-    if (max !== "") {
-        filtros.push(`${precioFinalSQL} <= ?`);
-        valores.push(max);
-    }
-
-    // stock
-    if (stock === "disponible") {
-        filtros.push("p.stock > 0");
-    } else if (stock === "agotado") {
-        filtros.push("(p.stock = 0 OR p.stock IS NULL)");
-    }
-
-    // ofertas
-    if (orden === "ofertas") {
-        filtros.push("o.id IS NOT NULL");
-    }
-
-    const whereSQL = filtros.length ? "WHERE " + filtros.join(" AND ") : "";
-
-    // ordenamientos
-    let ordenSQL = "";
-    switch (orden) {
-        case "precioAsc":
-            ordenSQL = "ORDER BY precio_final ASC";
-            break;
-        case "precioDesc":
-            ordenSQL = "ORDER BY precio_final DESC";
-            break;
-        case "vendidos":
-            ordenSQL = "ORDER BY p.vendidos DESC";
-            break;
-        case "novedad":
-            ordenSQL = "ORDER BY p.id DESC";
-            break;
-        case "ofertas":
-            ordenSQL = "ORDER BY o.valor DESC";
-            break;
-        default:
-            ordenSQL = "ORDER BY p.id DESC";
-    }
-
-    // consulta principal
-    const [books] = await db.query(
-        `
-        SELECT
-            p.*,
-            o.tipo AS oferta_tipo,
-            o.valor AS oferta_valor,
-
-            CASE 
-                WHEN o.tipo = 'porcentaje' THEN p.precio - (p.precio * (o.valor / 100))
-                WHEN o.tipo = 'monto' THEN p.precio - o.valor
-                ELSE p.precio
-            END AS precio_final
-
-        FROM productos p
-        LEFT JOIN ofertas o
-            ON o.product_id = p.id AND o.activa = 1
-
-        ${whereSQL}
-        ${ordenSQL}
-        LIMIT ? OFFSET ?
-        `,
-        [...valores, _limit, _offset]
-    );
-
-    // conteo total
-    const [count] = await db.query(
-        `
-        SELECT COUNT(*) AS total
-        FROM productos p
-        LEFT JOIN ofertas o
-            ON o.product_id = p.id AND o.activa = 1
-        ${whereSQL}
-        `,
-        valores
-    );
-
-    return {
-        page,
-        limit: _limit,
-        totalBooks: count[0].total,
-        totalPages: Math.ceil(count[0].total / _limit),
-        books
-    };
-}
-
-
+// ---------------------------------------------------
+// LIMPIAR CAMPOS (solo para creación)
+// ---------------------------------------------------
 function limpiarCamposLibro(data) {
     return {
-        nombre: data.nombre || null,
-        autor: data.autor || null,
-        precio: data.precio || null,
-        categoria: data.categoria || null,
+        nombre: data.nombre || "",
+        autor: data.autor || "",
+        precio: data.precio || 0,
+        categoria: data.categoria || "",
         stock: data.stock || 0,
-        descripcion: data.descripcion || null,
+        descripcion: data.descripcion || "",
         imagen: data.imagen || null,
-        editorial: data.editorial || null,
-        tipo_de_libro: data.tipo_de_libro || null,
-        paginas: data.paginas || null
+        editorial: data.editorial || "",
+        tipo_de_libro: data.tipo_de_libro || "",
+        paginas: data.paginas || 0
     };
 }
 
-// OBTENER LIBROS CON PAGINACIÓN + FILTROS + OFERTAS
+// ---------------------------------------------------
+// OBTENER LIBRO POR ID
+// ---------------------------------------------------
+async function getBookById(id) {
+    const [rows] = await db.query("SELECT * FROM productos WHERE id = ?", [id]);
+    return rows[0] || null;
+}
+
+// ---------------------------------------------------
+// PAGINADO BÁSICO (ADMIN)
+// ---------------------------------------------------
 async function getBooksPaginated(page = 1, limit = 10, categoria = "", search = "") {
     const offset = (page - 1) * limit;
 
@@ -168,76 +47,192 @@ async function getBooksPaginated(page = 1, limit = 10, categoria = "", search = 
 
     if (search) {
         filtros.push("(p.nombre LIKE ? OR p.autor LIKE ?)");
-        valores.push(`%${search}%`);
-        valores.push(`%${search}%`);
+        valores.push(`%${search}%`, `%${search}%`);
     }
 
-    const whereSQL = filtros.length > 0 ? "WHERE " + filtros.join(" AND ") : "";
+    const whereSQL = filtros.length ? "WHERE " + filtros.join(" AND ") : "";
 
-    const [books] = await db.query(
-        `SELECT 
-            p.*,
-            o.tipo AS oferta_tipo,
-            o.valor AS oferta_valor
+    const [books] = await db.query(`
+        SELECT p.*, o.tipo AS oferta_tipo, o.valor AS oferta_valor
         FROM productos p
-        LEFT JOIN ofertas o 
-            ON o.product_id = p.id AND o.activa = 1
+        LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
         ${whereSQL}
-        LIMIT ? OFFSET ?`,
-        [...valores, limit, offset]
-    );
+        LIMIT ? OFFSET ?
+    `, [...valores, limit, offset]);
 
-    const [count] = await db.query(
-        `SELECT COUNT(*) AS total
-         FROM productos p
-         LEFT JOIN ofertas o 
-            ON o.product_id = p.id AND o.activa = 1
-         ${whereSQL}`,
-        valores
-    );
+    const [count] = await db.query(`
+        SELECT COUNT(*) AS total
+        FROM productos p
+        LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
+        ${whereSQL}
+    `, valores);
 
     return {
         page,
         limit,
         totalBooks: count[0].total,
         totalPages: Math.ceil(count[0].total / limit),
-        books,
+        books
     };
 }
 
-// OBTENER TODOS LOS LIBROS
-async function getAllBooks() {
-    const [results] = await db.query("SELECT * FROM productos");
-    return results;
+// ---------------------------------------------------
+// PAGINADO AVANZADO (TIENDA)
+// ---------------------------------------------------
+async function getBooksPaginatedAdvanced(params) {
+    const {
+        page = 1,
+        limit = 8,
+        search = "",
+        categoria = "",
+        min = "",
+        max = "",
+        stock = "",
+        orden = ""
+    } = params;
+
+    const _limit = Number(limit);
+    const _offset = (Number(page) - 1) * _limit;
+
+    let filtros = [];
+    let valores = [];
+
+    if (categoria) {
+        const arr = categoria.split(",");
+        const placeholders = arr.map(() => "p.categoria = ?").join(" OR ");
+        filtros.push(`(${placeholders})`);
+        valores.push(...arr);
+    }
+
+    if (search) {
+        filtros.push("(p.nombre LIKE ? OR p.autor LIKE ?)");
+        valores.push(`%${search}%`, `%${search}%`);
+    }
+
+    // PRECIO FINAL SQL
+    const precioFinalSQL = `
+        (
+            CASE 
+                WHEN o.tipo = 'porcentaje' THEN p.precio - (p.precio * (o.valor / 100))
+                WHEN o.tipo = 'monto' THEN p.precio - o.valor
+                ELSE p.precio
+            END
+        )
+    `;
+
+    if (min !== "") { filtros.push(`${precioFinalSQL} >= ?`); valores.push(min); }
+    if (max !== "") { filtros.push(`${precioFinalSQL} <= ?`); valores.push(max); }
+
+    if (stock === "disponible") filtros.push("p.stock > 0");
+    if (stock === "agotado") filtros.push("(p.stock = 0 OR p.stock IS NULL)");
+
+    if (orden === "ofertas") filtros.push("o.id IS NOT NULL");
+
+    const whereSQL = filtros.length ? "WHERE " + filtros.join(" AND ") : "";
+
+    let ordenSQL = "";
+    switch (orden) {
+        case "precioAsc": ordenSQL = "ORDER BY precio_final ASC"; break;
+        case "precioDesc": ordenSQL = "ORDER BY precio_final DESC"; break;
+        case "vendidos": ordenSQL = "ORDER BY p.vendidos DESC"; break;
+        case "novedad": ordenSQL = "ORDER BY p.id DESC"; break;
+        case "ofertas": ordenSQL = "ORDER BY o.valor DESC"; break;
+        default: ordenSQL = "ORDER BY p.id DESC";
+    }
+
+    const [books] = await db.query(`
+        SELECT
+            p.*,
+            o.tipo AS oferta_tipo,
+            o.valor AS oferta_valor,
+            ${precioFinalSQL} AS precio_final
+        FROM productos p
+        LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
+        ${whereSQL}
+        ${ordenSQL}
+        LIMIT ? OFFSET ?
+    `, [...valores, _limit, _offset]);
+
+    const [count] = await db.query(`
+        SELECT COUNT(*) AS total
+        FROM productos p
+        LEFT JOIN ofertas o ON o.product_id = p.id AND o.activa = 1
+        ${whereSQL}
+    `, valores);
+
+    return {
+        page,
+        limit: _limit,
+        totalBooks: count[0].total,
+        totalPages: Math.ceil(count[0].total / _limit),
+        books
+    };
 }
 
-// AGREGAR UN LIBRO
+// ---------------------------------------------------
+// CREAR
+// ---------------------------------------------------
 async function addBook(data) {
-    const cleanData = limpiarCamposLibro(data);
-
-    const [result] = await db.query("INSERT INTO productos SET ?", cleanData);
-    return { id: result.insertId, ...cleanData };
+    const clean = limpiarCamposLibro(data);
+    const [result] = await db.query("INSERT INTO productos SET ?", clean);
+    return { id: result.insertId, ...clean };
 }
 
-// ACTUALIZAR UN LIBRO
+// ---------------------------------------------------
+// ACTUALIZAR SIN BORRAR CAMPOS
+// ---------------------------------------------------
 async function updateBook(id, data) {
-    const cleanData = limpiarCamposLibro(data);
+    const [rows] = await db.query("SELECT * FROM productos WHERE id = ?", [id]);
+    if (!rows.length) return false;
 
-    await db.query("UPDATE productos SET ? WHERE id = ?", [cleanData, id]);
+    const actual = rows[0];
+
+    const actualizado = {
+        nombre: data.nombre ?? actual.nombre,
+        autor: data.autor ?? actual.autor,
+        precio: data.precio ?? actual.precio,
+        categoria: data.categoria ?? actual.categoria,
+        stock: data.stock ?? actual.stock,
+        descripcion: data.descripcion ?? actual.descripcion,
+        imagen: data.imagen !== undefined ? data.imagen : actual.imagen,
+        editorial: data.editorial ?? actual.editorial,
+        tipo_de_libro: data.tipo_de_libro ?? actual.tipo_de_libro,
+        paginas: data.paginas ?? actual.paginas
+    };
+
+    await db.query("UPDATE productos SET ? WHERE id = ?", [actualizado, id]);
     return true;
 }
 
-// ELIMINAR UN LIBRO
+// ---------------------------------------------------
+// ELIMINAR LIBRO
+// ---------------------------------------------------
 async function deleteBook(id) {
     await db.query("DELETE FROM productos WHERE id = ?", [id]);
     return true;
 }
 
+// ---------------------------------------------------
+// REPORTE EXISTENCIAS
+// ---------------------------------------------------
+async function getReporteExistencias() {
+    const [rows] = await db.query(`
+        SELECT categoria, SUM(stock) AS total_stock
+        FROM productos GROUP BY categoria
+    `);
+
+    const reporte = {};
+    rows.forEach(r => reporte[r.categoria] = r.total_stock);
+
+    return reporte;
+}
+
 module.exports = {
-    getAllBooks,
+    getBookById,
+    getBooksPaginated,
+    getBooksPaginatedAdvanced,
     addBook,
     updateBook,
     deleteBook,
-    getBooksPaginated,
-    getBooksPaginatedAdvanced
+    getReporteExistencias
 };

@@ -1,16 +1,13 @@
-
+// routes/usuario/books.routes.js
 const express = require("express");
 const router = express.Router();
 
 const {
-    getBooks,       
-    getBookById    
-} = require("../controllers/usuario/books.controller.js");
-
+    getBooks,
+    getBook
+} = require("../controllers/usuario/books.controller");
 
 router.get("/books", getBooks);
-router.get("/book/:id", getBookById);
-
+router.get("/book/:id", getBook);
 
 module.exports = router;
-
