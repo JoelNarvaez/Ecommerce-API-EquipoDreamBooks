@@ -107,16 +107,20 @@
           <!-- DASHBOARD -->
           <section id="dashboard" class="section active">
             <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-cart3"></i></div>
-                <div class="stat-content"><h3>Pedidos totales</h3></div>
-              </div>
-
-              <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
-                <div class="stat-content"><h3>Ingresos</h3></div>
-              </div>
-
+<div class="stat-card" id="stat-pedidos">
+    <div class="stat-icon"><i class="bi bi-cart3"></i></div>
+    <div class="stat-content">
+        <h3>Pedidos totales</h3>
+        <p id="total-pedidos" class="stat-number">0</p>  <!-- 👈 AQUI VA EL NUMERO -->
+    </div>
+</div>
+<div class="stat-card ingresos">
+    <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
+    <div class="stat-content">
+        <h3>Ingresos</h3>
+        <p id="total-ingresos" class="stat-number">$0.00</p>
+    </div>
+</div>
               <div class="stat-card" id="stat-libros">
                 <div class="stat-icon"><i class="bi bi-box"></i></div>
                 <div class="stat-content"><h3>Libros</h3></div>
@@ -197,14 +201,35 @@
           </section>
 
           <!-- ANALYTICS -->
-          <section id="analytics" class="section">
-            <div class="card">
-              <div class="card-header"><h2>Gráficas</h2></div>
-              <p style="padding: 20px; color: #666">
-                No hay datos disponibles.
-              </p>
-            </div>
-          </section>
+  <!-- ANALYTICS -->
+<section id="analytics" class="section">
+  <div class="card">
+    <div class="card-header"><h2>Gráficas del sistema</h2></div>
+
+    <div class="charts-container">
+
+      <!-- ❗ GRÁFICA 1: Pedidos totales por día -->
+      <div class="chart-box">
+        <h3>Pedidos Totales</h3>
+        <div id="chart-pedidos"></div>
+      </div>
+
+      <!-- ❗ GRÁFICA 2: Ingresos totales por día -->
+      <div class="chart-box">
+        <h3>Ingresos</h3>
+        <div id="chart-ingresos"></div>
+      </div>
+
+      <!-- ❗ GRÁFICA 3: Existencias por categoría -->
+      <div class="chart-box">
+        <h3>Existencias por categoría</h3>
+        <div id="chart-existencias"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
           <!-- PERFIL -->
           <section id="profile" class="section">
@@ -522,5 +547,6 @@
     <script src="/Frontend/js/admin/agregarLibro.js"></script>
     <script src="/Frontend/js/admin/eliminar.js"></script>
     <script src="/Frontend/js/admin/editar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </body>
 </html>

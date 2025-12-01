@@ -177,11 +177,20 @@ document.getElementById("btn-save-edit").addEventListener("click", async () => {
 
     const data = await res.json();
 
-    if (res.ok) {
-        alert("Libro actualizado correctamente");
-        document.getElementById("modal-editar").classList.add("hidden");
-        fetchBooks(1, 10);
-    } else {
-        alert("Error al actualizar libro");
+if (res.ok) {
+    alert("Libro actualizado correctamente");
+
+    // 🔥 ACTUALIZAR REPORTE SIN REFRESCAR
+    if (typeof actualizarReporteExistencias === "function") {
+        actualizarReporteExistencias();
     }
+
+    // 🔥 ACTUALIZAR LISTA DE LIBROS SIN REFRESCAR
+    fetchBooks(1, 10);
+
+    // Cerrar modal
+    document.getElementById("modal-editar").classList.add("hidden");
+} else {
+    alert("Error al actualizar libro");
+}
 });

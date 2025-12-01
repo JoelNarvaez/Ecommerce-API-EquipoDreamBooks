@@ -1,86 +1,90 @@
-/* TARJETAS DE ESTADÍSTICAS */
+/* -----------------------------
+   TARJETAS DE ESTADÍSTICAS
+------------------------------ */
 .stat-card {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    gap: 18px;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
     margin-bottom: 20px;
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* ÍCONO CÍRCULO */
+/* -----------------------------
+     ÍCONO PRINCIPAL
+------------------------------ */
 .stat-icon {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #000000, #000000);
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #111, #000);
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 28px;
+    color: #ffffff;
+    font-size: 32px;
+    flex-shrink: 0;
 }
 
-.stat-card:nth-child(2) .stat-icon {
-    background: linear-gradient(135deg, #000000, #000000);
-}
-
+/* Uniformidad en posición (por si agregas más tarjetas) */
+.stat-card:nth-child(2) .stat-icon,
 .stat-card:nth-child(3) .stat-icon {
-    background: linear-gradient(135deg, #000000, #000000);
+    background: linear-gradient(145deg, #111, #000);
 }
 
+/* -----------------------------
+     TEXTOS
+------------------------------ */
 .stat-content h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 1.15rem;
     font-weight: 700;
+    color: #222;
+    letter-spacing: 0.3px;
 }
 
+/* Número grande */
 .stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-top: 4px;
+    color: #000000;
+    letter-spacing: -1px;
+}
+
+/* -----------------------------
+    FLECHA DE DESPLIEGUE (Libros)
+------------------------------ */
+.stat-arrow {
+    margin-left: auto;
     font-size: 24px;
-    font-weight: 600;
+    transition: transform 0.3s ease, color 0.3s ease;
     color: #333;
 }
 
-.stat-card {
-    background: #ffffff;
-    border: 1px solid #eaeaea;
-    border-radius: 18px;
-    padding: 25px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.06);
-    transition: 0.25s;
+.stat-card:hover .stat-arrow {
+    color: #000;
 }
 
-.stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0px 10px 24px rgba(0,0,0,0.12);
+/* Rotación activa */
+.stat-arrow.rotate {
+    transform: rotate(180deg);
 }
 
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    font-size: 32px;
-    border-radius: 16px;
-    background: black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-.stat-content h3::after {
-    display: none !important;
-}
-/* Estado oculto */
+/* -----------------------------
+    ANIMACIÓN REPORTE (Libros)
+------------------------------ */
 .hidden {
     opacity: 0;
     max-height: 0;
@@ -89,22 +93,102 @@
     transition: all 0.35s ease;
 }
 
-/* Estado visible */
 .show {
     opacity: 1;
-    max-height: 800px; /* suficiente para tu contenido */
+    max-height: 900px;
     transform: translateY(0);
     transition: all 0.45s ease;
 }
-/* Flecha de despliegue */
-.stat-arrow {
-    margin-left: auto;
-    font-size: 22px;
-    transition: transform 0.3s ease;
-    color: #555;
+
+/* -----------------------------
+   TARJETA ESPECIAL: INGRESOS
+------------------------------ */
+.stat-card.ingresos {
+    background: linear-gradient(135deg, #ffffff, #fafafa);
+    border: 1px solid #dcdcdc;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Cuando está desplegado */
-.stat-arrow.rotate {
-    transform: rotate(180deg);
+/* Icono de dinero con estilo premium */
+.stat-card.ingresos .stat-icon {
+    background: linear-gradient(145deg, #0f9d58, #0a7d44);
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.15);
+}
+
+/* Texto “Ingresos” */
+.stat-card.ingresos h3 {
+    font-size: 1.2rem;
+    letter-spacing: 0.4px;
+}
+
+/* Número de ingresos — grande, premium, elegante */
+/* Número de ingresos — grande, premium, elegante */
+.stat-card.ingresos .stat-number {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-top: 6px;
+
+    background: linear-gradient(90deg, #0f9d58, #08703a);
+
+    /* CORRECTO: estándar + webkit */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* Hover con brillo */
+.stat-card.ingresos:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Efecto glossy diagonal */
+.stat-card.ingresos::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 100%
+    );
+    transform: rotate(25deg);
+    pointer-events: none;
+    transition: 0.4s ease;
+}
+
+/* Hover glossy animado */
+.stat-card.ingresos:hover::after {
+    top: -40%;
+    left: -40%;
+    opacity: 0.9;
+}
+
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+.chart-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e7e7e7;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.05);
+}
+
+.chart-box h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
 }

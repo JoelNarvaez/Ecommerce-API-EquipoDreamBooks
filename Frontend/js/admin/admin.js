@@ -33,8 +33,14 @@ navLinks.forEach(link => {
 
         pageTitle.textContent = link.textContent.trim();
 
+        // Cargar libros automáticamente cuando entras a Libros
         if (sectionId === "products") {
-            fetchBooks(1, 8); // Cargar libros automáticamente
+            fetchBooks(1, 8);
+        }
+
+        // Refrescar dashboard al entrar
+        if (sectionId === "dashboard") {
+            refrescarDashboard();
         }
     });
 });
@@ -80,35 +86,191 @@ modalAddBook?.addEventListener('click', (e) => {
 
 
 // --------------------------------------------------------
-// DESPLEGAR REPORTE DENTRO DEL PANEL (Libros)
+// DESPLEGAR REPORTE (LIBROS)
 // --------------------------------------------------------
-// --- Mostrar / ocultar el reporte SOLO desde el card de Libros ---
-// --------------------------------------------------------
-// DESPLEGAR REPORTE DENTRO DEL PANEL (Libros)
-// --------------------------------------------------------
-// --- Mostrar / ocultar el reporte SOLO desde el card de Libros ---
 const librosCard = document.getElementById('stat-libros');
 const dashboardReport = document.getElementById('dashboard-report');
 const arrow = librosCard?.querySelector('.stat-arrow');
 
-// Ocultar al inicio
 dashboardReport.classList.add('hidden');
 
 librosCard.addEventListener('click', () => {
-    
-    // Alternar mostrar/ocultar
     const showing = dashboardReport.classList.contains('hidden');
 
     if (showing) {
         dashboardReport.classList.remove('hidden');
         dashboardReport.classList.add('show');
-        arrow.classList.add('rotate');  // gira flecha
+        arrow.classList.add('rotate');
     } else {
         dashboardReport.classList.remove('show');
-        arrow.classList.remove('rotate');  // regresa flecha
+        arrow.classList.remove('rotate');
 
         setTimeout(() => {
             dashboardReport.classList.add('hidden');
         }, 300);
     }
 });
+
+
+// --------------------------------------------------------
+// CARGAR PEDIDOS TOTALES
+// --------------------------------------------------------
+async function cargarPedidosTotales() {
+    try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch("http://localhost:3000/api/admin/pedidos", {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+
+        if (data.ok) {
+            const total = data.pedidos.length;
+            document.getElementById("total-pedidos").textContent = total;
+        }
+    } catch (error) {
+        console.error("Error cargando pedidos:", error);
+    }
+}
+
+
+// --------------------------------------------------------
+// INGRESOS
+// --------------------------------------------------------
+async function fetchIngresos() {
+    const token = localStorage.getItem("token");
+
+    try {
+        const res = await fetch("http://localhost:3000/api/admin/ingresos", {
+            headers: { "Authorization": "Bearer " + token }
+        });
+
+        const data = await res.json();
+
+        if (data.ok) {
+            const ingresoFormato = Number(data.ingresos).toLocaleString("es-MX", {
+                style: "currency",
+                currency: "MXN"
+            });
+
+            document.getElementById("total-ingresos").textContent = ingresoFormato;
+        }
+    } catch (error) {
+        console.error("Error obteniendo ingresos:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    cargarPedidosTotales();
+    fetchIngresos();
+    generarGraficaPedidos();
+    generarGraficaIngresos();
+    generarGraficaExistencias();
+});
+
+// ===============================
+//   GRÁFICA 1 — Pedidos Totales
+// ===============================
+async function generarGraficaPedidos() {
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:3000/api/admin/pedidos", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const data = await res.json();
+    if (!data.ok) return;
+
+    const totalPedidos = data.pedidos.length;
+
+    const opciones = {
+        chart: { type: "radialBar", height: 300 },
+        series: [totalPedidos],
+        labels: ["Pedidos Totales"],
+        colors: ["#000000ff"]
+    };
+
+    const chart = new ApexCharts(document.querySelector("#chart-pedidos"), opciones);
+    chart.render();
+}
+
+
+// ===============================
+//   GRÁFICA 2 — Ingresos Totales
+// ===============================
+async function generarGraficaIngresos() {
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:3000/api/admin/ingresos", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const data = await res.json();
+    if (!data.ok) return;
+
+    const ingresos = Number(data.ingresos);
+
+    const opciones = {
+        chart: { type: "area", height: 300 },
+        series: [{
+            name: "Ingresos",
+            data: [ingresos]
+        }],
+        xaxis: { categories: ["Hoy"] },
+        colors: ["#198754"]
+    };
+
+    const chart = new ApexCharts(document.querySelector("#chart-ingresos"), opciones);
+    chart.render();
+}
+
+
+// =======================================
+//   GRÁFICA 3 — Existencias por categoría
+// =======================================
+async function generarGraficaExistencias() {
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const data = await res.json();
+    if (!data.ok) return;
+
+    const categorias = data.categorias;
+
+    const opciones = {
+        chart: { type: "bar", height: 300 },
+        series: [{
+            name: "Existencias",
+            data: [
+                categorias["Romance"] || 0,
+                categorias["Ciencia ficción"] || 0,
+                categorias["Infantil"] || 0
+            ]
+        }],
+        xaxis: {
+            categories: ["Romance", "Ciencia Ficción", "Infantil"]
+        },
+        colors: ["#0d6efd", "#0d6efd", "#555"]
+    };
+
+    const chart = new ApexCharts(document.querySelector("#chart-existencias"), opciones);
+    chart.render();
+}
+
+
+// --------------------------------------------------------
+// ACTUALIZAR DASHBOARD COMPLETO
+// --------------------------------------------------------
+function refrescarDashboard() {
+    cargarPedidosTotales();
+    fetchIngresos();
+}
+
+// Cargar al inicio
+document.addEventListener("DOMContentLoaded", () => {
+    refrescarDashboard();
+});
+
+// Refrescar cada 4 segundos
+setInterval(refrescarDashboard, 4000);
