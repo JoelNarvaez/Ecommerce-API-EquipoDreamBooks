@@ -1,6 +1,7 @@
 h1{
     color:var( --color-titulos);
     font-size: var( --font-size-titulos);
+    text-align: center;
 }
 
 
@@ -66,19 +67,18 @@ main{
 /*Sección de categorías*/
 .categorias-section {
     padding: 60px 0;                    /* Espaciado vertical arriba y abajo */
-
     margin-left: 10%;
     margin-right: 10%;
 }
 
 .categorias-container {
     padding: 0 20px;                    /* Espaciado horizontal */
-    background-color:white;          /* Fondo blanco */
+    background-color:var(--color-fondo);        
 }
 
-.categorias-card h3{
+.categoria-card h3{
     text-align: center;
-    color: var(--color-titulos);               /* Color gris oscuro */
+    color: var(--color-titulos);              
     margin-bottom: 10px;            /* Espacio debajo del título */
 }
 
@@ -96,10 +96,13 @@ main{
 }
 
 .categoria-card {
+    margin-top: 2rem;
     flex: 1;                            /* Cada card toma el mismo espacio */
-    background-color:white;          /* Fondo blanco */
+    background-color: var(--color-cards);
+    border-radius: 9px;
     padding: 20px;                     /* Espaciado interno */
     border:none;
+    /*opacity: 0.7;*/ 
 }
 .categoria-card img {
     width: 100%;                     
@@ -114,6 +117,66 @@ main{
     text-decoration: none; 
 }
 
+/* Presentación */
+
+.presentacion-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  margin: 5rem auto;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+
+.contenido-presentacion {
+  flex: 1;
+  padding: 1rem;
+  line-height: 1.6;
+}
+
+.presentacion-contenedor p{
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+.titulo, .eslogan{
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-titulos);
+}
+
+h2{
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 2rem;
+  color: #737373;
+}
+
+hr{
+    width: 6rem;
+    height: 1px;
+    background-color: #333333;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.img-presentacion {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-presentacion img {
+  width: 100%;
+  max-width: 500px; 
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
 /*Productos*/
 
 .container{
@@ -121,10 +184,6 @@ main{
     grid-template-columns: repeat(4, 1fr);
     gap:3rem;
     padding:3rem 0;
-}
-
-h1{
-    text-align: center;
 }
 
 .top-products{
@@ -169,7 +228,7 @@ h1{
 }
 
 .card-product{
-    background-color: var(--color-fondo);
+    background-color: var(--color-cards);
     text-align: center;          /* Centra textos */
     display: flex;               /* Necesario para centrar imagen + textos */
     flex-direction: column;
