@@ -11,6 +11,11 @@ const inputsPreview = {
     stock: document.getElementById("modal-stock"),
     desc: document.getElementById("modal-desc"),
     image: document.getElementById("modal-image"),
+
+    // 🔥 NUEVOS CAMPOS (solo preview, no afectan vista)
+    hasOffer: document.getElementById("modal-has-offer"),
+    offerType: document.getElementById("modal-offer-type"),
+    offerValue: document.getElementById("modal-offer-value")
 };
 
 // ELEMENTOS DE PREVIEW
@@ -51,9 +56,18 @@ inputsPreview.image.addEventListener("change", () => {
 
 // Escuchar cambios automáticos en todos los inputs
 Object.values(inputsPreview).forEach(input => {
+    if (!input) return;
     if (input.id !== "modal-image") {
         input.addEventListener("input", actualizarPreview);
     }
+});
+
+
+// ===========================================================
+// 🔥 NUEVA LÓGICA — MOSTRAR / OCULTAR CAMPOS DE OFERTA
+// ===========================================================
+document.getElementById("modal-has-offer").addEventListener("change", (e) => {
+    document.getElementById("modal-offer-fields").classList.toggle("hidden", !e.target.checked);
 });
 
 
@@ -76,6 +90,20 @@ document.getElementById("modal-save").addEventListener("click", async () => {
 
     const imagenArchivo = inputsPreview.image.files[0];
     if (imagenArchivo) form.append("imagen", imagenArchivo);
+
+
+    // ===========================================================
+    // 🔥 OFERTA (ENVÍO AL BACKEND)
+    // ===========================================================
+    const hasOffer = document.getElementById("modal-has-offer").checked;
+
+    form.append("hasOffer", hasOffer ? 1 : 0);
+
+    if (hasOffer) {
+        form.append("offer_type", document.getElementById("modal-offer-type").value);
+        form.append("offer_value", document.getElementById("modal-offer-value").value);
+    }
+
 
     const token = localStorage.getItem("token");
 

@@ -1,45 +1,47 @@
 const db = require("../../config/db");
-const { 
+
+// Importar funciones del modelo
+const {
     crearPedido,
     agregarDetalle,
     obtenerPedidos,
-    obtenerPedidoDetalles
+    obtenerPedidoDetalles,
+    obtenerIngresosTotales,
+    obtenerIngresosDia,
+    obtenerIngresosSemana,
+    obtenerIngresosMes
 } = require("../../models/orderModel");
 
-
-// ==========================================
-// GET /api/admin/pedidos
-// ==========================================
+/* ============================================================
+   GET /api/admin/pedidos
+============================================================ */
 async function getPedidos(req, res) {
     try {
         const pedidos = await obtenerPedidos();
         res.json({ ok: true, pedidos });
     } catch (error) {
-        console.error(error);
+        console.error("❌ Error en getPedidos:", error);
         res.status(500).json({ ok: false, message: "Error obteniendo pedidos" });
     }
 }
 
-
-// ==========================================
-// GET /api/admin/pedidos/:id
-// ==========================================
+/* ============================================================
+   GET /api/admin/pedidos/:id
+============================================================ */
 async function getPedidoById(req, res) {
     try {
         const id = req.params.id;
         const detalles = await obtenerPedidoDetalles(id);
         res.json({ ok: true, detalles });
     } catch (error) {
-        console.error(error);
+        console.error("❌ Error en getPedidoById:", error);
         res.status(500).json({ ok: false, message: "Error obteniendo detalles del pedido" });
     }
 }
 
-
-// ==========================================
-// POST /api/admin/crear-pedido
-// Crea pedido + detalles
-// ==========================================
+/* ============================================================
+   POST /api/admin/crear-pedido
+============================================================ */
 async function crearPedidoCompleto(req, res) {
     try {
         const usuario_id = req.usuario?.id || 1;
@@ -50,9 +52,10 @@ async function crearPedidoCompleto(req, res) {
         }
 
         // Calcular total
-        const total = items.reduce((sum, item) => 
-            sum + item.cantidad * item.precio_unitario, 
-        0);
+        const total = items.reduce(
+            (sum, item) => sum + item.cantidad * item.precio_unitario,
+            0
+        );
 
         // Crear pedido
         const pedido_id = await crearPedido(usuario_id, total);
@@ -74,21 +77,33 @@ async function crearPedidoCompleto(req, res) {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("❌ Error en crearPedidoCompleto:", error);
         res.status(500).json({ ok: false, msg: "Error al crear pedido" });
     }
 }
 
-// Obtiene ingresos totales
-
-const { obtenerIngresosTotales } = require("../../models/orderModel");
-
+/* ============================================================
+   GET /api/admin/ingresos
+   → Regresa:
+       • total
+       • dia
+       • semana
+       • mes
+============================================================ */
 async function getIngresos(req, res) {
     try {
         const total = await obtenerIngresosTotales();
-        res.json({ ok: true, ingresos: total });
+        const dia = await obtenerIngresosDia();
+        const semana = await obtenerIngresosSemana();
+        const mes = await obtenerIngresosMes();
+
+        res.json({
+            ok: true,
+            ingresos: { total, dia, semana, mes }
+        });
+
     } catch (error) {
-        console.error(error);
+        console.error("❌ Error en getIngresos:", error);
         res.status(500).json({ ok: false, message: "Error obteniendo ingresos" });
     }
 }
@@ -96,6 +111,6 @@ async function getIngresos(req, res) {
 module.exports = {
     getPedidos,
     getPedidoById,
-    getIngresos,
-    crearPedidoCompleto
+    crearPedidoCompleto,
+    getIngresos
 };

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/botones.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css" />
+     <link rel="stylesheet" href="/Frontend/css/estilos_admin/graficas.css" />
     <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css" />
     <link
       rel="stylesheet"
@@ -71,11 +72,6 @@
           </ul>
         </nav>
 
-        <div class="sidebar-footer">
-          <a class="nav-link" data-section="profile">
-            <i class="bi bi-person-circle"></i>
-          </a>
-        </div>
       </aside>
 
       <!-- MAIN CONTENT -->
@@ -89,10 +85,9 @@
           <div class="header-right">
             <div class="user-menu">
               <button class="user-btn">
-                <i class="bi bi-person-circle" style="font-size: 35px"></i>
-                <span>Administrador</span>
+                <i class="bi bi-person-circle"></i>
+                <span id="adminName">Administrador</span>
               </button>
-
               <div class="dropdown-menu">
                 <a href="#"
                   ><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a
@@ -114,47 +109,85 @@
         <p id="total-pedidos" class="stat-number">0</p>  <!-- 👈 AQUI VA EL NUMERO -->
     </div>
 </div>
-<div class="stat-card ingresos">
-    <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
+<!-- TARJETA PRINCIPAL -->
+<div class="stat-card" id="stat-ingresos">
+    <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
     <div class="stat-content">
-        <h3>Ingresos</h3>
+        <h3>Ingresos totales</h3>
         <p id="total-ingresos" class="stat-number">$0.00</p>
     </div>
+    <i class="bi bi-chevron-down stat-arrow"></i>
 </div>
-              <div class="stat-card" id="stat-libros">
-                <div class="stat-icon"><i class="bi bi-box"></i></div>
-                <div class="stat-content"><h3>Libros</h3></div>
-                <i class="bi bi-chevron-down stat-arrow"></i>
-              </div>
-            </div>
 
-            <div id="dashboard-report" class="hidden">
-              <h2>Reporte de existencias por categoría</h2>
+<!-- BLOQUE DESPLEGABLE -->
+<div id="ingresos-report" class="hidden ingresos-panel">
 
-              <div class="category-card">
-                <div class="category-icon category-romance">
-                  <i class="bi bi-heart-fill"></i>
-                </div>
-                <div class="category-label">Romance:</div>
-                <span id="stock-romance">0</span>
-              </div>
+    <!-- INGRESOS DEL DÍA -->
+    <div class="stat-card ingresos-dia mini-card">
+        <div class="stat-icon"><i class="bi bi-calendar-day"></i></div>
+        <div class="stat-content">
+            <h3>Ingresos del día</h3>
+            <p id="ingreso-dia" class="stat-number">$0.00</p>
+        </div>
+    </div>
 
-              <div class="category-card">
-                <div class="category-icon category-scifi">
-                  <i class="bi bi-rocket-fill"></i>
-                </div>
-                <div class="category-label">Ciencia ficción:</div>
-                <span id="stock-scifi">0</span>
-              </div>
+    <!-- INGRESOS DE LA SEMANA -->
+    <div class="stat-card ingresos-semana mini-card">
+        <div class="stat-icon"><i class="bi bi-calendar-week"></i></div>
+        <div class="stat-content">
+            <h3>Ingresos de la semana</h3>
+            <p id="ingreso-semana" class="stat-number">$0.00</p>
+        </div>
+    </div>
 
-              <div class="category-card">
-                <div class="category-icon category-infantil">
-                  <i class="bi bi-emoji-smile-fill"></i>
-                </div>
-                <div class="category-label">Infantil:</div>
-                <span id="stock-infantil">0</span>
-              </div>
-            </div>
+    <!-- INGRESOS DEL MES -->
+    <div class="stat-card ingresos-mes mini-card">
+        <div class="stat-icon"><i class="bi bi-calendar-month"></i></div>
+        <div class="stat-content">
+            <h3>Ingresos del mes</h3>
+            <p id="ingreso-mes" class="stat-number">$0.00</p>
+        </div>
+    </div>
+
+</div>
+             <div class="stat-card" id="stat-libros">
+    <div class="stat-icon"><i class="bi bi-box"></i></div>
+    <div class="stat-content">
+        <h3>Libros</h3>
+        <p id="total-libros" class="stat-number">0</p>
+    </div>
+    <i class="bi bi-chevron-down stat-arrow"></i>
+</div>
+
+<!-- REPORTE (DESPLEGABLE) -->
+<div id="dashboard-report" class="hidden">
+    <h2>Reporte de existencias por categoría</h2>
+
+    <div class="category-card">
+        <div class="category-icon category-romance">
+            <i class="bi bi-heart-fill"></i>
+        </div>
+        <div class="category-label">Romance:</div>
+        <span id="stock-romance">0</span>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon category-scifi">
+            <i class="bi bi-rocket-fill"></i>
+        </div>
+        <div class="category-label">Ciencia ficción:</div>
+        <span id="stock-scifi">0</span>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon category-infantil">
+            <i class="bi bi-emoji-smile-fill"></i>
+        </div>
+        <div class="category-label">Infantil:</div>
+        <span id="stock-infantil">0</span>
+    </div>
+</div>
+
           </section>
 
           <!-- PRODUCTOS -->
@@ -200,7 +233,6 @@
             </div>
           </section>
 
-          <!-- ANALYTICS -->
   <!-- ANALYTICS -->
 <section id="analytics" class="section">
   <div class="card">
@@ -208,28 +240,109 @@
 
     <div class="charts-container">
 
-      <!-- ❗ GRÁFICA 1: Pedidos totales por día -->
+      <!-- =========================
+           GRAFICA 1 - PEDIDOS
+      ========================== -->
       <div class="chart-box">
-        <h3>Pedidos Totales</h3>
+
+        <div class="chart-header">
+          <div class="left">
+            <i class="bi bi-bag-check-fill"></i>
+            <span>Pedidos Totales</span>
+          </div>
+          <button class="refresh-btn" onclick="generarGraficaPedidos()">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <p class="chart-subtitle">Últimos registros • Datos en tiempo real</p>
+
+        <i class="chart-watermark bi bi-bag-fill"></i>
+
         <div id="chart-pedidos"></div>
+
+        <div class="chart-footer">
+          <div>
+            <h4>Promedio semanal</h4>
+            <p id="kpi-ped-prom">—</p>
+          </div>
+          <div>
+            <h4>Tendencia</h4>
+            <p id="kpi-ped-trend" class="kpi-up">—</p>
+          </div>
+        </div>
       </div>
 
-      <!-- ❗ GRÁFICA 2: Ingresos totales por día -->
+      <!-- =========================
+           GRAFICA 2 - INGRESOS
+      ========================== -->
       <div class="chart-box">
-        <h3>Ingresos</h3>
+
+        <div class="chart-header">
+          <div class="left">
+            <i class="bi bi-currency-dollar"></i>
+            <span>Ingresos</span>
+          </div>
+          <button class="refresh-btn" onclick="generarGraficaIngresos()">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <p class="chart-subtitle">Desempeño económico mensual</p>
+
+        <i class="chart-watermark bi bi-graph-up-arrow"></i>
+
         <div id="chart-ingresos"></div>
+
+        <div class="chart-footer">
+          <div>
+            <h4>Ingreso promedio</h4>
+            <p id="kpi-ing-prom">—</p>
+          </div>
+          <div>
+            <h4>Crecimiento</h4>
+            <p id="kpi-ing-trend" class="kpi-up">—</p>
+          </div>
+        </div>
       </div>
 
-      <!-- ❗ GRÁFICA 3: Existencias por categoría -->
+      <!-- =========================
+           GRAFICA 3 - EXISTENCIAS
+      ========================== -->
       <div class="chart-box">
-        <h3>Existencias por categoría</h3>
+
+        <div class="chart-header">
+          <div class="left">
+            <i class="bi bi-box-seam-fill"></i>
+            <span>Existencias por Categoría</span>
+          </div>
+          <button class="refresh-btn" onclick="generarGraficaExistencias()">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <p class="chart-subtitle">Inventario actualizado</p>
+
+        <i class="chart-watermark bi bi-archive-fill"></i>
+
         <div id="chart-existencias"></div>
+
+        <div class="chart-footer">
+          <div>
+            <h4>Categoría más alta</h4>
+            <p id="kpi-stock-max">—</p>
+          </div>
+          <div>
+            <h4>Disponible total</h4>
+            <p id="kpi-stock-total">—</p>
+          </div>
+        </div>
+
       </div>
 
     </div>
   </div>
 </section>
-
 
           <!-- PERFIL -->
           <section id="profile" class="section">
@@ -318,6 +431,30 @@
           <input id="modal-image" type="file" accept="image/*" required />
         </div>
 
+        <!-- ========== OFERTA ========== -->
+<div class="form-group">
+  <label>
+    <input type="checkbox" id="modal-has-offer" />
+    ¿Agregar oferta?
+  </label>
+</div>
+
+<div id="modal-offer-fields" class="hidden">
+
+  <div class="form-group">
+    <label>Tipo de oferta</label>
+    <select id="modal-offer-type">
+      <option value="porcentaje">Porcentaje (%)</option>
+      <option value="monto">Monto fijo ($)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Valor de la oferta</label>
+    <input id="modal-offer-value" type="number" step="0.01" min="0" placeholder="Ej. 20" />
+  </div>
+
+</div> 
         <!-- BOTÓN GUARDAR -->
         <button id="modal-save" class="btn btn-primary">Guardar libro</button>
 
@@ -426,6 +563,38 @@
           <label>Nueva imagen (opcional)</label>
           <input id="edit-image" type="file" accept="image/*" />
         </div>
+
+        <!-- ========== OFERTA ========== -->
+<div class="form-group">
+  <label>
+    <input type="checkbox" id="edit-has-offer" />
+    ¿Este libro tiene oferta?
+  </label>
+</div>
+
+<div id="edit-offer-fields" class="hidden">
+
+  <div class="form-group">
+    <label>Tipo de oferta</label>
+    <select id="edit-offer-type">
+      <option value="porcentaje">Porcentaje (%)</option>
+      <option value="monto">Monto fijo ($)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Valor de la oferta</label>
+    <input id="edit-offer-value" type="number" step="0.01" min="0" placeholder="Ej. 20" />
+  </div>
+
+  <div class="form-group">
+    <label>
+      <input type="checkbox" id="edit-offer-active" />
+      ¿Oferta activa?
+    </label>
+  </div>
+
+</div>
 
         <!-- BOTÓN GUARDAR -->
         <button id="btn-save-edit" class="btn btn-primary">
@@ -541,12 +710,14 @@
 
     <!-- SCRIPTS -->
     <script src="/Frontend/js/admin/reportes.js"></script>
+    <script src="/Frontend/js/admin/graficas.js"></script>  <!-- NUEVO -->
     <script src="/Frontend/js/admin/admin.js"></script>
     <script src="/Frontend/js/admin/consultar.js"></script>
     <script src="/Frontend/js/admin/vistaPrevia.js"></script>
     <script src="/Frontend/js/admin/agregarLibro.js"></script>
     <script src="/Frontend/js/admin/eliminar.js"></script>
     <script src="/Frontend/js/admin/editar.js"></script>
+    <script src="/Frontend/js/admin/sesion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </body>
 </html>

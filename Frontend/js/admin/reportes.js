@@ -37,5 +37,34 @@ async function actualizarReporteExistencias() {
   }
 }
 
+async function cargarLibrosTotales() {
+    const token = localStorage.getItem("token");
+
+    try {
+        const res = await fetch("http://localhost:3000/api/admin/books?page=1&limit=1", {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+
+        console.log("📚 Respuesta libros:", data);
+
+        if (data.totalBooks !== undefined) {
+            document.getElementById("total-libros").textContent = data.totalBooks;
+        } 
+        else if (Array.isArray(data.books)) { 
+            // fallback por si cambia algo
+            document.getElementById("total-libros").textContent = data.books.length;
+        }
+        else {
+            document.getElementById("total-libros").textContent = 0;
+        }
+
+    } catch (error) {
+        console.error("Error cargando libros totales:", error);
+    }
+}
+
+
 // Ejecutar automáticamente al cargar la página
 document.addEventListener("DOMContentLoaded", actualizarReporteExistencias);

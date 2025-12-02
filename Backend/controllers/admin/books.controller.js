@@ -8,6 +8,14 @@ const {
     getReporteExistencias
 } = require("../../models/modelLibros");
 
+// 🔥 Importar modelo de ofertas
+const {
+    crearOferta,
+    getOfertaByProduct,
+    actualizarOferta,
+    eliminarOferta
+} = require("../../models/modelOfertas");
+
 // ------------------------------------------------------------
 // GET BOOKS (ADMIN)
 // ------------------------------------------------------------
@@ -29,7 +37,7 @@ exports.getBooks = async (req, res) => {
 };
 
 // ------------------------------------------------------------
-// AGREGAR LIBRO
+// AGREGAR LIBRO + OFERTA
 // ------------------------------------------------------------
 exports.addBook = async (req, res) => {
     try {
@@ -39,6 +47,15 @@ exports.addBook = async (req, res) => {
         };
 
         const nuevo = await addBook(data);
+
+        // ------- 🔥 Crear oferta si viene marcada -------
+        if (req.body.hasOffer == 1) {
+            await crearOferta(
+                nuevo.id,
+                req.body.offer_type,
+                req.body.offer_value
+            );
+        }
 
         res.json({
             ok: true,
@@ -56,7 +73,7 @@ exports.addBook = async (req, res) => {
 };
 
 // ------------------------------------------------------------
-// OBTENER LIBRO POR ID
+// OBTENER LIBRO POR ID + OFERTA
 // ------------------------------------------------------------
 exports.obtenerLibro = async (req, res) => {
     try {
@@ -66,7 +83,9 @@ exports.obtenerLibro = async (req, res) => {
             return res.status(404).json({ ok: false, message: "Libro no encontrado" });
         }
 
-        res.json({ ok: true, libro });
+        const oferta = await getOfertaByProduct(req.params.id);
+
+        res.json({ ok: true, libro, oferta });
 
     } catch (error) {
         console.error(error);
@@ -75,7 +94,7 @@ exports.obtenerLibro = async (req, res) => {
 };
 
 // ------------------------------------------------------------
-// EDITAR LIBRO
+// EDITAR LIBRO + OFERTA
 // ------------------------------------------------------------
 exports.editarLibro = async (req, res) => {
     try {
@@ -85,6 +104,39 @@ exports.editarLibro = async (req, res) => {
         };
 
         await updateBook(req.params.id, data);
+
+        // ======= 🔥 LOGICA DE OFERTAS =======
+        const ofertaExistente = await getOfertaByProduct(req.params.id);
+
+        // SI EL CHECKBOX DICE "NO TIENE OFERTA"
+        if (req.body.hasOffer == 0) {
+            if (ofertaExistente) {
+                await eliminarOferta(ofertaExistente.id);
+            }
+        }
+
+        // SI EL CHECKBOX DICE "TIENE OFERTA"
+        else if (req.body.hasOffer == 1) {
+
+            // SI NO EXISTÍA → CREAR
+            if (!ofertaExistente) {
+                await crearOferta(
+                    req.params.id,
+                    req.body.offer_type,
+                    req.body.offer_value
+                );
+            }
+
+            // SI YA EXISTÍA → ACTUALIZAR
+            else {
+                await actualizarOferta(
+                    ofertaExistente.id,
+                    req.body.offer_type,
+                    req.body.offer_value,
+                    req.body.offer_active == 1 ? 1 : 0
+                );
+            }
+        }
 
         res.json({
             ok: true,

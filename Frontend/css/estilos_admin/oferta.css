@@ -58,3 +58,90 @@
     background: #ff4444 !important;
     color: white !important;
 }
+
+/* ============================================
+   CONTENEDOR PRINCIPAL DE OFERTAS
+============================================ */
+#edit-offer-fields,
+#modal-offer-fields {
+    background: #f8fafc;
+    padding: 0px 20px;
+    border: 1px solid #dce3ee;
+    border-radius: 12px;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    animation: fadeInOffer .25s ease;
+}
+
+/* Animación suave */
+@keyframes fadeInOffer {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   TÍTULOS Y LABELS
+============================================ */
+#edit-offer-fields label,
+#modal-offer-fields label {
+    font-weight: 600;
+    color: #1e1e1e;
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Checkbox "¿Tiene oferta?" */
+.form-group > label {
+    font-weight: 600;
+    color: #1e1e1e;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #005bbb; /* azul admin */
+}
+
+/* ============================================
+   INPUTS Y SELECTS DE OFERTA
+============================================ */
+#edit-offer-fields select,
+#modal-offer-fields select,
+#edit-offer-fields input[type="number"],
+#modal-offer-fields input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccd5e3;
+    background: #fff;
+    font-size: 0.95rem;
+    transition: all 0.15s ease;
+}
+
+/* Hover y focus PRO */
+#edit-offer-fields select:focus,
+#modal-offer-fields select:focus,
+#edit-offer-fields input[type="number"]:focus,
+#modal-offer-fields input[type="number"]:focus {
+    outline: none;
+    border-color: #005bbb;
+    box-shadow: 0 0 0 3px rgba(0, 91, 187, 0.18);
+}
+
+/* ============================================
+   ESPACIADO ENTRE GRUPOS
+============================================ */
+#edit-offer-fields .form-group,
+#modal-offer-fields .form-group {
+    margin-bottom: 14px;
+}
+
+/* Checkbox “Oferta activa?” */
+#edit-offer-active {
+    accent-color: #28a745; /* verde para indicar activo */
+}

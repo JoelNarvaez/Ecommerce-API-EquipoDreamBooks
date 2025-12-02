@@ -1,0 +1,67 @@
+/* ================================
+   MENÚ DROPDOWN PROFESIONAL
+================================ */
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 180px;
+    padding: 10px 0;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+    
+    /* Sombras premium estilo panel admin */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+
+    /* Animación */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: all 0.22s ease;
+    z-index: 999;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ======================
+    ITEMS DEL MENÚ
+====================== */
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.18s ease;
+}
+
+/* Ícono */
+.dropdown-menu a i {
+    font-size: 1.1rem;
+    color: #444;
+    transition: .2s ease;
+}
+
+/* Hover elegante */
+.dropdown-menu a:hover {
+    background: #f2f6ff;
+    color: #005bbb;
+}
+
+.dropdown-menu a:hover i {
+    color: #005bbb;
+}
+
+/* Línea divisoria opcional */
+.dropdown-divider {
+    height: 1px;
+    background: #e5e5e5;
+    margin: 6px 0;
+}
