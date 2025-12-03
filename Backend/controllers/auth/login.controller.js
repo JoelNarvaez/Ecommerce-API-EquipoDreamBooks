@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const { 
     obtenerUserPorCorreo,
     actualizarIntentosFallidos,
@@ -54,9 +55,21 @@ exports.login = async (req, res) => {
     // contraseña corecta
     await resetearIntentos(email);
 
+    // Generación de TOKEN JWT
+        const token = jwt.sign(
+        {
+            id: user.id,
+            email: user.email,
+            rol: user.rol
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "2h" }
+    );
+
     return res.status(200).json({
         success: true,
         message: "Inicio de sesión exitoso",
+        token: token,
         user: {
             id: user.id,
             nombre: user.nombre,

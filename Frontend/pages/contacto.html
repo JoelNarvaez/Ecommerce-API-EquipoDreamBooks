@@ -15,12 +15,12 @@
     <header>
         <nav class="header-general">
             <div class="menu-izq">
-                <img src="/Frontend/imagenes/logo-header-fondo.png" alt="logo">
+                <div class="logo-header"></div>
             </div>
             <div class="menu-centro">
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#">Libros</a></li>
+                    <li><a href="/Frontend/pages/libros.html">Libros</a></li>
                     <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                     <li><a href="nosotros.html">Sobre Nosotros</a></li>
@@ -28,7 +28,13 @@
             </div>
             <div class="menu-der">
                 <ul>
-                    <li><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                    <li id="userInfo" style="display:none;" class="user-info">
+                        <i class="fa-solid fa-book-open-reader user-icon"></i>
+                        <span id="userName" class="user-name"></span>
+                    </li>
+                    <li  id="btnAcceder"><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                    <li><button id="btnCerrarSesion" class="button-logout" style="display:none">Salir</button>
+                    </li>
                     <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
                     <li><i class="fa-solid fa-cart-shopping"></i></li>
                 </ul>  
@@ -157,6 +163,7 @@
     <script src="/Frontend/js/app.js"></script>
     <script src="/Frontend/js/preguntas_freucentes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/Frontend/js/manejo-sesion.js"></script>
   
 </body>
 </html>

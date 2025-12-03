@@ -1,0 +1,108 @@
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header {
+    height: 70px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #d9d9d9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.header-left h1 {
+    font-size: 28px;
+}
+
+.search-box {
+    position: relative;
+    width: 250px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #d9d9d9;
+    border-radius: 25px;
+    background-color: #f5f5f5;
+}
+
+/* CONTENEDOR principal */
+#dashboard-report {
+    padding: 25px;
+    border-radius: 20px;
+    margin-top: 25px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* Título */
+#dashboard-report h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Tarjetas de categoría */
+.category-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    margin-bottom: 15px;
+    background: #f9fafb;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.category-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-romance { background: #e05885; color: white; }
+.category-scifi    { background: #4d96da; color: white; }
+.category-infantil { background: #f3c351; color: white; }
+
+.category-label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.stat-content h3::after {
+    display: none !important;
+}
+/* Estado oculto */
+.hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: all 0.35s ease;
+}
+
+/* Estado visible */
+.show {
+    opacity: 1;
+    max-height: 800px; /* suficiente para tu contenido */
+    transform: translateY(0);
+    transition: all 0.45s ease;
+}

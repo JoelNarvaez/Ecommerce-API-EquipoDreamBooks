@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DreamBook | Panel de Administración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      href="/Frontend/imagenes/favicon-sf.png"
+      type="image/x-icon"
+    />
+
+    <!-- CSS PRINCIPALES -->
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/reset.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/layout.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/sidebar.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/main.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/content.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/productos.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/oferta.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/botones.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css" />
+     <link rel="stylesheet" href="/Frontend/css/estilos_admin/graficas.css" />
+    <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css" />
+    <link
+      rel="stylesheet"
+      href="/Frontend/css/estilos_admin/estadisticas.css"
+    />
+
+    <!-- Íconos Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2 class="logo">DreamBook</h2>
+          <button class="toggle-btn" id="toggleBtn">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul class="nav-list">
+            <li class="nav-item active">
+              <a class="nav-link" data-section="dashboard">
+                <i class="bi bi-speedometer2"></i>
+                <span class="nav-text">Panel</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-section="products">
+                <i class="bi bi-box-seam"></i>
+                <span class="nav-text">Libros</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-section="analytics">
+                <i class="bi bi-graph-up"></i>
+                <span class="nav-text">Gráficas</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <!-- HEADER -->
+        <header class="header">
+          <div class="header-left">
+            <h1 id="pageTitle">Panel</h1>
+          </div>
+
+          <div class="header-right">
+            <div class="user-menu">
+              <button class="user-btn">
+                <i class="bi bi-person-circle"></i>
+                <span id="adminName">Administrador</span>
+              </button>
+              <div class="dropdown-menu">
+                <a href="#"
+                  ><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a
+                >
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- SECCIONES -->
+        <div class="content">
+          <!-- DASHBOARD -->
+          <section id="dashboard" class="section active">
+            <div class="stats-grid">
+<div class="stat-card" id="stat-pedidos">
+    <div class="stat-icon"><i class="bi bi-cart3"></i></div>
+    <div class="stat-content">
+        <h3>Pedidos totales</h3>
+        <p id="total-pedidos" class="stat-number">0</p>  <!-- 👈 AQUI VA EL NUMERO -->
+    </div>
+</div>
+<!-- TARJETA PRINCIPAL -->
+<div class="stat-card" id="stat-ingresos">
+    <div class="stat-icon ingresos-icon-main">
+        <i class="bi bi-cash-stack"></i>
+    </div>
+
+    <div class="stat-content">
+        <h3>Ingresos Totales</h3>
+        <p id="total-ingresos" class="stat-number">$0.00</p>
+    </div>
+
+    <i class="bi bi-chevron-down stat-arrow"></i>
+</div>
+
+<!-- BLOQUE DESPLEGABLE -->
+<div id="ingresos-report" class="hidden ingresos-panel">
+
+    <div class="ingresos-grid">
+
+        <!-- DIA -->
+        <div class="ingreso-box dia">
+            <div class="ingreso-icon icon-dia">
+                <i class="bi bi-calendar-day"></i>
+            </div>
+            <h4>Hoy</h4>
+            <p id="ingreso-dia" class="ingreso-number">$0.00</p>
+        </div>
+
+        <!-- SEMANA -->
+        <div class="ingreso-box semana">
+            <div class="ingreso-icon icon-semana">
+                <i class="bi bi-calendar-week"></i>
+            </div>
+            <h4>Esta semana</h4>
+            <p id="ingreso-semana" class="ingreso-number">$0.00</p>
+        </div>
+
+        <!-- MES -->
+        <div class="ingreso-box mes">
+            <div class="ingreso-icon icon-mes">
+                <i class="bi bi-calendar-month"></i>
+            </div>
+            <h4>Este mes</h4>
+            <p id="ingreso-mes" class="ingreso-number">$0.00</p>
+        </div>
+
+    </div>
+
+</div>
+
+             <div class="stat-card" id="stat-libros">
+    <div class="stat-icon"><i class="bi bi-box"></i></div>
+    <div class="stat-content">
+        <h3>Libros</h3>
+        <p id="total-libros" class="stat-number">0</p>
+    </div>
+    <i class="bi bi-chevron-down stat-arrow"></i>
+</div>
+
+<!-- REPORTE (DESPLEGABLE) -->
+<div id="dashboard-report" class="hidden">
+    <h2>Reporte de existencias por categoría</h2>
+
+    <div class="category-card">
+        <div class="category-icon category-romance">
+            <i class="bi bi-heart-fill"></i>
+        </div>
+        <div class="category-label">Romance:</div>
+        <span id="stock-romance">0</span>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon category-scifi">
+            <i class="bi bi-rocket-fill"></i>
+        </div>
+        <div class="category-label">Ciencia ficción:</div>
+        <span id="stock-scifi">0</span>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon category-infantil">
+            <i class="bi bi-emoji-smile-fill"></i>
+        </div>
+        <div class="category-label">Infantil:</div>
+        <span id="stock-infantil">0</span>
+    </div>
+</div>
+
+          </section>
+
+          <!-- PRODUCTOS -->
+          <section id="products" class="section">
+            <div class="card">
+              <div class="card-header">
+                <h2>Gestión de libros</h2>
+
+                <div class="actions-header">
+                  <div class="search-box">
+                    <div class="search-group">
+                      <input
+                        type="text"
+                        placeholder="Buscar..."
+                        id="search-books"
+                      />
+                      <i class="bi bi-search search-icon"></i>
+                    </div>
+
+                    <select id="filter-category" class="filter-select">
+                      <option value="">Todas</option>
+                      <option value="Romance">Romance</option>
+                      <option value="Infantil">Infantil</option>
+                      <option value="Ciencia ficción">Ciencia ficción</option>
+                      <option value="oferta">Oferta</option>
+                    </select>
+                  </div>
+
+                  <button id="open-add-book" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Agregar libro
+                  </button>
+                </div>
+              </div>
+
+              <div class="products-grid" id="books-grid">
+                <p style="color: #666">No hay libros registrados.</p>
+              </div>
+
+              <div
+                id="pagination"
+                style="text-align: center; padding: 20px"
+              ></div>
+            </div>
+          </section>
+
+  <!-- ANALYTICS -->
+<section id="analytics" class="section">
+  <div class="card">
+    <div class="card-header"><h2>Gráficas del sistema</h2></div>
+
+    <div class="charts-container">
+
+      <!-- =========================
+           GRAFICA 1 - PEDIDOS
+      ========================== -->
+      <div class="chart-box">
+
+        <div class="chart-header">
+          <div class="left">
+            <i class="bi bi-bag-check-fill"></i>
+            <span>Pedidos Totales</span>
+          </div>
+          <button class="refresh-btn" onclick="generarGraficaPedidos()">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <p class="chart-subtitle">Últimos registros • Datos en tiempo real</p>
+
+        <i class="chart-watermark bi bi-bag-fill"></i>
+
+        <div id="chart-pedidos"></div>
+
+        <div class="chart-footer">
+          <div>
+            <h4>Promedio semanal</h4>
+            <p id="kpi-ped-prom">—</p>
+          </div>
+          <div>
+            <h4>Tendencia</h4>
+            <p id="kpi-ped-trend" class="kpi-up">—</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================
+           GRAFICA 2 - INGRESOS
+      ========================== -->
+      <div class="chart-box">
+
+        <div class="chart-header">
+          <div class="left">
+            <i class="bi bi-currency-dollar"></i>
+            <span>Ingresos</span>
+          </div>
+          <button class="refresh-btn" onclick="generarGraficaIngresos()">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <p class="chart-subtitle">Desempeño económico mensual</p>
+
+        <i class="chart-watermark bi bi-graph-up-arrow"></i>
+
+        <div id="chart-ingresos"></div>
+
+        <div class="chart-footer">
+          <div>
+            <h4>Ingreso promedio</h4>
+            <p id="kpi-ing-prom">—</p>
+          </div>
+          <div>
+            <h4>Crecimiento</h4>
+            <p id="kpi-ing-trend" class="kpi-up">—</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================
+           GRAFICA 3 - EXISTENCIAS
+      ========================== -->
+      <div class="chart-box">
+
+        <div class="chart-header">
+          <div class="left">
+            <i class="bi bi-box-seam-fill"></i>
+            <span>Existencias por Categoría</span>
+          </div>
+          <button class="refresh-btn" onclick="generarGraficaExistencias()">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <p class="chart-subtitle">Inventario actualizado</p>
+
+        <i class="chart-watermark bi bi-archive-fill"></i>
+
+        <div id="chart-existencias"></div>
+
+        <div class="chart-footer">
+          <div>
+            <h4>Categoría más alta</h4>
+            <p id="kpi-stock-max">—</p>
+          </div>
+          <div>
+            <h4>Disponible total</h4>
+            <p id="kpi-stock-total">—</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+          <!-- PERFIL -->
+          <section id="profile" class="section">
+            <div class="card">
+              <div class="card-header"><h2>Perfil</h2></div>
+              <p style="padding: 20px; color: #666">
+                El perfil está deshabilitado.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+ <!-- MODAL PARA AGREGAR LIBRO -->
+<div id="modal-add-book" class="modal hidden">
+  <div class="modal-content modal-wide">
+
+    <button class="modal-close" id="close-add-book">&times;</button>
+    <h2>Agregar libro</h2>
+
+    <div class="form-preview-wrapper">
+
+      <!-- FORMULARIO -->
+      <div class="settings-form">
+
+        <!-- TÍTULO -->
+        <div class="form-group">
+          <label>Título</label>
+          <input id="modal-title" type="text" placeholder="Ej. Peppa Pig" required />
+        </div>
+
+        <!-- AUTOR -->
+        <div class="form-group">
+          <label>Autor</label>
+          <input id="modal-author" type="text" placeholder="Ej. Juan Pérez" required />
+        </div>
+
+        <!-- FILA PRECIO + STOCK -->
+        <div class="form-row">
+          <div class="form-group small">
+            <label>Precio</label>
+            <input id="modal-price" type="number" step="0.01" min="0" placeholder="Ej. 199.99" required />
+          </div>
+
+          <div class="form-group small">
+            <label>Stock</label>
+            <input id="modal-stock" type="number" min="0" placeholder="Ej. 10" required />
+          </div>
+        </div>
+
+        <!-- CATEGORÍA -->
+        <div class="form-group">
+          <label>Categoría</label>
+          <input id="modal-category" type="text" placeholder="Ej. Romance / Infantil" required />
+        </div>
+
+        <!-- EDITORIAL -->
+        <div class="form-group">
+          <label>Editorial</label>
+          <input id="modal-editorial" type="text" placeholder="Ej. Alfaguara" />
+        </div>
+
+        <!-- FILA TIPO + PAGINAS -->
+        <div class="form-row">
+          <div class="form-group small">
+            <label>Tipo de libro</label>
+            <input id="modal-tipo" type="text" placeholder="Ej. Tapa dura / Ebook" />
+          </div>
+
+          <div class="form-group small">
+            <label>Páginas</label>
+            <input id="modal-paginas" type="number" placeholder="Ej. 240" />
+          </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="modal-desc" placeholder="Escribe una breve descripción del libro..." required></textarea>
+        </div>
+
+        <!-- IMAGEN -->
+        <div class="form-group">
+          <label>Imagen del libro</label>
+          <input id="modal-image" type="file" accept="image/*" required />
+        </div>
+
+        <!-- ========== OFERTA ========== -->
+<div class="form-group">
+  <label>
+    <input type="checkbox" id="modal-has-offer" />
+    ¿Agregar oferta?
+  </label>
+</div>
+
+<div id="modal-offer-fields" class="hidden">
+
+  <div class="form-group">
+    <label>Tipo de oferta</label>
+    <select id="modal-offer-type">
+      <option value="porcentaje">Porcentaje (%)</option>
+      <option value="monto">Monto fijo ($)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Valor de la oferta</label>
+    <input id="modal-offer-value" type="number" step="0.01" min="0" placeholder="Ej. 20" />
+  </div>
+
+</div> 
+        <!-- BOTÓN GUARDAR -->
+        <button id="modal-save" class="btn btn-primary">Guardar libro</button>
+
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="preview-container">
+        <h3>Vista previa</h3>
+
+        <div class="preview-card">
+          <div class="preview-img">
+            <img id="preview-image" src="/Frontend/assets/no-image.png" />
+          </div>
+
+          <div class="preview-info">
+            <h4 id="preview-title">Título del libro</h4>
+            <p id="preview-category">Categoría</p>
+            <p id="preview-author">Autor</p>
+            <p id="preview-price">$0.00</p>
+            <p id="preview-editorial">Editorial</p>
+            <p id="preview-tipo">Tipo</p>
+            <p id="preview-paginas">0 páginas</p>
+            <p id="preview-stock">En existencia (0)</p>
+            <p id="preview-desc">Descripción...</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ==============================
+      MODAL EDITAR LIBRO
+============================== -->
+<div id="modal-editar" class="modal hidden">
+  <div class="modal-content modal-wide">
+
+    <button class="modal-close" id="close-edit-modal">&times;</button>
+    <h2>Editar libro</h2>
+
+    <div class="form-preview-wrapper">
+
+      <!-- FORMULARIO -->
+      <div class="settings-form">
+
+        <!-- TÍTULO -->
+        <div class="form-group">
+          <label>Título</label>
+          <input id="edit-title" type="text" placeholder="Ej. Orgullo y prejuicio" />
+        </div>
+
+        <!-- AUTOR -->
+        <div class="form-group">
+          <label>Autor</label>
+          <input id="edit-author" type="text" placeholder="Ej. Jane Austen" />
+        </div>
+
+        <!-- PRECIO + STOCK -->
+        <div class="form-row">
+          <div class="form-group small">
+            <label>Precio</label>
+            <input id="edit-price" type="number" step="0.01" placeholder="Ej. 249.00" />
+          </div>
+
+          <div class="form-group small">
+            <label>Stock</label>
+            <input id="edit-stock" type="number" placeholder="Ej. 10" />
+          </div>
+        </div>
+
+        <!-- CATEGORÍA -->
+        <div class="form-group">
+          <label>Categoría</label>
+          <input id="edit-category" type="text" placeholder="Ej. Romance / Infantil" />
+        </div>
+
+        <!-- EDITORIAL -->
+        <div class="form-group">
+          <label>Editorial</label>
+          <input id="edit-editorial" type="text" placeholder="Ej. Alfaguara" />
+        </div>
+
+        <!-- TIPO + PAGINAS -->
+        <div class="form-row">
+          <div class="form-group small">
+            <label>Tipo de libro</label>
+            <input id="edit-tipo" type="text" placeholder="Ej. Tapa blanda" />
+          </div>
+
+          <div class="form-group small">
+            <label>Páginas</label>
+            <input id="edit-paginas" type="number" placeholder="Ej. 432" />
+          </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="edit-desc" placeholder="Actualiza la descripción del libro..."></textarea>
+        </div>
+
+        <!-- NUEVA IMAGEN -->
+        <div class="form-group">
+          <label>Nueva imagen (opcional)</label>
+          <input id="edit-image" type="file" accept="image/*" />
+        </div>
+
+        <!-- ========== OFERTA ========== -->
+<div class="form-group">
+  <label>
+    <input type="checkbox" id="edit-has-offer" />
+    ¿Este libro tiene oferta?
+  </label>
+</div>
+
+<div id="edit-offer-fields" class="hidden">
+
+  <div class="form-group">
+    <label>Tipo de oferta</label>
+    <select id="edit-offer-type">
+      <option value="porcentaje">Porcentaje (%)</option>
+      <option value="monto">Monto fijo ($)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Valor de la oferta</label>
+    <input id="edit-offer-value" type="number" step="0.01" min="0" placeholder="Ej. 20" />
+  </div>
+
+  <div class="form-group">
+    <label>
+      <input type="checkbox" id="edit-offer-active" />
+      ¿Oferta activa?
+    </label>
+  </div>
+
+</div>
+
+        <!-- BOTÓN GUARDAR -->
+        <button id="btn-save-edit" class="btn btn-primary">
+          <i class="bi bi-save"></i> Guardar cambios
+        </button>
+
+      </div>
+
+      <!-- ===== PREVIEW ===== -->
+      <div class="preview-container">
+        <h3>Vista previa</h3>
+
+        <div class="preview-card">
+          <div class="preview-img">
+            <img id="edit-preview-image" src="/Frontend/assets/no-image.png" />
+          </div>
+
+          <div class="preview-info">
+
+            <h4 id="edit-preview-title">Título del libro</h4>
+
+            <p id="edit-preview-category">Categoría</p>
+            <p id="edit-preview-author">Autor</p>
+
+            <p id="edit-preview-price" class="preview-price">$0.00</p>
+
+            <p id="edit-preview-editorial">Editorial</p>
+            <p id="edit-preview-tipo">Tipo</p>
+            <p id="edit-preview-paginas">0 páginas</p>
+
+            <p class="preview-stock ok" id="edit-preview-stock">
+              En existencia (0)
+            </p>
+
+            <p id="edit-preview-desc" class="preview-desc">
+              Descripción del libro...
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+ <div id="modal-eliminar" class="modal hidden">
+  <div class="modal-content modal-wide">
+
+    <button class="modal-close" id="close-delete-modal">&times;</button>
+    <h2>Eliminar libro</h2>
+
+    <div class="delete-wrapper">
+
+      <!-- ========== PREVIEW IZQUIERDA ========== -->
+      <div class="delete-preview">
+        <h3>Vista previa</h3>
+
+        <div class="delete-preview-card">
+          
+          <div class="preview-img">
+            <img id="delete-book-image" src="/Frontend/assets/no-image.png" />
+          </div>
+
+          <div class="delete-info">
+            <h4 id="delete-book-title">Título del libro</h4>
+
+            <p id="delete-book-category">Categoría</p>
+            <p id="delete-book-author">Autor</p>
+            <p class="price" id="delete-book-price">$0.00</p>
+
+            <p id="delete-book-editorial"><strong>Editorial:</strong> -</p>
+            <p id="delete-book-tipo"><strong>Tipo:</strong> -</p>
+            <p id="delete-book-paginas"><strong>Páginas:</strong> -</p>
+
+            <p class="stock" id="delete-book-stock">En existencia (0)</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ========== PANEL DERECHO (ACCIONES) ========== -->
+      <div class="delete-controls">
+
+        <div class="form-group">
+          <label>Cantidad a eliminar</label>
+          <input
+            type="number"
+            id="cantidad-eliminar"
+            min="1"
+            placeholder="Ej. 2"
+          />
+        </div>
+
+        <div class="delete-actions">
+          <button id="btn-confirm-delete" class="btn btn-danger">
+            <i class="bi bi-dash-circle"></i> Eliminar stock
+          </button>
+
+          <button id="btn-delete-total" class="btn btn-dark">
+            <i class="bi bi-trash"></i> Eliminar libro
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- SCRIPTS -->
+    <script src="/Frontend/js/admin/reportes.js"></script>
+    <script src="/Frontend/js/admin/graficas.js"></script>  <!-- NUEVO -->
+    <script src="/Frontend/js/admin/admin.js"></script>
+    <script src="/Frontend/js/admin/consultar.js"></script>
+    <script src="/Frontend/js/admin/vistaPrevia.js"></script>
+    <script src="/Frontend/js/admin/agregarLibro.js"></script>
+    <script src="/Frontend/js/admin/eliminar.js"></script>
+    <script src="/Frontend/js/admin/editar.js"></script>
+    <script src="/Frontend/js/admin/sesion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  </body>
+</html>

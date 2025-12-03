@@ -15,21 +15,32 @@ document.getElementById("formLogin").addEventListener("submit", async function (
         });
 
         const result = await response.json();
-
+        console.log("Respuesta del backend:", result);
         // Reiniciar captcha después de cada intento
         if (typeof turnstile !== "undefined") {
             turnstile.reset();
         }
 
         if (response.ok) {
-            Swal.fire({
+            await Swal.fire({
                 icon: "success",
                 title: "Bienvenido",
-                text: result.user.nombre
+                text: result.user.nombre,
+                timer: 1500,
+                showConfirmButton: false
             });
 
             localStorage.setItem("token", result.token);
+            localStorage.setItem("userName", result.user.nombre);
+            localStorage.setItem("userRole", result.user.rol);
 
+            // Validación de rol 
+            if(result.user.rol === "admin"){
+                window.location.href = "/Frontend/pages/admin/panel_admin.html";
+                return;
+            }else{
+                window.location.href = "/Frontend/pages/index.html";
+            }
         } else {
             Swal.fire({
                 icon: "error",

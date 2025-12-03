@@ -1,7 +1,7 @@
 .contacto-section {
     font-size: var(--font-size-base);
     padding: 60px 0;              /* Espaciado vertical arriba y abajo */
-    background-color:#f5f5f5;   /* Fondo gris claro */
+    background-color: var(--color-fondo-contacto);   /* Fondo gris claro */
 }
 
 .contacto-container{
@@ -27,13 +27,13 @@
 
 .contacto-content h2{
     font-size: 2.5rem;          /* Tamaño de fuente grande */
-    color: #333333;           /* Color gris oscuro */
+    color: white;           /* Color gris oscuro */
     margin-bottom: 10px;        /* Espacio dejado del título */
 }
 
 .contacto-content p{
-    color: #666666;           /* Color gris medio */
-    margin-bottom: 30px;        /* Espaccio debajo del párrafo */
+    color: var(--color-texto); 
+    margin-bottom: 30px;        
     line-height: 1.7rem;
 }
 
@@ -43,8 +43,8 @@
 }
 
 .info-columna p{
-    margin-bottom: 10px;      /* Espacio debajo de cada párrafo */
-    color: #666666;           /* Color gris medio */
+    margin-bottom: 10px;     /* Espacio debajo de cada párrafo */
+    color: var(--color-texto);           
 }
 
 /* Formulario de contacto */

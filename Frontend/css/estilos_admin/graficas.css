@@ -1,0 +1,131 @@
+/* ===============================
+   CONTENEDOR DE GRÁFICAS
+================================== */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 32px;
+    padding: 25px;
+    animation: fadeIn 0.4s ease;
+    
+}
+
+/* ===============================
+   TARJETAS DE GRÁFICAS
+================================== */
+.chart-box {
+    width: 100%;
+    max-width: 850px; 
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 25px;
+    border: 1px solid #e5e5e5;
+
+    box-shadow:
+        0px 4px 14px rgba(0,0,0,0.05),
+        -2px -2px 8px rgba(255,255,255,0.8);
+
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-box:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0px 8px 22px rgba(0,0,0,0.09),
+        -3px -3px 12px rgba(255,255,255,0.9);
+}
+
+/* ===============================
+   HEADER DE CADA GRÁFICA
+================================== */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.chart-header .left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chart-header i {
+    font-size: 1.4rem;
+    color: #111;
+}
+
+.chart-header span {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* ===============================
+   SUBTÍTULO
+================================== */
+.chart-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* ===============================
+   BOTÓN REFRESCAR
+================================== */
+.refresh-btn {
+    background: #f2f2f2;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.refresh-btn:hover {
+    background: #e4e4e4;
+    transform: scale(1.05);
+}
+
+/* ===============================
+   MARCA DE AGUA (ICONO GRANDE)
+================================== */
+.chart-watermark {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 55px;
+    color: rgba(0,0,0,0.05);
+}
+
+/* ===============================
+   FOOTER DE KPI'S
+================================== */
+.chart-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-footer h4 {
+    font-size: 13px;
+    color: #777;
+}
+
+.chart-footer p {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.kpi-up {
+    color: #0b8f39;
+}
+
+.kpi-down {
+    color: #c0392b;
+}

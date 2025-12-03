@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DreamBooks | Detalle del Libro</title>
+    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/detalle-libro.css">
+</head>
+
+<body>
+
+<div class="detalle-container">
+
+    <!-- Imagen -->
+    <div class="detalle-imagen">
+        <img id="img-libro" src="" alt="Imagen del libro">
+    </div>
+
+    <!-- INFORMACIÓN -->
+    <div class="detalle-info">
+
+        <!-- TITULO -->
+        <h1 id="titulo"></h1>
+
+        <!-- AUTOR Y EDITORIAL -->
+        <p class="autor"><strong>Autor:</strong> <span id="autor"></span></p>
+        <p class="editorial"><strong>Editorial:</strong> <span id="editorial"></span></p>
+
+        <!-- PRECIO -->
+        <div class="precio-box" id="precioBox"></div>
+
+        <!-- STOCK -->
+        <p id="stock"></p>
+
+        <!-- DESCRIPCIÓN -->
+        <h3>Descripción</h3>
+        <p class="descripcion" id="descripcion"></p>
+
+        <!-- EXTRA INFO -->
+        <div class="extra-info">
+            <p><strong>Categoría:</strong> <span id="categoria"></span></p>
+            <p><strong>Tipo de libro:</strong> <span id="tipo"></span></p>
+            <p><strong>Páginas:</strong> <span id="paginas"></span></p>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="acciones">
+            <button class="btn agregar">Agregar al carrito</button>
+            <button class="btn comprar">Comprar ahora</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="../js/detalle-libro.js"></script>
+
+</body>
+</html>
