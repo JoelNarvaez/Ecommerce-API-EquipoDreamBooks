@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DreamBook - Lista de Deseos</title>
+  <link rel="stylesheet" href="/Frontend/css/wishlist.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <header class="shop-header">
+    <div class="shop-header__left">
+      <a class="brand" href="#" title="Volver a la tienda">
+        <i class="bi bi-arrow-left"></i>
+        <span>Volver</span>
+      </a>
+    </div>
+    <div class="shop-header__right">
+      <a class="brand" href="#" title="Panel">
+        <i class="bi bi-book" style="font-size:20px"></i>
+        <span>DreamBook</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="page-layout">
+    <section class="card list-container">
+      <div class="card-header">
+        <h2><i class="bi bi-heart-fill" style="color:#e74c3c; margin-right:8px;"></i> Lista de Deseos</h2>
+      </div>
+      
+      <div class="wishlist-items">
+        
+        <div class="wishlist-item">
+          <div class="item-thumb">
+            <i class="bi bi-book-half" style="font-size: 2rem;"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">El Señor de los Anillos</div>
+            <div class="item-meta">J.R.R. Tolkien</div>
+            <div class="item-stock in-stock">Disponible</div>
+          </div>
+          <div class="item-price">$45.00</div>
+          <div class="item-actions">
+            <button class="btn btn-sm btn-primary"><i class="bi bi-cart-plus"></i> Agregar</button>
+            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+
+        <div class="wishlist-item">
+          <div class="item-thumb">
+            <i class="bi bi-journal-richtext" style="font-size: 2rem;"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Diseño UX Avanzado</div>
+            <div class="item-meta">Editorial Tech</div>
+            <div class="item-stock low-stock">¡Últimas unidades!</div>
+          </div>
+          <div class="item-price">$32.50</div>
+          <div class="item-actions">
+            <button class="btn btn-sm btn-primary"><i class="bi bi-cart-plus"></i> Agregar</button>
+            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+
+        <div class="wishlist-item">
+          <div class="item-thumb">
+            <i class="bi bi-journal-album" style="font-size: 2rem;"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Colección de Arte 2024</div>
+            <div class="item-meta">Art World</div>
+            <div class="item-stock out-stock">Agotado</div>
+          </div>
+          <div class="item-price">$120.00</div>
+          <div class="item-actions">
+            <button class="btn btn-sm btn-secondary" disabled>Sin Stock</button>
+            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <aside class="card summary">
+      <div class="card-header">
+        <h2>Tu Colección</h2>
+      </div>
+      <div class="summary-body">
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+          Tienes <strong>3 libros</strong> en tu lista de deseos. Muevelos al carrito para asegurar tu compra.
+        </p>
+        <div class="row total">
+          <span>Valor total</span>
+          <strong>$197.50</strong>
+        </div>
+        <button class="btn btn-primary" style="width:100%">
+          <i class="bi bi-cart-check"></i> Mover todo al carrito
+        </button>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
