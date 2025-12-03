@@ -218,12 +218,19 @@ exports.eliminarLibro = async (req, res) => {
 exports.obtenerReporteExistencias = async (req, res) => {
     try {
         const reporte = await getReporteExistencias();
-        res.json({ ok: true, categorias: reporte });
+
+        res.json({
+            ok: true,
+            categorias: reporte.categorias,   // Stock por categoría
+            totalLibros: reporte.totalLibros  // Libros diferentes
+        });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ ok: false, message: "Error al obtener reporte" });
+        console.error("Error al obtener reporte de existencias:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener reporte de existencias"
+        });
     }
 };
-
 

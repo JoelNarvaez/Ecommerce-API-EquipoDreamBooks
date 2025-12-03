@@ -1,4 +1,29 @@
 // ===============================================================
+// FUNCIONES AUXILIARES PARA COLORES DINÁMICOS
+// ===============================================================
+function generarColorDesdeTexto(texto) {
+    let hash = 0;
+
+    for (let i = 0; i < texto.length; i++) {
+        hash = texto.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = "#";
+
+    for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xFF;
+        color += ("00" + value.toString(16)).substr(-2);
+    }
+
+    return color;
+}
+
+function generarDegradado(colorBase) {
+    return `linear-gradient(135deg, ${colorBase}, ${colorBase}dd)`;
+}
+
+
+// ===============================================================
 // REPORTE DINÁMICO DE EXISTENCIAS POR CATEGORÍA
 // ===============================================================
 async function cargarLibrosTotales() {
@@ -10,26 +35,38 @@ async function cargarLibrosTotales() {
         });
 
         const data = await res.json();
-        if (!res.ok || !data.ok) return;
 
+        // Validar respuesta
+        if (!data.ok) {
+            console.error("Error en reporte:", data.message);
+            return;
+        }
+
+        // Datos del backend
         const categorias = data.categorias || {};
+        const totalLibros = data.totalLibros || 0;
 
-        // 🔥 TOTAL DE LIBROS DIFERENTES
-        document.getElementById("total-libros").textContent = data.totalLibros || 0;
+        // 🔥 Mostrar total de libros diferentes
+        const totalLibrosEl = document.getElementById("total-libros");
+        if (totalLibrosEl) {
+            totalLibrosEl.textContent = totalLibros;
+        }
 
         const contenedor = document.getElementById("dashboard-report");
+        if (!contenedor) return;
 
         contenedor.innerHTML = `
             <h2>Reporte de existencias por categoría</h2>
         `;
 
+        // Crear cards dinámicamente
         Object.entries(categorias).forEach(([nombre, cantidad]) => {
-
-            const slug = nombre.toLowerCase().replace(/\s+/g, "-");
+            const colorBase = generarColorDesdeTexto(nombre);
+            const gradiente = generarDegradado(colorBase);
 
             contenedor.innerHTML += `
                 <div class="category-card">
-                    <div class="category-icon category-${slug}">
+                    <div class="category-icon" style="background: ${gradiente}">
                         <i class="bi bi-collection-fill"></i>
                     </div>
                     <div class="category-label">${nombre}:</div>
@@ -42,7 +79,9 @@ async function cargarLibrosTotales() {
         console.error("Error en reporte dinámico:", err);
     }
 }
-// Ejecutar al cargar la página solo si necesitas la data desde inicio
+
+
+// Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     cargarLibrosTotales();
 });

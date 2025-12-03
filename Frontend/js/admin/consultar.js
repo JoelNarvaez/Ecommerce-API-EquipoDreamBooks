@@ -147,8 +147,12 @@ async function cargarCategoriasSelect() {
     if (!select) return;
 
     // Reiniciar select
-    select.innerHTML = `<option value="">Todas</option>`;
+    select.innerHTML = `
+      <option value="">Todas</option>
+      <option value="oferta">Ofertas</option>   <!-- 🔥 AGREGADO -->
+    `;
 
+    // Categorías desde la BD
     data.categorias.forEach(cat => {
       select.innerHTML += `
         <option value="${cat}">${cat}</option>
@@ -160,10 +164,6 @@ async function cargarCategoriasSelect() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  cargarCategoriasSelect(); // ← LLAMAR AQUÍ
-  fetchBooks(1, 10);
-});
 
 
 // --------------------------------------------------------

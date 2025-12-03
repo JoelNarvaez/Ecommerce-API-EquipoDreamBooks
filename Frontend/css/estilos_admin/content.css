@@ -151,3 +151,24 @@
         transform 0.45s ease,
         padding 0.45s ease;
 }
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    color: white;
+    flex-shrink: 0;
+
+    box-shadow: rgba(0,0,0,0.15) 0px 4px 10px;
+    transition: 0.3s ease;
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.07);
+}

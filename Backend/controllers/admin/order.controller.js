@@ -1,6 +1,3 @@
-const db = require("../../config/db");
-
-// Importar funciones del modelo
 const {
     crearPedido,
     agregarDetalle,
@@ -9,12 +6,14 @@ const {
     obtenerIngresosTotales,
     obtenerIngresosDia,
     obtenerIngresosSemana,
-    obtenerIngresosMes
+    obtenerIngresosMes,
+    obtenerHistorialDiarioMes
 } = require("../../models/orderModel");
 
-/* ============================================================
-   GET /api/admin/pedidos
-============================================================ */
+
+// ============================================================
+//  GET /api/admin/pedidos
+// ============================================================
 async function getPedidos(req, res) {
     try {
         const pedidos = await obtenerPedidos();
@@ -25,9 +24,10 @@ async function getPedidos(req, res) {
     }
 }
 
-/* ============================================================
-   GET /api/admin/pedidos/:id
-============================================================ */
+
+// ============================================================
+//  GET /api/admin/pedidos/:id
+// ============================================================
 async function getPedidoById(req, res) {
     try {
         const id = req.params.id;
@@ -39,9 +39,10 @@ async function getPedidoById(req, res) {
     }
 }
 
-/* ============================================================
-   POST /api/admin/crear-pedido
-============================================================ */
+
+// ============================================================
+//  POST /api/admin/crear-pedido
+// ============================================================
 async function crearPedidoCompleto(req, res) {
     try {
         const usuario_id = req.usuario?.id || 1;
@@ -51,16 +52,13 @@ async function crearPedidoCompleto(req, res) {
             return res.status(400).json({ ok: false, msg: "No hay productos en el pedido" });
         }
 
-        // Calcular total
         const total = items.reduce(
             (sum, item) => sum + item.cantidad * item.precio_unitario,
             0
         );
 
-        // Crear pedido
         const pedido_id = await crearPedido(usuario_id, total);
 
-        // Crear detalles
         for (const item of items) {
             await agregarDetalle(
                 pedido_id,
@@ -82,32 +80,54 @@ async function crearPedidoCompleto(req, res) {
     }
 }
 
-/* ============================================================
-   GET /api/admin/ingresos
-   → Regresa:
-       • total
-       • dia
-       • semana
-       • mes
-============================================================ */
+
 async function getIngresos(req, res) {
     try {
         const total = await obtenerIngresosTotales();
         const dia = await obtenerIngresosDia();
         const semana = await obtenerIngresosSemana();
         const mes = await obtenerIngresosMes();
+        const historialRows = await obtenerHistorialDiarioMes();
+
+        const historial = historialRows.map(r => ({
+            dia: r.dia,
+            total: Number(r.total)
+        }));
+
+        const promedio =
+            historial.length > 0
+                ? historial.reduce((acc, v) => acc + v.total, 0) / historial.length
+                : 0;
+
+        let tendencia = 0;
+        if (historial.length >= 2) {
+            tendencia =
+                historial[historial.length - 1].total -
+                historial[historial.length - 2].total;
+        }
 
         res.json({
             ok: true,
-            ingresos: { total, dia, semana, mes }
+            ingresos: {
+                total,
+                dia,
+                semana,
+                mes,
+                historial,
+                promedio,
+                tendencia
+            }
         });
 
-    } catch (error) {
-        console.error("❌ Error en getIngresos:", error);
+    } catch (e) {
+        console.error("❌ Error en getIngresos:", e);
         res.status(500).json({ ok: false, message: "Error obteniendo ingresos" });
     }
 }
 
+
+
+// EXPORTAR CONTROLADOR
 module.exports = {
     getPedidos,
     getPedidoById,

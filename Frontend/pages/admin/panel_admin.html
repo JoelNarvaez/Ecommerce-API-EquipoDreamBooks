@@ -111,45 +111,54 @@
 </div>
 <!-- TARJETA PRINCIPAL -->
 <div class="stat-card" id="stat-ingresos">
-    <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+    <div class="stat-icon ingresos-icon-main">
+        <i class="bi bi-cash-stack"></i>
+    </div>
+
     <div class="stat-content">
-        <h3>Ingresos totales</h3>
+        <h3>Ingresos Totales</h3>
         <p id="total-ingresos" class="stat-number">$0.00</p>
     </div>
+
     <i class="bi bi-chevron-down stat-arrow"></i>
 </div>
 
 <!-- BLOQUE DESPLEGABLE -->
 <div id="ingresos-report" class="hidden ingresos-panel">
 
-    <!-- INGRESOS DEL DÍA -->
-    <div class="stat-card ingresos-dia mini-card">
-        <div class="stat-icon"><i class="bi bi-calendar-day"></i></div>
-        <div class="stat-content">
-            <h3>Ingresos del día</h3>
-            <p id="ingreso-dia" class="stat-number">$0.00</p>
-        </div>
-    </div>
+    <div class="ingresos-grid">
 
-    <!-- INGRESOS DE LA SEMANA -->
-    <div class="stat-card ingresos-semana mini-card">
-        <div class="stat-icon"><i class="bi bi-calendar-week"></i></div>
-        <div class="stat-content">
-            <h3>Ingresos de la semana</h3>
-            <p id="ingreso-semana" class="stat-number">$0.00</p>
+        <!-- DIA -->
+        <div class="ingreso-box dia">
+            <div class="ingreso-icon icon-dia">
+                <i class="bi bi-calendar-day"></i>
+            </div>
+            <h4>Hoy</h4>
+            <p id="ingreso-dia" class="ingreso-number">$0.00</p>
         </div>
-    </div>
 
-    <!-- INGRESOS DEL MES -->
-    <div class="stat-card ingresos-mes mini-card">
-        <div class="stat-icon"><i class="bi bi-calendar-month"></i></div>
-        <div class="stat-content">
-            <h3>Ingresos del mes</h3>
-            <p id="ingreso-mes" class="stat-number">$0.00</p>
+        <!-- SEMANA -->
+        <div class="ingreso-box semana">
+            <div class="ingreso-icon icon-semana">
+                <i class="bi bi-calendar-week"></i>
+            </div>
+            <h4>Esta semana</h4>
+            <p id="ingreso-semana" class="ingreso-number">$0.00</p>
         </div>
+
+        <!-- MES -->
+        <div class="ingreso-box mes">
+            <div class="ingreso-icon icon-mes">
+                <i class="bi bi-calendar-month"></i>
+            </div>
+            <h4>Este mes</h4>
+            <p id="ingreso-mes" class="ingreso-number">$0.00</p>
+        </div>
+
     </div>
 
 </div>
+
              <div class="stat-card" id="stat-libros">
     <div class="stat-icon"><i class="bi bi-box"></i></div>
     <div class="stat-content">

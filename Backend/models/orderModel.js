@@ -9,7 +9,7 @@ async function crearPedido(usuarioId, total) {
     return result.insertId;
 }
 
-// Agregar cada producto al pedido
+// Agregar detalle
 async function agregarDetalle(pedidoId, productoId, cantidad, precio) {
     await db.query(
         `INSERT INTO pedido_detalles (pedido_id, producto_id, cantidad, precio_unitario)
@@ -18,7 +18,7 @@ async function agregarDetalle(pedidoId, productoId, cantidad, precio) {
     );
 }
 
-// Obtener todos los pedidos
+// Obtener pedidos
 async function obtenerPedidos() {
     const [rows] = await db.query(`
         SELECT p.id, u.nombre AS usuario, p.total, p.estado, p.creado_en
@@ -29,20 +29,20 @@ async function obtenerPedidos() {
     return rows;
 }
 
-// Obtener detalles de un pedido
+// Obtener detalles
 async function obtenerPedidoDetalles(id) {
     const [rows] = await db.query(`
         SELECT d.*, pr.nombre
         FROM pedido_detalles d
-        LEFT JOIN productos pr ON pr.id = d.product_id
+        LEFT JOIN productos pr ON pr.id = d.producto_id
         WHERE d.pedido_id = ?
     `, [id]);
+
     return rows;
 }
 
-// ---------------------------
-// INGRESOS → CONSULTAS SQL
-// ---------------------------
+
+// ==================== INGRESOS ====================
 
 // Total acumulado
 async function obtenerIngresosTotales() {
@@ -84,6 +84,22 @@ async function obtenerIngresosMes() {
     return rows[0].mes;
 }
 
+// Historial diario del mes
+async function obtenerHistorialDiarioMes() {
+    const [rows] = await db.query(`
+        SELECT 
+            DAY(creado_en) AS dia,
+            SUM(total) AS total
+        FROM pedidos
+        WHERE MONTH(creado_en) = MONTH(CURDATE())
+        AND YEAR(creado_en) = YEAR(CURDATE())
+        GROUP BY DAY(creado_en)
+        ORDER BY dia ASC
+    `);
+
+    return rows;
+}
+
 module.exports = {
     crearPedido,
     agregarDetalle,
@@ -92,5 +108,6 @@ module.exports = {
     obtenerIngresosTotales,
     obtenerIngresosDia,
     obtenerIngresosSemana,
-    obtenerIngresosMes
+    obtenerIngresosMes,
+    obtenerHistorialDiarioMes
 };

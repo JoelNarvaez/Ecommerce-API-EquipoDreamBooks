@@ -216,15 +216,23 @@ async function deleteBook(id) {
 // REPORTE EXISTENCIAS
 // ---------------------------------------------------
 async function getReporteExistencias() {
+
+    // Stock por categoría
     const [rows] = await db.query(`
         SELECT categoria, SUM(stock) AS total_stock
         FROM productos GROUP BY categoria
     `);
 
-    const reporte = {};
-    rows.forEach(r => reporte[r.categoria] = r.total_stock);
+    const categorias = {};
+    rows.forEach(r => categorias[r.categoria] = r.total_stock);
 
-    return reporte;
+    // 🔥 TOTAL DE LIBROS DIFERENTES (sin sumar stock)
+    const [count] = await db.query(`SELECT COUNT(*) AS totalLibros FROM productos`);
+
+    return {
+        categorias,
+        totalLibros: count[0].totalLibros
+    };
 }
 
 // =============================================================

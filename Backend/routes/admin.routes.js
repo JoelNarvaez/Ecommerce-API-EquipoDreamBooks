@@ -50,11 +50,6 @@ router.put("/eliminar-stock/:id", verifyToken, eliminarStock);
 router.get("/pedidos", verifyToken, getPedidos);
 router.get("/pedidos/:id", verifyToken, getPedidoById);
 router.post("/crear-pedido", verifyToken, crearPedidoCompleto);
-
-
-// ==============================================
-// RUTA DE INGRESOS (totales, día, semana, mes)
-// ==============================================
 router.get("/ingresos", verifyToken, getIngresos);
 
 
