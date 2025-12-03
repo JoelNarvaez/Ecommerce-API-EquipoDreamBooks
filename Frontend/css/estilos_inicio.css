@@ -138,6 +138,7 @@ main{
 .presentacion-contenedor p{
   font-size: 1.2rem;
   line-height: 2rem;
+  color: var(--color-texto);
 }
 
 .titulo, .eslogan{
@@ -147,34 +148,28 @@ main{
   color: var(--color-titulos);
 }
 
-h2{
+ h2{
   text-align: center;
   margin-top: 4rem;
   font-size: 2rem;
-  color: #737373;
+  color: var(--color-titulos)!important;
 }
 
 hr{
     width: 6rem;
     height: 1px;
-    background-color: #333333;
+    color: var(--color-texto);
     margin-bottom: 10px;
     text-align: left;
 }
 
 .img-presentacion {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.img-presentacion img {
-  width: 100%;
-  max-width: 500px; 
-  height: auto;
-  object-fit: contain;
-  display: block;
+  height: 50vh; /* 50% de la altura de la ventana */
+  background-image: var(--img-presentacion-inicio);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /*Productos*/

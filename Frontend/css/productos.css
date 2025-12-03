@@ -58,7 +58,7 @@
     padding: 14px 16px;
 }
 
-/* 🔥 TÍTULO MÁS PEGADO Y ELEGANTE */
+/*TÍTULO */
 .product-info h3 {
     font-size: 1.1rem;
     font-weight: 700;
@@ -133,7 +133,7 @@
     position: absolute;
     top: 12px;
     left: 12px;
-    background: #380cd6;
+    background: #89ace1;
     color: #fff;
     padding: 6px 12px;
     font-size: 13px;
@@ -191,3 +191,95 @@
     text-decoration: none;
     color: inherit;
 }
+
+/* ===========================================
+   BOTONES DE ACCIÓN (wishlist, carrito, comprar)
+=========================================== */
+
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding-bottom: 8px;
+}
+
+/* Botón base */
+.btn-card {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f2f2f2;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Iconos */
+.btn-card i {
+    font-size: 18px;
+    color: #444;
+    transition: 0.25s ease;
+}
+
+/* Hover general */
+.btn-card:hover {
+    transform: translateY(-3px);
+    background: #333;
+}
+
+.btn-card:hover i {
+    color: #fff;
+}
+
+/* ====================
+   Colores por tipo
+==================== */
+
+/* Wishlist (corazón) */
+.wishlist-btn i {
+    color: #a14c6b;
+}
+
+.wishlist-btn:hover {
+    background: #a14c6b;
+}
+
+.wishlist-btn:hover i {
+    color: #fff;
+}
+
+/* Carrito */
+.cart-btn i {
+    color: #89ace1;
+}
+
+.cart-btn:hover {
+    background: #89ace1;
+}
+
+.cart-btn:hover i {
+    color: #fff;
+}
+
+/* Comprar */
+.buy-btn i {
+    color: #00b6a6;
+}
+
+.buy-btn:hover {
+    background: #00b6a6;
+}
+
+.buy-btn:hover i {
+    color: #fff;
+}
+
+
+

@@ -4,10 +4,45 @@
     <meta charset="UTF-8">
     <title>DreamBooks | Detalle del Libro</title>
     <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/detalle-libro.css">
+    <link rel="stylesheet" href="../css/productos.css">
+    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="sin-hero">
+     <header>
+        <nav class="header-general">
+            <div class="menu-izq">
+                <div class="logo-header"></div>
+            </div>
+            <div class="menu-centro">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="/Frontend/pages/libros.html">Libros</a></li>
+                    <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="menu-der">
+                <ul>
+                    <li id="userInfo" style="display:none;" class="user-info">
+                        <i class="fa-solid fa-book-open-reader user-icon"></i>
+                        <span id="userName" class="user-name"></span>
+                    </li>
+                    <li  id="btnAcceder"><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
+                    <li><button id="btnCerrarSesion" class="button-logout" style="display:none">Salir</button>
+                    </li>
+                    <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
+                    <li><i class="fa-solid fa-cart-shopping"></i></li>
+                </ul>  
+            </div>  
+        </nav>
+    <div class="separador-header"></div>
+    </header>
+
 
 <div class="detalle-container">
 
@@ -26,14 +61,10 @@
         <p class="autor"><strong>Autor:</strong> <span id="autor"></span></p>
         <p class="editorial"><strong>Editorial:</strong> <span id="editorial"></span></p>
 
-        <!-- PRECIO -->
-        <div class="precio-box" id="precioBox"></div>
 
-        <!-- STOCK -->
-        <p id="stock"></p>
 
         <!-- DESCRIPCIÓN -->
-        <h3>Descripción</h3>
+        <h3>Sinopsis</h3>
         <p class="descripcion" id="descripcion"></p>
 
         <!-- EXTRA INFO -->
@@ -42,17 +73,123 @@
             <p><strong>Tipo de libro:</strong> <span id="tipo"></span></p>
             <p><strong>Páginas:</strong> <span id="paginas"></span></p>
         </div>
-
+    </div>
+    <div class="pago-seccion">
+        <!-- PRECIO -->
+        <div class="precio-box precio-grande" id="precioBox"></div>
+        <!-- STOCK -->
+        <p id="stock"></p>
         <!-- BOTONES -->
         <div class="acciones">
-            <button class="btn agregar">Agregar al carrito</button>
-            <button class="btn comprar">Comprar ahora</button>
+            <button class="btn agregar"><i class="fa-solid fa-cart-plus"></i> Agregar al carrito</button>
+        </div>
+        <div class="acciones">
+            <button class="btn comprar"><i class="fa-solid fa-money-check-dollar"></i>Comprar ahora</button>
+        </div>
+        <div class="acciones">
+            <button class="btn wishlist"><i class="fa-solid fa-heart"></i>Lista de deseos</button>
         </div>
     </div>
-
 </div>
 
-<script src="../js/detalle-libro.js"></script>
+    <section class="section-slider">
+        <h2 class="section-title">Similares</h2>
+
+        <div class="slider-wrapper">
+            <button class="slider-btn left" data-target="slider-recomendados">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="slider-container" id="slider-recomendados"></div>
+
+            <button class="slider-btn right" data-target="slider-recomendados">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+    <!-- Accesibilidad -->
+    <button id="btnAccesibilidad" class="accesibilidad-btn">
+        <i class="fa-solid fa-universal-access"></i> 
+    </button>
+        <!-- Panel lateral de accesibilidad -->
+    <div id="panelAccesibilidad" class="accesibilidad-panel">
+
+        <h2>Accesibilidad</h2>
+
+        <!-- Tema claro/oscuro -->
+        <div class="opcion">
+            <span>Tema:</span>
+            <button id="btnTema" class="tema-btn">
+                <i id="iconTema" class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+
+        <!-- Tamaño de texto -->
+        <div class="opcion">
+            <span>Tamaño de texto:</span>
+            <div class="texto-controles">
+                <button id="textoMenos">A-</button>
+                <button id="textoMas">A+</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <footer class="footer">
+        <div class="footer-contenedor">
+            <div class="footer-contenido">
+                <div class="footer-info">
+                <h2>DreamBooks</h2>
+                <p>"Sueña despierto"</p>
+                <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
+                </div>
+                <div class="footer-redes">
+                    <h4>Síguenos en redes sociales</h4>
+                    <div class="redes-sociales">    
+                        <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
+                    <div class="info-contacto">
+                        
+                    </div>
+                </div>
+                <div class="menu-footer-contenedor">
+                    <ul class="menu-footer">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="#">Libros</a></li>
+                        <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                </ul>
+                </div>
+                <div class="footer-suscripcion">
+                    <form class="form-suscripcion-footer" action="">
+                        <div class="suscripcion-contenedor">
+                            <h3>Suscríbete</h3>
+                            <label for="fname">Correo electrónico:</label><br>
+                            <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
+                            <input type="submit" id="enviar-suscripcion" value="Enviar">
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2025. Todos los derechos reservados.</p>
+                <p>Este es un proyecto académico para la materia de programación web</p>
+            </div>
+        </div>
+    </footer>
+    
+
+    <script src="../js/detalle-libro.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

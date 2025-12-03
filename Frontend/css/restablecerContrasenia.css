@@ -5,8 +5,9 @@
 .contacto-section {
   font-size: var(--font-size-base);
   padding: 60px 0;
-  background-color: #f5f5f5;
+  background-color: var(--color-fondo)!important;
 }
+
 
 .contacto-container {
   padding: 60px 70px;

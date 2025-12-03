@@ -34,6 +34,9 @@ document.getElementById("formLogin").addEventListener("submit", async function (
             localStorage.setItem("userName", result.user.nombre);
             localStorage.setItem("userRole", result.user.rol);
 
+            localStorage.setItem("usuarioActual", result.user.nombre);
+
+
             // Validación de rol 
             if(result.user.rol === "admin"){
                 window.location.href = "/Frontend/pages/admin/panel_admin.html";

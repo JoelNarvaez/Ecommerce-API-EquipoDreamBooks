@@ -25,7 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cerrar sesión
     btnCerrarSesion.addEventListener("click", () => {
-        localStorage.clear();
-        window.location.reload();
-    });
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("usuarioActual");
+
+   
+    window.location.reload();
+});
+
 });

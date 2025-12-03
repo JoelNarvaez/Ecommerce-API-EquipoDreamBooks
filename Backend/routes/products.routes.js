@@ -7,7 +7,8 @@ const {
     getBook,
     getNovedades,
     getOfertas,
-    getCategorias
+    getCategorias,
+    getBooksByCategoria
 } = require("../controllers/usuario/books.controller");
 
 router.get("/books", getBooks);
@@ -15,6 +16,9 @@ router.get("/book/:id", getBook);
 
 router.get("/books/novedades", getNovedades);
 router.get("/books/ofertas", getOfertas);
+
+router.get("/books/categoria/:categoria", getBooksByCategoria);
+
 router.get("/categorias", getCategorias);
 
 

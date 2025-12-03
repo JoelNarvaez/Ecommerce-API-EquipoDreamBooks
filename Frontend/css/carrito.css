@@ -4,9 +4,22 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f5f5f5;
+  font-family: var(--font-family);
+  background: var(--color-fondo);
   color: #111;
+  color: var(--color-texto) !important;
+}
+
+main{
+  min-height: 80vh;
+}
+
+h2{
+   color:var(--color-gris);
+}
+
+.row{
+  color: black;
 }
 
 .shop-header {
@@ -140,6 +153,7 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: 0.3s;
+  font-family: var(--font-family);
 }
 .btn-primary {
   background: linear-gradient(135deg, #000, #444);

@@ -9,6 +9,20 @@
   margin-top: 20px;
 }
 
+h3{
+  font-family: var(--font-family);
+}
+
+.precio{
+  font-family: var(--font-family);
+}
+
+#ordenar{
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  padding: 0.5rem;
+}
+
 /* ================================
    Paginación 
 ================================ */
@@ -20,7 +34,7 @@
 }
 
 .page-btn {
-  background: #c47a62;
+  background: var(--color-boton)!important;
   color: white;
   border: none;
   padding: 8px 14px;
@@ -30,15 +44,16 @@
   cursor: pointer;
   transition: 0.2s ease-in-out;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  font-family: var(--font-family);
 }
 
 .page-btn:hover {
-  background: #a86450;
+  background:var(--color-boton-hover)!important;
   transform: translateY(-2px);
 }
 
 .page-btn.active {
-  background: #8c4f39;
+  background: var(--color-boton)!important;
   color: #fff;
   transform: scale(1.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
@@ -50,6 +65,7 @@
   padding: 20px;
   border-radius: 10px;
   height: fit-content;
+  font-family: var(--font-family);
 }
 
 .filtro-grupo {
@@ -61,6 +77,7 @@
   font-size: 17px;
   font-weight: bold;
   color: #000;
+  font-family: var(--font-family);
 }
 
 .filtro-grupo ul {
@@ -77,26 +94,29 @@
 
 .campo-precio label {
   font-size: 14px;
+  font-family: var(--font-family);
 }
 
 .campo-precio input {
   width: 70px;
   padding: 5px;
+  font-family: var(--font-family);
 }
 
 .btn-filtrar-precio {
   width: 100%;
-  background: #bc7f63;
+  background: var(--color-boton);
   color: white;
   padding: 8px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   margin-top: 10px;
+  font-family: var(--font-family);
 }
 
 .btn-filtrar-precio:hover {
-  background: #a56e55;
+  background: var(--color-boton-hover);
 }
 
 .zona-libros {
@@ -114,7 +134,7 @@
   width: 60%;
   max-width: 700px;
   background: #fff;
-  border: 2px solid #d3c2b6;
+  border: 2px solid var(--color-boton);
   display: flex;
   padding: 10px 15px;
   border-radius: 30px;
@@ -129,16 +149,17 @@
 }
 
 .buscador-contenedor button {
-  background: #bc7f63;
+  background: var(--color-boton);
   color: white;
   border: none;
   padding: 8px 12px;
   border-radius: 50%;
   cursor: pointer;
+  width: 5.7%;
 }
 
 .buscador-contenedor button:hover {
-  background: #a56e55;
+   background: var(--color-boton-hover);
 }
 
 /* ================================
@@ -191,7 +212,8 @@
   width: 100%;
   padding: 10px;
   margin-top: 10px;
-  background: #bc7f63;
+  background: var(--color-boton);
+  font-family: var(--font-family);
   border: none;
   color: white;
   font-weight: 600;
@@ -201,7 +223,7 @@
 }
 
 .btn-limpiar-filtros:hover {
-  background: #a56e55;
+  background: var(--color-boton-hover);
 }
 
 .no-books-msg {
