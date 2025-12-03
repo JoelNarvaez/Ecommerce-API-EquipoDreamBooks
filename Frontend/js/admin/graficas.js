@@ -1,233 +1,416 @@
-/* ========================================================================
-   GRAFICA 1 — PEDIDOS TOTALES
-======================================================================== */
-let chartPedidos = null;
+/* ============================================================================
+   VARIABLES GLOBALES DE LAS GRÁFICAS
+============================================================================ */
+let chartPedidos   = null;
+let chartIngresos  = null;
+let chartExistencias = null;
 
+
+/* ============================================================================
+   GRAFICA 1 — PEDIDOS TOTALES (RadialBar)
+============================================================================ */
 async function generarGraficaPedidos() {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    try {
-        const res = await fetch("http://localhost:3000/api/admin/pedidos", {
-            headers: { "Authorization": "Bearer " + token }
-        });
+  try {
+    const res = await fetch("http://localhost:3000/api/admin/pedidos", {
+      headers: { "Authorization": "Bearer " + token }
+    });
 
-        const data = await res.json();
-        if (!data.ok) return;
+    const data = await res.json();
+    if (!data.ok) return;
 
-        const totalPedidos = data.pedidos.length;
+    const totalPedidos = data.pedidos.length;
 
-        const opciones = {
-            chart: { type: "radialBar", height: 300 },
-            series: [totalPedidos],
-            labels: ["Pedidos Totales"],
-            colors: ["#000"],
-        };
+    const opciones = {
+      chart: {
+        type: "radialBar",
+        height: 320,
+        sparkline: { enabled: true }
+      },
 
-        if (chartPedidos) chartPedidos.destroy();
+      series: [totalPedidos],
 
-        chartPedidos = new ApexCharts(
-            document.querySelector("#chart-pedidos"),
-            opciones
-        );
+      colors: ["#0072ff"],
 
-        chartPedidos.render();
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "light",
+          type: "horizontal",
+          gradientToColors: ["#27aeef"],
+          stops: [0, 100]
+        }
+      },
 
-        actualizarKpiPedidos(totalPedidos);
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            size: "62%",
+            background: "#f6f7f9"
+          },
+          track: {
+            background: "#ececec",
+            strokeWidth: "90%"
+          },
+          dataLabels: {
+            name: {
+              offsetY: 22,
+              color: "#333",
+              fontSize: "15px",
+              formatter: () => "Pedidos Totales"
+            },
+            value: {
+              offsetY: -12,
+              color: "#000",
+              fontSize: "34px",
+              fontWeight: "700",
+              formatter: function () {
+                return totalPedidos;
+              }
+            }
+          }
+        }
+      },
 
-    } catch (error) {
-        console.error("Error generando gráfica de pedidos:", error);
-    }
+      stroke: {
+        lineCap: "round"
+      }
+    };
+
+    if (chartPedidos) chartPedidos.destroy();
+
+    chartPedidos = new ApexCharts(
+      document.querySelector("#chart-pedidos"),
+      opciones
+    );
+
+    chartPedidos.render();
+
+    actualizarKpiPedidos(totalPedidos);
+
+  } catch (error) {
+    console.error("Error generando gráfica de pedidos:", error);
+  }
 }
+
 
 function actualizarKpiPedidos(total) {
-    document.getElementById("kpi-ped-prom").textContent =
-        Math.max(1, Math.round(total / 7)) + " por día";
+  const promEl  = document.getElementById("kpi-ped-prom");
+  const trendEl = document.getElementById("kpi-ped-trend");
 
-    const trendEl = document.getElementById("kpi-ped-trend");
-    trendEl.textContent = total >= 15 ? "↑ Subiendo" : "↓ Estable";
-    trendEl.className = total >= 15 ? "kpi-up" : "kpi-down";
+  if (promEl) {
+    promEl.textContent = Math.max(1, Math.round(total / 7)) + " por día";
+  }
+
+  if (trendEl) {
+    if (total >= 15) {
+      trendEl.textContent = "↑ Subiendo";
+      trendEl.className   = "kpi-up";
+    } else {
+      trendEl.textContent = "↓ Estable";
+      trendEl.className   = "kpi-down";
+    }
+  }
 }
 
 
-/* ========================================================================
-   GRAFICA 2 — INGRESOS (REAL CON PROMEDIO Y TENDENCIA)
-======================================================================== */
-let chartIngresos = null;
-
+/* ============================================================================
+   GRAFICA 2 — INGRESOS (Área moderna)
+============================================================================ */
 async function generarGraficaIngresos() {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    try {
-        const res = await fetch("http://localhost:3000/api/admin/ingresos", {
-            headers: { "Authorization": "Bearer " + token }
-        });
+  try {
+    const res = await fetch("http://localhost:3000/api/admin/ingresos", {
+      headers: { "Authorization": "Bearer " + token }
+    });
 
-        const data = await res.json();
-        if (!data.ok) return;
+    const data = await res.json();
+    console.log("Respuesta /ingresos:", data);
 
-        const info = data.ingresos || {};
+    const info = data.ingresos || {};
 
-        // Historial REAL del backend
-        const historial = Array.isArray(info.historial)
-            ? info.historial
-            : [];
+    const historial = Array.isArray(info.historial) ? info.historial : [];
 
-        // Construir series correctamente
-        const serie = historial.length
-            ? historial.map(r => Number(r.total))
-            : [0];
+    // Serie de datos
+    const serie = historial.length
+      ? historial.map(r => Number(r.total || 0))
+      : [0];
 
-        const categorias = historial.length
-            ? historial.map(r => `Día ${r.dia}`)
-            : ["Sin datos"];
+    // Etiquetas eje X (Día 1, Día 2, ...)
+    const labels = historial.length
+      ? historial.map(r => `Día ${r.dia}`)
+      : ["Sin datos"];
 
-        const promedio = info.promedio || 0;
-        const tendencia = info.tendencia || 0;
-
-        const opciones = {
-            chart: { type: "area", height: 300 },
-            series: [{
-                name: "Ingresos del mes",
-                data: serie
-            }],
-            xaxis: { categories },
-            colors: ["#0f9d58"],
-            stroke: { width: 3 },
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.4,
-                    opacityTo: 0.1
-                }
-            }
-        };
-
-        if (chartIngresos) chartIngresos.destroy();
-
-        chartIngresos = new ApexCharts(
-            document.querySelector("#chart-ingresos"),
-            opciones
-        );
-
-        chartIngresos.render();
-
-        actualizarKpiIngresos(promedio, tendencia);
-
-    } catch (error) {
-        console.error("Error generando gráfica de ingresos:", error);
+    // Promedio
+    let promedio = Number(info.promedio);
+    if (!Number.isFinite(promedio)) {
+      const suma = serie.reduce((acc, v) => acc + v, 0);
+      promedio = serie.length ? suma / serie.length : 0;
     }
+
+    // Tendencia
+    let tendencia = Number(info.tendencia);
+    if (!Number.isFinite(tendencia) && serie.length >= 2) {
+      tendencia = serie[serie.length - 1] - serie[serie.length - 2];
+    }
+    if (!Number.isFinite(tendencia)) tendencia = 0;
+
+    const opciones = {
+      chart: {
+        type: "area",
+        height: 300,
+        toolbar: {
+          show: true,
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true
+          }
+        }
+      },
+      series: [{
+        name: "Ingresos del mes",
+        data: serie
+      }],
+      xaxis: {
+        categories: labels,
+        labels: {
+          style: {
+            fontSize: "11px",
+            colors: "#666"
+          }
+        }
+      },
+      colors: ["#0f9d58"],
+      stroke: {
+        width: 3,
+        curve: "smooth"
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.4,
+          opacityTo: 0.1,
+          stops: [0, 100]
+        }
+      },
+      markers: {
+        size: 4,
+        colors: ["#ffffff"],
+        strokeColors: ["#0f9d58"],
+        strokeWidth: 2
+      },
+      tooltip: {
+        y: {
+          formatter: (val) =>
+            "$" + Number(val).toLocaleString("es-MX", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+        }
+      }
+    };
+
+    if (chartIngresos) {
+      chartIngresos.destroy();
+    }
+
+    chartIngresos = new ApexCharts(
+      document.querySelector("#chart-ingresos"),
+      opciones
+    );
+
+    chartIngresos.render();
+    actualizarKpiIngresos(promedio, tendencia);
+
+  } catch (error) {
+    console.error("Error generando gráfica de ingresos:", error);
+  }
 }
 
 function actualizarKpiIngresos(promedio, tendencia) {
-    const promEl = document.getElementById("kpi-ing-prom");
-    const trendEl = document.getElementById("kpi-ing-trend");
+  const promEl  = document.getElementById("kpi-ing-prom");
+  const trendEl = document.getElementById("kpi-ing-trend");
 
-    promEl.textContent = "$" + promedio.toFixed(2);
+  if (promEl) {
+    promEl.textContent = "$" + (promedio || 0).toFixed(2);
+  }
 
-    if (tendencia >= 0) {
-        trendEl.textContent = `↑ +$${tendencia.toFixed(2)}`;
-        trendEl.className = "kpi-up";
-    } else {
-        trendEl.textContent = `↓ $${tendencia.toFixed(2)}`;
-        trendEl.className = "kpi-down";
-    }
+  if (!trendEl) return;
+
+  if (tendencia >= 0) {
+    trendEl.textContent = `↑ +$${tendencia.toFixed(2)}`;
+    trendEl.className   = "kpi-up";
+  } else {
+    trendEl.textContent = `↓ $${tendencia.toFixed(2)}`;
+    trendEl.className   = "kpi-down";
+  }
 }
 
 
-
-/* ========================================================================
-   GRAFICA 3 — EXISTENCIAS POR CATEGORÍA (DINÁMICA)
-======================================================================== */
-let chartExistencias = null;
-
+/* ============================================================================
+   GRAFICA 3 — EXISTENCIAS POR CATEGORÍA (Barra PRO)
+============================================================================ */
 async function generarGraficaExistencias() {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    try {
-        const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
-            headers: { "Authorization": "Bearer " + token }
-        });
+  try {
+    const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
+      headers: { "Authorization": "Bearer " + token }
+    });
 
-        const data = await res.json();
-        if (!data.ok) return;
+    const data = await res.json();
+    if (!data.ok) return;
 
-        const categoriasObj = data.categorias || {};
+    let categoriasObj = data.categorias || {};
 
-        const categorias = Object.keys(categoriasObj);
-        const valores = Object.values(categoriasObj).map(v => Number(v));
+    // Si viene como array [{nombre, cantidad}] lo convertimos a objeto plano
+    if (Array.isArray(categoriasObj)) {
+      categoriasObj = Object.fromEntries(
+        categoriasObj.map(c => [c.nombre, c.cantidad])
+      );
+    }
 
-        // Si no hay categorías, mostrar mensaje y limpiar KPIs
-        if (!categorias.length) {
-            if (chartExistencias) chartExistencias.destroy();
-            document.getElementById("kpi-stock-max").textContent = "—";
-            document.getElementById("kpi-stock-total").textContent = "—";
-            return;
+    const labels = Object.keys(categoriasObj);
+    const valores = Object.values(categoriasObj).map(v => Number(v) || 0);
+
+    if (!labels.length) {
+      if (chartExistencias) chartExistencias.destroy();
+      const maxEl = document.getElementById("kpi-stock-max");
+      const totEl = document.getElementById("kpi-stock-total");
+      if (maxEl) maxEl.textContent = "—";
+      if (totEl) totEl.textContent = "—";
+      return;
+    }
+
+    const palette = [
+      "#4a90e2", "#50e3c2", "#f5a623",
+      "#bd10e0", "#7ed321", "#f8e71c"
+    ];
+
+    const colores = labels.map((_, i) => palette[i % palette.length]);
+
+    const opciones = {
+      chart: {
+        type: "bar",
+        height: 320,
+        toolbar: { show: false }
+      },
+      series: [{
+        name: "Stock disponible",
+        data: valores
+      }],
+      xaxis: {
+        categories: labels,
+        labels: {
+          style: {
+            fontSize: "12px",
+            colors: "#666"
+          }
+        },
+        axisBorder: { show: false },
+        axisTicks:  { show: false }
+      },
+      yaxis: {
+        labels: {
+          style: {
+            fontSize: "11px",
+            colors: "#999"
+          }
         }
+      },
+      grid: {
+        borderColor: "rgba(0,0,0,0.04)",
+        strokeDashArray: 4,
+        xaxis: { lines: { show: false } }
+      },
+      colors: colores,
+      plotOptions: {
+        bar: {
+          borderRadius: 8,
+          distributed: true,
+          columnWidth: "45%",
+          dataLabels: {
+            position: "top"
+          }
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: (val) => val,
+        offsetY: -18,
+        style: {
+          fontSize: "12px",
+          colors: ["#111"]
+        }
+      },
+      tooltip: {
+        y: {
+          formatter: (val) => `${val} libros`
+        }
+      },
+      legend: {
+        show: false
+      }
+    };
 
-        const opciones = {
-            chart: { type: "bar", height: 320 },
-            series: [{ name: "Stock", data: valores }],
-            xaxis: { categories: categorias },
-            colors: ["#4a90e2"],
-            plotOptions: {
-                bar: {
-                    borderRadius: 6,
-                    distributed: true
-                }
-            },
-            dataLabels: { enabled: true }
-        };
-
-        if (chartExistencias) chartExistencias.destroy();
-
-        chartExistencias = new ApexCharts(
-            document.querySelector("#chart-existencias"),
-            opciones
-        );
-
-        chartExistencias.render();
-
-        actualizarKpiExistencias(categoriasObj);
-
-    } catch (error) {
-        console.error("Error generando gráfica de existencias:", error);
+    if (chartExistencias) {
+      chartExistencias.destroy();
     }
+
+    chartExistencias = new ApexCharts(
+      document.querySelector("#chart-existencias"),
+      opciones
+    );
+
+    chartExistencias.render();
+    actualizarKpiExistencias(categoriasObj);
+
+  } catch (error) {
+    console.error("Error generando gráfica de existencias:", error);
+  }
 }
 
-/* ========================================================================
-   KPI — EXISTENCIAS (SEGURO, SIN CRASHEAR)
-======================================================================== */
+
+/* ============================================================================
+   KPI — EXISTENCIAS
+============================================================================ */
 function actualizarKpiExistencias(categoriasObj) {
-    const entries = Object.entries(categoriasObj);
+  const entries = Object.entries(categoriasObj);
 
-    if (!entries.length) {
-        document.getElementById("kpi-stock-max").textContent = "—";
-        document.getElementById("kpi-stock-total").textContent = "—";
-        return;
-    }
+  const maxEl = document.getElementById("kpi-stock-max");
+  const totEl = document.getElementById("kpi-stock-total");
 
-    const ordenadas = entries
-        .slice() // copia
-        .sort((a, b) => Number(b[1]) - Number(a[1]));
+  if (!entries.length) {
+    if (maxEl) maxEl.textContent = "—";
+    if (totEl) totEl.textContent = "—";
+    return;
+  }
 
-    const mayor = ordenadas[0];
+  const ordenadas = entries
+    .slice()
+    .sort((a, b) => Number(b[1]) - Number(a[1]));
 
-    document.getElementById("kpi-stock-max").textContent =
-        `${mayor[0]} (${mayor[1]})`;
+  const [nombreMax, valorMax] = ordenadas[0];
 
-    const total = entries.reduce((sum, [, val]) => sum + Number(val), 0);
+  const total = entries.reduce(
+    (sum, [, v]) => sum + Number(v || 0),
+    0
+  );
 
-    document.getElementById("kpi-stock-total").textContent = total;
+  if (maxEl) {
+    maxEl.textContent = `${nombreMax} (${valorMax})`;
+  }
+
+  if (totEl) {
+    totEl.textContent = total;
+  }
 }
 
-
-
-/* ========================================================================
-   INICIALIZAR TODO
-======================================================================== */
-document.addEventListener("DOMContentLoaded", () => {
-    generarGraficaPedidos();
-    generarGraficaIngresos();
-    generarGraficaExistencias();
-});

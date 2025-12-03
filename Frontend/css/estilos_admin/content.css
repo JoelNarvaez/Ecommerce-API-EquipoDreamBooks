@@ -172,3 +172,326 @@
 .category-card:hover .category-icon {
     transform: scale(1.07);
 }
+
+
+.pedidos-report {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+}
+
+.pedidos-resumen-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.pill {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 6px;
+}
+
+.pill strong {
+    font-weight: 700;
+}
+
+.estado-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 16px;
+}
+
+.estado-list li {
+    font-size: 0.9rem;
+    padding: 4px 0;
+}
+
+.pedidos-table-wrapper {
+    max-height: 260px;
+    overflow: auto;
+}
+
+.pedidos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.pedidos-table th,
+.pedidos-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.pedidos-table th {
+    text-align: left;
+    background: #f2f2f2;
+    position: sticky;
+    top: 0;
+}
+
+.panel {
+    margin-top: 15px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    animation: fadeIn 0.25s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+.panel-title {
+    font-size: 20px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resumen-box {
+    background: #f7f7f7;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.resumen-box h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.pedidos-table-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.pedidos-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pedidos-table th {
+    background: #f0f0f0;
+    position: sticky;
+    top: 0;
+}
+
+.pedidos-table th,
+.pedidos-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+/* Subfila de productos */
+.pedido-producto-row {
+    background: #f8f9fa;
+    border-top: 1px solid #e5e5e5;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+
+.pedido-producto-row:hover {
+    background: #eef2f4;
+}
+
+/* Icono del libro */
+.prod-icon {
+    font-size: 1rem;
+    margin-right: 8px;
+    color: #4a4a4a;
+}
+
+/* Contenedor nombre */
+.prod-info {
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    font-weight: 500;
+}
+
+/* Nombre de producto */
+.prod-name {
+    color: #333;
+}
+
+/* Cantidad */
+.prod-cant {
+    color: #555;
+    font-weight: 600;
+}
+
+/* Precio */
+.prod-precio {
+    color: #1a7a3f;
+    font-weight: 700;
+}
+
+/* ============================================================
+   TÍTULO
+============================================================ */
+.titulo-reporte {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* ============================================================
+   GRID DE TARJETAS
+============================================================ */
+.categorias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
+    gap: 20px;
+}
+
+/* ============================================================
+   TARJETA
+============================================================ */
+.categoria-card {
+    background: #fff;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.categoria-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+/* ============================================================
+   BARRA DE COLOR LATERAL
+============================================================ */
+.categoria-color {
+    width: 10px;
+    height: 100%;
+    border-radius: 8px;
+    margin-right: 18px;
+}
+
+/* ============================================================
+   TEXTO
+============================================================ */
+.categoria-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3436;
+}
+
+.categoria-info p {
+    margin: 5px 0 0;
+    font-size: .95rem;
+    color: #555;
+}
+
+/* ============================================================
+   PROGRESS BAR
+============================================================ */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width .5s ease;
+}
+
+/* ============================================================
+   ICONO DE LIBRO
+============================================================ */
+.categoria-icon {
+    margin-left: auto;
+    font-size: 2.2rem;
+    color: #7f8c8d;
+}
+
+/* ============================================================
+   ANIMACIÓN DE APARICIÓN
+============================================================ */
+.fadeInCard {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeInUp .45s forwards ease-out;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+
+.chart-box {
+    background: #fff;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.05),
+      0 10px 25px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-box:hover {
+    box-shadow:
+      0 4px 10px rgba(0,0,0,0.07),
+      0 12px 28px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    transition: 0.25s ease;
+}
+
+.chart-header span {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#chart-pedidos .apexcharts-canvas {
+    margin-top: -20px;
+}
+
+.pedidos-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.pedidos-label {
+    font-size: 14px;
+    color: #777;
+    margin-top: -5px;
+}
+
+.chart-watermark {
+    opacity: 0.05;
+    font-size: 90px;
+    position: absolute;
+    right: 25px;
+    bottom: -15px;
+}
