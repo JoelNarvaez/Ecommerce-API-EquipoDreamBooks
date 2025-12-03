@@ -42,11 +42,15 @@
 
 
 .section-slider .product-card {
-    flex: 0 0 300px;     /* tamaño fijo */
+    flex: 0 0 300px;     /* tamaño fijo en ancho */
     width: 300px;
-    height: 610px;
+    min-height: 610px;   
     margin-right: 12px;
     scroll-snap-align: start;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* empuja los iconos abajo */
 }
 
 
@@ -90,4 +94,16 @@
 .slider-btn i {
     font-size: 18px;
     color: #3a4ddb;
+}
+
+
+
+/* Estilos para iconos en cards*/
+
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px;
+    flex-shrink: 0;  /* evita que se reduzca con altura */
 }

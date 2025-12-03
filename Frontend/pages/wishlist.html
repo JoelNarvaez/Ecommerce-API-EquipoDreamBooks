@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamBooks | Contacto</title>
-    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="/Frontend/css/estilos.css">
-    <link rel="stylesheet" href="/Frontend/css/contacto.css">
-    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DreamBook - Lista de Deseos</title>
+  <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Frontend/css/wishlist.css" />
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
 <body class="sin-hero">
-    <header>
+<header>
         <nav class="header-general">
             <div class="menu-izq">
                 <div class="logo-header"></div>
@@ -43,45 +43,85 @@
     <div class="separador-header"></div>
     </header>
 
-
-    <main>
-<section class="contacto-section">
-        <div class="contacto-container">
-          <div class="contacto-image">
-               <img src="/Frontend/imagenes/contacto.png" alt="Contacto">
+  <main class="page-layout">
+    <section class="card list-container">
+      <div class="card-header">
+        <h2><i class="bi bi-heart-fill" style="color:#e74c3c; margin-right:8px;"></i> Lista de Deseos</h2>
+      </div>
+      
+      <div class="wishlist-items">
+        
+        <div class="wishlist-item">
+          <div class="item-thumb">
+            <i class="bi bi-book-half" style="font-size: 2rem;"></i>
           </div>
-          <div class="contacto-content">
-             <h2>Contacto</h2>
-             <p>En DreamBooks nos interesa escucharte y resolver tus dudas. Puedes contactarnos en línea o asistir directamente a nuestro establecimiento. <br>Encuéntranos en: <br> <br> </p>
-            <div class="contacto-info">
-                <div class="info-columna">
-                    <p><i class="fa-solid fa-location-dot"></i>Calle Nieto #555 Col. Centro</p>
-                    <p><i class="fa-solid fa-phone"></i>Tel: 449-019-24-52</p>
-                    
-                    
-                </div>
-                <div class="info-columna">
-                    <p><i class="fa-solid fa-envelope"></i>libreria_dreambooks@gmail.com</p>
-                    
-                </div>
-            </div>
-                <form class="contacto-form">
-                    <div class="form-row">
-                        <input type="text" placeholder="Giselle Macías" required>
-                        <input type="email" placeholder="giselle.macias@gmail.com" required>
-                    </div>
-                    <textarea placeholder="Mensaje" rows="5" required></textarea>
-                    <button type="submit">Enviar</button>
-                </form>
+          <div class="item-details">
+            <div class="item-title">El Señor de los Anillos</div>
+            <div class="item-meta">J.R.R. Tolkien</div>
+            <div class="item-stock in-stock">Disponible</div>
+          </div>
+          <div class="item-price">$45.00</div>
+          <div class="item-actions">
+            <button class="btn btn-sm btn-primary"><i class="bi bi-cart-plus"></i> Agregar</button>
+            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
           </div>
         </div>
-    </section>
-    <div class="mapa">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3702.474870549467!2d-102.30635968802115!3d21.877782279909187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee871dd69677%3A0xf6c47e97deb7cb1b!2sNieto%2C%20Aguascalientes%2C%20Ags.!5e0!3m2!1sen!2smx!4v1763368495953!5m2!1sen!2smx" width="100%" height="540vh" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    </main>
 
-    <!-- Accesibilidad -->
+        <div class="wishlist-item">
+          <div class="item-thumb">
+            <i class="bi bi-journal-richtext" style="font-size: 2rem;"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Diseño UX Avanzado</div>
+            <div class="item-meta">Editorial Tech</div>
+            <div class="item-stock low-stock">¡Últimas unidades!</div>
+          </div>
+          <div class="item-price">$32.50</div>
+          <div class="item-actions">
+            <button class="btn btn-sm btn-primary"><i class="bi bi-cart-plus"></i> Agregar</button>
+            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+
+        <div class="wishlist-item">
+          <div class="item-thumb">
+            <i class="bi bi-journal-album" style="font-size: 2rem;"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Colección de Arte 2024</div>
+            <div class="item-meta">Art World</div>
+            <div class="item-stock out-stock">Agotado</div>
+          </div>
+          <div class="item-price">$120.00</div>
+          <div class="item-actions">
+            <button class="btn btn-sm btn-secondary" disabled>Sin Stock</button>
+            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <aside class="card summary">
+      <div class="card-header">
+        <h2>Tu Colección</h2>
+      </div>
+      <div class="summary-body">
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+          Tienes <strong>3 libros</strong> en tu lista de deseos. Muevelos al carrito para asegurar tu compra.
+        </p>
+        <div class="row total">
+          <span>Valor total</span>
+          <strong>$197.50</strong>
+        </div>
+        <button class="btn btn-primary" style="width:100%">
+          <i class="bi bi-cart-check"></i> Mover todo al carrito
+        </button>
+      </div>
+    </aside>
+  </main>
+
+      <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">
         <i class="fa-solid fa-universal-access"></i> 
     </button>
@@ -109,8 +149,7 @@
 
 </div>
 
-
-<footer class="footer">
+  <footer class="footer">
     <div class="footer-contenedor">
         <div class="footer-contenido">
             <div class="footer-info">
@@ -159,11 +198,9 @@
         </div>
     </div>
 </footer>
-    
-    <script src="/Frontend/js/app.js"></script>
-    <script src="/Frontend/js/preguntas_freucentes.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/Frontend/js/manejo-sesion.js"></script>
-  
+    <script src="../js/app.js"></script>
 </body>
 </html>
