@@ -1,86 +1,136 @@
-/* TARJETAS DE ESTADÍSTICAS */
+/* -----------------------------
+   TARJETAS DE ESTADÍSTICAS
+------------------------------ */
 .stat-card {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    gap: 18px;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
     margin-bottom: 20px;
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* ÍCONO CÍRCULO */
+/* -----------------------------
+     ÍCONO PRINCIPAL
+------------------------------ */
 .stat-icon {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #000000, #000000);
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #111, #000);
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 28px;
+    color: #ffffff;
+    font-size: 32px;
+    flex-shrink: 0;
 }
 
-.stat-card:nth-child(2) .stat-icon {
-    background: linear-gradient(135deg, #000000, #000000);
-}
-
-.stat-card:nth-child(3) .stat-icon {
-    background: linear-gradient(135deg, #000000, #000000);
-}
-
+/* -----------------------------
+     TEXTOS
+------------------------------ */
 .stat-content h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 1.15rem;
     font-weight: 700;
+    color: #222;
+    letter-spacing: 0.3px;
 }
 
 .stat-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 4px;
+    color: #000000;
+    letter-spacing: -1px;
+}
+
+/* -----------------------------
+   TARJETA ESPECIAL: INGRESOS
+------------------------------ */
+.stat-card.ingresos .stat-icon {
+    background: linear-gradient(145deg, #0f9d58, #0a7d44);
+}
+
+.stat-card.ingresos .stat-number {
+    background: linear-gradient(90deg, #0f9d58, #08703a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* -----------------------------
+   INGRESOS DEL DÍA
+------------------------------ */
+.stat-card.ingresos-dia .stat-icon {
+    background: linear-gradient(145deg, #4285f4, #2a63c7);
+}
+
+.stat-card.ingresos-dia .stat-number {
+    background: linear-gradient(90deg, #000000, #000000);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* -----------------------------
+   INGRESOS DE LA SEMANA
+------------------------------ */
+.stat-card.ingresos-semana .stat-icon {
+    background: linear-gradient(145deg, #fbbc04, #e0a300);
+}
+
+.stat-card.ingresos-semana .stat-number {
+    background: linear-gradient(90deg, #000000, #000000);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* -----------------------------
+   INGRESOS DEL MES
+------------------------------ */
+.stat-card.ingresos-mes .stat-icon {
+    background: linear-gradient(145deg, #ea4335, #c62828);
+}
+
+.stat-card.ingresos-mes .stat-number {
+    background: linear-gradient(90deg, #000000, #000000);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* -----------------------------
+   ANIMACIONES DE LIBROS
+------------------------------ */
+.stat-arrow {
+    margin-left: auto;
     font-size: 24px;
-    font-weight: 600;
+    transition: transform 0.3s ease, color 0.3s ease;
     color: #333;
 }
 
-.stat-card {
-    background: #ffffff;
-    border: 1px solid #eaeaea;
-    border-radius: 18px;
-    padding: 25px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.06);
-    transition: 0.25s;
+.stat-card:hover .stat-arrow {
+    color: #000;
 }
 
-.stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0px 10px 24px rgba(0,0,0,0.12);
+.stat-arrow.rotate {
+    transform: rotate(180deg);
 }
 
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    font-size: 32px;
-    border-radius: 16px;
-    background: black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-.stat-content h3::after {
-    display: none !important;
-}
-/* Estado oculto */
 .hidden {
     opacity: 0;
     max-height: 0;
@@ -89,22 +139,10 @@
     transition: all 0.35s ease;
 }
 
-/* Estado visible */
 .show {
     opacity: 1;
-    max-height: 800px; /* suficiente para tu contenido */
+    max-height: 900px;
     transform: translateY(0);
     transition: all 0.45s ease;
 }
-/* Flecha de despliegue */
-.stat-arrow {
-    margin-left: auto;
-    font-size: 22px;
-    transition: transform 0.3s ease;
-    color: #555;
-}
 
-/* Cuando está desplegado */
-.stat-arrow.rotate {
-    transform: rotate(180deg);
-}

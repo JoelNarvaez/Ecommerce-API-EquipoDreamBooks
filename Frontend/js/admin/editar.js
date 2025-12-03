@@ -1,4 +1,5 @@
 let libroEditando = null;
+let ofertaActual = null; // 🔥 Se usará para saber si ya tenía oferta
 
 // ===========================================================
 //   DETECTAR CLICK EN BOTÓN EDITAR
@@ -35,6 +36,8 @@ document.addEventListener("click", async (e) => {
     }
 
     const libro = data.libro;
+    const oferta = data.oferta || null;
+    ofertaActual = oferta;
 
     // --------------------------
     // LLENAR FORMULARIO
@@ -49,7 +52,13 @@ document.addEventListener("click", async (e) => {
         tipo: document.getElementById("edit-tipo"),
         paginas: document.getElementById("edit-paginas"),
         desc: document.getElementById("edit-desc"),
-        image: document.getElementById("edit-image")
+        image: document.getElementById("edit-image"),
+
+        // 🔥 Nuevos campos de oferta
+        hasOffer: document.getElementById("edit-has-offer"),
+        offerType: document.getElementById("edit-offer-type"),
+        offerValue: document.getElementById("edit-offer-value"),
+        offerActive: document.getElementById("edit-offer-active")
     };
 
     editInputs.title.value = libro.nombre;
@@ -61,6 +70,27 @@ document.addEventListener("click", async (e) => {
     editInputs.tipo.value = libro.tipo_de_libro || "";
     editInputs.paginas.value = libro.paginas || "";
     editInputs.desc.value = libro.descripcion || "";
+
+    // =====================================================
+    // 🔥 MOSTRAR U OCULTAR CAMPOS DE OFERTA SEGÚN EL LIBRO
+    // =====================================================
+    if (oferta) {
+        editInputs.hasOffer.checked = true;
+        document.getElementById("edit-offer-fields").classList.remove("hidden");
+
+        editInputs.offerType.value = oferta.tipo;
+        editInputs.offerValue.value = oferta.valor;
+        editInputs.offerActive.checked = oferta.activa == 1;
+    } else {
+        editInputs.hasOffer.checked = false;
+        document.getElementById("edit-offer-fields").classList.add("hidden");
+    }
+
+    // Evento para mostrar/ocultar campos cuando el usuario tilda
+    editInputs.hasOffer.addEventListener("change", (ev) => {
+        document.getElementById("edit-offer-fields")
+            .classList.toggle("hidden", !ev.target.checked);
+    });
 
     // --------------------------
     // PREVISUALIZACIÓN
@@ -156,6 +186,7 @@ document.getElementById("btn-save-edit").addEventListener("click", async () => {
 
     const form = new FormData();
 
+    // Datos del libro
     form.append("nombre", editInputs.title.value);
     form.append("autor", editInputs.author.value);
     form.append("precio", editInputs.price.value);
@@ -169,18 +200,36 @@ document.getElementById("btn-save-edit").addEventListener("click", async () => {
     const imagenFile = editInputs.image.files[0];
     if (imagenFile) form.append("imagen", imagenFile);
 
+
+    // =====================================================
+    //   🔥 ENVIAR INFORMACIÓN DE LA OFERTA
+    // =====================================================
+    const hasOffer = editInputs.hasOffer.checked;
+    form.append("hasOffer", hasOffer ? 1 : 0);
+
+    if (hasOffer) {
+        form.append("offer_type", editInputs.offerType.value);
+        form.append("offer_value", editInputs.offerValue.value);
+        form.append("offer_active", editInputs.offerActive.checked ? 1 : 0);
+    }
+
+
     const res = await fetch(`http://localhost:3000/api/admin/books/${libroEditando}`, {
         method: "PUT",
         headers: { "Authorization": `Bearer ${token}` },
         body: form
     });
 
-    const data = await res.json();
-
     if (res.ok) {
         alert("Libro actualizado correctamente");
-        document.getElementById("modal-editar").classList.add("hidden");
+
+        if (typeof actualizarReporteExistencias === "function") {
+            actualizarReporteExistencias();
+        }
+
         fetchBooks(1, 10);
+
+        document.getElementById("modal-editar").classList.add("hidden");
     } else {
         alert("Error al actualizar libro");
     }

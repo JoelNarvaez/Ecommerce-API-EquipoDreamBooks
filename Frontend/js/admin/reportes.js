@@ -1,41 +1,48 @@
 // ===============================================================
-// FUNCIONES PARA ACTUALIZAR REPORTE DE EXISTENCIAS SIN RECARGAR
+// REPORTE DINÁMICO DE EXISTENCIAS POR CATEGORÍA
 // ===============================================================
+async function cargarLibrosTotales() {
+    try {
+        const token = localStorage.getItem("token");
 
-// Función global reutilizable
-async function actualizarReporteExistencias() {
-  try {
-    const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
 
-    const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
+        const data = await res.json();
+        if (!res.ok || !data.ok) return;
 
-    const data = await res.json();
+        const categorias = data.categorias || {};
 
-    if (!res.ok || !data.ok) {
-      console.error("Error en reporte:", data.message || "Token inválido");
-      return;
+        // 🔥 TOTAL DE LIBROS DIFERENTES
+        document.getElementById("total-libros").textContent = data.totalLibros || 0;
+
+        const contenedor = document.getElementById("dashboard-report");
+
+        contenedor.innerHTML = `
+            <h2>Reporte de existencias por categoría</h2>
+        `;
+
+        Object.entries(categorias).forEach(([nombre, cantidad]) => {
+
+            const slug = nombre.toLowerCase().replace(/\s+/g, "-");
+
+            contenedor.innerHTML += `
+                <div class="category-card">
+                    <div class="category-icon category-${slug}">
+                        <i class="bi bi-collection-fill"></i>
+                    </div>
+                    <div class="category-label">${nombre}:</div>
+                    <span>${cantidad}</span>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error("Error en reporte dinámico:", err);
     }
-
-    const categorias = data.categorias || {};
-
-    // Actualizar indicadores del dashboard
-    document.getElementById("stock-romance").textContent =
-      categorias["Romance"] ?? 0;
-
-    document.getElementById("stock-scifi").textContent =
-      categorias["Ciencia ficción"] ?? 0;
-
-    document.getElementById("stock-infantil").textContent =
-      categorias["Infantil"] ?? 0;
-
-  } catch (err) {
-    console.error("Error cargando reporte:", err);
-  }
 }
-
-// Ejecutar automáticamente al cargar la página
-document.addEventListener("DOMContentLoaded", actualizarReporteExistencias);
+// Ejecutar al cargar la página solo si necesitas la data desde inicio
+document.addEventListener("DOMContentLoaded", () => {
+    cargarLibrosTotales();
+});
