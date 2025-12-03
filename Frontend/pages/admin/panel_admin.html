@@ -101,103 +101,115 @@
         <div class="content">
           <!-- DASHBOARD -->
           <section id="dashboard" class="section active">
-            <div class="stats-grid">
-<div class="stat-card" id="stat-pedidos">
-    <div class="stat-icon"><i class="bi bi-cart3"></i></div>
-    <div class="stat-content">
-        <h3>Pedidos totales</h3>
-        <p id="total-pedidos" class="stat-number">0</p>  <!-- 👈 AQUI VA EL NUMERO -->
-    </div>
-</div>
-<!-- TARJETA PRINCIPAL -->
-<div class="stat-card" id="stat-ingresos">
-    <div class="stat-icon ingresos-icon-main">
-        <i class="bi bi-cash-stack"></i>
-    </div>
+  <div class="stats-grid">
 
-    <div class="stat-content">
+    <!-- TARJETA: PEDIDOS TOTALES -->
+    <<!-- TARJETA: PEDIDOS TOTALES -->
+<div class="stat-card" id="stat-pedidos">
+  <div class="stat-icon">
+    <i class="bi bi-cart3"></i>
+  </div>
+
+  <div class="stat-content">
+    <h3>Pedidos totales</h3>
+    <p id="total-pedidos" class="stat-number">0</p>
+  </div>
+
+  <i class="bi bi-chevron-down stat-arrow"></i>
+</div>
+
+<!-- PANEL DESGLOSE PEDIDOS -->
+<div id="panel-pedidos" class="panel hidden pedidos-panel">
+  <h2 class="panel-title">
+    <i class="bi bi-cart3"></i> Desglose de Pedidos
+  </h2>
+
+  <div id="pedidos-resumen" class="pedidos-resumen"></div>
+
+  <h3 class="subtitulo">Últimos pedidos</h3>
+
+  <div class="pedidos-table-wrapper">
+    <table class="pedidos-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="pedidos-body"></tbody>
+    </table>
+  </div>
+</div>
+
+
+    <!-- TARJETA: INGRESOS -->
+    <div class="stat-card" id="stat-ingresos">
+      <div class="stat-icon ingresos-icon-main">
+        <i class="bi bi-cash-stack"></i>
+      </div>
+
+      <div class="stat-content">
         <h3>Ingresos Totales</h3>
         <p id="total-ingresos" class="stat-number">$0.00</p>
+      </div>
+
+      <i class="bi bi-chevron-down stat-arrow"></i>
     </div>
 
-    <i class="bi bi-chevron-down stat-arrow"></i>
-</div>
-
-<!-- BLOQUE DESPLEGABLE -->
-<div id="ingresos-report" class="hidden ingresos-panel">
-
-    <div class="ingresos-grid">
-
+    <!-- PANEL DESGLOSE INGRESOS -->
+    <div id="ingresos-report" class="hidden ingresos-panel">
+      <div class="ingresos-grid">
         <!-- DIA -->
         <div class="ingreso-box dia">
-            <div class="ingreso-icon icon-dia">
-                <i class="bi bi-calendar-day"></i>
-            </div>
-            <h4>Hoy</h4>
-            <p id="ingreso-dia" class="ingreso-number">$0.00</p>
+          <div class="ingreso-icon icon-dia">
+            <i class="bi bi-calendar-day"></i>
+          </div>
+          <h4>Hoy</h4>
+          <p id="ingreso-dia" class="ingreso-number">$0.00</p>
         </div>
 
         <!-- SEMANA -->
         <div class="ingreso-box semana">
-            <div class="ingreso-icon icon-semana">
-                <i class="bi bi-calendar-week"></i>
-            </div>
-            <h4>Esta semana</h4>
-            <p id="ingreso-semana" class="ingreso-number">$0.00</p>
+          <div class="ingreso-icon icon-semana">
+            <i class="bi bi-calendar-week"></i>
+          </div>
+          <h4>Esta semana</h4>
+          <p id="ingreso-semana" class="ingreso-number">$0.00</p>
         </div>
 
         <!-- MES -->
         <div class="ingreso-box mes">
-            <div class="ingreso-icon icon-mes">
-                <i class="bi bi-calendar-month"></i>
-            </div>
-            <h4>Este mes</h4>
-            <p id="ingreso-mes" class="ingreso-number">$0.00</p>
+          <div class="ingreso-icon icon-mes">
+            <i class="bi bi-calendar-month"></i>
+          </div>
+          <h4>Este mes</h4>
+          <p id="ingreso-mes" class="ingreso-number">$0.00</p>
         </div>
-
+      </div>
     </div>
 
-</div>
-
-             <div class="stat-card" id="stat-libros">
-    <div class="stat-icon"><i class="bi bi-box"></i></div>
-    <div class="stat-content">
+    <!-- TARJETA: LIBROS -->
+    <div class="stat-card" id="stat-libros">
+      <div class="stat-icon">
+        <i class="bi bi-box"></i>
+      </div>
+      <div class="stat-content">
         <h3>Libros</h3>
         <p id="total-libros" class="stat-number">0</p>
-    </div>
-    <i class="bi bi-chevron-down stat-arrow"></i>
-</div>
-
-<!-- REPORTE (DESPLEGABLE) -->
-<div id="dashboard-report" class="hidden">
-    <h2>Reporte de existencias por categoría</h2>
-
-    <div class="category-card">
-        <div class="category-icon category-romance">
-            <i class="bi bi-heart-fill"></i>
-        </div>
-        <div class="category-label">Romance:</div>
-        <span id="stock-romance">0</span>
+      </div>
+      <i class="bi bi-chevron-down stat-arrow"></i>
     </div>
 
-    <div class="category-card">
-        <div class="category-icon category-scifi">
-            <i class="bi bi-rocket-fill"></i>
-        </div>
-        <div class="category-label">Ciencia ficción:</div>
-        <span id="stock-scifi">0</span>
+    <!-- PANEL: REPORTE DE EXISTENCIAS POR CATEGORÍA -->
+    <div id="dashboard-report" class="hidden">
+      <!-- El contenido lo rellena cargarLibrosTotales() -->
     </div>
 
-    <div class="category-card">
-        <div class="category-icon category-infantil">
-            <i class="bi bi-emoji-smile-fill"></i>
-        </div>
-        <div class="category-label">Infantil:</div>
-        <span id="stock-infantil">0</span>
-    </div>
-</div>
-
-          </section>
+  </div>
+</section>
 
           <!-- PRODUCTOS -->
           <section id="products" class="section">
@@ -716,17 +728,18 @@
   </div>
 </div>
 
+<!-- Cargar ApexCharts PRIMERO -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-    <!-- SCRIPTS -->
-    <script src="/Frontend/js/admin/reportes.js"></script>
-    <script src="/Frontend/js/admin/graficas.js"></script>  <!-- NUEVO -->
-    <script src="/Frontend/js/admin/admin.js"></script>
-    <script src="/Frontend/js/admin/consultar.js"></script>
-    <script src="/Frontend/js/admin/vistaPrevia.js"></script>
-    <script src="/Frontend/js/admin/agregarLibro.js"></script>
-    <script src="/Frontend/js/admin/eliminar.js"></script>
-    <script src="/Frontend/js/admin/editar.js"></script>
-    <script src="/Frontend/js/admin/sesion.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- Luego tus scripts -->
+<script src="/Frontend/js/admin/graficas.js"></script>
+<script src="/Frontend/js/admin/admin.js"></script>
+<script src="/Frontend/js/admin/consultar.js"></script>
+<script src="/Frontend/js/admin/vistaPrevia.js"></script>
+<script src="/Frontend/js/admin/agregarLibro.js"></script>
+<script src="/Frontend/js/admin/eliminar.js"></script>
+<script src="/Frontend/js/admin/editar.js"></script>
+<script src="/Frontend/js/admin/sesion.js"></script>
+
   </body>
 </html>

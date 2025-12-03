@@ -117,3 +117,29 @@ exports.getCategorias = async (req, res) => {
 };
 
 
+// Recuperar libros por categoría
+exports.getBooksByCategoria = async (req, res) => {
+    try {
+        const categoria = req.params.categoria;
+
+        const result = await getBooksPaginatedAdvanced({
+            page: 1,
+            limit: 20,
+            categoria: categoria   // ← FILTRA AQUÍ
+        });
+
+        res.json({
+            ok: true,
+            libros: result.books
+        });
+
+    } catch (error) {
+        console.error("ERROR EN getBooksByCategoria:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error al obtener libros por categoría"
+        });
+    }
+};
+
+

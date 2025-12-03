@@ -138,50 +138,55 @@ function renderBooks(books = []) {
           ).toFixed(2)
         : precio.toFixed(2);
 
-      return `
-        <a href="/Frontend/pages/detalle-libro.html?id=${
-          book.id
-        }" class="link-card">
-            <div class="product-card">
+return `
+<a href="/Frontend/pages/detalle-libro.html?id=${book.id}" class="link-card">
+    <div class="product-card">
 
-                ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
+        ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
+        ${book.stock === 0 ? `<span class="badge-agotado">Agotado</span>` : ""}
+
+        <div class="product-image">
+            <img src="${urlImagen}" alt="${book.nombre}">
+        </div>
+
+        <div class="product-info">
+            <h3>${book.nombre}</h3>
+            <p class="autor">${book.autor}</p>
+            <p class="editorial">${book.editorial}</p>
+
+            <div class="precio">
                 ${
-                  book.stock === 0
-                    ? `<span class="badge-agotado">Agotado</span>`
-                    : ""
+                  tieneOferta
+                    ? `<span class="precio-original">$${precio}</span>
+                       <span class="precio-oferta">$${precioOferta}</span>`
+                    : `<span class="precio-normal">$${precio}</span>`
                 }
-
-                <div class="product-image">
-                    <img src="${urlImagen}" alt="${book.nombre}">
-                </div>
-
-                <div class="product-info">
-                    <h3>${book.nombre}</h3>
-                    <p class="autor">${book.autor}</p>
-                    <p class="editorial">${book.editorial}</p>
-
-                    <div class="precio">
-                        ${
-                          tieneOferta
-                            ? `<span class="precio-original">$${precio}</span>
-                                   <span class="precio-oferta">$${precioOferta}</span>`
-                            : `<span class="precio-normal">$${precio}</span>`
-                        }
-                    </div>
-
-                    <p class="${
-                      book.stock > 0 ? "stock-disponible" : "stock-agotado"
-                    }">
-                        ${
-                          book.stock > 0
-                            ? `Disponible (${book.stock})`
-                            : "Agotado"
-                        }
-                    </p>
-                </div>
-
             </div>
-        </a>`;
+
+            <p class="${book.stock > 0 ? "stock-disponible" : "stock-agotado"}">
+                ${book.stock > 0 ? `Disponible (${book.stock})` : "Agotado"}
+            </p>
+        </div>
+
+
+        <div class="card-actions">
+            <button class="btn-card wishlist-btn" data-id="${book.id}">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+            <button class="btn-card cart-btn" data-id="${book.id}">
+                <i class="fa-solid fa-cart-plus"></i>
+            </button>
+
+            <button class="btn-card buy-btn" data-id="${book.id}">
+                <i class="fa-solid fa-money-check-dollar"></i>
+            </button>
+        </div>
+
+    </div>
+</a>
+`;
+
     })
     .join("");
 }
@@ -331,3 +336,17 @@ async function cargarCategorias() {
         console.error("Error al cargar categorías", err);
     }
 }
+
+// Evitar que los iconos abran el detalle del libro
+document.addEventListener("click", function (e) {
+    if (e.target.closest(".btn-card")) {
+        e.preventDefault();   // Evita que se abra el <a>
+        e.stopPropagation();  // Detiene el click hacia el enlace
+        const id = e.target.closest(".btn-card").dataset.id;
+
+        console.log("Botón presionado:", id);
+
+        // Aquí después rediriges a tus HTMLs reales
+        // if (...) window.location.href = "/wishlist.html";
+    }
+});
