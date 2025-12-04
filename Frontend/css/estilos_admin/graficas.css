@@ -17,7 +17,7 @@
 .chart-box {
     width: 100%;
     max-width: 850px; 
-    background: #ffffff;
+    background: var(--color-fondo);
     border-radius: 18px;
     padding: 25px;
     border: 1px solid #e5e5e5;
@@ -56,12 +56,13 @@
 
 .chart-header i {
     font-size: 1.4rem;
-    color: #111;
+    color: var(--color-texto); 
 }
 
 .chart-header span {
     font-size: 18px;
     font-weight: 700;
+    color: var(--color-titulos);
 }
 
 /* ===============================
@@ -69,7 +70,7 @@
 ================================== */
 .chart-subtitle {
     font-size: 14px;
-    color: #666;
+    color: var(--color-texto);
     margin-bottom: 16px;
 }
 
@@ -77,7 +78,7 @@
    BOTÓN REFRESCAR
 ================================== */
 .refresh-btn {
-    background: #f2f2f2;
+    background: e2e2e2;
     border: none;
     padding: 8px 10px;
     border-radius: 8px;
@@ -114,18 +115,25 @@
 
 .chart-footer h4 {
     font-size: 13px;
-    color: #777;
+    color: var(--color-titulos);
 }
 
 .chart-footer p {
     font-size: 15px;
     font-weight: 700;
+    color: var(--color-texto);
 }
 
 .kpi-up {
-    color: #0b8f39;
+    color: #00b6a6!important;;
 }
 
 .kpi-down {
-    color: #c0392b;
+    color: #a14c6b!important;
+}
+
+
+/* Texto accesibilidad*/
+.titulo-panel{
+    color:var(--color-titulos);
 }
