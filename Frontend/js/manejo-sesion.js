@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("usuarioActual");
 
    
-    window.location.reload();
+    window.location.href = "/Frontend/pages/login.html";
 });
 
 });

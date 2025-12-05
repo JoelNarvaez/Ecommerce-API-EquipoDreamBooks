@@ -7,13 +7,14 @@
 
 .header {
     height: 70px;
-    background-color: #ffffff;
+    background-color: var(--color-principal);
     border-bottom: 1px solid #d9d9d9;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    color:white;
 }
 
 .header-left h1 {
