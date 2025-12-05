@@ -355,8 +355,23 @@ document.addEventListener("click", function (e) {
           return;
         }
         if (btn.classList.contains("buy-btn")) {
-          return;
-        }
+
+    const token = localStorage.getItem("token");
+
+    // ⛔ Si NO está logeado
+    if (!token) {
+        Swal.fire({
+            icon: "warning",
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para comprar este libro.",
+        });
+        return;
+    }
+
+    // ✔ Si SÍ está logeado → redirige
+    window.location.href = `/Frontend/pages/compra.html?id=${id}&cantidad=1`;
+    return;
+}
     }
 });
 
