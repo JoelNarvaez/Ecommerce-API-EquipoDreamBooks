@@ -74,7 +74,7 @@
 }
 
 .contacto-form button{
-    background-color: var(--color-boton);  
+    background: var(--color-boton);  
     color: white;               /* Texto blnaco */
     padding: 10px 20px;           /* Espaciado interno */
     border: none;                 /* Sin borde */

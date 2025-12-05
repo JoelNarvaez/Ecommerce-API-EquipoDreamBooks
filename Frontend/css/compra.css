@@ -1,6 +1,6 @@
 /* ============= GENERAL ================= */
 body {
-    background: #f5eee8;
+    background: var(--color-fondo);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -27,8 +27,12 @@ body {
     border: 1px solid #e8dfd9;
 }
 
-h1, h3 {
+h3 {
     color: #6a4b3c;
+}
+
+h1{
+    color:var(--color-titulos);
 }
 
 /* GRID de 2 columnas */
@@ -130,7 +134,7 @@ h1, h3 {
     margin-top: 10px;
     width: 100%;
     padding: 14px;
-    background: #b68b78;
+    background: var(--color-boton);
     border-radius: 12px;
     color: white;
     font-weight: bold;
@@ -157,12 +161,13 @@ h1, h3 {
 
 .cuponBox button {
     width: 100%;
-    background: #b68b78;
+    background: var(--color-boton);
     color: white;
     padding: 8px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    min-height: 3rem;
 }
 
 .cuponBox p {

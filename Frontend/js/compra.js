@@ -315,13 +315,27 @@ document.getElementById("aplicarCupon").addEventListener("click", async () => {
 document.getElementById("confirmarOrdenBtn").addEventListener("click", async () => {
     const errores = validarFormulario();
     if (errores.length > 0) {
-        alert("⚠️ Corrige los siguientes errores:\n\n" + errores.join("\n"));
+        /*alert("⚠️ Corrige los siguientes errores:\n\n" + errores.join("\n"));
+        return;*/
+        Swal.fire({
+            icon: "warning",
+            title: "Corrige los siguientes errores",
+            html: errores.map(e => `• ${e}`).join("<br>"),
+            confirmButtonText: "Entendido",
+        });
         return;
     }
 
     const token = localStorage.getItem("token");
     if (!token) {
-        alert("Debes iniciar sesión.");
+        /*alert("Debes iniciar sesión.");
+        return;*/
+        Swal.fire({
+            icon: "error",
+            title: "Debes iniciar sesión",
+            text: "Inicia sesión para continuar.",
+            confirmButtonText: "Ok"
+        });
         return;
     }
 
@@ -353,12 +367,34 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
     const data = await res.json();
 
     if (!data.ok) {
-        alert("Error al procesar la orden: " + data.message);
+        /*alert("Error al procesar la orden: " + data.message);
+        return;*/
+        Swal.fire({
+            icon: 'error',            
+            title: 'Oops...',          
+            text: 'Error al procesar la orden: ' + data.message, 
+            confirmButtonText: 'Aceptar' 
+        });
         return;
+
     }
 
-    alert("¡Pedido creado exitosamente!");
-    window.location.href = "/Frontend/pages/index.html";
+    //alert("¡Pedido creado exitosamente!");
+   /* Swal.fire({
+        icon: 'success',               
+        title: '¡Éxito!',             
+        text: '¡Pedido creado exitosamente!', 
+        confirmButtonText: 'Aceptar'   
+    });
+    window.location.href = "/Frontend/pages/index.html";*/
+    Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: '¡Pedido creado exitosamente!',
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        window.location.href = "/Frontend/pages/index.html";
+    });
 });
 
 /* ========================================================

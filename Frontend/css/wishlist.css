@@ -75,6 +75,7 @@ body {
 .wishlist-items {
     display: flex;
     flex-direction: column;
+   /* min-height: 50vh;*/
 }
 
 /* ITEM INDIVIDUAL */
@@ -244,6 +245,7 @@ body {
     border-color: #111;
     background: #fff;
 }
+
 
 /* RESPONSIVE */
 @media (max-width: 900px) {

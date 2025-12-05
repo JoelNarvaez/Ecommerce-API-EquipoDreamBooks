@@ -9,7 +9,7 @@
     /*--color-boton: #c77965;*/
     --color-boton: linear-gradient(135deg, #652410, #fac697);
     --color-boton-hover:linear-gradient(135deg, #1b262a, #ed8761);
-    --color-principal: #a9806a;
+    --color-principal: #272727;
     --font-size-base: 1rem;
     --font-size-header: 1.2rem;
     --line-height:1.6rem;
@@ -24,6 +24,8 @@
     --color-fondo-header:#ffffff;
     --color-nav-text: #ffffff;
     --color-nav-text-sin-hero: #000000;
+    --color-header-admin:#ffffff;
+    --color-header-text-admin:black;
     
     /*Cards*/
     --color-cards: #ffffff;
@@ -44,7 +46,7 @@
     --color-header-sin-hero: #000000;
     --background-hero-nosotros-dark: url('/Frontend/imagenes/fondo-aqua.jpg');
     --color-font-footer: #ffffff;
-    --color-principal:#009aa6;
+    --color-principal:#03505a;
     /*--color-principal: linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);*/
     /*--color-principal:linear-gradient(135deg, #0D0D1B 0%,  #F88973  100%);*/
     /*--color-principal:linear-gradient(135deg, #652410, #fac697);*/
@@ -53,6 +55,9 @@
     /*--color-separador-header:#d9ab57;*/
     --color-separador-header:linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);
     --color-fondo-header: rgba(189, 186, 186, 0.1);
+
+    --color-header-admin:#03505a;
+    --color-header-text-admin:white;
     /*Cards*/
     --color-cards:#454546;
     --color-cards-secundarias:#eeedeb;
@@ -244,4 +249,8 @@
 .swal2-popup {
     opacity: 1 !important;
     z-index: 999999 !important;
+}
+
+#pageTitle{
+    color:var(--color-header-text-admin);
 }

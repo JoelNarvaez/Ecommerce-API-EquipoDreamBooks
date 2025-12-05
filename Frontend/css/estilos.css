@@ -579,7 +579,6 @@ gap: 15px;                     /* Espacio entre los enlaces */
 }
 
 footer p,
-footer input,
 footer h2,
 footer h4 {
     font-family: var(--font-family);
