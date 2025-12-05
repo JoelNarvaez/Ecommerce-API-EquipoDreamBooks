@@ -19,36 +19,37 @@ exports.crearPedidoDesdeCarrito = async (req, res) => {
     try {
         const usuario_id = req.user.id;
 
-        const { items, subtotal, iva, descuento, totalFinal, cupon } = req.body;
+        const { items, subtotal, iva, descuento, totalFinal, cupon, compraDirecta } = req.body;
 
+        // Validación de items
         if (!items || items.length === 0) {
-            return res.status(400).json({ ok: false, message: "El carrito está vacío." });
+            return res.status(400).json({ ok: false, message: "No hay productos para procesar el pedido." });
         }
 
         await connection.beginTransaction();
 
-        // 1️⃣ Crear pedido
+        // Crear pedido principal
         const pedidoId = await crearPedidoDB(usuario_id, totalFinal);
 
-        // 2️⃣ Crear detalles y descontar stock
+        // Recorrer detalles del pedido
         for (const item of items) {
+            const productoId = item.ProductoId || item.idProducto;
+            const cantidad = item.Cantidad || item.cantidad;
+
             await crearPedidoDetalleDB(
                 pedidoId,
-                item.ProductoId || item.idProducto,
-                item.Cantidad || item.cantidad,
+                productoId,
+                cantidad,
                 item.precioFinal
             );
 
-            await descontarStockDB(
-                item.ProductoId || item.idProducto,
-                item.Cantidad || item.cantidad
-            );
+            await descontarStockDB(productoId, cantidad);
         }
 
         let cuponText = "Sin Cupón";
         let cuponDescuento = 0;
 
-        // 3️⃣ Marcar cupón si existe
+        // Marcar cupón como usado si existe
         if (cupon) {
             const infoCupon = await obtenerCuponPorCodigoSinVeri(cupon);
 
@@ -59,8 +60,10 @@ exports.crearPedidoDesdeCarrito = async (req, res) => {
             }
         }
 
-        // 4️⃣ 🆕 Vaciar carrito del usuario
-        await vaciarCarritoDB(usuario_id);
+        // Vaciar carrito solo si NO es compra directa
+        if (!compraDirecta) {
+            await vaciarCarritoDB(usuario_id);
+        }
 
         await connection.commit();
 
@@ -87,9 +90,12 @@ exports.crearPedidoDesdeCarrito = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("❌ ERROR EN CREAR PEDIDO:", error);
         await connection.rollback();
-        return res.status(500).json({ ok: false, message: "Error al crear pedido." });
+        return res.status(500).json({
+            ok: false,
+            message: "Error al crear el pedido."
+        });
     } finally {
         connection.release();
     }

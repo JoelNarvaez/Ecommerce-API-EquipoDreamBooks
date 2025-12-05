@@ -134,7 +134,7 @@
 
 .btn {
     padding: 12px 25px;
-    background-color: var(--color-boton);
+    background: var(--color-boton);
     border-radius: 8px;
     border: none;
     color: white;
@@ -143,7 +143,7 @@
 }
 
 .btn:hover {
-    background-color: var(--color-boton-hover);
+    background: var(--color-boton-hover);
 }
 
 

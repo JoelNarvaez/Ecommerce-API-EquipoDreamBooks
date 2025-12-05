@@ -26,7 +26,7 @@ async function getPedidos(req, res) {
     });
 
   } catch (error) {
-    console.error("❌ Error en getPedidos:", error);
+    console.error("Error en getPedidos:", error);
     res.status(500).json({
       ok: false,
       message: "Error obteniendo pedidos"
@@ -46,7 +46,7 @@ async function getPedidoById(req, res) {
     res.json({ ok: true, detalles });
 
   } catch (error) {
-    console.error("❌ Error en getPedidoById:", error);
+    console.error("Error en getPedidoById:", error);
     res.status(500).json({ ok: false, message: "Error obteniendo detalles del pedido" });
   }
 }
@@ -88,7 +88,7 @@ async function crearPedidoCompleto(req, res) {
     });
 
   } catch (error) {
-    console.error("❌ Error en crearPedidoCompleto:", error);
+    console.error("Error en crearPedidoCompleto:", error);
     res.status(500).json({ ok: false, msg: "Error al crear pedido" });
   }
 }
@@ -108,7 +108,7 @@ async function getIngresos(req, res) {
     try {
       rows = await obtenerHistorialDiarioMes();
     } catch (err) {
-      console.error("❌ Error obteniendo historial diario:", err);
+      console.error("Error obteniendo historial diario:", err);
       rows = [];
     }
 
@@ -143,7 +143,7 @@ async function getIngresos(req, res) {
     });
 
   } catch (e) {
-    console.error("❌ Error en getIngresos:", e);
+    console.error("Error en getIngresos:", e);
     res.status(500).json({ ok: false, message: "Error obteniendo ingresos" });
   }
 }

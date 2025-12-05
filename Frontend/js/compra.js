@@ -41,7 +41,7 @@ function validarFormulario() {
     if (ciudad.length < 2) errores.push("Ciudad inválida.");
     if (estado.length < 2) errores.push("Estado inválido.");
     if (referencia.length < 3) errores.push("Referencia inválida.");
-    if (postal.length !== 5) errores.push("Código postal debe tener 5 dígitos.");
+    if (postal.length !== 5) errores.push("El código postal debe tener 5 dígitos.");
 
     return errores;
 }
@@ -74,18 +74,52 @@ for (let i = 0; i < 15; i++) {
 }
 
 /* ========================================================
-   DECODIFICAR TOKEN PARA OBTENER usuario_id
+   EXTRAER usuario_id DEL TOKEN
 ======================================================== */
 function getUserIdFromToken() {
     const token = localStorage.getItem("token");
     if (!token) return null;
-
     const payload = JSON.parse(atob(token.split(".")[1]));
     return payload.id;
 }
 
 /* ========================================================
-   OBTENER CARRITO DESDE BACKEND
+   DETECTAR COMPRA DIRECTA
+======================================================== */
+const urlParams = new URLSearchParams(window.location.search);
+const libroDirectoId = urlParams.get("id");
+const libroDirectoCantidad = Number(urlParams.get("cantidad")) || 1;
+
+/* ========================================================
+   OBTENER UN LIBRO INDIVIDUAL PARA COMPRA DIRECTA
+======================================================== */
+async function cargarCompraDirecta() {
+    if (!libroDirectoId) return null;
+
+    const res = await fetch(`http://localhost:3000/api/products/book/${libroDirectoId}`);
+    const data = await res.json();
+
+    if (!data.ok) return null;
+
+    const libro = data.libro;
+    const precioNormal = Number(libro.precio);
+    const precioFinal = precioNormal; // sin ofertas aquí, si tienes ofertas las agregamos
+
+    const item = {
+        ProductoId: libroDirectoId,
+        Cantidad: libroDirectoCantidad,
+        nombre: libro.nombre,
+        autor: libro.autor,
+        imagen: libro.imagen,
+        precioNormal,
+        precioFinal
+    };
+
+    return [item];
+}
+
+/* ========================================================
+   OBTENER CARRITO NORMAL
 ======================================================== */
 async function obtenerCarrito() {
     try {
@@ -106,7 +140,7 @@ async function obtenerCarrito() {
 }
 
 /* ========================================================
-   GENERAR HTML DEL PRODUCTO
+   GENERAR HTML DE PRODUCTO
 ======================================================== */
 function generarProductoHTML(item) {
     const precioNormal = Number(item.precioNormal);
@@ -139,45 +173,58 @@ function generarProductoHTML(item) {
     `;
 }
 
-
 /* ========================================================
-   CARGAR RESUMEN DE COMPRA  (CORREGIDO)
+   CARGAR RESUMEN (CARRITO O COMPRA DIRECTA)
 ======================================================== */
 async function cargarResumenCompra() {
     const contenedor = document.querySelector(".resumenOrden");
+
     const subtotalHTML = document.getElementById("subtotal");
     const ivaHTML = document.getElementById("iva");
     const descuentoHTML = document.getElementById("descuento");
     const totalHTML = document.getElementById("totalFinal");
 
-    const carritoData = await obtenerCarrito();
+    let items = [];
 
-    if (!carritoData || carritoData.itemsCarrito.length === 0) {
-        contenedor.innerHTML = "<p>No hay productos en tu carrito.</p>";
-        return;
+    /* 🔥 COMPRA DIRECTA (cuando viene ?compra=ID en la URL) */
+    if (libroDirectoId) {
+        items = await cargarCompraDirecta();
+    } 
+    
+    /* 🛒 Si NO es compra directa → cargar carrito */
+    else {
+        const carritoData = await obtenerCarrito();
+
+        if (!carritoData || carritoData.itemsCarrito.length === 0) {
+            contenedor.innerHTML = "<p>No hay productos en tu carrito.</p>";
+            return;
+        }
+
+        items = carritoData.itemsCarrito;
     }
 
-    const items = carritoData.itemsCarrito;
-
+    /* Renderizar los productos */
     contenedor.innerHTML = items.map(item => generarProductoHTML(item)).join("");
 
-    // CALCULAR TOTALES
-    let subtotal = items.reduce(
-        (acc, item) => acc + item.Cantidad * item.precioFinal,
+    /* ============================================
+       CALCULAR SUBTOTAL, IVA Y TOTAL SIN DESCUENTO
+    ============================================ */
+    const subtotal = items.reduce(
+        (acc, item) => acc + item.Cantidad * Number(item.precioFinal),
         0
     );
 
-    let iva = subtotal * 0.16;
-    let descuento = 0; // SI NO HAY CUPÓN ES 0
-    let total = subtotal + iva - descuento;
+    const iva = subtotal * 0.16;
+    const descuento = 0;
+    const total = subtotal + iva - descuento;
 
-    // MOSTRAR EN HTML
-    subtotalHTML.textContent = subtotal.toLocaleString("es-MX", { minimumFractionDigits: 2 });
-    ivaHTML.textContent = iva.toLocaleString("es-MX", { minimumFractionDigits: 2 });
-    descuentoHTML.textContent = descuento.toLocaleString("es-MX", { minimumFractionDigits: 2 });
-    totalHTML.textContent = total.toLocaleString("es-MX", { minimumFractionDigits: 2 });
+    /* Mostrar valores iniciales */
+    subtotalHTML.textContent = subtotal.toFixed(2);
+    ivaHTML.textContent = iva.toFixed(2);
+    descuentoHTML.textContent = descuento.toFixed(2);
+    totalHTML.textContent = total.toFixed(2);
 
-    // GUARDAR DATOS EN VARIABLE GLOBAL
+    /* Guardar información global */
     window.dataCompra = {
         subtotal,
         iva,
@@ -188,33 +235,40 @@ async function cargarResumenCompra() {
 }
 
 /* ========================================================
+   ACTUALIZAR LOS TOTALES EN PANTALLA
+======================================================== */
+function actualizarResumenFinal() {
+    const subtotalHTML = document.getElementById("subtotal");
+    const ivaHTML = document.getElementById("iva");
+    const descuentoHTML = document.getElementById("descuento");
+    const totalHTML = document.getElementById("totalFinal");
+
+    const { subtotal, iva, descuento, total } = window.dataCompra;
+
+    subtotalHTML.textContent = subtotal.toFixed(2);
+    ivaHTML.textContent = iva.toFixed(2);
+    descuentoHTML.textContent = descuento.toFixed(2);
+    totalHTML.textContent = total.toFixed(2);
+}
+
+
+/* ========================================================
    APLICAR CUPÓN
 ======================================================== */
 document.getElementById("aplicarCupon").addEventListener("click", async () => {
-    const input = document.getElementById("cuponInput");
-    const codigo = input.value.trim();
+    const codigo = document.getElementById("cuponInput").value.trim();
     const mensaje = document.getElementById("cuponMensaje");
 
-    // ⚠️ SI BORRASTE EL CUPÓN → QUITAR DESCUENTO
+    // SI SE BORRA EL CUPÓN
     if (codigo === "") {
         mensaje.innerText = "";
         window.dataCompra.descuento = 0;
+        window.dataCompra.total = window.dataCompra.subtotal + window.dataCompra.iva;
 
-        // Recalcular total sin cupón
-        const total = window.dataCompra.subtotal + window.dataCompra.iva;
-
-        document.getElementById("descuento").innerText =
-            "0.00";
-
-        document.getElementById("totalFinal").innerText =
-            total.toLocaleString("es-MX", { minimumFractionDigits: 2 });
-
-        window.dataCompra.total = total;
-
+        actualizarResumenFinal();
         return;
     }
 
-    // ⚠️ SI SÍ HAY CUPÓN, VALIDARLO CON BACKEND
     const token = localStorage.getItem("token");
 
     const res = await fetch("http://localhost:3000/api/carts/aplicar", {
@@ -232,39 +286,31 @@ document.getElementById("aplicarCupon").addEventListener("click", async () => {
         mensaje.style.color = "red";
         mensaje.innerText = data.message;
 
-        // Si es inválido → quitar descuento
         window.dataCompra.descuento = 0;
+        window.dataCompra.total = window.dataCompra.subtotal + window.dataCompra.iva;
 
-        const total = window.dataCompra.subtotal + window.dataCompra.iva;
-        document.getElementById("descuento").innerText = "0.00";
-        document.getElementById("totalFinal").innerText =
-            total.toLocaleString("es-MX", { minimumFractionDigits: 2 });
-
-        window.dataCompra.total = total;
-
+        actualizarResumenFinal();
         return;
     }
 
     // CUPÓN VÁLIDO
-    const cupon = data.cupon;
+    const cupon = Number(data.cupon.MontoDescuento);
 
     mensaje.style.color = "green";
-    mensaje.innerText = `Cupón aplicado: -$${cupon.MontoDescuento}`;
+    mensaje.innerText = `Cupón aplicado: -$${cupon}`;
 
-    window.dataCompra.descuento = Number(cupon.MontoDescuento);
+    // ACTUALIZAR VARIABLES GLOBALES
+    window.dataCompra.descuento = cupon;
+    window.dataCompra.total =
+        window.dataCompra.subtotal + window.dataCompra.iva - cupon;
 
-    document.getElementById("descuento").innerText =
-        cupon.MontoDescuento.toLocaleString("es-MX", { minimumFractionDigits: 2 });
-
-    const total = window.dataCompra.subtotal + window.dataCompra.iva - window.dataCompra.descuento;
-
-    window.dataCompra.total = total;
-    document.getElementById("totalFinal").innerText =
-        total.toLocaleString("es-MX", { minimumFractionDigits: 2 });
+    // REFRESCAR TOTALES EN PANTALLA
+    actualizarResumenFinal();
 });
 
+
 /* ========================================================
-   CONFIRMAR Y CREAR PEDIDO REAL
+   CONFIRMAR COMPRA
 ======================================================== */
 document.getElementById("confirmarOrdenBtn").addEventListener("click", async () => {
     const errores = validarFormulario();
@@ -279,10 +325,12 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
         return;
     }
 
-    const usuario_id = getUserIdFromToken(); // ← IMPORTANTE
+    const usuario_id = getUserIdFromToken();
 
     const { subtotal, iva, descuento, total, items } = window.dataCompra;
     const cupon = document.getElementById("cuponInput").value.trim() || null;
+
+    const esCompraDirecta = libroDirectoId ? true : false;
 
     const res = await fetch("http://localhost:3000/api/carts/checkout", {
         method: "POST",
@@ -291,29 +339,29 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
             "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-            usuario_id,      // ← SE ENVÍA
+            usuario_id,
             subtotal,
             iva,
             descuento,
             totalFinal: total,
             cupon,
-            items
+            items,
+            compraDirecta: esCompraDirecta   // 🔥 IMPORTANTE
         })
     });
 
     const data = await res.json();
 
     if (!data.ok) {
-        alert("❌ Error al procesar la orden: " + data.message);
+        alert("Error al procesar la orden: " + data.message);
         return;
     }
 
-    alert("✔ ¡Pedido creado exitosamente!");
-    window.location.href = "/Frontend/pedido_exitoso.html";
+    alert("¡Pedido creado exitosamente!");
+    window.location.href = "/Frontend/pages/index.html";
 });
 
-
 /* ========================================================
-   INICIAR
+   INICIO
 ======================================================== */
 cargarResumenCompra();
