@@ -31,7 +31,6 @@ async function cargarSlider(endpoint, contenedorId) {
                 ).toFixed(2)
                 : precioNormal.toFixed(2);
 
-            // Estructura del card
             cont.innerHTML += `
                 <div class="product-card card-slider">
 
@@ -78,7 +77,7 @@ async function cargarSlider(endpoint, contenedorId) {
                         </button>
                     </div>
                 </div>
-        `;
+            `;
         });
     } catch (error) {
         console.error("Error en cargarSlider:", error);
@@ -87,7 +86,7 @@ async function cargarSlider(endpoint, contenedorId) {
 
 
 /* ============================================================
-   CONTROL DE DESPLAZAMIENTO DE SLIDERS
+   DESPLAZAMIENTO DE SLIDERS
 ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(".slider-btn");
@@ -97,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const targetId = btn.dataset.target;
             const slider = document.getElementById(targetId);
 
-            const scrollAmount = 300; // avance
+            const scrollAmount = 300;
 
             slider.scrollBy({
                 left: btn.classList.contains("left") ? -scrollAmount : scrollAmount,
@@ -109,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ============================================================
-   ASIGNAR EVENTOS A CADA SLIDER
+   EVENTOS EN SLIDERS
 ============================================================ */
 document.getElementById("slider-novedades")
     .addEventListener("click", manejarClickEnSlider);
@@ -119,7 +118,7 @@ document.getElementById("slider-ofertas")
 
 
 /* ============================================================
-   FUNCIÓN UNIVERSAL PARA MANEJAR ICONOS DEL SLIDER
+   FUNCIÓN UNIVERSAL PARA CLICKS EN ICONOS DEL SLIDER
 ============================================================ */
 async function manejarClickEnSlider(e) {
     const btn = e.target.closest("button");
@@ -127,19 +126,19 @@ async function manejarClickEnSlider(e) {
 
     const id = Number(btn.dataset.id);
 
-    // --- AGREGAR AL CARRITO ---
+    // --- CARRITO ---
     if (btn.classList.contains("cart-btn")) {
         await agregarAlCarrito(id);
         return;
     }
 
-    // --- AGREGAR A WISHLIST ---
+    // --- WISHLIST ---
     if (btn.classList.contains("wishlist-btn")) {
-        console.log("Añadir a wishlist:", id);
+        await agregarAWishlist(id);
         return;
     }
 
-    // --- COMPRA DIRECTa ---
+    // --- COMPRAR AHORA ---
     if (btn.classList.contains("buy-btn")) {
         const token = localStorage.getItem("token");
 
@@ -219,7 +218,7 @@ async function agregarAlCarrito(idLibro, cantidad = 1) {
 
 
 /* ============================================================
-   ACTUALIZAR ITEM EXISTENTE EN EL CARRITO
+   ACTUALIZAR ITEM EXISTENTE
 ============================================================ */
 async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) {
     const nuevaCantidad = itemExistente.Cantidad + cantidad;
@@ -245,7 +244,7 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) 
 
 
 /* ============================================================
-   AGREGAR NUEVO ITEM AL CARRITO
+   AGREGAR NUEVO ITEM
 ============================================================ */
 async function agregarNuevoItem(idLibro, cantidad, token) {
     const res = await fetch("http://localhost:3000/api/carts/agregar", {
@@ -270,7 +269,60 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
 
 
 /* ============================================================
-   CARGAR LOS SLIDERS
+   AGREGAR A WISHLIST
+============================================================ */
+async function agregarAWishlist(idLibro) {
+    try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            Swal.fire({
+                icon: "warning",
+                title: "Inicia sesión",
+                text: "Debes iniciar sesión para usar wishlist.",
+            });
+            return;
+        }
+
+        const res = await fetch("http://localhost:3000/api/wishlist/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ idLibro }),
+        });
+
+        const data = await res.json();
+
+        if (!data.ok) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: data.message || "No se pudo agregar el libro a wishlist.",
+            });
+            return;
+        }
+
+        Swal.fire({
+            icon: "success",
+            title: "Agregado a tu wishlist",
+            text: "El libro fue guardado correctamente.",
+            timer: 1800,
+        });
+    } catch (error) {
+        console.error("Error wishlist:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Error inesperado",
+            text: "Ocurrió un error al agregar el libro a wishlist.",
+        });
+    }
+}
+
+
+/* ============================================================
+   CARGAR SLIDERS
 ============================================================ */
 cargarSlider("http://localhost:3000/api/products/books/novedades", "slider-novedades");
 cargarSlider("http://localhost:3000/api/products/books/ofertas", "slider-ofertas");

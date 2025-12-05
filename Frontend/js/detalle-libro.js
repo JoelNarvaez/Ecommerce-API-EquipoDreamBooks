@@ -103,8 +103,7 @@ async function cargarSlider(endpoint, contenedorId) {
             const precioOferta = tieneOferta
                 ? (book.oferta_tipo === "porcentaje"
                     ? precioNormal - precioNormal * (book.oferta_valor / 100)
-                    : precioNormal - book.oferta_valor
-                ).toFixed(2)
+                    : precioNormal - book.oferta_valor).toFixed(2)
                 : precioNormal.toFixed(2);
 
             const card = document.createElement("div");
@@ -172,12 +171,20 @@ cargarSlider("http://localhost:3000/api/products/books/ofertas", "slider-ofertas
 
 
 /* ============================
-      BOTÓN AGREGAR
+      BOTÓN AGREGAR AL CARRITO
 ============================ */
 const agregarCarritoBtn = document.getElementById("agregarCarrito");
 agregarCarritoBtn.addEventListener("click", () => {
-    const id = Number(idActual);
-    agregarAlCarrito(id);
+    agregarAlCarrito(Number(idActual));
+});
+
+
+/* ============================
+      BOTÓN COMPRAR AHORA
+============================ */
+const btnComprarAhora = document.getElementById("btnComprarAhora");
+btnComprarAhora.addEventListener("click", () => {
+    comprarAhora(Number(idActual));
 });
 
 
@@ -309,3 +316,22 @@ document.addEventListener("click", async (e) => {
         Swal.fire("Ups", data.message, "info");
     }
 });
+
+
+/* ============================
+      COMPRAR AHORA
+============================ */
+function comprarAhora(idLibro) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        Swal.fire({
+            icon: "warning",
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para comprar este libro.",
+        });
+        return;
+    }
+
+    window.location.href = `/Frontend/pages/compra.html?id=${idLibro}&cantidad=1`;
+}

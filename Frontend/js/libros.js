@@ -14,7 +14,6 @@ function aplicarCategoriaURL() {
 
   console.log("Categoría recibida desde URL:", categoriaURL);
 
-  // Permitir varias categorías separadas por coma
   const categoriasArray = categoriaURL
     .split(",")
     .map((c) => c.trim().toLowerCase());
@@ -36,9 +35,6 @@ async function fetchBooks(page = 1, limit = 8) {
     const search = document.getElementById("search-books")?.value || "";
     const ordenar = document.getElementById("ordenar")?.value || "";
 
-    // ----------------------
-    // Categorías seleccionadas
-    // ----------------------
     const categoriasSeleccionadas = [];
     document
       .querySelectorAll(".filtro-grupo ul input[type='checkbox']")
@@ -46,21 +42,14 @@ async function fetchBooks(page = 1, limit = 8) {
         if (chk.checked) categoriasSeleccionadas.push(chk.value);
       });
 
-    // Si viene categoría desde la URL y el usuario no ha marcado otra
     let categoria = categoriasSeleccionadas.join(",");
     if (categoriaURL && categoriasSeleccionadas.length === 0) {
       categoria = categoriaURL;
     }
 
-    // ----------------------
-    // Precio
-    // ----------------------
     const min = document.getElementById("precio-min")?.value || "";
     const max = document.getElementById("precio-max")?.value || "";
 
-    // ----------------------
-    // Stock
-    // ----------------------
     let stock = "";
     const chkDisp = document.getElementById("stock-disponible");
     const chkAgot = document.getElementById("stock-agotado");
@@ -68,19 +57,6 @@ async function fetchBooks(page = 1, limit = 8) {
     if (chkDisp?.checked && !chkAgot?.checked) stock = "disponible";
     else if (!chkDisp?.checked && chkAgot?.checked) stock = "agotado";
 
-    console.log("➡ Filtros enviados:", {
-      page,
-      search,
-      categoria,
-      min,
-      max,
-      stock,
-      ordenar,
-    });
-
-    // ----------------------
-    // Construir URL
-    // ----------------------
     const url =
       `http://localhost:3000/api/products/books` +
       `?page=${page}` +
@@ -114,9 +90,9 @@ function renderBooks(books = []) {
   if (!books || books.length === 0) {
     grid.innerHTML = `
         <div class="no-books-msg">
-        <span>No se encontraron libros con los filtros aplicados. </span>
+          <span>No se encontraron libros con los filtros aplicados.</span>
         </div>
-        `;
+    `;
     return;
   }
 
@@ -138,7 +114,7 @@ function renderBooks(books = []) {
           ).toFixed(2)
         : precio.toFixed(2);
 
-return `
+      return `
 <a href="/Frontend/pages/detalle-libro.html?id=${book.id}" class="link-card">
     <div class="product-card">
 
@@ -157,7 +133,8 @@ return `
             <div class="precio">
                 ${
                   tieneOferta
-                    ? `<span class="precio-original">$${precio}</span>
+                    ? `
+                       <span class="precio-original">$${precio}</span>
                        <span class="precio-oferta">$${precioOferta}</span>`
                     : `<span class="precio-normal">$${precio}</span>`
                 }
@@ -168,8 +145,8 @@ return `
             </p>
         </div>
 
-
         <div class="card-actions">
+
             <button class="btn-card wishlist-btn" data-id="${book.id}">
                 <i class="fa-regular fa-heart"></i>
             </button>
@@ -181,12 +158,12 @@ return `
             <button class="btn-card buy-btn" data-id="${book.id}">
                 <i class="fa-solid fa-money-check-dollar"></i>
             </button>
+
         </div>
 
     </div>
 </a>
 `;
-
     })
     .join("");
 }
@@ -206,22 +183,18 @@ function renderPagination(currentPage, totalPages) {
   let html = "";
 
   if (currentPage > 1) {
-    html += `<button class="page-btn" onclick="fetchBooks(${
-      currentPage - 1
-    })">&laquo;</button>`;
+    html += `<button class="page-btn" onclick="fetchBooks(${currentPage - 1})">&laquo;</button>`;
   }
 
   for (let i = 1; i <= totalPages; i++) {
     html += `
-            <button class="page-btn ${i === currentPage ? "active" : ""}"
-                onclick="fetchBooks(${i})">${i}</button>
-        `;
+      <button class="page-btn ${i === currentPage ? "active" : ""}"
+      onclick="fetchBooks(${i})">${i}</button>
+    `;
   }
 
   if (currentPage < totalPages) {
-    html += `<button class="page-btn" onclick="fetchBooks(${
-      currentPage + 1
-    })">&raquo;</button>`;
+    html += `<button class="page-btn" onclick="fetchBooks(${currentPage + 1})">&raquo;</button>`;
   }
 
   pagination.innerHTML = html;
@@ -263,127 +236,136 @@ function initFiltros() {
 //   INICIALIZAR TODO
 // ===========================
 document.addEventListener("DOMContentLoaded", () => {
-  cargarCategorias();  // ← PRIMERO
-  aplicarCategoriaURL(); // Aplica la categoría desde la URL
+  cargarCategorias();
+  aplicarCategoriaURL();
   initFiltros();
   fetchBooks(1, 8);
 });
 
-//limpiar filtros
+// ===========================
+//   LIMPIAR FILTROS
+// ===========================
 function limpiarFiltros() {
-  console.log("🧹 Limpiando filtros…");
-
-  // Borrar búsqueda
   const search = document.getElementById("search-books");
   if (search) search.value = "";
 
-  // Borrar categorías
   document
     .querySelectorAll(".filtro-grupo ul input[type='checkbox']")
     .forEach((chk) => (chk.checked = false));
 
-  // Borrar precio
   document.getElementById("precio-min").value = "";
   document.getElementById("precio-max").value = "";
 
-  // Borrar stock
   document.getElementById("stock-disponible").checked = false;
   document.getElementById("stock-agotado").checked = false;
 
-  // Borrar orden
   const ordenar = document.getElementById("ordenar");
   if (ordenar) ordenar.value = "";
 
   window.history.replaceState({}, document.title, "libros.html");
 
-  // Volver a cargar desde cero
   fetchBooks(1, 8);
 }
 
-
+// ===========================
+//   CARGAR CATEGORÍAS
+// ===========================
 async function cargarCategorias() {
-    try {
-        const res = await fetch("http://localhost:3000/api/products/categorias");
-        const data = await res.json();
+  try {
+    const res = await fetch("http://localhost:3000/api/products/categorias");
+    const data = await res.json();
 
-        if (!data.ok) return;
+    if (!data.ok) return;
 
-        const lista = document.getElementById("lista-categorias");
-        lista.innerHTML = "";
+    const lista = document.getElementById("lista-categorias");
+    lista.innerHTML = "";
 
-        data.categorias.forEach(cat => {
-            const id = "cat_" + cat.replace(/\s+/g, "_");
+    data.categorias.forEach((cat) => {
+      const id = "cat_" + cat.replace(/\s+/g, "_");
 
-            lista.innerHTML += `
-                <li>
-                    <label>
-                        <input type="checkbox" value="${cat}" id="${id}">
-                        ${cat}
-                    </label>
-                </li>
-            `;
-        });
+      lista.innerHTML += `
+        <li>
+            <label>
+                <input type="checkbox" value="${cat}" id="${id}">
+                ${cat}
+            </label>
+        </li>
+      `;
+    });
 
-        // Volver a aplicar categoría desde la URL si es necesario
-        aplicarCategoriaURL();
+    aplicarCategoriaURL();
 
-        // Registrar eventos para estos nuevos checkboxes
-        document
-            .querySelectorAll("#lista-categorias input[type='checkbox']")
-            .forEach(chk => chk.addEventListener("change", () => fetchBooks(1, 8)));
-
-    } catch (err) {
-        console.error("Error al cargar categorías", err);
-    }
+    document
+      .querySelectorAll("#lista-categorias input[type='checkbox']")
+      .forEach((chk) => chk.addEventListener("change", () => fetchBooks(1, 8)));
+  } catch (err) {
+    console.error("Error al cargar categorías", err);
+  }
 }
 
-// Evitar que los iconos abran el detalle del libro
+// ===========================
+//   MANEJO DE BOTONES
+// ===========================
 document.addEventListener("click", function (e) {
-    if (e.target.closest(".btn-card")) {
-        const btn = e.target.closest(".btn-card");
-        e.preventDefault();   // Evita que se abra el <a>
-        e.stopPropagation();  // Detiene el click hacia el enlace
-        const id = Number(btn.dataset.id);
+  if (e.target.closest(".btn-card")) {
+    const btn = e.target.closest(".btn-card");
+    e.preventDefault();
+    e.stopPropagation();
+    const id = Number(btn.dataset.id);
 
-        if (btn.classList.contains("wishlist-btn")) {
+    // ======================
+    // WISHLIST
+    // ======================
+    if (btn.classList.contains("wishlist-btn")) {
+      const token = localStorage.getItem("token");
 
-          return;
-        }
-
-        if (btn.classList.contains("cart-btn")) {
-          agregarAlCarrito(id);
-          return;
-        }
-        if (btn.classList.contains("buy-btn")) {
-
-    const token = localStorage.getItem("token");
-
-    // ⛔ Si NO está logeado
-    if (!token) {
+      if (!token) {
         Swal.fire({
-            icon: "warning",
-            title: "Inicia sesión",
-            text: "Debes iniciar sesión para comprar este libro.",
+          icon: "warning",
+          title: "Inicia sesión",
+          text: "Debes iniciar sesión para usar wishlist.",
         });
         return;
+      }
+
+      agregarAWishlist(id);
+      return;
     }
 
-    // ✔ Si SÍ está logeado → redirige
-    window.location.href = `/Frontend/pages/compra.html?id=${id}&cantidad=1`;
-    return;
-}
+    // ======================
+    // CARRITO
+    // ======================
+    if (btn.classList.contains("cart-btn")) {
+      agregarAlCarrito(id);
+      return;
     }
+
+    // ======================
+    // COMPRAR AHORA
+    // ======================
+    if (btn.classList.contains("buy-btn")) {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        Swal.fire({
+          icon: "warning",
+          title: "Inicia sesión",
+          text: "Debes iniciar sesión para comprar este libro.",
+        });
+        return;
+      }
+
+      window.location.href = `/Frontend/pages/compra.html?id=${id}&cantidad=1`;
+      return;
+    }
+  }
 });
 
-
-
 // ============================
-//    FUNCIONES CARRITO
+//    OBTENER CARRITO
 // ============================
-
 async function obtenerCarrito() {
   try {
-    // 1. Verificar autenticación
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -424,10 +406,11 @@ async function obtenerCarrito() {
   }
 }
 
-
+// ============================
+//    AGREGAR AL CARRITO
+// ============================
 async function agregarAlCarrito(idLibro, cantidad = 1) {
   try {
-    // 1. Verificar autenticación
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -440,13 +423,19 @@ async function agregarAlCarrito(idLibro, cantidad = 1) {
     }
 
     const carritoData = await obtenerCarrito();
-
     const items = carritoData.itemsCarrito;
-    const itemExistente = items.find((item) => item.ProductoId === idLibro);
 
+    const itemExistente = items.find(
+      (item) => item.ProductoId === idLibro
+    );
 
     if (itemExistente) {
-      return await actualizarItemExistente(itemExistente, cantidad, idLibro, token);
+      return await actualizarItemExistente(
+        itemExistente,
+        cantidad,
+        idLibro,
+        token
+      );
     } else {
       return await agregarNuevoItem(idLibro, cantidad, token);
     }
@@ -460,23 +449,26 @@ async function agregarAlCarrito(idLibro, cantidad = 1) {
   }
 }
 
-// ==============================
-// Actualizar item existente
-// ==============================
+// ============================
+//   ACTUALIZAR ITEM EXISTENTE
+// ============================
 async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) {
   const nuevaCantidad = itemExistente.Cantidad + cantidad;
 
-  const updateRes = await fetch("http://localhost:3000/api/carts/actualizar", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      idLibro,
-      cantidad: nuevaCantidad,
-    }),
-  });
+  const updateRes = await fetch(
+    "http://localhost:3000/api/carts/actualizar",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        productoId: idLibro,   // <- CORREGIDO
+        cantidad: nuevaCantidad,
+      }),
+    }
+  );
 
   const updateData = await updateRes.json();
 
@@ -489,32 +481,21 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) 
     return;
   }
 
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    }
-  });
-  Toast.fire({
+  Swal.fire({
     icon: "success",
-    title: "Se actualizó la cantidad del libro en el carrito a " + nuevaCantidad,
+    title:
+      "Se actualizó la cantidad del libro a " +
+      nuevaCantidad,
+    timer: 2000,
   });
 
   return updateData;
 }
 
-
-
-// ==============================
-// Agregar nuevo item
-// ==============================
+// ============================
+//   AGREGAR NUEVO ITEM
+// ============================
 async function agregarNuevoItem(idLibro, cantidad, token) {
-
   const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
     method: "POST",
     headers: {
@@ -522,16 +503,12 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      idLibro,
+      productoId: idLibro,   // <- CORREGIDO
       cantidad,
     }),
   });
 
   const addData = await addRes.json();
-
-  const items = addData.carrito;
-
-  const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
 
   if (!addRes.ok) {
     Swal.fire({
@@ -544,10 +521,65 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
 
   Swal.fire({
     icon: "success",
-    title: `${itemAdded.detalleProducto.nombre} Agregado`,
-    text: "Libro agregado al carrito correctamente.",
+    title: "Libro agregado",
+    text: "Se añadió al carrito correctamente.",
+    timer: 2000,
   });
 
   return addData;
 }
 
+// ===========================================
+//     AGREGAR A WISHLIST (YA FUNCIONA BIEN)
+// ===========================================
+async function agregarAWishlist(idLibro) {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar libros a tu wishlist.",
+      });
+      return;
+    }
+
+    const res = await fetch(
+      "http://localhost:3000/api/wishlist/add",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productoId: idLibro }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: data.message || "No se pudo agregar el libro a wishlist.",
+      });
+      return;
+    }
+
+    Swal.fire({
+      icon: "success",
+      title: "Agregado a tu wishlist",
+      text: "El libro fue guardado correctamente.",
+      timer: 2000,
+    });
+  } catch (error) {
+    console.error("Error wishlist:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error inesperado",
+      text: "Ocurrió un error al agregar el libro a wishlist.",
+    });
+  }
+}
