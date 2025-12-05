@@ -507,16 +507,12 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      idLibro,
+      productoId: idLibro,
       cantidad,
     }),
   });
 
   const addData = await addRes.json();
-
-  const items = addData.carrito;
-
-  const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
 
   if (!addRes.ok) {
     Swal.fire({
@@ -526,6 +522,9 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
     });
     return;
   }
+
+  const items = addData.carrito;
+  const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
 
   Swal.fire({
     icon: "success",
