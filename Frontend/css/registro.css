@@ -77,7 +77,7 @@
   width: 30%;
   padding: 0.8rem;
   border: none;
-  background-color: var(--color-boton);
+  background: var(--color-boton);
   color:var(--color-boton-texto);
   border-radius: 8px;
   font-size: 1.1rem;
@@ -88,7 +88,7 @@
 }
 
 .account-button:hover {
-  background-color: var(--color-gris);
+  background: var(--color-gris);
 }
 
 .pais-opciones{
