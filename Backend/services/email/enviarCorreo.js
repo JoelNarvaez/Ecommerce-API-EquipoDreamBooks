@@ -33,7 +33,7 @@ const enviarCorreo = async (contenidoHTML, asunto, correo, archivos=[]) => {
         attachments: archivosAdjuntos.length > 0 ? archivosAdjuntos : undefined
     });
 
-    return info.messageId;
+    return info;
 }
 
 module.exports = enviarCorreo;

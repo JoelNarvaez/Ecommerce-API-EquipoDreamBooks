@@ -1,0 +1,153 @@
+const enviarCorreo = require('./enviarCorreo');
+
+const enviarSubscripcionUsuario = async (nombre, codigoCupon, email) => {
+
+    const archivosImg = [
+        {
+            filename: "logo-header.png",
+            cid: "logoDreamBooks"
+        }
+    ]
+
+    const contenidoHTML = `<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
+
+    <!-- Wrapper principal -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5; padding:40px 0;">
+        <tr>
+            <td align="center">
+
+                <!-- Contenedor -->
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
+
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center">
+                                        <div
+                                            style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin-bottom:20px;">
+                                            <img src="cid:logoDreamBooks" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
+                                            ¡Bienvenido a DreamBooks!
+                                        </h1>
+                                        <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">
+                                            Ya formas parte de nuestra comunidad
+                                        </p>
+                                        <p style="color:#737373; font-size:14px; line-height:0;">
+                                            Sueña despierto
+                                        </p>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+                    </tr>
+
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
+                            <p style="margin:0; color:#000; font-size:16px; line-height:1.6;">
+                                Hola <strong style="color:#703030;">${nombre}</strong>,
+                            </p>
+                            <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
+                                Gracias por suscribirte a nuestras novedades. A partir de ahora recibirás noticias,
+                                promociones exclusivas y contenido creado especialmente para ti.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+                    </tr>
+
+                    <!-- Coupon Block -->
+                    <tr>
+                        <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
+
+                            <h2 style="margin:0; color:#703030; font-size:22px; font-weight:700; text-align:center;">
+                                Tu cupón de bienvenida
+                            </h2>
+
+                            <p style="margin:15px 0 10px; color:#737373; font-size:14px; text-align:center;">
+                                Como agradecimiento por unirte a nuestra comunidad, aquí tienes un cupón especial para tu próxima compra.
+                            </p>
+
+                            <div style="text-align:center; margin-top:20px;">
+                                <span style="
+                                    display:inline-block;
+                                    background-color:#ebe6db;
+                                    padding:15px 25px;
+                                    font-size:20px;
+                                    font-weight:700;
+                                    color:#703030;
+                                    border-radius:8px;
+                                    letter-spacing:2px;
+                                ">
+                                    ${codigoCupon}
+                                </span>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+                    </tr>
+
+                    <!-- Support Message -->
+                    <tr>
+                        <td style="background-color:#ffffff; padding:25px; border-radius:12px; border-left:4px solid #c77965;">
+                            <p style="margin:0; color:#737373; font-size:14px; line-height:1.6;">
+                                Si tienes alguna duda sobre cómo utilizar tu cupón o sobre nuestros servicios, no dudes en escribirnos.
+                                Estamos aquí para ayudarte.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center;">
+                            <p style="margin:0; color:#ffffff; font-size:14px; line-height:1.6;">
+                                © 2025 DreamBooks. Todos los derechos reservados.
+                            </p>
+                            <p style="margin:10px 0 0; color:#ffffff; font-size:12px; opacity:0.9;">
+                                Recibiste este correo porque te suscribiste a nuestras novedades.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>`
+
+    const send = await enviarCorreo(contenidoHTML, "¡Te damos la bienvenida a DreamBooks! Usa tu cupón en tu próxima compra", email, archivosImg);
+
+    if (send)
+        return true;
+
+    return false;
+
+}
+
+module.exports = enviarSubscripcionUsuario;
