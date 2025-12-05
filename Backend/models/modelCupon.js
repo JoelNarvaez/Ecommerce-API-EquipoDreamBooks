@@ -36,8 +36,18 @@ async function obtenerCuponPorCodigo(codigo) {
     return rows[0];
 }
 
+async function obtenerCuponPorCodigoSinVeri(codigo) {
+    const [rows] = await db.query(`
+        SELECT * FROM cupones
+        WHERE Codigo = ?
+    `, [codigo]);
+
+    return rows[0];
+}
+
 module.exports = {
     generarCodigoCupon,
     crearCupon,
-    obtenerCuponPorCodigo
+    obtenerCuponPorCodigo,
+    obtenerCuponPorCodigoSinVeri
 };

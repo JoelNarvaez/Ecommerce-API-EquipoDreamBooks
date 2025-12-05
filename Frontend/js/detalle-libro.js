@@ -266,20 +266,32 @@ async function actualizarItemExistente(item, cantidad, idLibro, token) {
 ============================ */
 async function agregarNuevoItem(idLibro, cantidad, token) {
 
-    const res = await fetch("http://localhost:3000/api/carts/agregar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ productoId: idLibro, cantidad })
+  const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      productoId: idLibro,
+      cantidad,
+    }),
+  });
+
+  const addData = await addRes.json();
+
+  if (!addRes.ok) {
+    Swal.fire({
+      icon: "error",
+      title: "No se pudo agregar el libro al carrito.",
+      text: addData.message || "",
     });
+    return;
+  }
 
-    const data = await res.json();
+  const items = addData.carrito;
+  const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
 
-    if (!res.ok) {
-        return Swal.fire("Error", data.message || "No se pudo agregar el libro.", "error");
-    }
 
     Swal.fire("Agregado", "Libro agregado al carrito correctamente.", "success");
 }
