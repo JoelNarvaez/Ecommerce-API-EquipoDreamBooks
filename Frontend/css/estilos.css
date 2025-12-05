@@ -7,33 +7,86 @@
 :root {
     --color-fondo: #ffffff;
     --color-texto: #000000;
+    --color-texto-boton:#009aa6;
     --color-header-con-hero: #ffffff;
-    --color-header-sin-hero: #000000;
+    --color-header-sin-hero:black;
     --color-font-footer: #ffffff;
-    --color-nav-text: #fff;
     --color-boton-texto:#fff;
     --color-boton: #c77965;
+    --color-boton-hover:#a8644b;
     --font-size-base: 1rem;
+    --font-size-header: 1.2rem;
     --line-height:1.6rem;
     --color-footer: #a9806a;
     --font-family: 'Quicksand', sans-serif;
-    --color-titulos:#703030;
+    --color-titulos:#737373;
     --font-size-titulos: 2.5rem;
+    --font-size-subtitulos: 1.2rem;
     --color-beige: #ebe6db;
     --color-gris:#737373;
+    --color-separador-header: #a9806a;
+    --color-fondo-header:#ffffff;
+    --color-nav-text: #ffffff;
+    --color-nav-text-sin-hero: #000000;
+    --color-cards: #ffffff;
+
+    /* Imágenes*/
+    --img-logo: url('/Frontend/imagenes/logo-header-fondo.png');
+    --img-presentacion-inicio: url('/Frontend/imagenes/logo-grande-negro.png');
+
+    /* Página de preguntas frecuentes */
+    --color-preguntas: #ebe4d1;
 
     /* Página Sobre Nosotros*/
     --background-hero-nosotros-ligth: url('/Frontend/imagenes/fondo-cafe.jpg');
 
+    /* Página contacto*/
+    --color-fondo-contacto:#f5f5f5;
+
+    /*Página de Detalles del Libro*/
+    --color-precio:#c77965;
+    --color-stock:#2e7d32;
+    --color-sin-stock:#b71c1c;
 }
 
 .modo-oscuro {
-    --color-fondo: #311010;
-    --color-texto: #ffffff;
-    --color-header: #181818;
-    --color-nav-text: #fff;
-    --color-boton: #335a99;
+    --color-fondo: #272727;
+    --color-texto: #cdcdcd;
+    --color-titulos:#ffffff;
+    --color-header: white;
+    --color-boton: #009aa6;
+    --color-boton-hover:#0ebfcd;
+    --color-header-con-hero: #ffffff;
+    --color-header-sin-hero: #000000;
     --background-hero-nosotros-dark: url('/Frontend/imagenes/fondo-aqua.jpg');
+    --color-font-footer: #ffffff;
+    --color-footer: linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);
+    /*--color-footer:#d9ab57;*/
+    /*--color-separador-header:#d9ab57;*/
+    --color-separador-header:linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);
+    --color-fondo-header: rgba(189, 186, 186, 0.1);
+    --color-cards: rgba(189, 186, 186, 0.1);
+    --color-nav-text-sin-hero:#ffffff;
+
+    /* Imágenes*/
+    --img-presentacion-inicio: url('/Frontend/imagenes/logo-grande-blanco.png');
+    --img-logo: url('/Frontend/imagenes/logo-header.png');
+
+     /* Página de preguntas frecuentes */
+    --color-preguntas: #42a8a1;
+
+    /* Página contacto*/
+    --color-fondo-contacto:#272727;
+
+    /*Página de Detalles del Libro*/
+    --color-precio:#ffffff;
+    --color-stock:#009aa6;
+    --color-sin-stock:#e66c5c;
+}
+
+/*Fuente global*/
+main, section, article, div, p, span, h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family) !important;
 }
 
 /* Estilos del header*/
@@ -44,13 +97,33 @@
     border-radius: 8px;
     padding: 15px 8%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);  
-    width: 85%;
-    margin-left: 8%;
+    width: 95%;
+    margin-left: 3%;
     margin-right: 5%;
     margin-top: 1.5rem;
+    font-size: var(--font-size-header);
+
 }
 .sin-hero li a{
-    color:var(--color-header-sin-hero)
+    color:var(--color-nav-text-sin-hero);
+
+}
+
+
+.con-hero nav a i {
+    color: var(--color-header-con-hero) !important;
+}
+
+.sin-hero nav a i{
+    color: var(--color-header-sin-hero) !important;
+}
+
+.logo-header{
+    background-image: var(--img-logo);
+    width: 11.25rem;
+    height: 3.75rem;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .con-hero nav {
@@ -59,8 +132,19 @@
     left: 0;
     background: transparent;
     padding: 20px 8%;
-    color:var(--color-header-con-hero)
+    color:var(--color-header-con-hero);
+    font-size: var(--font-size-header);
 }
+
+.user-name{
+    font-weight: bold;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;        
+}
+
 
 .menu-izq { 
     flex: 1; 
@@ -78,12 +162,17 @@
     flex: 1; 
     display: flex;
     justify-content: flex-end;
+    margin-left: 9rem;
 }
 
 .menu-centro ul,
 .menu-der ul {
     display: flex;
     gap: 2rem;
+}
+
+.sin-hero .header-general{
+    background-color: var(--color-fondo-header);
 }
 
 .hero{
@@ -101,6 +190,7 @@
 
 .header-general{
     color: var(--color-header);
+    background-color: var(--color-fondo);
 }
 
 .header-general nav{
@@ -124,12 +214,21 @@ nav ul li a:hover {
     border-radius: 8px;
     border: none;
     padding: 0.6rem;
-    color:var(--color-fondo);
+    color:var(--color-boton-texto);
 }
+
+.button-logout{
+    border-radius: 8px;
+    border: none;
+    padding: 0.6rem;
+    color:var(--color-boton-texto);
+    min-width: 4rem;
+}
+
 button{
     background: var(--color-boton);
     font-size: (var(--font-size-base));
-    color:(var(--color-header));
+    color: var(--color-boton-texto);
     cursor: pointer;
 }
 
@@ -170,11 +269,16 @@ nav ul{
 .separador-header{
     height: 2rem;
     /*background: #9c5862;*/
-    background: #a9806a;
+    background: var(--color-separador-header);
     width: 100%;
     margin-bottom: 0;
     border-radius: 5px;
    /* clip-path: polygon(0 0, 100% 0, 100% 10%, 51% 38%, 0 9%);*/
+}
+
+/*Body*/
+body{
+    background-color: var(--color-fondo);
 }
 
 main {
@@ -204,79 +308,6 @@ main {
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-
-
-.menu-derecha {
-  display: flex;
-  align-items: center; 
-  gap: 1rem;
-  padding: 2rem;
-}
-
-#userInfo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; 
-}
-
-.icono-usuario {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.user-name {
-  font-weight: bold;
-  color: #333;
-}
-
-/* Estilo de menú */
-.menu{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-size: 1.4rem;
-}
-
-.menu-central{
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-}
-
-.menu-izquierda{
-    padding: 2rem;
-}
-
-.menu-derecha{
-  padding: 2rem;
-}
-
-.menu-derecha button{
-  padding: 10rem;
-  border-radius: 8px;
-}
-
-#loginBtn{
-    padding: 0.9rem;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    background:#d91f8c;
-    border: none;
-    color:white;
-}
-
-#logoutBtn{
-  padding: 0.9rem;
-  border-radius: 8px;
-  background: #f7ca0f;
-  border: none;
-  color:black;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
 /* PANEL DE ACCESIBILIDAD */
 .accesibilidad-panel {
     position: fixed;
@@ -284,7 +315,7 @@ main {
     right: -300px; /* se oculta fuera de pantalla */
     width: 300px;
     height: 100%;
-    background-color: #ffffff;
+    background-color: var(--color-fondo);
     padding: 25px;
     box-shadow: -4px 0 10px rgba(0,0,0,0.3);
     z-index: 9998;
@@ -304,6 +335,7 @@ main {
 .accesibilidad-panel h2 {
     font-size: 22px;
     margin-bottom: 10px;
+    color:var(--color-titulos);
 }
 
 /* Opciones */
@@ -311,6 +343,8 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color:var(--color-texto);
+    font-weight: bold;
 }
 
 /* Botón de tema */
@@ -344,7 +378,7 @@ main {
 /*Footer*/
 /* Footer */
 footer {
-    background-color:var(--color-footer);
+    background: var(--color-footer);
     color:white;               /* Texto blanco */
     padding: 40px 0 20px 0;      /* Espaciado vertical arriba y abajo */
 }
@@ -431,7 +465,7 @@ gap: 15px;                     /* Espacio entre los enlaces */
 }
 
 .red-social:hover {
-    background-color: #FFFFFF;   /* Fondo gris claro al hacer hover */
+    color: var(--color-font-footer);    /* Fondo gris claro al hacer hover */
     color: #333333;             /* Texto gris oscuro al hacer hover */
 }
 .footer-copyright {
@@ -442,18 +476,22 @@ gap: 15px;                     /* Espacio entre los enlaces */
 }
 
 .footer-copyright p {
-    color: white;                 /* Color gris medio */
+    color: var(--color-font-footer);                 /* Color gris medio */
     font-size: 0.8rem;                /* Tamaño de fuente pequeño */
 }
 
-.footer h3, p, input,h2, h4{
+footer h3,
+footer p,
+footer input,
+footer h2,
+footer h4 {
     font-family: var(--font-family);
-    color:var(--color-header);
+    color: var(--color-font-footer)!important;
 }
 
 .suscripcion-contenedor  h3, label, input{
     font-family: var(--font-family);
-    color:var(--color-texto);
+    color:black;
 }
 
 .suscripcion-contenedor  h3{

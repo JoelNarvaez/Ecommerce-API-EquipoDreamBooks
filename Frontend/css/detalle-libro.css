@@ -1,0 +1,287 @@
+.detalle-container {
+    max-width: 80vw;
+    margin: 40px auto;
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+}
+
+.detalle-imagen img {
+    width: 380px;
+    height: 530px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.detalle-imagen img:hover{
+    transform: scale(1.2)
+}
+
+.detalle-info {
+    flex: 2;
+}
+
+.pago-seccion{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.detalle-info h1 {
+    font-size: var(--font-size-titulos);
+    font-family: var(--font-family);
+    color: var(--color-titulos);
+    margin-bottom: 5px;
+}
+
+.detalle-info h3{
+    font-family: var(--font-family);
+    color: var(--color-texto);
+}
+
+.autor {
+    font-size: var(--font-size-subtitulos);
+    color: var(--color-titulos);
+}
+
+.editorial {
+    font-size:var(--font-size-base);
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.precio-box {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+    color: var(--color-texto);
+    font-family: var(--font-family);
+    font-size:var(--font-size-base);
+}
+
+.precio-normal {
+    color: var(--color-texto) !important;
+    font-family: var(--font-family);
+    font-size:var(--font-size-base);
+    font-weight: bold;
+}
+
+.precio-original {
+    text-decoration: line-through;
+    color: var(--color-texto);
+    font-family: var(--font-family);
+    font-size:var(--font-size-subtitulos);
+}
+
+.precio-oferta {
+    font-size: 1.9rem;
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.precio-box.precio-grande .precio-normal{
+    color: var(--color-precio) !important;
+    font-family: var(--font-family);
+    font-size:var(--font-size-titulos)!important;
+}
+
+.stock {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.stock-disponible {
+    color: var(--color-stock) !important;
+}
+
+.stock-agotado {
+    color: var(--color-sin-stock) !important;
+}
+
+.descripcion {
+    margin: 15px 0;
+    line-height: 1.5;
+    color: var(--color-texto);
+    font-family: var(--font-family);
+}
+
+/* SECCIÓN DE DATOS EXTRAS */
+.extra-info {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f7f8f3;
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    width: 50%;
+}
+
+.extra-info p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: var(--color-gris);
+}
+
+/* BOTONES */
+.acciones {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 25px;
+    background-color: var(--color-boton);
+    border-radius: 8px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background-color: var(--color-boton-hover);
+}
+
+
+/* ===========================
+   SECCIONES SLIDER DETALLES LIBRO
+=========================== */
+
+.section-slider {
+    margin: 50px auto;
+    width: 70%;
+    font-family: var(--font-family);
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: 700;
+    padding: 15px;
+    margin-bottom: 12px;
+    color: var(--color-titulos);
+    font-family: "Quicksand", sans-serif;
+    text-align: center;
+}
+
+/* Contenedor horizontal */
+.slider-container {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 10px 0 20px;
+    scroll-snap-type: x mandatory;
+}
+
+/* Ocultar scroll visual */
+.slider-container::-webkit-scrollbar {
+    height: 0px;
+}
+
+.slider-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+
+.slider-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+.section-slider .product-card {
+    flex: 0 0 300px;     /* tamaño fijo */
+    width: 300px;
+    height: 610px;
+    margin-right: 12px;
+    scroll-snap-align: start;
+}
+
+
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* BOTONES */
+.slider-btn {
+    position: absolute;
+    z-index: 10;
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: 0.2s ease;
+}
+
+.slider-btn:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.slider-btn.left {
+    left: -45px;
+}
+
+.slider-btn.right {
+    right: -45px;
+}
+
+.slider-btn i {
+    font-size: 18px;
+    color: #3a4ddb;
+}
+
+
+
+/* TARJETA */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    height: 610px;
+}
+
+/* INFO DEL LIBRO */
+.product-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título y datos */
+.product-info h3 {
+    display: -webkit-box;;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 45px;
+}
+
+.product-info .autor,
+.product-info .editorial {
+    font-size: 14px;
+    line-height: 1.2;
+    height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ICONOS */
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    margin-top: 15px;
+}
+

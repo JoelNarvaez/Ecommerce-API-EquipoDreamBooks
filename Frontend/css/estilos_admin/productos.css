@@ -1,0 +1,353 @@
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------------------------
+    AQUÍ ESTÁ LA PARTE CORREGIDA DE IMAGEN
+---------------------------------------------- */
+
+.product-image {
+    width: 100%;
+    height: 480px;      /* ✔ altura fija correcta */
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* ✔ adapta la imagen sin deformar */
+    object-position: center;
+    display: block;
+}
+
+/* ------------------------------
+    BADGE DE OFERTA (ARRIBA)
+-------------------------------*/
+.offer-top-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #1c74c2;
+    color: white;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    font-weight: bold;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.25);
+}
+
+/* ------------------------------
+    CAJA DE PRECIOS
+-------------------------------*/
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-right: 5px;
+}
+
+.new-price {
+    color: #e60000;
+    font-weight: bold;
+}
+
+.offer-info {
+    background: #ffe0e0;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #c10000;
+}
+
+.product-badge.oferta {
+    background: #ff4444 !important;
+    color: white !important;
+}
+
+/* ------------------------------
+    ETIQUETA DE DESCUENTO
+-------------------------------*/
+.discount-tag {
+    width: fit-content;
+    background: #0c0c0c;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 4px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.18);
+}
+
+/* ------------------------------
+    ESTADO DE STOCK
+-------------------------------*/
+.stock-status {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.stock-status.existencia {
+    color: #01310f;
+}
+
+.stock-status.agotado {
+    color: #d32f2f;
+}
+
+/* ==============================================
+   BOTONES DE ACCIÓN (editar/eliminar)
+==============================================*/
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.btn-action {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.btn-action:hover {
+    background: #eaeaea;
+    transform: translateY(-2px);
+    border-color: #bbb;
+}
+
+.btn-action:active {
+    transform: scale(.95);
+}
+
+.btn-action i {
+    font-size: 18px;
+}
+
+.search-box {
+    position: relative;
+    width: 250px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background-color: #fff;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+    font-size: 18px;
+}
+
+/* // cards  */
+.product-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.book-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+.price-section .price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #d10000;
+}
+
+.stock-section {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.stock-ok {
+    color: #0a7a20;
+}
+
+.stock-bad {
+    color: #b00000;
+}
+
+.book-author {
+    font-size: 0.9rem;
+    color: #444;
+    margin-top: 2px;
+}
+
+.product-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    background: #f5f5f5;
+}
+
+.btn-action.edit i {
+    color: #005bbb;
+}
+
+.btn-action.delete i {
+    color: #cc0000;
+}
+
+.btn-action.edit:hover i {
+    color: #003f88;
+}
+
+.btn-action.delete:hover i {
+    color: #900000;
+}
+
+.product-category {
+    font-size: 13px;
+    color: #555;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+/* Contenedor de búsqueda + categoría */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Input con icono */
+.search-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+/* Input más grande */
+.search-group input {
+    width: 260px;     /* ← Aumenta el ancho */
+    height: 42px;     /* ← Más alto */
+    padding-left: 40px;
+    font-size: 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+}
+
+/* Icono más alineado */
+.search-icon {
+    left: 12px;
+    font-size: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* Select */
+.filter-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    font-size: 14px;
+}
+
+.product-actions {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+    display: flex;
+    gap: 10px;
+}
+
+.product-card {
+    position: relative;
+}
+
+.product-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+    display: flex;
+    gap: 8px;
+
+    opacity: 1;
+    visibility: visible;
+}
+
+.product-actions {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.product-card:hover .product-actions {
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-action {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    background: #f2f2f2;
+}
+

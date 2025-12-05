@@ -1,0 +1,109 @@
+/* ===========================
+   SECCIONES SLIDER HOME
+=========================== */
+
+.section-slider {
+    margin: 50px auto;
+    width: 70%;
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: 700;
+    padding: 15px;
+    margin-bottom: 12px;
+    color: #333;
+    font-family: "Quicksand", sans-serif;
+    text-align: center;
+}
+
+/* Contenedor horizontal */
+.slider-container {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 10px 0 20px;
+    scroll-snap-type: x mandatory;
+}
+
+/* Ocultar scroll visual */
+.slider-container::-webkit-scrollbar {
+    height: 0px;
+}
+
+.slider-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+
+.slider-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+.section-slider .product-card {
+    flex: 0 0 300px;     /* tamaño fijo en ancho */
+    width: 300px;
+    min-height: 610px;   
+    margin-right: 12px;
+    scroll-snap-align: start;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* empuja los iconos abajo */
+}
+
+
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* BOTONES */
+.slider-btn {
+    position: absolute;
+    z-index: 10;
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: 0.2s ease;
+}
+
+.slider-btn:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.slider-btn.left {
+    left: -45px;
+}
+
+.slider-btn.right {
+    right: -45px;
+}
+
+.slider-btn i {
+    font-size: 18px;
+    color: #3a4ddb;
+}
+
+
+
+/* Estilos para iconos en cards*/
+
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px;
+    flex-shrink: 0;  /* evita que se reduzca con altura */
+}

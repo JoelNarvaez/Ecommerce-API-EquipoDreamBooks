@@ -37,6 +37,24 @@
     margin-bottom: 1rem;
 }
 
+.login-logo {
+    width: 150px;       /* ancho inicial */
+    max-width: 40%;      /* no se pase de cierto % en pantallas grandes */
+    aspect-ratio: 1/1;   /* mantiene proporción cuadrada */
+    background-image: var(--img-logo);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto 1rem auto; /* centrado y separa del h2 */
+}
+
+.login-content p{
+    color: var(--color-texto);
+}
+
+.login-content h2{
+    color: var(--color-titulos);
+}
 
 #formLogin {
   display: flex;

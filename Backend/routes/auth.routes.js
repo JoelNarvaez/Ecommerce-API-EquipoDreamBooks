@@ -22,8 +22,5 @@ router.get('/verify-reset-token/:token', verifyResetToken);
 
 router.post("/reset-password/:token", resetPassword);
 
-// router.get('/validate-token', verifyToken, authController.validateToken);
-
-// router.post('/logout', verifyToken, authController.logout);
 
 module.exports = router;
