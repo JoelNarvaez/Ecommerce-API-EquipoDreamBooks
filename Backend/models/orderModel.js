@@ -131,6 +131,15 @@ async function obtenerPedidoDetalles(id) {
     return rows;
 }
 
+async function obtenerPedido(id) {
+    const [rows] = await db.query(`
+        SELECT *
+        FROM pedidos where Id = ?
+    `, [id]);
+
+    return rows[0];
+}
+
 /* ============================================================
     🟦 8. MÉTRICAS DE INGRESOS
    ============================================================ */
@@ -208,6 +217,7 @@ module.exports = {
     // CONSULTAS DE PEDIDOS
     obtenerPedidos,
     obtenerPedidoDetalles,
+    obtenerPedido,
 
     // MÉTRICAS
     obtenerIngresosTotales,
