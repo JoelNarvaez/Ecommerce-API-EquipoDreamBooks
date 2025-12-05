@@ -1,11 +1,11 @@
 const { GetItemCarrito, eliminarItemCarrito, obtenerCarritoUsuario } = require("../../models/modelCarrito");
 
-
 exports.eliminarCarrito = async (req, res) => {
     try {
 
         const { id } = req.user;
-        const { idItem } = req.body;
+        const { idItem } = req.params;   // <--- CORREGIDO: viene desde la URL
+
         const carritoUsuario = await obtenerCarritoUsuario(id);
 
         if (carritoUsuario.length === 0) {
@@ -17,9 +17,8 @@ exports.eliminarCarrito = async (req, res) => {
             return res.status(404).json({ message: "Item no encontrado" });
         }
 
-        const eliminar = await eliminarItemCarrito(itemCarrito.Id);
-
-        if (!eliminar) {
+        const eliminado = await eliminarItemCarrito(idItem);
+        if (!eliminado) {
             return res.status(500).json({ message: "Error al eliminar item del carrito" });
         }
 

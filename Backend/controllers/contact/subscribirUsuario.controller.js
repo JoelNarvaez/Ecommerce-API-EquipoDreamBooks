@@ -1,5 +1,5 @@
 const { generarCodigoCupon, crearCupon } = require("../../models/modelCupon");
-const { obtenerUserPorCorreo,subscribirUsuario } = require("../../models/usersModel");
+const { obtenerUserPorCorreo, subscribirUsuario } = require("../../models/usersModel");
 const enviarSubscripcionUsuario = require("../../services/email/enviarSubscripcionUsuario.service");
 
 exports.subscribirUsuario = async (req, res) => {
@@ -22,21 +22,27 @@ exports.subscribirUsuario = async (req, res) => {
             return res.status(500).json({ message: "Error al suscribir el usuario." });
         }
 
-        const codigoCupon = generarCodigoCupon('DREAMBOOKS', 20);
-        const cuponCreado = await crearCupon(codigoCupon, usuario.id);
+        // CREAR CUPÓN NUEVO (parámetros: prefijo, descuento FIXED)
+        const descuento = 20;
+        const codigoCupon = generarCodigoCupon("DREAMBOOKS", descuento);
+
+        // Crear cupón con el nuevo modelo
+        const cuponCreado = await crearCupon(codigoCupon, descuento);
 
         if (!cuponCreado) {
             return res.status(500).json({ message: "Error al crear el cupón de descuento." });
         }
 
-        // Enviar correo de confirmación de recepción
+        // Enviar correo
         const send = await enviarSubscripcionUsuario(usuario.nombre, codigoCupon, email);
 
         if (!send) {
             return res.status(500).json({ message: "Error al enviar correo de subscripcion" });
         }
 
-        return res.status(200).json({ message: "Usuario suscrito exitosamente. Te hemos enviado un cupón de descuento." });
+        return res.status(200).json({
+            message: "Usuario suscrito exitosamente. Te hemos enviado un cupón de descuento."
+        });
 
     } catch (error) {
         console.error(error);
