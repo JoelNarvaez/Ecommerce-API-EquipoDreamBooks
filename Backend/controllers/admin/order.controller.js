@@ -1,4 +1,6 @@
 // controllers/admin/order.controller.js
+const db = require("../../config/db");
+
 const {
   crearPedido,
   agregarDetalle,
@@ -8,20 +10,19 @@ const {
   obtenerIngresosDia,
   obtenerIngresosSemana,
   obtenerIngresosMes,
-  obtenerHistorialDiarioMes
+  obtenerHistorialDiarioMes,
 } = require("../../models/orderModel");
 
-
-// ============================================================
-//  GET /api/admin/pedidos
-// ============================================================
+/* ============================================================
+    2. GET /api/admin/pedidos  → LISTADO DE PEDIDOS
+   ============================================================ */
 async function getPedidos(req, res) {
   try {
     const pedidos = await obtenerPedidos();
 
     res.json({
       ok: true,
-      pedidos
+      pedidos,
     });
 
   } catch (error) {
@@ -34,14 +35,16 @@ async function getPedidos(req, res) {
 }
 
 
-// ============================================================
-//  GET /api/admin/pedidos/:id
-// ============================================================
+/* ============================================================
+    3. GET /api/admin/pedidos/:id  → DETALLES DE PEDIDO
+   ============================================================ */
 async function getPedidoById(req, res) {
   try {
     const id = req.params.id;
     const detalles = await obtenerPedidoDetalles(id);
+
     res.json({ ok: true, detalles });
+
   } catch (error) {
     console.error("❌ Error en getPedidoById:", error);
     res.status(500).json({ ok: false, message: "Error obteniendo detalles del pedido" });
@@ -49,9 +52,10 @@ async function getPedidoById(req, res) {
 }
 
 
-// ============================================================
-//  POST /api/admin/crear-pedido
-// ============================================================
+/* ============================================================
+    4. MÉTODO ANTIGUO (NO USAR PERO NO BORRAR)
+       POST /api/admin/crear-pedido
+   ============================================================ */
 async function crearPedidoCompleto(req, res) {
   try {
     const usuario_id = req.usuario?.id || 1;
@@ -90,9 +94,9 @@ async function crearPedidoCompleto(req, res) {
 }
 
 
-// ============================================================
-//  GET /api/admin/ingresos
-// ============================================================
+/* ============================================================
+    5. GET /api/admin/ingresos → MÉTRICAS
+   ============================================================ */
 async function getIngresos(req, res) {
   try {
     const total  = await obtenerIngresosTotales();
@@ -100,7 +104,6 @@ async function getIngresos(req, res) {
     const semana = await obtenerIngresosSemana();
     const mes    = await obtenerIngresosMes();
 
-    // Historial en try-catch aparte para que NUNCA tumbe la respuesta
     let rows = [];
     try {
       rows = await obtenerHistorialDiarioMes();
@@ -110,7 +113,7 @@ async function getIngresos(req, res) {
     }
 
     const historial = rows.map(r => ({
-      dia:   Number(r.dia),
+      dia: Number(r.dia),
       total: Number(r.total)
     }));
 
@@ -123,7 +126,7 @@ async function getIngresos(req, res) {
     if (historial.length >= 2) {
       const last = historial[historial.length - 1].total;
       const prev = historial[historial.length - 2].total;
-      tendencia  = last - prev;
+      tendencia = last - prev;
     }
 
     res.json({
@@ -146,8 +149,11 @@ async function getIngresos(req, res) {
 }
 
 
-// EXPORTAR CONTROLADOR
+/* ============================================================
+    EXPORTAR CONTROLADOR COMPLETO
+   ============================================================ */
 module.exports = {
+  crearPedido,
   getPedidos,
   getPedidoById,
   crearPedidoCompleto,

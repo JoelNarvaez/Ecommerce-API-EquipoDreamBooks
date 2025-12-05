@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="../css/compra.css">
+    <script src="https://kit.fontawesome.com/b6afd5c837.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <title>Checkout</title>
+</head>
+
+<body>
+    <div class="principal">
+
+        <!-- COLUMNA 1 — FORMULARIOS -->
+        <div class="colum1">
+
+            <header>
+                <h1>Completa tu orden</h1>
+            </header>
+
+            <!-- DATOS PERSONALES -->
+            <section class="bloque">
+                <h3>Datos Personales</h3>
+
+                <form id="form-persona" class="formGrid">
+                    <div class="formularioPagoBox">
+                        <label for="nombrePersona">Nombre</label>
+                        <input type="text" id="nombrePersona" placeholder="Ej. Juan" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="apellidoPersona">Apellido</label>
+                        <input type="text" id="apellidoPersona" placeholder="Ej. Pérez" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="emailPersona">Email</label>
+                        <input type="email" id="emailPersona" placeholder="correo@ejemplo.com" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="telefonoPersona">Teléfono</label>
+                        <input type="text" id="telefonoPersona" placeholder="10 dígitos" required>
+                    </div>
+                </form>
+            </section>
+
+            <!-- MÉTODO DE PAGO -->
+            <section class="bloque">
+                <h3>Método de pago</h3>
+
+                <div class="menuFormaDePago">
+                    <ul>
+                        <li><i class="fa-brands fa-cc-visa"></i></li>
+                        <li><i class="fa-brands fa-cc-mastercard"></i></li>
+                        <li><i class="fa-brands fa-google-pay"></i></li>
+                        <li><i class="bi bi-paypal"></i></li>
+                    </ul>
+                </div>
+
+                <form id="form-pago" class="formGrid">
+                    <div class="formularioPagoBox">
+                        <label for="nombreTitular">Nombre del titular</label>
+                        <input type="text" id="nombreTitular" placeholder="Igual que en la tarjeta" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="cardNumber">Número de Tarjeta</label>
+                        <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" maxlength="3" placeholder="Ej. 123" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label>Fecha de Expiración</label>
+                        <div class="expRow">
+                            <select id="expMonth" required>
+                                <option value="">Mes</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+
+                            <select id="expYear" required>
+                                <option value="">Año</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- DIRECCIÓN DE ENVÍO -->
+            <section class="bloque">
+                <h3>Dirección de compra</h3>
+
+                <form id="form-envio" class="formGrid">
+                    <div class="formularioPagoBox">
+                        <label for="direccionEnvio">Dirección</label>
+                        <input type="text" id="direccionEnvio" placeholder="Calle, número y colonia" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="ciudadEnvio">Ciudad</label>
+                        <input type="text" id="ciudadEnvio" placeholder="Ej. Aguascalientes" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="estadoEnvio">Estado</label>
+                        <input type="text" id="estadoEnvio" placeholder="Ej. Aguascalientes" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="refEnvio">Referencia</label>
+                        <input type="text" id="refEnvio" placeholder="Entre calles, punto de referencia" required>
+                    </div>
+
+                    <div class="formularioPagoBox">
+                        <label for="postalCodeEnvio">Código Postal</label>
+                        <input type="text" id="postalCodeEnvio" maxlength="5" placeholder="00000" required>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+
+        <!-- COLUMNA 2 — RESUMEN -->
+        <div class="colum2">
+            <div class="stickyBox">
+
+                <header class="encabezadoOrden">
+                    <h2>Tu orden</h2>
+                </header>
+
+                <!-- PRODUCTO (SE RELLENA DINÁMICO) -->
+                <div class="resumenOrden"></div>
+
+                <!-- CUPÓN -->
+                <div class="cuponBox">
+                    <label>¿Tienes un cupón?</label>
+                    <input type="text" id="cuponInput" placeholder="Ingresa tu cupón">
+                    <button id="aplicarCupon">Aplicar</button>
+                    <p id="cuponMensaje"></p>
+                </div>
+
+                <!-- TOTALES -->
+                <div class="contenedorTotal">
+                    <p>Subtotal: $<span id="subtotal">0</span></p>
+                    <p>IVA (16%): $<span id="iva">0</span></p>
+                    <p class="descuento">Cupón: -$<span id="descuento">0</span></p>
+
+                    <h3 class="total">Total: $<span id="totalFinal">0</span></h3>
+
+                    <button class="confirmarOrdenBtn" id="confirmarOrdenBtn">Confirmar Orden</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../js/compra.js"></script>
+
+</body>
+</html>

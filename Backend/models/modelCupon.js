@@ -1,27 +1,43 @@
 const db = require("../config/db");
 
-
-function generarCodigoCupon( prefijo = '', descuento = 0) {
-    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; // sin 0 ni 1 para evitar confusiones
+// GENERADOR DE CÓDIGOS
+function generarCodigoCupon(prefijo = '', descuento = 0) {
+    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
     let codigo = prefijo ? prefijo.toUpperCase() + '-' : '';
+
     for (let i = 0; i < 8; i++) {
         codigo += chars.charAt(Math.floor(Math.random() * chars.length));
     }
+
+    // ejemplo: DREAMBOOKS-ABC12345-20
     return codigo + '-' + descuento;
 }
 
-
-// Crear oferta
-async function crearCupon(Codigo, IdUsuario) {
+// CREAR CUPÓN (con la nueva estructura)
+async function crearCupon(codigoGenerado, montoDescuento) {
     const [result] = await db.query(`
-        INSERT INTO Cupones (Codigo, IdUsuario, Activo, Utilizado)
-        VALUES (?, ?, 1, 0)
-    `, [Codigo, IdUsuario]);
+        INSERT INTO cupones (Codigo, MontoDescuento, Activo)
+        VALUES (?, ?, 1)
+    `, [codigoGenerado, montoDescuento]);
 
     return result.affectedRows === 1;
 }
 
+// BUSCAR CUPÓN POR CÓDIGO
+async function obtenerCuponPorCodigo(codigo) {
+    const [rows] = await db.query(`
+        SELECT * FROM cupones
+        WHERE Codigo = ?
+        AND Activo = 1
+        AND (FechaExpiracion IS NULL OR FechaExpiracion >= CURDATE())
+        LIMIT 1
+    `, [codigo]);
+
+    return rows[0];
+}
+
 module.exports = {
+    generarCodigoCupon,
     crearCupon,
-    generarCodigoCupon
+    obtenerCuponPorCodigo
 };

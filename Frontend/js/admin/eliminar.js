@@ -39,7 +39,12 @@ document.addEventListener("click", async (e) => {
     const data = await res.json();
 
     if (!res.ok) {
-        alert("Error al cargar datos del libro");
+        //alert("Error al cargar datos del libro");
+         Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Error al cargar datos del libro."
+        });
         return;
     }
 
@@ -55,7 +60,7 @@ document.addEventListener("click", async (e) => {
     document.getElementById("delete-book-stock").textContent = stock;
     document.getElementById("delete-book-price").textContent = price;
 
-    // 🔥 Nuevos campos
+    // Nuevos campos
     document.getElementById("delete-book-editorial").textContent =
         libro.editorial ? `Editorial: ${libro.editorial}` : "Editorial: -";
 
@@ -87,7 +92,12 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
     const cantidad = parseInt(document.getElementById("cantidad-eliminar").value);
 
     if (!cantidad || cantidad <= 0) {
-        alert("Ingresa una cantidad válida.");
+        //alert("Ingresa una cantidad válida.");
+        Swal.fire({
+            icon: "warning",
+            title: "Cantidad inválida",
+            text: "Ingresa una cantidad válida"
+        });
         return;
     }
 
@@ -105,7 +115,12 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
     const data = await res.json();
 
     if (res.ok) {
-        alert("Stock actualizado correctamente");
+        //alert("Stock actualizado correctamente");
+        Swal.fire({
+            title: "Actualización",
+            text: "Stock actualizado correctamente",
+            icon: "success"
+        });
         fetchBooks(1, 8);
 
         if (typeof actualizarReporteExistencias === "function") {
@@ -113,7 +128,12 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
         }
 
     } else {
-        alert(data.message || "Error al actualizar stock");
+        //alert(data.message || "Error al actualizar stock");
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.message || "Error al actualizar stock"
+        });
     }
 
     document.getElementById("modal-eliminar").classList.add("hidden");
@@ -124,8 +144,16 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
 // ----------------------------------------------------------
 document.getElementById("btn-delete-total")?.addEventListener("click", async () => {
 
-    if (!confirm("¿Seguro que deseas eliminar este libro permanentemente?")) return;
+    //if (!confirm("¿Seguro que deseas eliminar este libro permanentemente?")) return;
+    const result = await Swal.fire({
+        title: "¿Seguro que deseas eliminar este libro permanentemente?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    });
 
+    if (!result.isConfirmed) return;
     const token = localStorage.getItem("token");
 
     const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {
@@ -138,7 +166,12 @@ document.getElementById("btn-delete-total")?.addEventListener("click", async () 
     const data = await res.json();
 
     if (res.ok) {
-        alert("Libro eliminado correctamente");
+        //alert("Libro eliminado correctamente");
+        Swal.fire({
+            title: "Eliminación",
+            text: "Libro eliminado correctamente",
+            icon: "success"
+        });
         fetchBooks(1, 8);
 
         if (typeof actualizarReporteExistencias === "function") {
@@ -146,7 +179,12 @@ document.getElementById("btn-delete-total")?.addEventListener("click", async () 
         }
 
     } else {
-        alert(data.message || "Error al eliminar libro");
+        //alert(data.message || "Error al eliminar libro");
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.message || "Error al eliminar libro"
+        });
     }
 
     document.getElementById("modal-eliminar").classList.add("hidden");

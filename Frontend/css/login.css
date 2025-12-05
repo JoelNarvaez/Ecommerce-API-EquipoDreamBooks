@@ -38,14 +38,14 @@
 }
 
 .login-logo {
-    width: 150px;       /* ancho inicial */
-    max-width: 40%;      /* no se pase de cierto % en pantallas grandes */
-    aspect-ratio: 1/1;   /* mantiene proporción cuadrada */
+    width: 150px;       
+    max-width: 40%;      
+    aspect-ratio: 1/1;   
     background-image: var(--img-logo);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    margin: 0 auto 1rem auto; /* centrado y separa del h2 */
+    margin: 0 auto 1rem auto; 
 }
 
 .login-content p{
@@ -78,7 +78,7 @@
   width: 30%;
   padding: 0.8rem;
   border: none;
-  background-color: var(--color-boton);
+  background: var(--color-boton);
   color:var(--color-boton-texto);
   border-radius: 8px;
   font-size: 1.1rem;
@@ -89,7 +89,7 @@
 }
 
 .login-button:hover {
-  background-color: var(--color-gris);
+  background: var(--color-gris);
 }
 
 .registro-opcion{
@@ -100,4 +100,36 @@
 }
 
 
+.input-container {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  background: var(--color-fondo-input, #fff);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden; /* para que el icono quede pegado */
+}
 
+.input-container i {
+  color: gray;
+  padding: 12px;              /* tamaño del cuadrito */
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;                 /* tamaño fijo */
+}
+
+.input-container input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+  background: transparent; /* para que combine con el contenedor */
+}
+
+.input-container:focus-within {
+  border: 1px solid #6f94c7;
+  box-shadow: 0 0 4px #6f94c7;
+}

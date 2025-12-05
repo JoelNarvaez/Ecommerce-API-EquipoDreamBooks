@@ -1,12 +1,10 @@
-
-
+// ============================
+// Cargar página del carrito
+// ============================
 async function cargarPaginaCarrito() {
     try {
-
         const carritoData = await obtenerCarrito();
-
         inicializarCarrito(carritoData.itemsCarrito);
-
     } catch (error) {
         Swal.fire({
             icon: "error",
@@ -14,42 +12,65 @@ async function cargarPaginaCarrito() {
             text: "Ocurrió un error inesperado. Intenta nuevamente.",
         });
     }
-
 }
 
+// ============================
+// Inicializar carrito
+// ============================
 async function inicializarCarrito(itemsCarrito = []) {
     const carritoContainer = document.getElementById("cartItems");
     carritoContainer.innerHTML = "";
-
-    
 
     if (itemsCarrito.length === 0) {
         carritoContainer.innerHTML = "<p>Tu carrito está vacío.</p>";
         return;
     }
-    carritoContainer.innerHTML = itemsCarrito.map(item => {
 
-        item.detalleProducto.imagen = item.detalleProducto.imagen ? `http://localhost:3000/uploads/${item.detalleProducto.imagen}` : "/Frontend/assets/no-image.png";
+    carritoContainer.innerHTML = itemsCarrito
+        .map(item => {
+            const imagen = item.imagen
+                ? `http://localhost:3000/uploads/${item.imagen}`
+                : "/Frontend/assets/no-image.png";
 
-        const subtotal = item.Cantidad * item.detalleProducto.precio;
+            const precioUnitario = Number(item.precioFinal);
+            const precioOriginal = Number(item.precioNormal);
 
-        const subtotalFormateado = subtotal.toLocaleString("es-MX", {
-            style: "currency",
-            currency: "MXN"
-        });
+            const subtotal = item.Cantidad * precioUnitario;
+            const subtotalFormateado = subtotal.toLocaleString("es-MX", {
+                style: "currency",
+                currency: "MXN"
+            });
 
-
-        return `<div class="cart-item">
+            return `
+                <div class="cart-item">
                     <div class="cart-item__thumb">
-                        <img src="${item.detalleProducto.imagen}"
-                            alt="${item.detalleProducto.nombre}"
+                        <img src="${imagen}"
+                            alt="${item.nombre}"
                             style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
                     </div>
 
                     <div>
-                        <p class="cart-item__title">${item.detalleProducto.nombre}</p>
-                        <p class="cart-item__meta">${item.detalleProducto.autor}</p>
-                        <p class="cart-item__price">${item.detalleProducto.precio} MXN</p>
+                        <p class="cart-item__title">${item.nombre}</p>
+                        <p class="cart-item__meta">${item.autor}</p>
+
+                        <!-- PRECIO FORMATEADO CORRECTAMENTE -->
+                        <p class="cart-item__price">
+                            ${precioUnitario.toLocaleString("es-MX", {
+                                style: "currency",
+                                currency: "MXN"
+                            })}
+
+                            ${
+                                precioOriginal > precioUnitario
+                                    ? `<span style="text-decoration:line-through; color:#888; font-size:12px; margin-left:5px;">
+                                            ${precioOriginal.toLocaleString("es-MX", {
+                                                style: "currency",
+                                                currency: "MXN"
+                                            })}
+                                       </span>`
+                                    : ""
+                            }
+                        </p>
 
                         <div class="qty">
                             <button class="qty-btn minus" data-id="${item.ProductoId}">-</button>
@@ -60,35 +81,51 @@ async function inicializarCarrito(itemsCarrito = []) {
 
                     <div class="botones_precio">
                         <p class="cart-item__price">${subtotalFormateado}</p>
-                        <button class="remove" data-id="${item.Id}">
+                        <button class="remove" data-id="${item.itemId}">
                             <i class="bi bi-trash3"></i>
                         </button>
                     </div>
-                </div>`
+                </div>
+            `;
+        })
+        .join("");
 
-    });
-
-
+    // Totales
     const subtotal = document.getElementById("subtotal");
     const shipping = document.getElementById("shipping");
     const total = document.getElementById("total");
 
-    const totalSubtotal = itemsCarrito.reduce((acc, item) => acc + (item.Cantidad * item.detalleProducto.precio), 0);
+    const totalSubtotal = itemsCarrito.reduce(
+        (acc, item) => acc + item.Cantidad * Number(item.precioFinal),
+        0
+    );
+
     const shippingCost = totalSubtotal > 0 ? 50 : 0;
     const totalAmount = totalSubtotal + shippingCost;
 
-    subtotal.innerHTML = totalSubtotal.toLocaleString("es-MX", { style: "currency", currency: "MXN" });
-    shipping.textContent = shippingCost.toLocaleString("es-MX", { style: "currency", currency: "MXN" });
-    total.textContent = totalAmount.toLocaleString("es-MX", { style: "currency", currency: "MXN" });
-
+    subtotal.textContent = totalSubtotal.toLocaleString("es-MX", {
+        style: "currency",
+        currency: "MXN"
+    });
+    shipping.textContent = shippingCost.toLocaleString("es-MX", {
+        style: "currency",
+        currency: "MXN"
+    });
+    total.textContent = totalAmount.toLocaleString("es-MX", {
+        style: "currency",
+        currency: "MXN"
+    });
 }
 
+// =====================================
+// Eventos del carrito: +, -, eliminar
+// =====================================
 const cont = document.getElementById("cartItems");
-cont.addEventListener("click", (e) => {
+
+cont.addEventListener("click", e => {
     if (e.target.classList.contains("minus")) {
         const id = Number(e.target.dataset.id);
         agregarAlCarrito(id, 1, false);
-
     }
 
     if (e.target.classList.contains("plus")) {
@@ -99,26 +136,23 @@ cont.addEventListener("click", (e) => {
     const btnRemove = e.target.closest(".remove");
     if (btnRemove) {
         const id = Number(btnRemove.dataset.id);
-        EliminarItemCarrito(id)
+        EliminarItemCarrito(id);
         return;
     }
-
 });
 
 // ============================
-//    FUNCIONES CARRITO
+// Obtener carrito desde backend
 // ============================
-
 async function obtenerCarrito() {
     try {
-        // 1. Verificar autenticación
         const token = localStorage.getItem("token");
 
         if (!token) {
             Swal.fire({
                 icon: "warning",
                 title: "Inicia sesión",
-                text: "Debes iniciar sesión para agregar libros al carrito.",
+                text: "Debes iniciar sesión para manejar tu carrito.",
             });
             return;
         }
@@ -152,10 +186,11 @@ async function obtenerCarrito() {
     }
 }
 
-
+// ============================
+// Agregar al carrito
+// ============================
 async function agregarAlCarrito(idLibro, cantidad = 1, increment = true) {
     try {
-        // 1. Verificar autenticación
         const token = localStorage.getItem("token");
 
         if (!token) {
@@ -170,7 +205,7 @@ async function agregarAlCarrito(idLibro, cantidad = 1, increment = true) {
         const carritoData = await obtenerCarrito();
 
         const items = carritoData.itemsCarrito;
-        const itemExistente = items.find((item) => item.ProductoId === idLibro);
+        const itemExistente = items.find(item => item.ProductoId === idLibro);
 
         if (itemExistente) {
             await actualizarItemExistente(itemExistente, cantidad, idLibro, token, increment);
@@ -184,16 +219,18 @@ async function agregarAlCarrito(idLibro, cantidad = 1, increment = true) {
         Swal.fire({
             icon: "error",
             title: "Error inesperado",
-            text: `${error.message || "Ocurrió un error inesperado. Intenta nuevamente."}`,
+            text: error.message || "Ocurrió un error inesperado.",
         });
     }
 }
 
-// ==============================
+// ============================
 // Actualizar item existente
-// ==============================
+// ============================
 async function actualizarItemExistente(itemExistente, cantidad, idLibro, token, increment = true) {
-    const nuevaCantidad = increment ? itemExistente.Cantidad + cantidad : itemExistente.Cantidad - cantidad;
+    const nuevaCantidad = increment
+        ? itemExistente.Cantidad + cantidad
+        : itemExistente.Cantidad - cantidad;
 
     const updateRes = await fetch("http://localhost:3000/api/carts/actualizar", {
         method: "PUT",
@@ -212,38 +249,24 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token, 
     if (!updateRes.ok) {
         Swal.fire({
             icon: "warning",
-            title: "No se pudo actualizar la cantidad del libro.",
-            text: `${updateData.message || ""}`,
+            title: "No se pudo actualizar la cantidad.",
+            text: updateData.message || "",
         });
         return;
     }
 
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-    Toast.fire({
+    Swal.fire({
         icon: "success",
-        title: "Se actualizó la cantidad del libro en el carrito a " + nuevaCantidad,
+        title: "Cantidad actualizada a " + nuevaCantidad,
     });
 
     return updateData;
 }
 
-
-
-// ==============================
+// ============================
 // Agregar nuevo item
-// ==============================
+// ============================
 async function agregarNuevoItem(idLibro, cantidad, token) {
-
     const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
         method: "POST",
         headers: {
@@ -258,14 +281,10 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
 
     const addData = await addRes.json();
 
-    const items = addData.carrito;
-
-    const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
-
     if (!addRes.ok) {
         Swal.fire({
             icon: "error",
-            title: "No se pudo agregar el libro al carrito.",
+            title: "No se pudo agregar el libro.",
             text: addData.message || "",
         });
         return;
@@ -273,25 +292,23 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
 
     Swal.fire({
         icon: "success",
-        title: `${itemAdded.detalleProducto.nombre} Agregado`,
-        text: "Libro agregado al carrito correctamente.",
+        title: "Libro agregado al carrito",
     });
 
     return addData;
 }
 
-// =============================
-// eliminar item
-// =============================
+// ============================
+// Eliminar item del carrito
+// ============================
 async function EliminarItemCarrito(idItem) {
-
     const token = localStorage.getItem("token");
 
     if (!token) {
         Swal.fire({
             icon: "warning",
             title: "Inicia sesión",
-            text: "Debes iniciar sesión para agregar libros al carrito.",
+            text: "Debes iniciar sesión para eliminar libros del carrito.",
         });
         return;
     }
@@ -301,10 +318,7 @@ async function EliminarItemCarrito(idItem) {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            idItem
-        }),
+        }
     });
 
     const addData = await addRes.json();
@@ -312,7 +326,7 @@ async function EliminarItemCarrito(idItem) {
     if (!addRes.ok) {
         Swal.fire({
             icon: "error",
-            title: "No se eliminar el libro del carrito.",
+            title: "No se pudo eliminar el libro.",
             text: addData.message || "",
         });
         return;
@@ -320,11 +334,36 @@ async function EliminarItemCarrito(idItem) {
 
     Swal.fire({
         icon: "success",
-        title: `libro eliminado del carrito`,
-        text: "Libro eliminado del carrito correctamente.",
+        title: "Libro eliminado correctamente",
     });
 
     await cargarPaginaCarrito();
 }
 
+// Cargar carrito al iniciar
 cargarPaginaCarrito();
+
+
+// ============================
+// Ir a la página de compra
+// ============================
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+    window.location.href = "/Frontend/pages/compra.html";
+});
+
+async function cargarPaginaCarrito() {
+    try {
+        const carritoData = await obtenerCarrito();
+
+        // Guardar carrito para la página de compra
+        localStorage.setItem("carritoDreamBooks", JSON.stringify(carritoData.itemsCarrito));
+
+        inicializarCarrito(carritoData.itemsCarrito);
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Error inesperado",
+            text: "Ocurrió un error inesperado. Intenta nuevamente.",
+        });
+    }
+}

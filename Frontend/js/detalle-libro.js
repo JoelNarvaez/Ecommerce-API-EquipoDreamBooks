@@ -381,3 +381,33 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
   return addData;
 }
 
+document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".wishlist");
+    if (!btn) return;
+
+    console.log("CLICK EN WISHLIST!!"); // <-- DEBE SALIR
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+        return Swal.fire("Inicia sesión", "Debes iniciar sesión para usar wishlist", "warning");
+    }
+
+    const productoId = Number(idActual);
+
+    const res = await fetch("http://localhost:3000/api/wishlist/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({ productoId })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+        Swal.fire("Agregado", "Libro guardado en tu lista de deseos ❤️", "success");
+    } else {
+        Swal.fire("Ups", data.message, "info");
+    }
+});
