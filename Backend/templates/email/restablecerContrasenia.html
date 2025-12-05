@@ -2,81 +2,119 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Restablecer contraseña</title>
 </head>
 
-<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Quicksand', sans-serif; color: #000000;">
+<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
 
-    <!-- Contenedor principal -->
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    <!-- Wrapper principal -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5; padding:40px 0;">
         <tr>
             <td align="center">
 
-                <!-- Tarjeta -->
-                <table width="600" border="0" cellspacing="0" cellpadding="0"
-                    style="background-color: #ebe6db; margin-top: 20px; border-radius: 10px; overflow: hidden;">
+                <!-- Contenedor -->
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
 
-                    <!-- HEADER -->
+                    <!-- Header -->
                     <tr>
-                        <td align="center"
-                            style="padding: 0px; background-color: #ffffff; color: #703030; font-size: 2rem; font-weight: bold;">
-                            <img src="../../assets/public/logo-header-fondo.png" alt="Books" width="120"
-                                style="margin-top: 20px;">
+                        <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
+
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center">
+                                        <div
+                                            style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin-bottom:20px;">
+                                            <img src="./../../assets/public/logo-header.png" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
+                                            Restablece tu contraseña
+                                        </h1>
+                                        <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">
+                                            DreamBooks
+                                        </p>
+                                        <p style="color:#737373; font-size:14px; line-height:0;">
+                                            Sueña despierto
+                                        </p>
+                                    </td>
+                                </tr>
+
+                            </table>
+
                         </td>
                     </tr>
 
+                    <!-- Espaciado -->
                     <tr>
-                        <td align="center"
-                            style="padding: 30px; background-color: #ffffff; color: #703030; font-size: 2rem; font-weight: bold;">
-                            Restablece tu contraseña
-                        </td>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
                     </tr>
 
-                    <!-- TEXTO PRINCIPAL -->
+                    <!-- Greeting / Texto Principal -->
                     <tr>
-                        <td style="padding: 30px; font-size: 1rem; color: #000000; line-height: 1.6rem;">
-                            <h2 style="color: #703030; font-size: 1.6rem; margin-top: 0;">
-                                ¡Hola ${nombre}!
-                            </h2>
+                        <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
+                            <p style="margin:0; color:#000; font-size:16px; line-height:1.6;">
+                                Hola <strong style="color:#703030;">{{nombre}}</strong>,
+                            </p>
 
-                            <p>
+                            <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
                                 Recibimos una solicitud para restablecer la contraseña de tu cuenta en
                                 <strong>DreamBooks</strong>.
                             </p>
 
-                            <p>
-                                Si realizaste esta solicitud, haz clic en el siguiente botón para crear una nueva
-                                contraseña. Este enlace es válido por tiempo limitado.
+                            <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
+                                Si realizaste esta solicitud, haz clic en el siguiente botón para crear una nueva contraseña.
+                                Este enlace es válido por tiempo limitado.
+                            </p>
+
+                            <!-- Botón centrado -->
+                            <div style="text-align:center; margin-top:25px;">
+                                <a href="{{reset_link}}"
+                                   style="background-color:#c77965; color:#ffffff; padding:14px 32px; 
+                                          text-decoration:none; border-radius:6px; font-size:16px; font-weight:600; 
+                                          display:inline-block;">
+                                    Restablecer contraseña
+                                </a>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <!-- Espaciado -->
+                    <tr>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+                    </tr>
+
+                    <!-- Mensaje secundario (con borde lateral) -->
+                    <tr>
+                        <td style="background-color:#ffffff; padding:25px; border-radius:12px; 
+                                   border-left:4px solid #c77965;">
+                            <p style="margin:0; color:#737373; font-size:14px; line-height:1.6;">
+                                Si no solicitaste este cambio, puedes ignorar este mensaje con total seguridad.  
+                                Tu contraseña no será modificada.
                             </p>
                         </td>
                     </tr>
 
-                    <!-- BOTÓN -->
+                    <!-- Espaciado -->
                     <tr>
-                        <td align="center" style="padding: 20px;">
-                            <a href="{{reset_link}}" style="background-color: #c77965; color: #fff; padding: 15px 30px; 
-                                      text-decoration: none; border-radius: 5px; font-size: 1rem; 
-                                      display: inline-block;">
-                                Restablecer contraseña
-                            </a>
-                        </td>
+                        <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
                     </tr>
 
-                    <!-- MENSAJE SECUNDARIO -->
+                    <!-- Footer -->
                     <tr>
-                        <td style="padding: 20px 30px; font-size: 0.9rem; color: #737373; line-height: 1.6rem;">
-                            Si no solicitaste este cambio, puedes ignorar este mensaje con seguridad. Tu contraseña no
-                            será modificada.
-                        </td>
-                    </tr>
-
-                    <!-- FOOTER -->
-                    <tr>
-                        <td align="center"
-                            style="background-color: #a9806a; padding: 20px; color: #ffffff; font-size: 0.9rem;">
-                            © 2025 DreamBooks. Todos los derechos reservados.
+                        <td style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center;">
+                            <p style="margin:0; color:#ffffff; font-size:14px; line-height:1.6;">
+                                © 2025 DreamBooks. Todos los derechos reservados.
+                            </p>
+                            <p style="margin:10px 0 0; color:#ffffff; font-size:12px; opacity:0.9;">
+                                Recibiste este correo debido a una solicitud de restablecimiento de contraseña.
+                            </p>
                         </td>
                     </tr>
 
