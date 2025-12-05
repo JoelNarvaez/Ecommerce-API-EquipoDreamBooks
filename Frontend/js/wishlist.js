@@ -17,21 +17,21 @@ async function cargarWishlist() {
 
 function mostrarWishlist(lista) {
     const contenedor = document.querySelector(".wishlist-items");
-    const totalSpan = document.querySelector(".summary strong");
+    const totalSpan = document.querySelector(".total strong");
 
     contenedor.innerHTML = "";
     let total = 0;
 
     lista.forEach(item => {
-        const precioNum = Number(item.precio); // ← Convertido aquí
-
+        const precioNum = Number(item.precio ?? 0);
         total += precioNum;
 
         contenedor.innerHTML += `
         <div class="wishlist-item" data-id="${item.ProductoId}">
             <div class="item-thumb">
-                <img src="/Frontend/imagenes/libros/${item.imagen}" class="thumb-img"
-                     onerror="this.src='/Frontend/imagenes/default-book.png'">
+                <img src="http://localhost:3000/uploads/${item.imagen}"
+                     class="thumb-img"
+                     onerror="this.src='/Frontend/assets/no-image.png'">
             </div>
 
             <div class="item-details">
@@ -46,7 +46,7 @@ function mostrarWishlist(lista) {
 
             <div class="item-actions">
                 <button class="btn btn-sm btn-primary agregar-carrito"
-                    ${item.stock <= 0 ? "disabled" : ""}>
+                        ${item.stock <= 0 ? "disabled" : ""}>
                     <i class="bi bi-cart-plus"></i> Agregar
                 </button>
 
@@ -57,15 +57,21 @@ function mostrarWishlist(lista) {
         </div>`;
     });
 
+    // 🔥 ACTUALIZAR TOTAL
     totalSpan.textContent = "$" + total.toFixed(2);
+
+    // 🔥 ACTUALIZAR CONTADOR
+    const countSpan = document.getElementById("wishlist-count");
+    const cantidadLibros = lista.length;
+    countSpan.innerHTML = `Tienes <strong>${cantidadLibros} libro${cantidadLibros === 1 ? "" : "s"}</strong> en tu lista de deseos.`;
 
     activarEventos();
 }
 
-/* ================================
-   EVENTOS: eliminar + agregar al carrito
-================================ */
 
+/* ================================
+   EVENTOS
+================================ */
 function activarEventos() {
     document.querySelectorAll(".eliminar-wishlist").forEach(btn => {
         btn.addEventListener("click", eliminarWishlist);
@@ -79,14 +85,33 @@ function activarEventos() {
 }
 
 /* -------- ELIMINAR -------- */
+/* -------- ELIMINAR -------- */
 async function eliminarWishlist(e) {
     const idProducto = e.target.closest(".wishlist-item").dataset.id;
-
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {
+    const confirm = await Swal.fire({
+        title: "¿Eliminar de tu lista?",
+        text: "Este libro se eliminará de tu lista de deseos.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar"
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {
         method: "DELETE",
         headers: { "Authorization": "Bearer " + token }
+    });
+
+    Swal.fire({
+        icon: "success",
+        title: "Eliminado",
+        text: "El libro fue eliminado de tu lista.",
+        timer: 1500,
+        showConfirmButton: false
     });
 
     cargarWishlist();
@@ -94,9 +119,7 @@ async function eliminarWishlist(e) {
 
 /* -------- AGREGAR AL CARRITO -------- */
 async function moverAlCarrito(e) {
-    const item = e.target.closest(".wishlist-item");
-    const idProducto = item.dataset.id;
-
+    const idProducto = e.target.closest(".wishlist-item").dataset.id;
     const token = localStorage.getItem("token");
 
     await fetch("http://localhost:3000/api/carts/agregar", {
@@ -108,25 +131,52 @@ async function moverAlCarrito(e) {
         body: JSON.stringify({ productoId: idProducto, cantidad: 1 })
     });
 
-    // también eliminar de wishlist
     await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {
         method: "DELETE",
         headers: { "Authorization": "Bearer " + token }
     });
 
+    Swal.fire({
+        icon: "success",
+        title: "Agregado al carrito",
+        text: "Este libro ahora está en tu carrito.",
+        timer: 1500,
+        showConfirmButton: false
+    });
+
     cargarWishlist();
 }
 
+
+/* -------- MOVER TODO -------- */
 /* -------- MOVER TODO -------- */
 async function moverTodo() {
     const token = localStorage.getItem("token");
-
     const items = document.querySelectorAll(".wishlist-item");
+
+    if (items.length === 0) {
+        return Swal.fire({
+            icon: "info",
+            title: "Lista vacía",
+            text: "No hay libros para mover al carrito."
+        });
+    }
+
+    const confirm = await Swal.fire({
+        title: "Mover todos al carrito",
+        text: "Todos los libros pasarán al carrito.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Mover",
+        cancelButtonText: "Cancelar"
+    });
+
+    if (!confirm.isConfirmed) return;
 
     for (const item of items) {
         const idProducto = item.dataset.id;
 
-        await fetch("http://localhost:3000/api/carts/add", {
+        await fetch("http://localhost:3000/api/carts/agregar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -141,5 +191,14 @@ async function moverTodo() {
         });
     }
 
+    Swal.fire({
+        icon: "success",
+        title: "Completado",
+        text: "Todos los libros fueron movidos al carrito.",
+        timer: 1500,
+        showConfirmButton: false
+    });
+
     cargarWishlist();
 }
+
