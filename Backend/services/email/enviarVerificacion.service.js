@@ -12,77 +12,117 @@ const enviarCorreoVerificacion = async ( idUser, nombre, email) => {
 
     const archivosImg = [
         {
-            filename: "logo-header-fondo.png",
+            filename: "logo-header.png",
             cid: "logoDreamBooks"
         }
     ]
 
-    const contenidoHTML = `<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Quicksand', sans-serif; color: #000000;">
-                            <!-- Contenedor principal -->
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f5f5f5;">
+    const contenidoHTML = `<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
+
+                            <!-- Wrapper principal -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5; padding:40px 0;">
                                 <tr>
                                     <td align="center">
 
-                                        <!-- Tarjeta -->
-                                        <table width="600" border="0" cellspacing="0" cellpadding="0"
-                                            style="background-color: #ebe6db; margin-top: 20px; border-radius: 10px; overflow: hidden;">
+                                        <!-- Contenedor -->
+                                        <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
 
-                                            <!-- HEADER -->
+                                            <!-- Header -->
                                             <tr>
-                                                <td align="center"
-                                                    style="padding: 0px; background-color: #ffffff; color: #703030; font-size: 2rem; font-weight: bold;">
-                                                    <img src="cid:logoDreamBooks" alt="Books" width="120" style="margin-top: 20px;">
+                                                <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
+
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td align="center">
+                                                                <div
+                                                                    style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin-bottom:20px;">
+                                                                    <img src="cid:logoDreamBooks" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="text-align:center;">
+                                                                <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
+                                                                    Verifica tu correo
+                                                                </h1>
+                                                                <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">
+                                                                    DreamBooks
+                                                                </p>
+                                                                <p style="color:#737373; font-size:14px; line-height:0;">
+                                                                    Sueña despierto
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+
                                                 </td>
                                             </tr>
+
+                                            <!-- Espaciado -->
                                             <tr>
-                                                <td align="center"
-                                                    style="padding: 30px; background-color: #ffffff; color: #703030; font-size: 2rem; font-weight: bold;">
-                                                    Verifica tu correo
-                                                </td>
+                                                <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
                                             </tr>
-                                        
 
-                                            <!-- TEXTO PRINCIPAL -->
+                                            <!-- Texto principal -->
                                             <tr>
-                                                <td style="padding: 30px; font-size: 1rem; color: #000000; line-height: 1.6rem;">
-                                                    <h2 style="color: #703030; font-size: 1.6rem; margin-top: 0;">¡Hola ${nombre}!</h2>
-
-                                                    <p>
-                                                        Gracias por registrarte en <strong>DreamBooks</strong>, tu tienda favorita de libros en
-                                                        línea.
-                                                        Antes de comenzar a explorar nuestras colecciones, necesitamos confirmar que este correo
-                                                        electrónico es tuyo.
+                                                <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
+                                                    <p style="margin:0; color:#000; font-size:16px; line-height:1.6;">
+                                                        ¡Hola <strong style="color:#703030;">${nombre}</strong>!
                                                     </p>
 
-                                                    <p>
-                                                        Para completar tu registro, solo haz clic en el siguiente botón:
+                                                    <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
+                                                        Gracias por registrarte en <strong>DreamBooks</strong>, tu tienda favorita de libros en línea.
+                                                    </p>
+
+                                                    <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
+                                                        Antes de comenzar a explorar nuestras colecciones, necesitamos confirmar que este correo electrónico es tuyo. Para completar tu registro, solo haz clic en el siguiente botón:
+                                                    </p>
+
+
+                                                    <!-- Botón centrado -->
+                                                    <div style="text-align:center; margin-top:25px;">
+                                                        <a href="${enlace}"
+                                                        style="background-color:#c77965; color:#ffffff; padding:14px 32px; 
+                                                                text-decoration:none; border-radius:6px; font-size:16px; font-weight:600; 
+                                                                display:inline-block;">
+                                                            Verificar correo
+                                                        </a>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                            <!-- Espaciado -->
+                                            <tr>
+                                                <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+                                            </tr>
+
+                                            <!-- Mensaje secundario con borde lateral -->
+                                            <tr>
+                                                <td style="background-color:#ffffff; padding:25px; border-radius:12px; 
+                                                        border-left:4px solid #c77965;">
+                                                    <p style="margin:0; color:#737373; font-size:14px; line-height:1.6;">
+                                                        Si no creaste una cuenta en DreamBooks, puedes ignorar este mensaje.
                                                     </p>
                                                 </td>
                                             </tr>
 
-                                            <!-- BOTÓN -->
+                                            <!-- Espaciado -->
                                             <tr>
-                                                <td align="center" style="padding: 20px;">
-                                                    <a href="${enlace}" style="background-color: #c77965; color: #fff; padding: 15px 30px; 
-                                                            text-decoration: none; border-radius: 5px; font-size: 1rem; 
-                                                            display: inline-block;">
-                                                        Verificar correo
-                                                    </a>
-                                                </td>
+                                                <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
                                             </tr>
 
-                                            <!-- MENSAJE SECUNDARIO -->
+                                            <!-- Footer -->
                                             <tr>
-                                                <td style="padding: 20px 30px; font-size: 0.9rem; color: #737373; line-height: 1.6rem;">
-                                                    Si no creaste una cuenta en DreamBooks, puedes ignorar este mensaje.
-                                                </td>
-                                            </tr>
-
-                                            <!-- FOOTER -->
-                                            <tr>
-                                                <td align="center"
-                                                    style="background-color: #a9806a; padding: 20px; color: #ffffff; font-size: 0.9rem;">
-                                                    © 2025 DreamBooks. Todos los derechos reservados.
+                                                <td style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center;">
+                                                    <p style="margin:0; color:#ffffff; font-size:14px; line-height:1.6;">
+                                                        © 2025 DreamBooks. Todos los derechos reservados.
+                                                    </p>
+                                                    <p style="margin:10px 0 0; color:#ffffff; font-size:12px; opacity:0.9;">
+                                                        Recibiste este correo como parte del proceso de verificación de cuenta.
+                                                    </p>
                                                 </td>
                                             </tr>
 

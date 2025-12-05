@@ -21,6 +21,10 @@ exports.login = async (req, res) => {
         return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
+    if(!user.verificado){
+        return res.status(403).json({message:"El usuario aun no esta verificado"});
+    }
+
     // esta bloqueado?
     if (user.bloqueado_hasta && new Date(user.bloqueado_hasta) > new Date()) {
         return res.status(403).json({

@@ -23,8 +23,8 @@ async function obtenerUserPorCorreo(email) {
 async function crearUser(nombre, email, contraseña, rol, telefono, pais) {
     const [result] = await pool.query(
         `INSERT INTO usuarios 
-        (nombre, email, contraseña, rol, intentos_fallidos, bloqueado_hasta, telefono, pais)
-        VALUES (?, ?, ?, ?, 0, NULL, ?, ?)`,
+        (nombre, email, contraseña, rol, intentos_fallidos, bloqueado_hasta, telefono, pais,verificado,subscrito)
+        VALUES (?, ?, ?, ?, 0, NULL, ?, ?,0,0)`,
         [nombre, email, contraseña, rol, telefono, pais]
     );
     return result.insertId;
@@ -100,6 +100,14 @@ async function obtenerUserPorTokenRestablecimiento(hashedToken) {
     return rows[0];
 }
 
+async function subscribirUsuario(correo) {
+    const [result] = await pool.query(
+        `UPDATE usuarios SET Subscrito = true WHERE email = ?`,
+        [correo]
+    );
+    return result.affectedRows === 1;
+}
+
 module.exports = {
     obtenerUserPorId,
     obtenerUserPorCorreo,
@@ -110,5 +118,6 @@ module.exports = {
     actualizarUsuarioVerificado,
     actualizarTokenExpiracion,
     obtenerUserPorTokenRestablecimiento,
-    actualizarContrasenia
+    actualizarContrasenia,
+    subscribirUsuario
 };

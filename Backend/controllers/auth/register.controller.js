@@ -23,7 +23,7 @@ exports.registrarUsuario = async (req, res) => {
     // Registrar usuario nuevo
     const idUser = await crearUser(nombre, email, hash, "usuario", telefono, pais);
 
-    const send = enviarCorreoVerificacion(idUser, nombre, email);
+    const send = await enviarCorreoVerificacion(idUser, nombre, email);
 
     if (send) {
       return res.status(201).json({
