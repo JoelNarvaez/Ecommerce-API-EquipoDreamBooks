@@ -349,7 +349,7 @@ const enviarNotaDeCompra = async (idPedido, nombre, fecha, metodoPago, items, su
         }
     ]
 
-    const send = await enviarCorreo(contenidoHTML, "Gracias por tu compra en DreamBooks 📚", email, archivosImg,archivosPdf);
+    const send = await enviarCorreo(contenidoHTML, `Gracias por tu compra en DreamBooks 📚 (Transacción #${idPedido})`, email, archivosImg,archivosPdf);
 
     if (send)
         return true;

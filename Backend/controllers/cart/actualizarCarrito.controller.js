@@ -6,7 +6,8 @@ exports.actualizarCarrito = async (req, res) => {
     try {
 
         const { id } = req.user;
-        const { idLibro, cantidad } = req.body;
+        const { productoId, cantidad } = req.body;
+        const idLibro = productoId;
         const carritoUsuario = await obtenerCarritoUsuario(id);
 
         const carritoActual = carritoUsuario[0];

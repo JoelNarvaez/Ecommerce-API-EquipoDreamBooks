@@ -229,7 +229,7 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) 
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ idLibro, cantidad: nuevaCantidad }),
+        body: JSON.stringify({ productoId: idLibro, cantidad: nuevaCantidad }),
     });
 
     const data = await res.json();
