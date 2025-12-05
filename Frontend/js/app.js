@@ -1,26 +1,27 @@
 // accesibilidad-por-usuario.js
 document.addEventListener("DOMContentLoaded", () => {
-  // ----------------------------
+
+  // ============================
   // CONFIG
-  // ----------------------------
-  // Nombre de la clave global donde guardas el usuario activo
-  // Ejemplo de uso: localStorage.setItem("usuarioActual", "juanito");
+  // ============================
   const USUARIO_KEY = "usuarioActual";
 
   // ============================
-  // UTIL / KEYS
+  // UTIL
   // ============================
   function getUsuarioActual() {
     return localStorage.getItem(USUARIO_KEY) || null;
   }
 
+  // SOLO REGRESA UNA KEY SI HAY USUARIO LOGEADO
   function getKey(key) {
     const usuario = getUsuarioActual();
-    return usuario ? `${usuario}_${key}` : key; // si no hay usuario usa llave global (útil para pruebas)
+    if (!usuario) return null;        // <<< NO GUARDAR NADA SIN LOGIN
+    return `${usuario}_${key}`;
   }
 
   // ============================
-  // ELEMENTOS (comprueba existencia)
+  // ELEMENTOS
   // ============================
   const btnPanel = document.getElementById("btnAccesibilidad");
   const panel = document.getElementById("panelAccesibilidad");
@@ -29,32 +30,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnTextoMas = document.getElementById("textoMas");
   const btnTextoMenos = document.getElementById("textoMenos");
 
-  // Helpers seguros para manipular icono
+  const imgTema = document.getElementById("imgTema");
+
   function setIconToSun() {
-    if (!iconTema) return;
-    iconTema.classList.remove("fa-moon");
-    iconTema.classList.add("fa-sun");
+    imgTema.src = "../imagenes/sol-icono.png";
   }
   function setIconToMoon() {
-    if (!iconTema) return;
-    iconTema.classList.remove("fa-sun");
-    iconTema.classList.add("fa-moon");
+    imgTema.src = "../imagenes/luna-icono.png";
+
   }
 
-  // ------------------------------
-  //  ABRIR / CERRAR PANEL
-  // ------------------------------
+  // ============================
+  // PANEL
+  // ============================
   if (btnPanel && panel) {
     btnPanel.addEventListener("click", () => {
       panel.classList.toggle("activo");
     });
-  } else {
-    console.warn("Accesibilidad: btnPanel o panel no encontrados.");
   }
 
-  // ------------------------------
-  //  MODO CLARO / OSCURO
-  // ------------------------------
+  // ============================
+  // MODO CLARO / OSCURO
+  // ============================
   function aplicarTema(tema) {
     if (tema === "oscuro") {
       document.body.classList.add("modo-oscuro");
@@ -67,103 +64,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnTema) {
     btnTema.addEventListener("click", () => {
-      try {
-        const llave = getKey("tema");
-        const temaActual = localStorage.getItem(llave) || "claro";
-        const nuevoTema = temaActual === "claro" ? "oscuro" : "claro";
-        localStorage.setItem(llave, nuevoTema);
-        console.log(`Accesibilidad: guardado ${llave} = ${nuevoTema}`);
-        aplicarTema(nuevoTema);
-      } catch (err) {
-        console.error("Error al cambiar tema:", err);
+      const usuarioKey = getKey("tema");
+
+      // Si NO hay usuario → NO guardar → solo cambiar visualmente
+      let temaActual;
+      if (!usuarioKey) {
+        temaActual = document.body.classList.contains("modo-oscuro")
+          ? "oscuro"
+          : "claro";
+      } else {
+        temaActual = localStorage.getItem(usuarioKey) || "claro";
       }
+
+      const nuevoTema = temaActual === "claro" ? "oscuro" : "claro";
+
+      if (usuarioKey) localStorage.setItem(usuarioKey, nuevoTema);
+
+      aplicarTema(nuevoTema);
     });
-  } else {
-    console.warn("Accesibilidad: btnTema no encontrado.");
   }
 
-  // ------------------------------
-  //  CONTROL DE TEXTO
-  // ------------------------------
-  // valor inicial por usuario (o global si no hay usuario)
-  let tamaño = parseInt(localStorage.getItem(getKey("textoTamano")), 10);
-  if (!tamaño || Number.isNaN(tamaño)) tamaño = 16;
+  // ============================
+  // CONTROL DE TAMAÑO TEXTO
+  // ============================
+  let tamañoBase = 16;
+  let tamañoGuardado = null;
+
+  const usuarioTamKey = getKey("textoTamano");
+  if (usuarioTamKey) {
+    tamañoGuardado = parseInt(localStorage.getItem(usuarioTamKey), 10);
+  }
+
+  if (!tamañoGuardado || Number.isNaN(tamañoGuardado)) {
+    tamañoGuardado = tamañoBase;
+  }
+
+  let tamaño = tamañoGuardado;
 
   function aplicarTamaño() {
     document.documentElement.style.fontSize = tamaño + "px";
-    localStorage.setItem(getKey("textoTamano"), String(tamaño));
-    console.log(`Accesibilidad: guardado ${getKey("textoTamano")} = ${tamaño}`);
+
+    const clave = getKey("textoTamano");
+    if (clave) localStorage.setItem(clave, String(tamaño));
   }
 
   if (btnTextoMas) {
     btnTextoMas.addEventListener("click", () => {
-      if (tamaño < 30) tamaño += 2;
+      if (tamaño < 22) tamaño += 2;
       aplicarTamaño();
     });
-  } else {
-    console.warn("Accesibilidad: textoMas no encontrado.");
   }
 
   if (btnTextoMenos) {
     btnTextoMenos.addEventListener("click", () => {
-      if (tamaño > 12) tamaño -= 2;
+      if (tamaño > 16) tamaño -= 2;
       aplicarTamaño();
     });
-  } else {
-    console.warn("Accesibilidad: textoMenos no encontrado.");
   }
 
-  // ------------------------------
-  //  INICIALIZACIÓN AL CARGAR PAGINA
-  // ------------------------------
-  // Aplica tema y tamaño guardados (por usuario si hay)
-  const temaGuardado = localStorage.getItem(getKey("tema")) || "claro";
+  // ============================
+  // INICIALIZACIÓN
+  // ============================
+  const usuarioTemaKey = getKey("tema");
+  const temaGuardado = usuarioTemaKey
+    ? localStorage.getItem(usuarioTemaKey) || "claro"
+    : "claro"; // <<< SIN USUARIO, FORZAR DEFAULT
+
   aplicarTema(temaGuardado);
   aplicarTamaño();
 
-  console.info("Accesibilidad iniciada. Usuario actual:", getUsuarioActual());
-
-  // ------------------------------
-  //  FUNCIONES AUX PARA PRUEBAS / LOGIN-LOGOUT
-  // ------------------------------
-  // Estas funciones son para ayudarte a probar el flujo:
-  //  - loginAs("juanito") -> simula login (guarda usuarioActual)
-  //  - logout() -> quita usuarioActual y recarga para ver defaults
-  // Notas: puedes llamarlas desde la consola
+  // ============================
+  // FUNCIONES AUX (consola)
+  // ============================
   window.loginAs = function (username) {
-    if (!username) return console.warn("loginAs: pasa un nombre de usuario");
+    if (!username) return console.warn("loginAs: pasa un nombre");
     localStorage.setItem(USUARIO_KEY, username);
-    console.log("Simulando login de:", username);
-    // al iniciar sesión debemos aplicar las preferencias de este usuario (si existen)
-    const tema = localStorage.getItem(getKey("tema")) || "claro";
-    const tam = parseInt(localStorage.getItem(getKey("textoTamano")), 10) || 16;
-    // actualizar variables internas
+    console.log("Simulando login:", username);
+
+    const temaKey = getKey("tema");
+    const tamKey = getKey("textoTamano");
+
+    const tema = temaKey ? localStorage.getItem(temaKey) || "claro" : "claro";
+    const tam = tamKey ? parseInt(localStorage.getItem(tamKey), 10) || 16 : 16;
+
     tamaño = tam;
     aplicarTema(tema);
     aplicarTamaño();
-    // recargar para que otras lógicas que dependen del usuario se actualicen si las tienes
-    // location.reload(); // descomenta si quieres forzar recarga completa
   };
 
   window.logout = function () {
+    console.log("Cerrando sesión…");
     localStorage.removeItem(USUARIO_KEY);
-    console.log("Simulando logout. Se ha eliminado usuarioActual.");
-    // Al cerrar sesión, aplicamos valores por defecto (globales)
-    const temaDefault = localStorage.getItem("tema") || "claro"; // llave global
-    const tamDefault = parseInt(localStorage.getItem("textoTamano"), 10) || 16;
-    tamaño = tamDefault;
-    aplicarTema(temaDefault);
+
+    // Restaurar DEFAULTS sin guardar
+    tamaño = 16;
+    aplicarTema("claro");
     aplicarTamaño();
-    // location.reload(); // descomenta si quieres forzar recarga completa
+
+    console.log("Logout completo. Sin usuario = sin guardar preferencias.");
   };
 
-  // para debugging rápido: mostrar claves relacionadas del usuario en consola
   window.printAccesibilidadStorage = function () {
-    const user = getUsuarioActual();
-    console.log("Usuario actual:", user);
-    console.log("Keys en localStorage relacionadas:");
-    Object.keys(localStorage)
-      .filter(k => (user ? k.startsWith(user + "_") : k.includes("textoTamano") || k.includes("tema")))
-      .forEach(k => console.log(k, "=", localStorage.getItem(k)));
+    console.log("Contenido localStorage:", JSON.parse(JSON.stringify(localStorage)));
   };
 });

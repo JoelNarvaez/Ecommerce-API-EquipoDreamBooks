@@ -103,5 +103,45 @@
     align-items: center;
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    background: var(--color-fondo-input, #fff);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.input-container i {
+    color: gray;
+    padding: 12px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.input-container input,
+.input-container select {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.input-container:focus-within {
+    border: 1px solid #6f94c7;
+    box-shadow: 0 0 4px #6f94c7;
+}
+
+.pais-container label {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: var(--color-texto);
+}
 
 

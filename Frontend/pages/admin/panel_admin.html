@@ -737,29 +737,33 @@
 
     <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">
-        <i class="fa-solid fa-universal-access"></i> 
+      <i class="fa-solid fa-universal-access"></i>
     </button>
     <!-- Panel lateral de accesibilidad -->
     <div id="panelAccesibilidad" class="accesibilidad-panel">
+      <h2>Accesibilidad</h2>
 
-        <h2>Accesibilidad</h2>
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+      <span>Tema:</span>
+      <button id="btnTema" class="tema-btn">
+        <img id="imgTema" src="../../imagenes/luna-icono.png" alt="tema">
+      </button>
+    </div>
 
-        <!-- Tema claro/oscuro -->
-        <div class="opcion">
-            <span>Tema:</span>
-            <button id="btnTema" class="tema-btn">
-                <i id="iconTema" class="fa-solid fa-moon"></i>
-            </button>
+      <!-- Tamaño de texto -->
+      <div class="opcion">
+        <span>Tamaño de texto:</span>
+        <div class="texto-controles">
+          <button id="textoMenos" class="btnTam">
+            <img src="../../imagenes/disminuirTam.png" alt="">
+          </button>
+
+          <button id="textoMas" class="btnTam">
+            <img src="../../imagenes/aumentarTam.png" alt="">
+          </button>
         </div>
-
-        <!-- Tamaño de texto -->
-        <div class="opcion">
-            <span>Tamaño de texto:</span>
-            <div class="texto-controles">
-                <button id="textoMenos">A-</button>
-                <button id="textoMas">A+</button>
-            </div>
-        </div>
+      </div>
     </div>
 
 <!-- Cargar ApexCharts PRIMERO -->
@@ -775,7 +779,7 @@
 <script src="/Frontend/js/admin/eliminar.js"></script>
 <script src="/Frontend/js/admin/editar.js"></script>
 <script src="/Frontend/js/admin/sesion.js"></script>
-<script src="../../js/app.js"></script>
+<script src="../../js/admin/accesibilidad.js"></script>
 
   </body>
 </html>
