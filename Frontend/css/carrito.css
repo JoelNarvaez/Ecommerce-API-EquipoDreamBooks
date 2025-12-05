@@ -177,3 +177,86 @@ h2{
     grid-template-columns: 1fr;
   }
 }
+
+.metodosPago {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.opcionPago {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.opcionPago input {
+    transform: scale(1.2);
+}
+
+.metodo {
+    padding: 10px 0;
+}
+
+.metodo ul {
+    padding-left: 20px;
+}
+
+/* Tarjetas de método de pago */
+.metodosPagoUI {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.opcionPagoCard {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 2px solid #d1d1d1;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fafafa;
+    transition: 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+.opcionPagoCard:hover {
+    background: #f2e7da;
+    transform: translateY(-2px);
+}
+
+.opcionPagoCard input {
+    accent-color: #b1652c;
+    transform: scale(1.2);
+}
+
+.opcionPagoCard i {
+    font-size: 20px;
+}
+
+/* OXXO QR */
+.qrBox {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.qrBox img {
+    width: 160px;
+    height: 160px;
+    border-radius: 10px;
+    border: 2px solid #d8d8d8;
+    padding: 5px;
+    background: white;
+}
+
+/* Secciones de pago */
+.metodo {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f6f3ef;
+    border-radius: 10px;
+}

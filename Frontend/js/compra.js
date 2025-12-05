@@ -18,17 +18,25 @@ function validarFormulario() {
 
     if (telefono.length < 10) errores.push("El teléfono debe tener al menos 10 dígitos.");
 
-    // MÉTODO DE PAGO
-    const titular = document.getElementById("nombreTitular").value.trim();
-    const cardNum = document.getElementById("cardNumber").value.trim();
-    const cvv = document.getElementById("cvv").value.trim();
-    const expMonth = document.getElementById("expMonth").value;
-    const expYear = document.getElementById("expYear").value;
+    // =====================================================
+    // MÉTODO DE PAGO (AGREGADO)
+    // =====================================================
+    const metodo = document.querySelector("input[name='metodoPago']:checked")?.value;
 
-    if (titular.length < 2) errores.push("El nombre del titular es obligatorio.");
-    if (cardNum.length !== 16) errores.push("La tarjeta debe tener 16 dígitos.");
-    if (cvv.length !== 3) errores.push("El CVV debe tener 3 dígitos.");
-    if (expMonth === "" || expYear === "") errores.push("Seleccione una fecha de expiración válida.");
+    if (metodo === "tarjeta") {
+        const titular = document.getElementById("nombreTitular").value.trim();
+        const cardNum = document.getElementById("cardNumber").value.trim();
+        const cvv = document.getElementById("cvv").value.trim();
+        const expMonth = document.getElementById("expMonth").value;
+        const expYear = document.getElementById("expYear").value;
+
+        if (titular.length < 2) errores.push("El nombre del titular es obligatorio.");
+        if (cardNum.length !== 16) errores.push("La tarjeta debe tener 16 dígitos.");
+        if (cvv.length !== 3) errores.push("El CVV debe tener 3 dígitos.");
+        if (expMonth === "" || expYear === "") errores.push("Seleccione una fecha de expiración válida.");
+    }
+
+    // OXXO y Transferencia NO requieren validación extra
 
     // DIRECCIÓN DE ENVÍO
     const direccion = document.getElementById("direccionEnvio").value.trim();
@@ -74,6 +82,21 @@ for (let i = 0; i < 15; i++) {
 }
 
 /* ========================================================
+   COSTOS DE ENVÍO POR PAÍS (AGREGADO)
+======================================================== */
+const costosEnvio = {
+    mexico: 99,
+    usa: 250,
+    canada: 280,
+    españa: 350,
+    latam: 200
+};
+
+const envioP = document.createElement("p");
+envioP.innerHTML = `Envío: $<span id="envio">0</span>`;
+document.querySelector(".contenedorTotal").insertBefore(envioP, document.querySelector(".total"));
+
+/* ========================================================
    EXTRAER usuario_id DEL TOKEN
 ======================================================== */
 function getUserIdFromToken() {
@@ -102,20 +125,16 @@ async function cargarCompraDirecta() {
     if (!data.ok) return null;
 
     const libro = data.libro;
-    const precioNormal = Number(libro.precio);
-    const precioFinal = precioNormal; // sin ofertas aquí, si tienes ofertas las agregamos
 
-    const item = {
+    return [{
         ProductoId: libroDirectoId,
         Cantidad: libroDirectoCantidad,
         nombre: libro.nombre,
         autor: libro.autor,
         imagen: libro.imagen,
-        precioNormal,
-        precioFinal
-    };
-
-    return [item];
+        precioNormal: Number(libro.precio),
+        precioFinal: Number(libro.precio)
+    }];
 }
 
 /* ========================================================
@@ -186,13 +205,9 @@ async function cargarResumenCompra() {
 
     let items = [];
 
-    /* 🔥 COMPRA DIRECTA (cuando viene ?compra=ID en la URL) */
     if (libroDirectoId) {
         items = await cargarCompraDirecta();
-    } 
-    
-    /* 🛒 Si NO es compra directa → cargar carrito */
-    else {
+    } else {
         const carritoData = await obtenerCarrito();
 
         if (!carritoData || carritoData.itemsCarrito.length === 0) {
@@ -203,54 +218,55 @@ async function cargarResumenCompra() {
         items = carritoData.itemsCarrito;
     }
 
-    /* Renderizar los productos */
     contenedor.innerHTML = items.map(item => generarProductoHTML(item)).join("");
 
-    /* ============================================
-       CALCULAR SUBTOTAL, IVA Y TOTAL SIN DESCUENTO
-    ============================================ */
-    const subtotal = items.reduce(
-        (acc, item) => acc + item.Cantidad * Number(item.precioFinal),
-        0
-    );
+    const subtotal = items.reduce((acc, item) => acc + item.Cantidad * Number(item.precioFinal), 0);
 
     const iva = subtotal * 0.16;
-    const descuento = 0;
-    const total = subtotal + iva - descuento;
 
-    /* Mostrar valores iniciales */
-    subtotalHTML.textContent = subtotal.toFixed(2);
-    ivaHTML.textContent = iva.toFixed(2);
-    descuentoHTML.textContent = descuento.toFixed(2);
-    totalHTML.textContent = total.toFixed(2);
-
-    /* Guardar información global */
     window.dataCompra = {
         subtotal,
         iva,
-        descuento,
-        total,
+        descuento: 0,
+        envio: 0,
+        total: subtotal + iva,
         items
     };
+
+    subtotalHTML.textContent = subtotal.toFixed(2);
+    ivaHTML.textContent = iva.toFixed(2);
+    descuentoHTML.textContent = "0";
+    totalHTML.textContent = window.dataCompra.total.toFixed(2);
+
+    recalcularEnvioYTotales();
 }
 
 /* ========================================================
    ACTUALIZAR LOS TOTALES EN PANTALLA
 ======================================================== */
 function actualizarResumenFinal() {
-    const subtotalHTML = document.getElementById("subtotal");
-    const ivaHTML = document.getElementById("iva");
-    const descuentoHTML = document.getElementById("descuento");
-    const totalHTML = document.getElementById("totalFinal");
-
-    const { subtotal, iva, descuento, total } = window.dataCompra;
-
-    subtotalHTML.textContent = subtotal.toFixed(2);
-    ivaHTML.textContent = iva.toFixed(2);
-    descuentoHTML.textContent = descuento.toFixed(2);
-    totalHTML.textContent = total.toFixed(2);
+    document.getElementById("subtotal").textContent = window.dataCompra.subtotal.toFixed(2);
+    document.getElementById("iva").textContent = window.dataCompra.iva.toFixed(2);
+    document.getElementById("descuento").textContent = window.dataCompra.descuento.toFixed(2);
+    document.getElementById("envio").textContent = window.dataCompra.envio.toFixed(2);
+    document.getElementById("totalFinal").textContent = window.dataCompra.total.toFixed(2);
 }
 
+/* ========================================================
+   CALCULAR ENVÍO (AGREGADO)
+======================================================== */
+function recalcularEnvioYTotales() {
+    const pais = document.getElementById("paisEnvio").value;
+    const envio = pais ? costosEnvio[pais] : 0;
+
+    window.dataCompra.envio = envio;
+
+    const { subtotal, iva, descuento } = window.dataCompra;
+
+    window.dataCompra.total = subtotal + iva - descuento + envio;
+
+    actualizarResumenFinal();
+}
 
 /* ========================================================
    APLICAR CUPÓN
@@ -259,12 +275,10 @@ document.getElementById("aplicarCupon").addEventListener("click", async () => {
     const codigo = document.getElementById("cuponInput").value.trim();
     const mensaje = document.getElementById("cuponMensaje");
 
-    // SI SE BORRA EL CUPÓN
     if (codigo === "") {
         mensaje.innerText = "";
         window.dataCompra.descuento = 0;
-        window.dataCompra.total = window.dataCompra.subtotal + window.dataCompra.iva;
-
+        window.dataCompra.total = window.dataCompra.subtotal + window.dataCompra.iva + window.dataCompra.envio;
         actualizarResumenFinal();
         return;
     }
@@ -285,38 +299,32 @@ document.getElementById("aplicarCupon").addEventListener("click", async () => {
     if (!data.ok) {
         mensaje.style.color = "red";
         mensaje.innerText = data.message;
-
         window.dataCompra.descuento = 0;
-        window.dataCompra.total = window.dataCompra.subtotal + window.dataCompra.iva;
-
+        window.dataCompra.total = window.dataCompra.subtotal + window.dataCompra.iva + window.dataCompra.envio;
         actualizarResumenFinal();
         return;
     }
 
-    // CUPÓN VÁLIDO
     const cupon = Number(data.cupon.MontoDescuento);
 
     mensaje.style.color = "green";
     mensaje.innerText = `Cupón aplicado: -$${cupon}`;
 
-    // ACTUALIZAR VARIABLES GLOBALES
     window.dataCompra.descuento = cupon;
-    window.dataCompra.total =
-        window.dataCompra.subtotal + window.dataCompra.iva - cupon;
 
-    // REFRESCAR TOTALES EN PANTALLA
+    window.dataCompra.total =
+        window.dataCompra.subtotal + window.dataCompra.iva - cupon + window.dataCompra.envio;
+
     actualizarResumenFinal();
 });
-
 
 /* ========================================================
    CONFIRMAR COMPRA
 ======================================================== */
 document.getElementById("confirmarOrdenBtn").addEventListener("click", async () => {
     const errores = validarFormulario();
+
     if (errores.length > 0) {
-        /*alert("⚠️ Corrige los siguientes errores:\n\n" + errores.join("\n"));
-        return;*/
         Swal.fire({
             icon: "warning",
             title: "Corrige los siguientes errores",
@@ -328,8 +336,6 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
 
     const token = localStorage.getItem("token");
     if (!token) {
-        /*alert("Debes iniciar sesión.");
-        return;*/
         Swal.fire({
             icon: "error",
             title: "Debes iniciar sesión",
@@ -340,11 +346,9 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
     }
 
     const usuario_id = getUserIdFromToken();
-
-    const { subtotal, iva, descuento, total, items } = window.dataCompra;
+    const { subtotal, iva, descuento, total, envio, items } = window.dataCompra;
     const cupon = document.getElementById("cuponInput").value.trim() || null;
-
-    const esCompraDirecta = libroDirectoId ? true : false;
+    const esCompraDirecta = !!libroDirectoId;
 
     const res = await fetch("http://localhost:3000/api/carts/checkout", {
         method: "POST",
@@ -357,36 +361,26 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
             subtotal,
             iva,
             descuento,
+            envio,
             totalFinal: total,
             cupon,
             items,
-            compraDirecta: esCompraDirecta   // 🔥 IMPORTANTE
+            compraDirecta: esCompraDirecta
         })
     });
 
     const data = await res.json();
 
     if (!data.ok) {
-        /*alert("Error al procesar la orden: " + data.message);
-        return;*/
         Swal.fire({
-            icon: 'error',            
-            title: 'Oops...',          
-            text: 'Error al procesar la orden: ' + data.message, 
-            confirmButtonText: 'Aceptar' 
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error al procesar la orden: ' + data.message,
+            confirmButtonText: 'Aceptar'
         });
         return;
-
     }
 
-    //alert("¡Pedido creado exitosamente!");
-   /* Swal.fire({
-        icon: 'success',               
-        title: '¡Éxito!',             
-        text: '¡Pedido creado exitosamente!', 
-        confirmButtonText: 'Aceptar'   
-    });
-    window.location.href = "/Frontend/pages/index.html";*/
     Swal.fire({
         icon: 'success',
         title: '¡Éxito!',
@@ -398,6 +392,26 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
 });
 
 /* ========================================================
+   MOSTRAR/OCULTAR MÉTODOS DE PAGO (AGREGADO)
+======================================================== */
+document.querySelectorAll("input[name='metodoPago']").forEach(radio => {
+    radio.addEventListener("change", () => {
+        const metodo = radio.value;
+
+        document.querySelector(".metodo-tarjeta").style.display =
+            metodo === "tarjeta" ? "grid" : "none";
+
+        document.querySelector(".metodo-oxxo").style.display =
+            metodo === "oxxo" ? "block" : "none";
+
+        document.querySelector(".metodo-transferencia").style.display =
+            metodo === "transferencia" ? "block" : "none";
+    });
+});
+
+/* ========================================================
    INICIO
 ======================================================== */
 cargarResumenCompra();
+
+document.getElementById("paisEnvio").addEventListener("change", recalcularEnvioYTotales);
