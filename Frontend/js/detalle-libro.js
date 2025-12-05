@@ -153,7 +153,7 @@ async function cargarSlider(endpoint, contenedorId) {
             </button>
 
             <button class="btn-card cart-btn"
-                onclick="event.stopPropagation(); agregarCarrito(${book.id})">
+                onclick="event.stopPropagation(); agregarAlCarrito(${book.id})">
                 <i class="fa-solid fa-cart-shopping"></i>
             </button>
 
@@ -198,3 +198,186 @@ async function cargarSlider(endpoint, contenedorId) {
 // ============================
 cargarSlider("http://localhost:3000/api/products/books/novedades", "slider-novedades");
 cargarSlider("http://localhost:3000/api/products/books/ofertas", "slider-ofertas");
+
+
+agregarCarritoBtn = document.getElementById("agregarCarrito");
+agregarCarritoBtn.addEventListener("click", () => {
+    const id = Number(idActual);
+  agregarAlCarrito(id);
+});
+
+
+// ============================
+//    FUNCIONES CARRITO
+// ============================
+
+async function obtenerCarrito() {
+  try {
+    // 1. Verificar autenticación
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar libros al carrito.",
+      });
+      return;
+    }
+
+    const carritoRes = await fetch("http://localhost:3000/api/carts", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const carritoData = await carritoRes.json();
+
+    if (!carritoRes.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo obtener tu carrito.",
+      });
+      return;
+    }
+
+    return carritoData;
+  } catch (error) {
+    console.error("Error inesperado:", error);
+
+    Swal.fire({
+      icon: "error",
+      title: "Error inesperado",
+      text: "Ocurrió un error inesperado. Intenta nuevamente.",
+    });
+  }
+}
+
+
+async function agregarAlCarrito(idLibro, cantidad = 1) {
+  try {
+    // 1. Verificar autenticación
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar libros al carrito.",
+      });
+      return;
+    }
+
+    const carritoData = await obtenerCarrito();
+
+    const items = carritoData.itemsCarrito;
+    const itemExistente = items.find((item) => item.ProductoId === idLibro);
+
+
+    if (itemExistente) {
+      return await actualizarItemExistente(itemExistente, cantidad, idLibro, token);
+    } else {
+      return await agregarNuevoItem(idLibro, cantidad, token);
+    }
+  } catch (error) {
+    console.error("Error inesperado:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error inesperado",
+      text: `${error.message || "Ocurrió un error inesperado. Intenta nuevamente."}`,
+    });
+  }
+}
+
+// ==============================
+// Actualizar item existente
+// ==============================
+async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) {
+  const nuevaCantidad = itemExistente.Cantidad + cantidad;
+
+  const updateRes = await fetch("http://localhost:3000/api/carts/actualizar", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      idLibro,
+      cantidad: nuevaCantidad,
+    }),
+  });
+
+  const updateData = await updateRes.json();
+
+  if (!updateRes.ok) {
+    Swal.fire({
+      icon: "warning",
+      title: "No se pudo actualizar la cantidad del libro.",
+      text: `${updateData.message || ""}`,
+    });
+    return;
+  }
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "success",
+    title: "Se actualizó la cantidad del libro en el carrito a " + nuevaCantidad,
+  });
+
+  return updateData;
+}
+
+
+
+// ==============================
+// Agregar nuevo item
+// ==============================
+async function agregarNuevoItem(idLibro, cantidad, token) {
+
+  const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      idLibro,
+      cantidad,
+    }),
+  });
+
+  const addData = await addRes.json();
+
+  const items = addData.carrito;
+
+  const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
+
+  if (!addRes.ok) {
+    Swal.fire({
+      icon: "error",
+      title: "No se pudo agregar el libro al carrito.",
+      text: addData.message || "",
+    });
+    return;
+  }
+
+  Swal.fire({
+    icon: "success",
+    title: `${itemAdded.detalleProducto.nombre} Agregado`,
+    text: "Libro agregado al carrito correctamente.",
+  });
+
+  return addData;
+}
+
