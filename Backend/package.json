@@ -24,7 +24,8 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "mysql2": "^3.15.3",
-    "nodemailer": "^7.0.10"
+    "nodemailer": "^7.0.10",
+    "puppeteer": "^24.32.0"
   },
   "devDependencies": {
     "morgan": "^1.10.1",
