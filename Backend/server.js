@@ -19,6 +19,7 @@ const productRoutes = require("./routes/products.routes.js");
 const cartRoutes = require("./routes/cart.routes.js");
 const adminRoutes = require("./routes/admin.routes.js");
 const contactRoutes = require("./routes/contact.routes.js");
+const wishlistRoutes = require("./routes/wishlist.routes.js");
 
 // Middlewares mínimos
 app.use(express.json());
@@ -50,13 +51,11 @@ app.use("/uploads", express.static(path.join(__dirname, "assets", "public", "lib
 
 // Rutas
 app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
-// app.use("/api/orders", orderRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api/wishlist", wishlistRoutes);
 
 // archivos publicos para consulta
 const folderPath = path.join(__dirname,"assets/public")

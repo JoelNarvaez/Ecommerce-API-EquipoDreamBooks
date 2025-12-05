@@ -1,0 +1,241 @@
+/* ============= GENERAL ================= */
+body {
+    background: #f5eee8;
+    font-family: 'Poppins', sans-serif;
+}
+
+.principal {
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    gap: 40px;
+}
+
+/* ============= COLUMNA IZQUIERDA ============= */
+.colum1 {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.bloque {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 1px solid #e8dfd9;
+}
+
+h1, h3 {
+    color: #6a4b3c;
+}
+
+/* GRID de 2 columnas */
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.formularioPagoBox {
+    display: flex;
+    flex-direction: column;
+}
+.formularioPagoBox label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #6a4b3c;
+}
+.formularioPagoBox input,
+.formularioPagoBox select {
+    padding: 10px;
+    border: 1px solid #cbb8a8;
+    border-radius: 10px;
+}
+
+.formularioPagoBox input:focus {
+    outline: none;
+    border-color: #b68b78;
+}
+
+/* Fecha exp. */
+.expRow {
+    display: flex;
+    gap: 10px;
+}
+
+/* Métodos de pago */
+.menuFormaDePago ul {
+    display: flex;
+    gap: 15px;
+    padding-left: 0;
+}
+.menuFormaDePago li i {
+    font-size: 35px;
+    color: #b68b78;
+}
+
+/* ============= COLUMNA DERECHA ============= */
+.colum2 {
+    width: 35%;
+}
+
+.stickyBox {
+    position: sticky;
+    top: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card {
+    background: #faf7f4;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.product-image img {
+    width: 100px;
+    border-radius: 10px;
+}
+
+.product-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #b68b78;
+}
+
+.remove-from-cart-btn {
+    background: #b68b78;
+    border: none;
+    padding: 7px 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+/* TOTAL */
+.contenedorTotal {
+    margin-top: 25px;
+    padding: 20px;
+    background: #faf7f4;
+    border-radius: 12px;
+    border: 1px solid #e1d4ca;
+}
+
+.confirmarOrdenBtn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 14px;
+    background: #b68b78;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+/* Mantengo todo lo anterior y agrego lo nuevo */
+
+.cuponBox {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #fff7ec;
+    border: 1px solid #e3c9a3;
+}
+
+.cuponBox input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #cbb8a8;
+}
+
+.cuponBox button {
+    width: 100%;
+    background: #b68b78;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cuponBox p {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #6a4b3c;
+}
+
+.descuento {
+    color: #c44;
+}
+
+.productoResumen {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f8f1e8;
+    margin-bottom: 20px;
+    align-items: center;
+    border: 1px solid #e5d8c9;
+}
+
+.imgBox {
+    width: 90px;
+    min-width: 90px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.imgBox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.infoBox {
+    flex: 1;
+}
+
+.infoBox h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.autor {
+    margin: 3px 0 10px;
+    font-size: 14px;
+    color: #6b5750;
+}
+
+.preciosProductos {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.precioFinal {
+    font-size: 18px;
+    font-weight: bold;
+    color: #8b4c2f;
+}
+
+.precioNormal {
+    text-decoration: line-through;
+    color: #9b8a85;
+    font-size: 14px;
+}
+
+.cantidad {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #5a463f;
+}

@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
 </head>
+
 <body class="sin-hero">
+
 <header>
         <nav class="header-general">
             <div class="menu-izq">
@@ -41,85 +43,47 @@
             </div>  
         </nav>
     <div class="separador-header"></div>
-    </header>
+</header>
 
-  <main class="page-layout">
+<main class="page-layout">
+
+    <!-- ====================================
+          LISTA DE DESEOS (VACÍA PARA JS)
+    ====================================== -->
     <section class="card list-container">
-      <div class="card-header">
-        <h2><i class="bi bi-heart-fill" style="color:#e74c3c; margin-right:8px;"></i> Lista de Deseos</h2>
-      </div>
-      
-      <div class="wishlist-items">
-        
-        <div class="wishlist-item">
-          <div class="item-thumb">
-            <i class="bi bi-book-half" style="font-size: 2rem;"></i>
-          </div>
-          <div class="item-details">
-            <div class="item-title">El Señor de los Anillos</div>
-            <div class="item-meta">J.R.R. Tolkien</div>
-            <div class="item-stock in-stock">Disponible</div>
-          </div>
-          <div class="item-price">$45.00</div>
-          <div class="item-actions">
-            <button class="btn btn-sm btn-primary"><i class="bi bi-cart-plus"></i> Agregar</button>
-            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
-          </div>
+        <div class="card-header">
+            <h2><i class="bi bi-heart-fill" style="color:#e74c3c; margin-right:8px;"></i> Lista de Deseos</h2>
         </div>
 
-        <div class="wishlist-item">
-          <div class="item-thumb">
-            <i class="bi bi-journal-richtext" style="font-size: 2rem;"></i>
-          </div>
-          <div class="item-details">
-            <div class="item-title">Diseño UX Avanzado</div>
-            <div class="item-meta">Editorial Tech</div>
-            <div class="item-stock low-stock">¡Últimas unidades!</div>
-          </div>
-          <div class="item-price">$32.50</div>
-          <div class="item-actions">
-            <button class="btn btn-sm btn-primary"><i class="bi bi-cart-plus"></i> Agregar</button>
-            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
-          </div>
-        </div>
-
-        <div class="wishlist-item">
-          <div class="item-thumb">
-            <i class="bi bi-journal-album" style="font-size: 2rem;"></i>
-          </div>
-          <div class="item-details">
-            <div class="item-title">Colección de Arte 2024</div>
-            <div class="item-meta">Art World</div>
-            <div class="item-stock out-stock">Agotado</div>
-          </div>
-          <div class="item-price">$120.00</div>
-          <div class="item-actions">
-            <button class="btn btn-sm btn-secondary" disabled>Sin Stock</button>
-            <button class="remove" title="Eliminar"><i class="bi bi-trash"></i></button>
-          </div>
-        </div>
-
-      </div>
+        <!-- AQUÍ SE INSERTAN LOS ITEMS DESDE JS -->
+        <div class="wishlist-items"></div>
     </section>
 
+    <!-- ====================================
+          RESUMEN DEL LADO DERECHO
+    ====================================== -->
     <aside class="card summary">
-      <div class="card-header">
-        <h2>Tu Colección</h2>
-      </div>
-      <div class="summary-body">
-        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
-          Tienes <strong>3 libros</strong> en tu lista de deseos. Muevelos al carrito para asegurar tu compra.
-        </p>
-        <div class="row total">
-          <span>Valor total</span>
-          <strong>$197.50</strong>
+        <div class="card-header">
+            <h2>Tu Colección</h2>
         </div>
-        <button class="btn btn-primary" style="width:100%">
-          <i class="bi bi-cart-check"></i> Mover todo al carrito
-        </button>
-      </div>
+
+        <div class="summary-body">
+            <p id="wishlist-count" style="font-size: 14px; color: #666; margin-bottom: 15px;">
+                Tienes <strong>0 libros</strong> en tu lista de deseos.
+            </p>
+
+            <div class="row total">
+                <span>Valor total</span>
+                <strong>$0.00</strong>
+            </div>
+
+            <button class="btn btn-primary mover-todo" style="width:100%">
+                <i class="bi bi-cart-check"></i> Mover todo al carrito
+            </button>
+        </div>
     </aside>
-  </main>
+
+</main>
 
   <!-- Accesibilidad -->
       <button id="btnAccesibilidad" class="accesibilidad-btn">
@@ -152,14 +116,16 @@
         </div>
       </div>
 
-  <footer class="footer">
+<footer class="footer">
     <div class="footer-contenedor">
         <div class="footer-contenido">
+
             <div class="footer-info">
-            <h2>DreamBooks</h2>
-            <p>"Sueña despierto"</p>
-            <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
+                <h2>DreamBooks</h2>
+                <p>"Sueña despierto"</p>
+                <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
             </div>
+
             <div class="footer-redes">
                 <h4>Síguenos en redes sociales</h4>
                 <div class="redes-sociales">    
@@ -174,6 +140,7 @@
                     
                 </div>
             </div>
+
             <div class="menu-footer-contenedor">
                 <ul class="menu-footer">
                     <li><a href="index.html">Inicio</a></li>
@@ -183,28 +150,33 @@
                     <li><a href="nosotros.html">Nosotros</a></li>
             </ul>
             </div>
+
             <div class="footer-suscripcion">
-                <form id="form-suscripcion-footer" class="form-suscripcion-footer" action="">
+                <form id="form-suscripcion-footer">
                     <div class="suscripcion-contenedor">
                         <h3>Suscríbete</h3>
-                        <label for="fname">Correo electrónico:</label><br>
-                        <input type="text" id="correo-suscripcion" placeholder="elizabeth.nieto@gmail.com"><br>
+                        <label>Correo electrónico:</label><br>
+                        <input type="text" id="correo-suscripcion" placeholder="correo@example.com"><br>
                         <input type="submit" id="enviar-suscripcion" value="Enviar">
                     </div>
-                    
                 </form>
             </div>
+
         </div>
+
         <div class="footer-copyright">
             <p>&copy; 2025. Todos los derechos reservados.</p>
-            <p>Este es un proyecto académico para la materia de programación web</p>
+            <p>Proyecto académico para Programación Web</p>
         </div>
     </div>
 </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/Frontend/js/manejo-sesion.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="/Frontend/js/subscripcion.js"></script>
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/Frontend/js/manejo-sesion.js"></script>
+<script src="/Frontend/js/app.js"></script>
+<script src="/Frontend/js/subscripcion.js"></script>
+<script src="/Frontend/js/wishlist.js"></script>
+
 </body>
 </html>
