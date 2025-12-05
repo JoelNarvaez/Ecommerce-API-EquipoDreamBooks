@@ -32,7 +32,7 @@ exports.obtenerWishlist = async (req, res) => {
     try {
         const lista = await obtenerWishlistDB(usuarioId);
 
-        console.log("WISHLIST BACKEND:", lista); // 👈 AGREGA ESTO
+        console.log("WISHLIST BACKEND:", lista); 
 
         res.json({ ok: true, wishlist: lista });
 
