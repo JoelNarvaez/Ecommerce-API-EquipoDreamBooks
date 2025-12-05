@@ -115,6 +115,7 @@ h2{
   background: #fff;
   border-radius: 6px;
   cursor: pointer;
+  color: #111;
 }
 .qty input {
   width: 46px;
@@ -123,6 +124,13 @@ h2{
   border-radius: 6px;
   height: 28px;
 }
+
+.botones_precio{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .cart-item__price {
   font-weight: 700;
 }
