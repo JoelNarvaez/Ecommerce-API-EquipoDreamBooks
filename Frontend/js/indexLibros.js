@@ -273,21 +273,11 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
 
   const items = addData.carrito;
   const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
-    const res = await fetch("http://localhost:3000/api/carts/agregar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ idLibro, cantidad }),
-    });
 
-    const data = await res.json();
-
-    if (!res.ok) {
+  if (!addRes.ok) {
         Swal.fire("Error", data.message || "No se pudo agregar al carrito.", "error");
         return;
-    }
+  }
 
     Swal.fire("Agregado", "Libro agregado al carrito!", "success");
     return data;
