@@ -239,7 +239,7 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token, 
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            idLibro,
+            productoId: idLibro,
             cantidad: nuevaCantidad,
         }),
     });
@@ -274,7 +274,7 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            idLibro,
+            productoId: idLibro,
             cantidad,
         }),
     });
