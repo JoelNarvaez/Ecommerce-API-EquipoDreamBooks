@@ -5,10 +5,14 @@ const {
     crearPedidoDB,
     crearPedidoDetalleDB,
     descontarStockDB,
-    marcarCuponDB
+    marcarCuponDB,
+    obtenerPedido
 } = require("../../models/orderModel");
 
 const { vaciarCarritoDB } = require("../../models/modelCarrito");
+const enviarNotaDeCompra = require("../../services/email/enviarNotaCompra.service");
+const { obtenerUserPorId } = require("../../models/usersModel");
+const { obtenerCuponPorCodigo, obtenerCuponPorCodigoSinVeri } = require("../../models/modelCupon");
 exports.crearPedidoDesdeCarrito = async (req, res) => {
     const connection = await db.getConnection();
 
@@ -41,15 +45,40 @@ exports.crearPedidoDesdeCarrito = async (req, res) => {
             );
         }
 
+        let cuponText = "Sin Cupón";
+        let cuponDescuento = 0;
+
         // 3️⃣ Marcar cupón si existe
         if (cupon) {
-            await marcarCuponDB(cupon);
+            const infoCupon = await obtenerCuponPorCodigoSinVeri(cupon);
+
+            if (infoCupon) {
+                cuponText = infoCupon.Codigo;
+                cuponDescuento = infoCupon.MontoDescuento;
+                await marcarCuponDB(cupon);
+            }
         }
 
         // 4️⃣ 🆕 Vaciar carrito del usuario
         await vaciarCarritoDB(usuario_id);
 
         await connection.commit();
+
+        const pedidoD = await obtenerPedido(pedidoId);
+
+        if (!pedidoD) res.status(400).json({ ok: false, message: "El pedido no existe" })
+
+
+        const usuario = await obtenerUserPorId(pedidoD.usuario_id)
+        if (!usuario) res.status(400).json({ ok: false, message: "No se encontró al usuario" })
+
+
+        const envio = 50; // hardcode para precio de envio
+        const enviado = await enviarNotaDeCompra(pedidoD.id, usuario.nombre, pedidoD.actualizado_en, 'PAYPAL', items, subtotal, envio, iva, totalFinal, cuponText, cuponDescuento, usuario.email);
+
+
+
+        if (!enviado) res.status(500).json({ ok: false, message: "Error al enviar el correo de compra" })
 
         return res.status(200).json({
             ok: true,
