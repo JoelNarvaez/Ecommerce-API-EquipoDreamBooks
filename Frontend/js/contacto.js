@@ -47,7 +47,7 @@ formContacto.addEventListener("submit", async function (e) {
             title: "Se envió tu mensaje",
             text: "Te contactaremos pronto."
         }).then(() => {
-            window.location.href = "login.html";
+            window.location.href = "contacto.html";
         });
 
     } catch (error) {
