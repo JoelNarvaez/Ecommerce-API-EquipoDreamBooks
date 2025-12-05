@@ -8,7 +8,7 @@ const {
     getReporteExistencias
 } = require("../../models/modelLibros");
 
-// 🔥 Importar modelo de ofertas
+// Importar modelo de ofertas
 const {
     crearOferta,
     getOfertaByProduct,

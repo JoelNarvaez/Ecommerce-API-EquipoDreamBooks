@@ -12,7 +12,7 @@ const inputsPreview = {
     desc: document.getElementById("modal-desc"),
     image: document.getElementById("modal-image"),
 
-    // 🔥 NUEVOS CAMPOS (solo preview, no afectan vista)
+    // NUEVOS CAMPOS (solo preview, no afectan vista)
     hasOffer: document.getElementById("modal-has-offer"),
     offerType: document.getElementById("modal-offer-type"),
     offerValue: document.getElementById("modal-offer-value")
@@ -117,7 +117,14 @@ document.getElementById("modal-save").addEventListener("click", async () => {
         const data = await res.json();
 
         if (data.ok) {
-            Swal.fire("✔ Libro agregado", "", "success");
+            Swal.fire("Libro agregado", "", "success");
+            /*Swal.fire({
+                title: "Libro agregado",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 5000,     
+                timerProgressBar: true
+            });*/
 
             fetchBooks(1, 8); // recargar lista
             document.getElementById("modal-add-book").classList.add("hidden");

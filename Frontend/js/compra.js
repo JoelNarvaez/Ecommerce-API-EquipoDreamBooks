@@ -330,6 +330,8 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
     const { subtotal, iva, descuento, total, items } = window.dataCompra;
     const cupon = document.getElementById("cuponInput").value.trim() || null;
 
+    const esCompraDirecta = libroDirectoId ? true : false;
+
     const res = await fetch("http://localhost:3000/api/carts/checkout", {
         method: "POST",
         headers: {
@@ -343,19 +345,20 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
             descuento,
             totalFinal: total,
             cupon,
-            items
+            items,
+            compraDirecta: esCompraDirecta   // 🔥 IMPORTANTE
         })
     });
 
     const data = await res.json();
 
     if (!data.ok) {
-        alert("❌ Error al procesar la orden: " + data.message);
+        alert("Error al procesar la orden: " + data.message);
         return;
     }
 
-    alert("✔ ¡Pedido creado exitosamente!");
-    window.location.href = "/Frontend/pedido_exitoso.html";
+    alert("¡Pedido creado exitosamente!");
+    window.location.href = "/Frontend/pages/index.html";
 });
 
 /* ========================================================

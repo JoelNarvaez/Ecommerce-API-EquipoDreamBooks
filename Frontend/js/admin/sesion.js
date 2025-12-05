@@ -41,7 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logoutBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        localStorage.clear();
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("usuarioActual");
+        
         window.location.href = "/Frontend/pages/login.html";
     });
 

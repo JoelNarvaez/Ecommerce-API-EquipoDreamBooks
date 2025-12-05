@@ -45,16 +45,16 @@
               <li><a href="index.html">Inicio</a></li>
               <li><a href="/Frontend/pages/libros.html">Libros</a></li>
               <li>
-                <a href="preguntas_frecuentes.html">Preguntas frecuentes</a>
+                <a href="preguntas_frecuentes.html">Preguntas</a>
               </li>
               <li><a href="contacto.html">Contacto</a></li>
-              <li><a href="nosotros.html">Sobre Nosotros</a></li>
+              <li><a href="nosotros.html">Nosotros</a></li>
             </ul>
           </div>
           <div class="menu-der">
             <ul>
               <li id="userInfo" class="user-info" style="display: none">
-                <i class="fa-solid fa-book-open-reader user-icon"></i>
+                <img class="logo-usuario" src="../imagenes/usuario-icono.png" alt="">
                 <span id="userName" class="user-name"></span>
               </li>
               <li id="btnAcceder">
@@ -71,20 +71,14 @@
                   Salir
                 </button>
               </li>
-              <li>
-                <i
-                  class="fa-solid fa-magnifying-glass"
-                  class="icono-buscar"
-                ></i>
-              </li>
-              <a href="../pages/carrito.html"><li><i class="fa-solid fa-cart-shopping"></i></li></a>
-              <a href="../pages/wishlist.html"><li><i class="fa-solid fa-heart"></i></li></a>
+              <li><a href="../pages/carrito.html"><i id="accesoCarrito" class="fa-solid fa-cart-shopping"></i></a></li>
+              <li><a href="../pages/wishlist.html"><i id="accesoWishlist" class="fa-solid fa-heart"></i></a></li>
             </ul>
           </div>
         </nav>
         <div class="content">
           <h1>DreamBooks Librería</h1>
-          <a href="/Frontend/pages/libros.html">Explore</a>
+          <a href="/Frontend/pages/libros.html">Explorar</a>
         </div>
       </div>
     </header>
@@ -226,20 +220,25 @@
     <div id="panelAccesibilidad" class="accesibilidad-panel">
       <h2>Accesibilidad</h2>
 
-      <!-- Tema claro/oscuro -->
-      <div class="opcion">
-        <span>Tema:</span>
-        <button id="btnTema" class="tema-btn">
-          <i id="iconTema" class="fa-solid fa-moon"></i>
-        </button>
-      </div>
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+      <span>Tema:</span>
+      <button id="btnTema" class="tema-btn">
+        <img id="imgTema" src="../imagenes/luna-icono.png" alt="tema">
+      </button>
+    </div>
 
       <!-- Tamaño de texto -->
       <div class="opcion">
         <span>Tamaño de texto:</span>
         <div class="texto-controles">
-          <button id="textoMenos">A-</button>
-          <button id="textoMas">A+</button>
+          <button id="textoMenos" class="btnTam">
+            <img src="../imagenes/disminuirTam.png" alt="">
+          </button>
+
+          <button id="textoMas" class="btnTam">
+            <img src="../imagenes/aumentarTam.png" alt="">
+          </button>
         </div>
       </div>
     </div>
@@ -257,29 +256,23 @@
           </div>
           <div class="footer-redes">
             <h4>Síguenos en redes sociales</h4>
-            <div class="redes-sociales">
-              <a
-                href="https://www.facebook.com/share/1Li3KJci2q/"
-                class="red-social"
-              >
-                <i class="fa-brands fa-facebook"></i>
-              </a>
-              <a
-                href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42"
-                class="red-social"
-              >
-                <i class="fa-brands fa-instagram"></i>
-              </a>
+              <div class="redes-sociales">    
+                <a href="https://www.facebook.com/share/16r15TWkNC/" class="red-social">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/dreambooks_libreria?igsh=aXhmZTdoeWRlZG0w" class="red-social">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
             <div class="info-contacto"></div>
           </div>
           <div class="menu-footer-contenedor">
             <ul class="menu-footer">
               <li><a href="index.html">Inicio</a></li>
-              <li><a href="#">Libros</a></li>
+              <li><a href="libros.html">Libros</a></li>
               <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
               <li><a href="contacto.html">Contacto</a></li>
-              <li><a href="nosotros.html">Sobre Nosotros</a></li>
+              <li><a href="nosotros.html">Nosotros</a></li>
             </ul>
           </div>
           <div class="footer-suscripcion">

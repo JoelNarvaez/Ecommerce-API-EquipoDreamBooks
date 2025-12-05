@@ -1,5 +1,5 @@
 let libroEditando = null;
-let ofertaActual = null; // 🔥 Se usará para saber si ya tenía oferta
+let ofertaActual = null; // Se usará para saber si ya tenía oferta
 
 // ===========================================================
 //   DETECTAR CLICK EN BOTÓN EDITAR
@@ -14,7 +14,12 @@ document.addEventListener("click", async (e) => {
     const id = card.querySelector(".btn-eliminar")?.dataset.id;
 
     if (!id) {
-        alert("Error: No se pudo identificar el libro.");
+        //alert("Error: No se pudo identificar el libro.");
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo identificar el libro."
+        });
         return;
     }
 
@@ -31,7 +36,12 @@ document.addEventListener("click", async (e) => {
     const data = await res.json();
 
     if (!res.ok) {
-        alert("Error al obtener datos del libro");
+        //alert("Error al obtener datos del libro");
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Error al obtener datos del libro"
+        });
         return;
     }
 
@@ -221,7 +231,14 @@ document.getElementById("btn-save-edit").addEventListener("click", async () => {
     });
 
     if (res.ok) {
-        alert("Libro actualizado correctamente");
+        /*alert("Libro actualizado correctamente");*/
+        Swal.fire({
+            title: "Modificación de Libro",
+            text: "Libro actualizado correctamente",
+            icon: "success"
+        });
+
+
 
         if (typeof actualizarReporteExistencias === "function") {
             actualizarReporteExistencias();
@@ -231,6 +248,11 @@ document.getElementById("btn-save-edit").addEventListener("click", async () => {
 
         document.getElementById("modal-editar").classList.add("hidden");
     } else {
-        alert("Error al actualizar libro");
+        //alert("Error al actualizar libro");
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Error al actualizar libro."
+        });
     }
 });
