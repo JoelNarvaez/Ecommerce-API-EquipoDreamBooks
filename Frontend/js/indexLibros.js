@@ -17,7 +17,7 @@ async function cargarSlider(endpoint, contenedorId) {
         data.libros.forEach((book) => {
             const urlImagen = book.imagen
                 ? `http://localhost:3000/uploads/${book.imagen}`
-                : "/Frontend/assets/no-image.png";
+                : "../assets/no-image.png";
 
             const tieneOferta = book.oferta_tipo && book.oferta_valor;
             const precioNormal = Number(book.precio);
@@ -34,7 +34,7 @@ async function cargarSlider(endpoint, contenedorId) {
             cont.innerHTML += `
                 <div class="product-card card-slider">
 
-                    <a href="/Frontend/pages/detalle-libro.html?id=${book.id}" class="link-card">
+                    <a href="../pages/detalle-libro.html?id=${book.id}" class="link-card">
                         ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
                         ${book.stock === 0 ? `<span class="badge-agotado">Agotado</span>` : ""}
 
@@ -151,7 +151,7 @@ async function manejarClickEnSlider(e) {
             return;
         }
 
-        window.location.href = `/Frontend/pages/compra.html?id=${id}&cantidad=1`;
+        window.location.href = `../pages/compra.html?id=${id}&cantidad=1`;
         return;
     }
 }

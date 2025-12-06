@@ -100,7 +100,7 @@ function renderBooks(books = []) {
     .map((book) => {
       const urlImagen = book.imagen
         ? `http://localhost:3000/uploads/${book.imagen}`
-        : "/Frontend/assets/no-image.png";
+        : "../assets/no-image.png";
 
       const tieneOferta = book.oferta_tipo && book.oferta_valor;
       const precio = Number(book.precio);
@@ -115,7 +115,7 @@ function renderBooks(books = []) {
         : precio.toFixed(2);
 
       return `
-<a href="/Frontend/pages/detalle-libro.html?id=${book.id}" class="link-card">
+<a href="../pages/detalle-libro.html?id=${book.id}" class="link-card">
     <div class="product-card">
 
         ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
@@ -355,7 +355,7 @@ document.addEventListener("click", function (e) {
         return;
       }
 
-      window.location.href = `/Frontend/pages/compra.html?id=${id}&cantidad=1`;
+      window.location.href = `../pages/compra.html?id=${id}&cantidad=1`;
       return;
     }
   }

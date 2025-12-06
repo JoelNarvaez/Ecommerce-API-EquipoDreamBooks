@@ -32,14 +32,14 @@
     --color-cards: #ffffff;
 
     /* Imágenes*/
-    --img-logo: url('/Frontend/imagenes/logo-header-fondo.png');
-    --img-presentacion-inicio: url('/Frontend/imagenes/logo-grande-negro.png');
+    --img-logo: url('../imagenes/logo-header-fondo.png');
+    --img-presentacion-inicio: url('../imagenes/logo-grande-negro.png');
 
     /* Página de preguntas frecuentes */
     --color-preguntas: #ebe4d1;
 
     /* Página Sobre Nosotros*/
-    --background-hero-nosotros-ligth: url('/Frontend/imagenes/fondo-cafe.jpg');
+    --background-hero-nosotros-ligth: url('../imagenes/fondo-cafe.jpg');
 
     /* Página contacto*/
     --color-fondo-contacto:#f5f5f5;
@@ -59,7 +59,7 @@
     --color-boton-hover:#0ebfcd;
     --color-header-con-hero: #ffffff;
     --color-header-sin-hero: #ffffff;
-    --background-hero-nosotros-dark: url('/Frontend/imagenes/fondo-aqua.jpg');
+    --background-hero-nosotros-dark: url('../imagenes/fondo-aqua.jpg');
     --color-font-footer: #ffffff;
     --color-footer: linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);
     /*--color-footer:#d9ab57;*/
@@ -70,8 +70,8 @@
     --color-nav-text-sin-hero:#ffffff;
 
     /* Imágenes*/
-    --img-presentacion-inicio: url('/Frontend/imagenes/logo-grande-blanco.png');
-    --img-logo: url('/Frontend/imagenes/logo-header.png');
+    --img-presentacion-inicio: url('../imagenes/logo-grande-blanco.png');
+    --img-logo: url('../imagenes/logo-header.png');
 
      /* Página de preguntas frecuentes */
     --color-preguntas: #42a8a1;

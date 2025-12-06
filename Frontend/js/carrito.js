@@ -30,7 +30,7 @@ async function inicializarCarrito(itemsCarrito = []) {
         .map(item => {
             const imagen = item.imagen
                 ? `http://localhost:3000/uploads/${item.imagen}`
-                : "/Frontend/assets/no-image.png";
+                : "../assets/no-image.png";
 
             const precioUnitario = Number(item.precioFinal);
             const precioOriginal = Number(item.precioNormal);
@@ -348,7 +348,7 @@ cargarPaginaCarrito();
 // Ir a la página de compra
 // ============================
 document.getElementById("checkoutBtn").addEventListener("click", () => {
-    window.location.href = "/Frontend/pages/compra.html";
+    window.location.href = "../pages/compra.html";
 });
 
 async function cargarPaginaCarrito() {

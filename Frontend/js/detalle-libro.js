@@ -31,7 +31,7 @@ async function cargarLibro() {
         document.getElementById("img-libro").src =
             libro.imagen
                 ? `http://localhost:3000/uploads/${libro.imagen}`
-                : "/Frontend/assets/no-image.png";
+                : "../assets/no-image.png";
 
         document.getElementById("titulo").textContent = libro.nombre;
         document.getElementById("autor").textContent = libro.autor;
@@ -96,7 +96,7 @@ async function cargarSlider(endpoint, contenedorId) {
         data.libros.forEach(book => {
             const urlImagen = book.imagen
                 ? `http://localhost:3000/uploads/${book.imagen}`
-                : "/Frontend/assets/no-image.png";
+                : "../assets/no-image.png";
 
             const tieneOferta = book.oferta_tipo && book.oferta_valor;
             const precioNormal = Number(book.precio);
@@ -155,7 +155,7 @@ async function cargarSlider(endpoint, contenedorId) {
             `;
 
             card.addEventListener("click", () => {
-                window.location.href = `/Frontend/pages/detalle-libro.html?id=${book.id}`;
+                window.location.href = `../pages/detalle-libro.html?id=${book.id}`;
             });
 
             cont.appendChild(card);
@@ -345,5 +345,5 @@ function comprarAhora(idLibro) {
         return;
     }
 
-    window.location.href = `/Frontend/pages/compra.html?id=${idLibro}&cantidad=1`;
+    window.location.href = `../pages/compra.html?id=${idLibro}&cantidad=1`;
 }

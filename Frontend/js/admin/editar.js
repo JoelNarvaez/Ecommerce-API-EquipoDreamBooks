@@ -120,7 +120,7 @@ document.addEventListener("click", async (e) => {
 
     let urlImg = libro.imagen
         ? `http://localhost:3000/uploads/${libro.imagen}`
-        : "/Frontend/assets/no-image.png";
+        : "../assets/no-image.png";
 
     preview.image.src = urlImg;
     preview.title.textContent = libro.nombre;

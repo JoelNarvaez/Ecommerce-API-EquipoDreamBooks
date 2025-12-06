@@ -5,7 +5,7 @@ const enviarCorreo = require('./enviarCorreo');
 
 const enviarCorreoRestablecerContrasenia = async (nombre, email, token) => {
 
-    const enlace = "http://127.0.0.1:5501/Frontend/pages/restablecerContrasenia.html?token=" + token;
+    const enlace = "http://127.0.0.1:5501../pages/restablecerContrasenia.html?token=" + token;
 
     const archivosImg = [
         {

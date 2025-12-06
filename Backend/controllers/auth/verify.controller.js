@@ -19,7 +19,7 @@ exports.verificarUsuario = async (req, res) => {
 
         const faIcono = `http://localhost:3000/public/images/favicon-sf.png`
         const logo = `http://localhost:3000/public/images/logo-header.png`
-        const enlace = "http://127.0.0.1:5501/Frontend/pages/login.html";
+        const enlace = "http://127.0.0.1:5501../pages/login.html";
 
         const contenidoHTML = `<!DOCTYPE html>
                                 <html lang="es">
