@@ -22,6 +22,7 @@ function validarFormulario() {
     // MÉTODO DE PAGO (AGREGADO)
     // =====================================================
     const metodo = document.querySelector("input[name='metodoPago']:checked")?.value;
+    window.dataCompra.metodoPago = metodo;
 
     if (metodo === "tarjeta") {
         const titular = document.getElementById("nombreTitular").value.trim();
@@ -346,7 +347,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
     }
 
     const usuario_id = getUserIdFromToken();
-    const { subtotal, iva, descuento, total, envio, items } = window.dataCompra;
+    const { subtotal, iva, descuento, total, envio, items, metodoPago } = window.dataCompra;
     const cupon = document.getElementById("cuponInput").value.trim() || null;
     const esCompraDirecta = !!libroDirectoId;
 
@@ -365,6 +366,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
             totalFinal: total,
             cupon,
             items,
+            metodoPago,
             compraDirecta: esCompraDirecta
         })
     });
@@ -397,6 +399,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
 document.querySelectorAll("input[name='metodoPago']").forEach(radio => {
     radio.addEventListener("change", () => {
         const metodo = radio.value;
+        window.dataCompra.metodoPago = metodo;
 
         document.querySelector(".metodo-tarjeta").style.display =
             metodo === "tarjeta" ? "grid" : "none";

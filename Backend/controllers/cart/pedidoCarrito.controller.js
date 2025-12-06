@@ -19,7 +19,7 @@ exports.crearPedidoDesdeCarrito = async (req, res) => {
     try {
         const usuario_id = req.user.id;
 
-        const { items, subtotal, iva, descuento, totalFinal, cupon, compraDirecta } = req.body;
+        const { items, subtotal, iva, descuento, totalFinal, cupon, compraDirecta, envio, metodoPago } = req.body;
 
         // Validación de items
         if (!items || items.length === 0) {
@@ -69,19 +69,15 @@ exports.crearPedidoDesdeCarrito = async (req, res) => {
 
         const pedidoD = await obtenerPedido(pedidoId);
 
-        if (!pedidoD) res.status(400).json({ ok: false, message: "El pedido no existe" })
+        if (!pedidoD) return res.status(400).json({ ok: false, message: "El pedido no existe" })
 
 
         const usuario = await obtenerUserPorId(pedidoD.usuario_id)
-        if (!usuario) res.status(400).json({ ok: false, message: "No se encontró al usuario" })
+        if (!usuario) return res.status(400).json({ ok: false, message: "No se encontró al usuario" })
 
 
-        const envio = 50; // hardcode para precio de envio
-        const enviado = await enviarNotaDeCompra(pedidoD.id, usuario.nombre, pedidoD.actualizado_en, 'PAYPAL', items, subtotal, envio, iva, totalFinal, cuponText, cuponDescuento, usuario.email);
+        enviarNotaDeCompra(pedidoD.id, usuario.nombre, pedidoD.actualizado_en, metodoPago, items, subtotal, envio, iva, totalFinal, cuponText, cuponDescuento, usuario.email);
 
-
-
-        if (!enviado) res.status(500).json({ ok: false, message: "Error al enviar el correo de compra" })
 
         return res.status(200).json({
             ok: true,

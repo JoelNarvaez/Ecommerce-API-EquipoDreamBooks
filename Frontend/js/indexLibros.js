@@ -280,7 +280,7 @@ async function agregarNuevoItem(idLibro, cantidad, token) {
   }
 
     Swal.fire("Agregado", "Libro agregado al carrito!", "success");
-    return data;
+    return addData;
 }
 
 
