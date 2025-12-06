@@ -27,7 +27,8 @@ document.addEventListener("click", async (e) => {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:3000/api/admin/books/${id}`, {
+   /* const res = await fetch(`http://localhost:3000/api/admin/books/${id}`, {*/
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/books/${id}`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
@@ -119,7 +120,8 @@ document.addEventListener("click", async (e) => {
     };
 
     let urlImg = libro.imagen
-        ? `http://localhost:3000/uploads/${libro.imagen}`
+        /*? `http://localhost:3000/uploads/${libro.imagen}`*/
+        ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${libro.imagen}`
         : "../assets/no-image.png";
 
     preview.image.src = urlImg;
@@ -224,7 +226,8 @@ document.getElementById("btn-save-edit").addEventListener("click", async () => {
     }
 
 
-    const res = await fetch(`http://localhost:3000/api/admin/books/${libroEditando}`, {
+   /* const res = await fetch(`http://localhost:3000/api/admin/books/${libroEditando}`, {*/
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/books/${libroEditando}`, {
         method: "PUT",
         headers: { "Authorization": `Bearer ${token}` },
         body: form

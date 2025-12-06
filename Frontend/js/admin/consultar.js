@@ -9,7 +9,8 @@ async function fetchBooks(page = 1, limit = 10) {
     const categoria = document.getElementById("filter-category")?.value || "";
 
     const res = await fetch(
-      `http://localhost:3000/api/admin/books?page=${page}&limit=${limit}&search=${searchText}&categoria=${categoria}`,
+      /*`http://localhost:3000/api/admin/books?page=${page}&limit=${limit}&search=${searchText}&categoria=${categoria}`,*/
+      `https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/books?page=${page}&limit=${limit}&search=${searchText}&categoria=${categoria}`,
       {
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -54,7 +55,8 @@ function renderBooks(books = []) {
     }
 
     const imagenURL = book.imagen
-      ? `http://localhost:3000/uploads/${book.imagen}`
+     /* ? `http://localhost:3000/uploads/${book.imagen}`*/
+      ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${book.imagen}`
       : `../assets/no-image.png`;
 
     const card = document.createElement("div");
@@ -138,7 +140,8 @@ function renderPagination(currentPage, totalPages) {
 // --------------------------------------------------------
 async function cargarCategoriasSelect() {
   try {
-    const res = await fetch("http://localhost:3000/api/products/categorias");
+    /*const res = await fetch("http://localhost:3000/api/products/categorias");*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/categorias");
     const data = await res.json();
 
     if (!data.ok) return;

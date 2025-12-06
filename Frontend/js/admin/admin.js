@@ -79,7 +79,8 @@ modalAddBook?.addEventListener('click', (e) => {
 // --------------------------------------------------------
 async function cargarCategoriasSelect() {
     try {
-        const res = await fetch("http://localhost:3000/api/products/categorias");
+        /*const res = await fetch("http://localhost:3000/api/products/categorias");*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/categorias");
         const data = await res.json();
 
         if (!data.ok) return;
@@ -129,7 +130,8 @@ async function cargarLibrosTotales() {
     try {
         const token = localStorage.getItem("token");
 
-        const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
+        /*const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/reporte-existencias", {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -241,7 +243,8 @@ async function cargarPedidosTotales() {
     try {
         const token = localStorage.getItem("token");
 
-        const res = await fetch("http://localhost:3000/api/admin/pedidos", {
+        /*const res = await fetch("http://localhost:3000/api/admin/pedidos", {*/
+         const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/pedidos", {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -355,7 +358,8 @@ async function fetchIngresos() {
     const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch("http://localhost:3000/api/admin/ingresos", {
+        /*const res = await fetch("http://localhost:3000/api/admin/ingresos", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/ingresos", {
             headers: { "Authorization": `Bearer ${token}` }
         });
 

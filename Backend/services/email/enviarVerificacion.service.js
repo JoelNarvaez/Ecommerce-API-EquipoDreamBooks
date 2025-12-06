@@ -8,7 +8,8 @@ const enviarCorreoVerificacion = async ( idUser, nombre, email) => {
 
     const token = jwt.sign({ idUser }, process.env.JWT_SECRET, { expiresIn: "1d" })
 
-    const enlace = `http://localhost:3000/api/auth/verify/${token}`
+   /* const enlace = `http://localhost:3000/api/auth/verify/${token}`*/
+    const enlace = `https://ecommerce-api-equipodreambooks-production.up.railway.app/api/auth/verify/${token}`
 
     const archivosImg = [
         {

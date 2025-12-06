@@ -19,7 +19,8 @@ form.addEventListener("submit", async (e) => {
         button.disabled = true;
         button.innerText = "Enviando...";
 
-        const response = await fetch("http://localhost:3000/api/auth/forgot-password", {
+        /*const response = await fetch("http://localhost:3000/api/auth/forgot-password", {*/
+        const response = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/auth/forgot-password", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -108,7 +108,8 @@ document.getElementById("modal-save").addEventListener("click", async () => {
     const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch("http://localhost:3000/api/admin/agregar", {
+        /*const res = await fetch("http://localhost:3000/api/admin/agregar", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/agregar", {
             method: "POST",
             headers: { "Authorization": `Bearer ${token}` },
             body: form

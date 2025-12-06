@@ -14,7 +14,8 @@ if (!token) {
     title: "Token no encontrado",
     text: "El token de restablecimiento no fue encontrado en la URL.",
   }).then((result) => {
-    window.location.href = "http://127.0.0.1:5501../pages/index.html";
+    /*window.location.href = "http://127.0.0.1:5501../pages/index.html";*/
+    window.location.href = "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/index.html";
   });
 } else {
   verifyToken(token);
@@ -24,7 +25,8 @@ if (!token) {
 async function verifyToken(token) {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/auth/verify-reset-token/${token}`
+      /*`http://localhost:3000/api/auth/verify-reset-token/${token}`*/
+      `https://ecommerce-api-equipodreambooks-production.up.railway.app/api/auth/verify-reset-token/${token}`
     );
     const data = await res.json();
 
@@ -35,7 +37,8 @@ async function verifyToken(token) {
         text: "El token de restablecimiento es inválido o ha expirado, intenta de nuevo.",
       }).then((result) => {
         window.location.href =
-          "http://127.0.0.1:5501../pages/index.html";
+          /*"http://127.0.0.1:5501../pages/index.html";*/
+          "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/index.html";
       });
       return;
     }
@@ -93,7 +96,8 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/auth/reset-password/${token}`,
+      /*`http://localhost:3000/api/auth/reset-password/${token}`,*/
+      `https://ecommerce-api-equipodreambooks-production.up.railway.app/api/auth/reset-password/${token}`,
       {
         method: "POST",
         headers: {
@@ -121,7 +125,8 @@ form.addEventListener("submit", async (e) => {
       title: "Contraseña actualizada",
       text: "Contraseña actualizada correctamente",
     }).then((result) => {
-      window.location.href = "http://127.0.0.1:5501../pages/login.html";
+      /*window.location.href = "http://127.0.0.1:5501../pages/login.html";*/
+      window.location.href = "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/login.html";
     });
 
     form.reset();

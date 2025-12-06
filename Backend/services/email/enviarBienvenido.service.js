@@ -5,7 +5,8 @@ const enviarCorreo = require('./enviarCorreo');
 
 const enviarCorreoBienvenido = async (nombre, email) => {
 
-    const enlace = "http://127.0.0.1:5501../pages/login.html";
+    /*const enlace = "http://127.0.0.1:5501../pages/login.html";*/
+    const enlace = "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/login.html";
 
     const archivosImg = [
         {

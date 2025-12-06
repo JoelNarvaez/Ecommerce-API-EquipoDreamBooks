@@ -16,7 +16,8 @@ async function cargarSlider(endpoint, contenedorId) {
 
         data.libros.forEach((book) => {
             const urlImagen = book.imagen
-                ? `http://localhost:3000/uploads/${book.imagen}`
+               /* ? `http://localhost:3000/uploads/${book.imagen}`*/
+                ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${book.imagen}`
                 : "../assets/no-image.png";
 
             const tieneOferta = book.oferta_tipo && book.oferta_valor;
@@ -173,7 +174,8 @@ async function obtenerCarrito() {
             return null;
         }
 
-        const res = await fetch("http://localhost:3000/api/carts", {
+        /*const res = await fetch("http://localhost:3000/api/carts", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts", {
             headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -223,7 +225,8 @@ async function agregarAlCarrito(idLibro, cantidad = 1) {
 async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) {
     const nuevaCantidad = itemExistente.Cantidad + cantidad;
 
-    const res = await fetch("http://localhost:3000/api/carts/actualizar", {
+    /*const res = await fetch("http://localhost:3000/api/carts/actualizar", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/actualizar", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -248,7 +251,8 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) 
 ============================================================ */
 async function agregarNuevoItem(idLibro, cantidad, token) {
 
-  const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
+  /*const addRes = await fetch("http://localhost:3000/api/carts/agregar", {*/
+  const addRes = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/agregar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -300,7 +304,8 @@ async function agregarAWishlist(idLibro) {
             return;
         }
 
-        const res = await fetch("http://localhost:3000/api/wishlist/add", {
+        /*const res = await fetch("http://localhost:3000/api/wishlist/add", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -340,5 +345,7 @@ async function agregarAWishlist(idLibro) {
 /* ============================================================
    CARGAR SLIDERS
 ============================================================ */
-cargarSlider("http://localhost:3000/api/products/books/novedades", "slider-novedades");
-cargarSlider("http://localhost:3000/api/products/books/ofertas", "slider-ofertas");
+/*cargarSlider("http://localhost:3000/api/products/books/novedades", "slider-novedades");
+cargarSlider("http://localhost:3000/api/products/books/ofertas", "slider-ofertas");*/
+cargarSlider("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/books/novedades", "slider-novedades");
+cargarSlider("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/books/ofertas", "slider-ofertas");

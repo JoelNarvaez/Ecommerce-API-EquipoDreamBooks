@@ -120,7 +120,8 @@ const libroDirectoCantidad = Number(urlParams.get("cantidad")) || 1;
 async function cargarCompraDirecta() {
     if (!libroDirectoId) return null;
 
-    const res = await fetch(`http://localhost:3000/api/products/book/${libroDirectoId}`);
+    /*const res = await fetch(`http://localhost:3000/api/products/book/${libroDirectoId}`);*/
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/book/${libroDirectoId}`);
     const data = await res.json();
 
     if (!data.ok) return null;
@@ -146,7 +147,8 @@ async function obtenerCarrito() {
         const token = localStorage.getItem("token");
         if (!token) return null;
 
-        const res = await fetch("http://localhost:3000/api/carts", {
+        /*const res = await fetch("http://localhost:3000/api/carts", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts", {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -170,7 +172,7 @@ function generarProductoHTML(item) {
     return `
         <div class="productoResumen">
             <div class="imgBox">
-                <img src="${item.imagen ? `http://localhost:3000/uploads/${item.imagen}` : "../assets/no-image.png"}" />
+                <img src="${item.imagen ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${item.imagen}` : "../assets/no-image.png"}" />
             </div>
 
             <div class="infoBox">
@@ -286,7 +288,8 @@ document.getElementById("aplicarCupon").addEventListener("click", async () => {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:3000/api/carts/aplicar", {
+    /*const res = await fetch("http://localhost:3000/api/carts/aplicar", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/aplicar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -351,7 +354,8 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
     const cupon = document.getElementById("cuponInput").value.trim() || null;
     const esCompraDirecta = !!libroDirectoId;
 
-    const res = await fetch("http://localhost:3000/api/carts/checkout", {
+    /*const res = await fetch("http://localhost:3000/api/carts/checkout", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/checkout", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

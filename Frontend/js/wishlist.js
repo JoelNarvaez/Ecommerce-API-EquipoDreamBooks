@@ -4,7 +4,8 @@ async function cargarWishlist() {
     const token = localStorage.getItem("token");
     if (!token) return window.location.href = "login.html";
 
-    const res = await fetch("http://localhost:3000/api/wishlist/", {
+    /*const res = await fetch("http://localhost:3000/api/wishlist/", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/", {
         headers: { "Authorization": "Bearer " + token }
     });
 
@@ -29,7 +30,7 @@ function mostrarWishlist(lista) {
         contenedor.innerHTML += `
         <div class="wishlist-item" data-id="${item.ProductoId}">
             <div class="item-thumb">
-                <img src="http://localhost:3000/uploads/${item.imagen}"
+                <img src="https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${item.imagen}"
                      class="thumb-img"
                      onerror="this.src='../assets/no-image.png'">
             </div>
@@ -101,7 +102,8 @@ async function eliminarWishlist(e) {
 
     if (!confirm.isConfirmed) return;
 
-    await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {
+    /*await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {*/
+    await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/${idProducto}`, {
         method: "DELETE",
         headers: { "Authorization": "Bearer " + token }
     });
@@ -122,7 +124,8 @@ async function moverAlCarrito(e) {
     const idProducto = e.target.closest(".wishlist-item").dataset.id;
     const token = localStorage.getItem("token");
 
-    await fetch("http://localhost:3000/api/carts/agregar", {
+    /*await fetch("http://localhost:3000/api/carts/agregar", {*/
+    await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/agregar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -131,7 +134,8 @@ async function moverAlCarrito(e) {
         body: JSON.stringify({ productoId: idProducto, cantidad: 1 })
     });
 
-    await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {
+    /*await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {*/
+    await fetch(`http://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/${idProducto}`, {
         method: "DELETE",
         headers: { "Authorization": "Bearer " + token }
     });
@@ -176,7 +180,8 @@ async function moverTodo() {
     for (const item of items) {
         const idProducto = item.dataset.id;
 
-        await fetch("http://localhost:3000/api/carts/agregar", {
+        /*await fetch("http://localhost:3000/api/carts/agregar", {*/
+        await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/agregar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -185,7 +190,8 @@ async function moverTodo() {
             body: JSON.stringify({ productoId: idProducto, cantidad: 1 })
         });
 
-        await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {
+        /*await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {*/
+        await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/${idProducto}`, {
             method: "DELETE",
             headers: { "Authorization": "Bearer " + token }
         });

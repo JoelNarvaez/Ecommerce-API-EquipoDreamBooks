@@ -30,7 +30,8 @@ document.addEventListener("click", async (e) => {
     // -----------------------------
     // NUEVOS CAMPOS DESDE BACKEND
     // -----------------------------
-    const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {
+    /*const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {*/
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/books/${libroSeleccionado}`, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
@@ -103,7 +104,8 @@ document.getElementById("btn-confirm-delete")?.addEventListener("click", async (
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:3000/api/admin/eliminar-stock/${libroSeleccionado}`, {
+    /*const res = await fetch(`http://localhost:3000/api/admin/eliminar-stock/${libroSeleccionado}`, {*/
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/eliminar-stock/${libroSeleccionado}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -156,7 +158,8 @@ document.getElementById("btn-delete-total")?.addEventListener("click", async () 
     if (!result.isConfirmed) return;
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {
+    /*const res = await fetch(`http://localhost:3000/api/admin/books/${libroSeleccionado}`, {*/
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/books/${libroSeleccionado}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${token}`
