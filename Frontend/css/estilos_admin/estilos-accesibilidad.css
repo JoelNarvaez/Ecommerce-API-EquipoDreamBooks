@@ -44,7 +44,7 @@
     --color-boton-hover:#0ebfcd;
     --color-header-con-hero: #ffffff;
     --color-header-sin-hero: #000000;
-    --background-hero-nosotros-dark: url('/Frontend/imagenes/fondo-aqua.jpg');
+    --background-hero-nosotros-dark: url('../imagenes/fondo-aqua.jpg');
     --color-font-footer: #ffffff;
     --color-principal:#03505a;
     /*--color-principal: linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);*/

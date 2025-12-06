@@ -170,7 +170,7 @@ function generarProductoHTML(item) {
     return `
         <div class="productoResumen">
             <div class="imgBox">
-                <img src="${item.imagen ? `http://localhost:3000/uploads/${item.imagen}` : "/Frontend/assets/no-image.png"}" />
+                <img src="${item.imagen ? `http://localhost:3000/uploads/${item.imagen}` : "../assets/no-image.png"}" />
             </div>
 
             <div class="infoBox">
@@ -389,7 +389,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
         text: '¡Pedido creado exitosamente!',
         confirmButtonText: 'Aceptar'
     }).then(() => {
-        window.location.href = "/Frontend/pages/index.html";
+        window.location.href = "../pages/index.html";
     });
 });
 

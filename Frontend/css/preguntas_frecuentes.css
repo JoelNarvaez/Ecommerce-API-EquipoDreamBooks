@@ -7,7 +7,7 @@ h3{
 }
 
 main{
-  background-image: url(/Frontend/imagenes/fondo-preguntas.jpg);
+  background-image: url(../imagenes/fondo-preguntas.jpg);
 }
 .preguntas-frecuentes-box{
   display: flex;

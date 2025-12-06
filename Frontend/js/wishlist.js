@@ -31,7 +31,7 @@ function mostrarWishlist(lista) {
             <div class="item-thumb">
                 <img src="http://localhost:3000/uploads/${item.imagen}"
                      class="thumb-img"
-                     onerror="this.src='/Frontend/assets/no-image.png'">
+                     onerror="this.src='../assets/no-image.png'">
             </div>
 
             <div class="item-details">

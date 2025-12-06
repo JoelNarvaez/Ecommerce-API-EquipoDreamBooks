@@ -55,7 +55,7 @@ function renderBooks(books = []) {
 
     const imagenURL = book.imagen
       ? `http://localhost:3000/uploads/${book.imagen}`
-      : `/Frontend/assets/no-image.png`;
+      : `../assets/no-image.png`;
 
     const card = document.createElement("div");
     card.classList.add("product-card");
