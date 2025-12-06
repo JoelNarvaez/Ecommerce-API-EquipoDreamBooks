@@ -328,3 +328,8 @@ h1{
     background: #f6f3ef;
     border-radius: 10px;
 }
+
+#paisEnvio{
+    font-family: var(--font-family);
+    font-size:var(--font-size-base);
+}

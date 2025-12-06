@@ -42,7 +42,7 @@ document.getElementById("formLogin").addEventListener("submit", async function (
                 window.location.href = "../pages/admin/panel_admin.html";
                 return;
             }else{
-                window.location.href = "../pages/index.html";
+                window.location.href = "../index.html";
             }
         } else {
             Swal.fire({
