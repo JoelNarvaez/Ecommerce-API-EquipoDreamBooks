@@ -1,36 +1,30 @@
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-core");
-const path = require("path");
 const fs = require("fs");
+const path = require("path");
 
 async function generarPDF(nombrePDF, contenidoHTML) {
-
   const outputPath = path.join(__dirname, "pdfs", nombrePDF);
 
-  // Asegurar carpeta
-  const pdfDir = path.join(__dirname, "pdfs");
-  if (!fs.existsSync(pdfDir)) {
-    fs.mkdirSync(pdfDir);
+  // Crear carpeta si no existe
+  if (!fs.existsSync(path.join(__dirname, "pdfs"))) {
+    fs.mkdirSync(path.join(__dirname, "pdfs"));
   }
 
-  // Lanzar navegador compatible con Railway
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless, // Obligatorio para contenedores
+    executablePath: await chromium.executablePath, // AQUÍ ESTÁ LA MAGIA
+    headless: chromium.headless,
   });
 
   const page = await browser.newPage();
-
-  await page.setContent(contenidoHTML, {
-    waitUntil: ["networkidle0", "load", "domcontentloaded"]
-  });
+  await page.setContent(contenidoHTML, { waitUntil: "networkidle0" });
 
   await page.pdf({
     path: outputPath,
     format: "A4",
-    printBackground: true
+    printBackground: true,
   });
 
   await browser.close();
