@@ -17,14 +17,11 @@ const enviarNotaDeCompra = async (
     email
 ) => {
 
-    // 🔹 Estos valores vienen crudos (números) y aquí solo los formateamos para el correo
     const fechaFormato = new Date(fecha).toLocaleDateString("es-MX");
     const subtotalFormato = Number(subtotal).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
     const envioFormato = Number(envio).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
     const impuestosFormato = Number(impuestos).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
 
-    // ❌ ANTES: Number(total + envio)  → sumaba el envío dos veces
-    // ✅ AHORA: total ya viene calculado (subtotal + iva - descuento + envio)
     const totalFormato = Number(total).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
 
     const cuponDescuentoFormato = Number(cuponDescuento).toLocaleString("es-MX", {

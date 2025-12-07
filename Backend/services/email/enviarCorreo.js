@@ -1,5 +1,3 @@
-// services/email/enviarCorreo.js
-
 const brevo = require("@getbrevo/brevo");
 
 // Crear instancia del API de correos transaccionales
@@ -16,34 +14,37 @@ apiInstance.setApiKey(
  * @param {string} contenidoHTML - cuerpo HTML del correo
  * @param {string} asunto - asunto del correo
  * @param {string} correo - correo destino
+ * @param {Array} adjuntos - archivos PDF u otros
  * @returns {boolean} true si se envió, false si falló
  */
-const enviarCorreo = async (contenidoHTML, asunto, correo) => {
+const enviarCorreo = async (contenidoHTML, asunto, correo, adjuntos = []) => {
     try {
         console.log("📧 Preparando envío de correo con Brevo a:", correo);
 
-        // Crear estructura del correo
-        const emailData = {
-            sender: {
-                name: "DreamBooks",
-                email: process.env.BUSINESS_EMAIL   // correo remitente
-            },
-            to: [
-                { email: correo }  // destinatario
-            ],
-            subject: asunto,
-            htmlContent: contenidoHTML  // contenido HTML
-        };
+        // ✨ Construcción del correo incluyendo adjuntos ✨
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
 
-        // Enviar correo vía API Brevo
-        const response = await apiInstance.sendTransacEmail(emailData);
+        sendSmtpEmail.to = [{ email: correo }];
+        sendSmtpEmail.subject = asunto;
+        sendSmtpEmail.htmlContent = contenidoHTML;
+        sendSmtpEmail.sender = { name: "DreamBooks", email: process.env.BUSINESS_EMAIL };
 
-        console.log("📩 Correo enviado correctamente con Brevo →", correo);
+        // 👇 SOLO si hay adjuntos, los agregamos
+        if (adjuntos.length > 0) {
+            sendSmtpEmail.attachment = adjuntos.map(file => ({
+                name: file.filename,
+                content: require("fs").readFileSync(file.path).toString("base64")
+            }));
+        }
+
+        // Enviar
+        await apiInstance.sendTransacEmail(sendSmtpEmail);
+        console.log("📧 Correo enviado correctamente ✔️");
+
         return true;
 
     } catch (error) {
-        console.error("❌ ERROR enviando correo con Brevo:");
-        console.error(error.response?.data || error);
+        console.error("❌ Error enviando correo:", error.message);
         return false;
     }
 };
