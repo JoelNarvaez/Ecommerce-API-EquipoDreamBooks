@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DreamBooks | Detalle del Libro</title>
-    <link rel="shortcut icon" href="/Frontend/imagenes/favicon-sf.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../imagenes/favicon-sf.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/detalle-libro.css">
@@ -20,23 +20,22 @@
             <div class="menu-centro">
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="/Frontend/pages/libros.html">Libros</a></li>
-                    <li><a href="preguntas_frecuentes.html">Preguntas frecuentes</a></li>
+                    <li><a href="../pages/libros.html">Libros</a></li>
+                    <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
                 </ul>
             </div>
             <div class="menu-der">
                 <ul>
                     <li id="userInfo" style="display:none;" class="user-info">
-                        <i class="fa-solid fa-book-open-reader user-icon"></i>
+                        <img class="logo-usuario" src="../imagenes/usuario-icono.png" alt="">
                         <span id="userName" class="user-name"></span>
                     </li>
                     <li  id="btnAcceder"><a href="login.html"><button class="button-acceder">Acceder</button></a></li>
-                    <li><button id="btnCerrarSesion" class="button-logout" style="display:none">Salir</button>
-                    </li>
-                    <li><i class="fa-solid fa-magnifying-glass" class="icono-buscar"></i></li>
-                    <li><i class="fa-solid fa-cart-shopping"></i></li>
+                    <li><button id="btnCerrarSesion" class="button-logout" style="display:none">Salir</button></li>
+                    <li><a href="../pages/carrito.html"><i id="accesoCarrito" class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li><a href="../pages/wishlist.html"><i id="accesoWishlist" class="fa-solid fa-heart"></i></a></li>
                 </ul>  
             </div>  
         </nav>
@@ -81,10 +80,12 @@
         <p id="stock"></p>
         <!-- BOTONES -->
         <div class="acciones">
-            <button class="btn agregar"><i class="fa-solid fa-cart-plus"></i> Agregar al carrito</button>
+            <button id="agregarCarrito" class="btn agregar"><i class="fa-solid fa-cart-plus"></i> Agregar al carrito</button>
         </div>
         <div class="acciones">
-            <button class="btn comprar"><i class="fa-solid fa-money-check-dollar"></i>Comprar ahora</button>
+            <button id="btnComprarAhora" class="btn comprar">
+    <i class="fa-solid fa-money-check-dollar"></i>Comprar ahora
+</button>
         </div>
         <div class="acciones">
             <button class="btn wishlist"><i class="fa-solid fa-heart"></i>Lista de deseos</button>
@@ -109,30 +110,33 @@
     </section>
     <!-- Accesibilidad -->
     <button id="btnAccesibilidad" class="accesibilidad-btn">
-        <i class="fa-solid fa-universal-access"></i> 
+      <i class="fa-solid fa-universal-access"></i>
     </button>
-        <!-- Panel lateral de accesibilidad -->
+    <!-- Panel lateral de accesibilidad -->
     <div id="panelAccesibilidad" class="accesibilidad-panel">
+      <h2>Accesibilidad</h2>
 
-        <h2>Accesibilidad</h2>
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+      <span>Tema:</span>
+      <button id="btnTema" class="tema-btn">
+        <img id="imgTema" src="../imagenes/luna-icono.png" alt="tema">
+      </button>
+    </div>
 
-        <!-- Tema claro/oscuro -->
-        <div class="opcion">
-            <span>Tema:</span>
-            <button id="btnTema" class="tema-btn">
-                <i id="iconTema" class="fa-solid fa-moon"></i>
-            </button>
+      <!-- Tamaño de texto -->
+      <div class="opcion">
+        <span>Tamaño de texto:</span>
+        <div class="texto-controles">
+          <button id="textoMenos" class="btnTam">
+            <img src="../imagenes/disminuirTam.png" alt="">
+          </button>
+
+          <button id="textoMas" class="btnTam">
+            <img src="../imagenes/aumentarTam.png" alt="">
+          </button>
         </div>
-
-        <!-- Tamaño de texto -->
-        <div class="opcion">
-            <span>Tamaño de texto:</span>
-            <div class="texto-controles">
-                <button id="textoMenos">A-</button>
-                <button id="textoMas">A+</button>
-            </div>
-        </div>
-
+      </div>
     </div>
 
 
@@ -142,18 +146,18 @@
                 <div class="footer-info">
                 <h2>DreamBooks</h2>
                 <p>"Sueña despierto"</p>
-                <img src="/Frontend/imagenes/logo-header.png" alt="DreamBooks">
+                <img src="../imagenes/logo-header.png" alt="DreamBooks">
                 </div>
                 <div class="footer-redes">
                     <h4>Síguenos en redes sociales</h4>
                     <div class="redes-sociales">    
-                        <a href="https://www.facebook.com/share/1Li3KJci2q/" class="red-social">
-                            <i class="fa-brands fa-facebook"></i>
-                        </a>
-                        <a href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42" class="red-social">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                    </div>
+                    <a href="https://www.facebook.com/share/16r15TWkNC/" class="red-social">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/dreambooks_libreria?igsh=aXhmZTdoeWRlZG0w" class="red-social">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
                     <div class="info-contacto">
                         
                     </div>
@@ -161,14 +165,14 @@
                 <div class="menu-footer-contenedor">
                     <ul class="menu-footer">
                         <li><a href="index.html">Inicio</a></li>
-                        <li><a href="#">Libros</a></li>
+                        <li><a href="libros.html">Libros</a></li>
                         <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
-                        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                        <li><a href="nosotros.html">Nosotros</a></li>
                 </ul>
                 </div>
                 <div class="footer-suscripcion">
-                    <form class="form-suscripcion-footer" action="">
+                    <form id="form-suscripcion-footer" class="form-suscripcion-footer" action="">
                         <div class="suscripcion-contenedor">
                             <h3>Suscríbete</h3>
                             <label for="fname">Correo electrónico:</label><br>
@@ -187,9 +191,10 @@
     </footer>
     
 
-    <script src="../js/detalle-libro.js"></script>
     <script src="../js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="../js/subscripcion.js"></script>
+    <script src="../js/detalle-libro.js"></script>
+    <script src="../js/manejo-sesion.js"></script>
 </body>
 </html>

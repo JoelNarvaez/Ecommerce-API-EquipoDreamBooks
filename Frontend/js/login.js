@@ -39,10 +39,10 @@ document.getElementById("formLogin").addEventListener("submit", async function (
 
             // Validación de rol 
             if(result.user.rol === "admin"){
-                window.location.href = "/Frontend/pages/admin/panel_admin.html";
+                window.location.href = "../pages/admin/panel_admin.html";
                 return;
             }else{
-                window.location.href = "/Frontend/pages/index.html";
+                window.location.href = "../pages/index.html";
             }
         } else {
             Swal.fire({

@@ -6,7 +6,7 @@
     align-items: center;
     gap: 18px;
     padding: 24px;
-    background: #ffffff;
+    background: var(--color-cards);
     border-radius: 18px;
     border: 1px solid #e7e7e7;
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
@@ -27,7 +27,7 @@
     width: 65px;
     height: 65px;
     border-radius: 16px;
-    background: linear-gradient(145deg, #111, #000);
+    background: var(--color-boton);
     box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@
     margin: 0;
     font-size: 1.15rem;
     font-weight: 700;
-    color: #222;
+    color: var(--color-titulos);
     letter-spacing: 0.3px;
 }
 
@@ -52,7 +52,7 @@
     font-size: 1.5rem;
     font-weight: 800;
     margin-top: 4px;
-    color: #000000;
+    color: var(--color-texto);
     letter-spacing: -1px;
 }
 
@@ -113,6 +113,7 @@
 }
 
 
+
 /* -----------------------------
    ANIMACIONES DE LIBROS
 ------------------------------ */
@@ -150,7 +151,7 @@
    TARJETA PRINCIPAL (TOP)
 =============================== */
 .ingresos-icon-main {
-    background: linear-gradient(145deg, #050505, #070707);
+    background: var(--color-boton);
 }
 
 /* ============================
@@ -171,12 +172,11 @@
    TARJETAS PEQUEÑAS
 =============================== */
 .ingreso-box {
-    background: #fff;
     border-radius: 18px;
     padding: 22px;
     border: 1px solid #e7e7e7;
     box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-
+    background: var(--color-cards-secundarias);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -185,6 +185,11 @@
     transition: transform .25s ease, box-shadow .25s ease;
     cursor: pointer;
 }
+
+.ingreso-box h4{
+    color: var(--color-gris)!important;
+}
+
 
 .ingreso-box:hover {
     transform: translateY(-5px);
@@ -208,7 +213,7 @@
 
 /* GRADIENTES PERSONALIZADOS */
 .icon-dia {
-    background: linear-gradient(145deg, #4285f4, #2a63c7);
+    background: linear-gradient(145deg, #89ace1, #2a63c7);
 }
 
 .icon-semana {
@@ -216,7 +221,7 @@
 }
 
 .icon-mes {
-    background: linear-gradient(145deg, #ea4335, #c62828);
+    background: linear-gradient(145deg, #a14c6b, #c62828);
 }
 
 /* ============================
@@ -241,6 +246,11 @@
 /* Espacio extra debajo del panel de pedidos */
 .pedidos-panel {
     margin-bottom: 25px !important;
+    background: var(--color-cards);
+}
+
+.pedidos-panel h2,h3,td{
+    color:var(--color-titulos);
 }
 
 /* Animación suave */
@@ -252,4 +262,19 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-5px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+.resumen-box{
+    background: var(--color-cards-secundarias);
+}
+
+#dashboard-report{
+    background: var(--color-fondo);
+}
+#dashboard-report h2{
+    color:var(--color-titulos);
+}
+
+.categoria-card{
+    background: var(--color-cards-secundarias);
 }

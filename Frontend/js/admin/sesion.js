@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Si NO está logueado → Mandar al login
     if (!userName || !token) {
-        window.location.href = "/Frontend/pages/login.html";
+        window.location.href = "../pages/login.html";
         return;
     }
 
@@ -41,8 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logoutBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        localStorage.clear();
-        window.location.href = "/Frontend/pages/login.html";
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("usuarioActual");
+        
+        window.location.href = "../pages/login.html";
     });
 
 });

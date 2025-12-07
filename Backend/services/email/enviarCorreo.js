@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer');
 const path = require("path");
 
-const enviarCorreo = async (contenidoHTML, asunto, correo, archivos=[]) => {
+const enviarCorreo = async (contenidoHTML, asunto, correo, archivos=[], archivoPdf = []) => {
     
     const archivosAdjuntos = archivos.map(item => ({
         filename: item.filename,
@@ -10,6 +10,7 @@ const enviarCorreo = async (contenidoHTML, asunto, correo, archivos=[]) => {
         cid: item.cid
     }));
 
+    archivosAdjuntos.push(...archivoPdf);
 
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -33,7 +34,7 @@ const enviarCorreo = async (contenidoHTML, asunto, correo, archivos=[]) => {
         attachments: archivosAdjuntos.length > 0 ? archivosAdjuntos : undefined
     });
 
-    return info.messageId;
+    return info;
 }
 
 module.exports = enviarCorreo;

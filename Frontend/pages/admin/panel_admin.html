@@ -7,33 +7,39 @@
 
     <link
       rel="shortcut icon"
-      href="/Frontend/imagenes/favicon-sf.png"
+      href="../imagenes/favicon-sf.png"
       type="image/x-icon"
     />
 
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
     <!-- CSS PRINCIPALES -->
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/reset.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/layout.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/sidebar.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/main.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/content.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/productos.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/oferta.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/botones.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/modal.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/user.css" />
-     <link rel="stylesheet" href="/Frontend/css/estilos_admin/graficas.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos_admin/responsive.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/reset.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/layout.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/sidebar.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/main.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/content.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/productos.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/oferta.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/botones.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/modal.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/user.css" />
+     <link rel="stylesheet" href="../css/estilos_admin/graficas.css" />
+    <link rel="stylesheet" href="../css/estilos_admin/responsive.css" />
     <link
       rel="stylesheet"
-      href="/Frontend/css/estilos_admin/estadisticas.css"
+      href="../css/estilos_admin/estadisticas.css"
     />
+
+    <!-- CSS para accesibilidad -->
+     <link rel="stylesheet" href="../css/estilos_admin/estilos-accesibilidad.css">
 
     <!-- Íconos Bootstrap -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
     />
+    <script src="https://kit.fontawesome.com/0209f1a64b.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -41,7 +47,8 @@
       <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar-header">
-          <h2 class="logo">DreamBook</h2>
+          <!-- <h2 class="logo">DreamBook</h2> -->
+           <img src="../imagenes/logo-header.png" alt="DreamBooks">
           <button class="toggle-btn" id="toggleBtn">
             <i class="bi bi-list"></i>
           </button>
@@ -104,7 +111,7 @@
   <div class="stats-grid">
 
     <!-- TARJETA: PEDIDOS TOTALES -->
-    <<!-- TARJETA: PEDIDOS TOTALES -->
+    <!-- TARJETA: PEDIDOS TOTALES -->
 <div class="stat-card" id="stat-pedidos">
   <div class="stat-icon">
     <i class="bi bi-cart3"></i>
@@ -215,7 +222,7 @@
           <section id="products" class="section">
             <div class="card">
               <div class="card-header">
-                <h2>Gestión de libros</h2>
+                <h2 class="titulo-panel">Gestión de libros</h2>
 
                 <div class="actions-header">
                   <div class="search-box">
@@ -257,7 +264,7 @@
   <!-- ANALYTICS -->
 <section id="analytics" class="section">
   <div class="card">
-    <div class="card-header"><h2>Gráficas del sistema</h2></div>
+    <div class="card-header titulo-panel"><h2>Gráficas del sistema</h2></div>
 
     <div class="charts-container">
 
@@ -487,7 +494,7 @@
 
         <div class="preview-card">
           <div class="preview-img">
-            <img id="preview-image" src="/Frontend/assets/no-image.png" />
+            <img id="preview-image" src="../assets/no-image.png" />
           </div>
 
           <div class="preview-info">
@@ -630,7 +637,7 @@
 
         <div class="preview-card">
           <div class="preview-img">
-            <img id="edit-preview-image" src="/Frontend/assets/no-image.png" />
+            <img id="edit-preview-image" src="../assets/no-image.png" />
           </div>
 
           <div class="preview-info">
@@ -678,7 +685,7 @@
         <div class="delete-preview-card">
           
           <div class="preview-img">
-            <img id="delete-book-image" src="/Frontend/assets/no-image.png" />
+            <img id="delete-book-image" src="../assets/no-image.png" />
           </div>
 
           <div class="delete-info">
@@ -728,18 +735,51 @@
   </div>
 </div>
 
+    <!-- Accesibilidad -->
+    <button id="btnAccesibilidad" class="accesibilidad-btn">
+      <i class="fa-solid fa-universal-access"></i>
+    </button>
+    <!-- Panel lateral de accesibilidad -->
+    <div id="panelAccesibilidad" class="accesibilidad-panel">
+      <h2>Accesibilidad</h2>
+
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+      <span>Tema:</span>
+      <button id="btnTema" class="tema-btn">
+        <img id="imgTema" src="../../imagenes/luna-icono.png" alt="tema">
+      </button>
+    </div>
+
+      <!-- Tamaño de texto -->
+      <div class="opcion">
+        <span>Tamaño de texto:</span>
+        <div class="texto-controles">
+          <button id="textoMenos" class="btnTam">
+            <img src="../../imagenes/disminuirTam.png" alt="">
+          </button>
+
+          <button id="textoMas" class="btnTam">
+            <img src="../../imagenes/aumentarTam.png" alt="">
+          </button>
+        </div>
+      </div>
+    </div>
+
 <!-- Cargar ApexCharts PRIMERO -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-<!-- Luego tus scripts -->
-<script src="/Frontend/js/admin/graficas.js"></script>
-<script src="/Frontend/js/admin/admin.js"></script>
-<script src="/Frontend/js/admin/consultar.js"></script>
-<script src="/Frontend/js/admin/vistaPrevia.js"></script>
-<script src="/Frontend/js/admin/agregarLibro.js"></script>
-<script src="/Frontend/js/admin/eliminar.js"></script>
-<script src="/Frontend/js/admin/editar.js"></script>
-<script src="/Frontend/js/admin/sesion.js"></script>
+<!-- Luego  scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/admin/graficas.js"></script>
+<script src="../js/admin/admin.js"></script>
+<script src="../js/admin/consultar.js"></script>
+<script src="../js/admin/vistaPrevia.js"></script>
+<script src="../js/admin/agregarLibro.js"></script>
+<script src="../js/admin/eliminar.js"></script>
+<script src="../js/admin/editar.js"></script>
+<script src="../js/admin/sesion.js"></script>
+<script src="../../js/admin/accesibilidad.js"></script>
 
   </body>
 </html>

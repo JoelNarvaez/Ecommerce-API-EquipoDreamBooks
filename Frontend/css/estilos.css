@@ -12,7 +12,8 @@
     --color-header-sin-hero:black;
     --color-font-footer: #ffffff;
     --color-boton-texto:#fff;
-    --color-boton: #c77965;
+    /*--color-boton: #c77965;*/
+    --color-boton: linear-gradient(135deg, #652410, #fac697);
     --color-boton-hover:#a8644b;
     --font-size-base: 1rem;
     --font-size-header: 1.2rem;
@@ -31,14 +32,14 @@
     --color-cards: #ffffff;
 
     /* Imágenes*/
-    --img-logo: url('/Frontend/imagenes/logo-header-fondo.png');
-    --img-presentacion-inicio: url('/Frontend/imagenes/logo-grande-negro.png');
+    --img-logo: url('../imagenes/logo-header-fondo.png');
+    --img-presentacion-inicio: url('../imagenes/logo-grande-negro.png');
 
     /* Página de preguntas frecuentes */
     --color-preguntas: #ebe4d1;
 
     /* Página Sobre Nosotros*/
-    --background-hero-nosotros-ligth: url('/Frontend/imagenes/fondo-cafe.jpg');
+    --background-hero-nosotros-ligth: url('../imagenes/fondo-cafe.jpg');
 
     /* Página contacto*/
     --color-fondo-contacto:#f5f5f5;
@@ -57,8 +58,8 @@
     --color-boton: #009aa6;
     --color-boton-hover:#0ebfcd;
     --color-header-con-hero: #ffffff;
-    --color-header-sin-hero: #000000;
-    --background-hero-nosotros-dark: url('/Frontend/imagenes/fondo-aqua.jpg');
+    --color-header-sin-hero: #ffffff;
+    --background-hero-nosotros-dark: url('../imagenes/fondo-aqua.jpg');
     --color-font-footer: #ffffff;
     --color-footer: linear-gradient(135deg, #a96f44 0%,  #f2ecb6  100%);
     /*--color-footer:#d9ab57;*/
@@ -69,8 +70,8 @@
     --color-nav-text-sin-hero:#ffffff;
 
     /* Imágenes*/
-    --img-presentacion-inicio: url('/Frontend/imagenes/logo-grande-blanco.png');
-    --img-logo: url('/Frontend/imagenes/logo-header.png');
+    --img-presentacion-inicio: url('../imagenes/logo-grande-blanco.png');
+    --img-logo: url('../imagenes/logo-header.png');
 
      /* Página de preguntas frecuentes */
     --color-preguntas: #42a8a1;
@@ -109,13 +110,12 @@ main, section, article, div, p, span, h1, h2, h3, h4, h5, h6 {
 
 }
 
-
 .con-hero nav a i {
     color: var(--color-header-con-hero) !important;
 }
 
 .sin-hero nav a i{
-    color: var(--color-header-sin-hero) !important;
+    color: var(--color-header-sin-hero);
 }
 
 .logo-header{
@@ -124,6 +124,10 @@ main, section, article, div, p, span, h1, h2, h3, h4, h5, h6 {
     height: 3.75rem;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.logo img{
+   object-fit: contain;
 }
 
 .con-hero nav {
@@ -145,6 +149,13 @@ main, section, article, div, p, span, h1, h2, h3, h4, h5, h6 {
     gap: 0.5rem;        
 }
 
+.logo-usuario{
+    height: 6rem;
+}
+
+.logo-usuario img{
+    object-fit: contain;
+}
 
 .menu-izq { 
     flex: 1; 
@@ -215,6 +226,7 @@ nav ul li a:hover {
     border: none;
     padding: 0.6rem;
     color:var(--color-boton-texto);
+    background: var(--color-boton);
 }
 
 .button-logout{
@@ -222,11 +234,12 @@ nav ul li a:hover {
     border: none;
     padding: 0.6rem;
     color:var(--color-boton-texto);
+    background: var(--color-boton);
     min-width: 4rem;
 }
 
 button{
-    background: var(--color-boton);
+    /*background: var(--color-boton);*/
     font-size: (var(--font-size-base));
     color: var(--color-boton-texto);
     cursor: pointer;
@@ -295,7 +308,7 @@ main {
     right: 20px;
     width: 55px;
     height: 55px;
-    background-color: #89ace1;
+    background: #89ace1 !important;
     color: white;
     border: none;
     border-radius: 50%;
@@ -312,8 +325,8 @@ main {
 .accesibilidad-panel {
     position: fixed;
     top: 0;
-    right: -300px; /* se oculta fuera de pantalla */
-    width: 300px;
+    right: -18%; /* se oculta fuera de pantalla */
+    width: 18%;
     height: 100%;
     background-color: var(--color-fondo);
     padding: 25px;
@@ -348,6 +361,7 @@ main {
 }
 
 /* Botón de tema */
+/*
 .tema-btn {
     width: 45px;
     height: 45px;
@@ -358,9 +372,9 @@ main {
     cursor: pointer;
     font-size: 20px;
 }
-
+*/
 /* Botones A+ / A- */
-.texto-controles button {
+/*.texto-controles button {
     padding: 6px 12px;
     border: none;
     background-color: #89ace1;
@@ -373,6 +387,90 @@ main {
 .texto-controles button:hover {
     background-color: #6f94c7;
 }
+
+#textoMenos{
+    width: 50px;
+    height: 50px;
+}
+
+#textoMenos img{
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+#textoMas{
+    width: 50px;
+    height: 50px;
+}
+
+#textoMas img{
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}*/
+
+
+.tema-btn {
+    width: 3.75rem;
+    height: 3.75rem;
+    border: none;
+    border-radius: 90%;
+    background-color: var(--color-fondo);
+    border: 1px solid #89ace1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+}
+
+.tema-btn img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.tema-btn:hover {
+    background-color: #6f94c7;
+}
+
+/* Contenedor de botones A+ / A- */
+.texto-controles {
+    display: flex;
+    gap: 15px; /* separación visible entre botones */
+}
+
+/* Botones A+ / A- */
+.btnTam {
+    width: 3.75rem;
+    height: 3.75rem;
+    border: none;
+    /*background-color: #89ace1;*/
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden; /* evita que la imagen se salga del botón */
+}
+
+/* Imagen dentro del botón */
+.btnTam img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* Hover */
+.btnTam:hover {
+    background-color: #6f94c7;
+}
+
 
 
 /*Footer*/
@@ -480,9 +578,7 @@ gap: 15px;                     /* Espacio entre los enlaces */
     font-size: 0.8rem;                /* Tamaño de fuente pequeño */
 }
 
-footer h3,
 footer p,
-footer input,
 footer h2,
 footer h4 {
     font-family: var(--font-family);
@@ -492,6 +588,7 @@ footer h4 {
 .suscripcion-contenedor  h3, label, input{
     font-family: var(--font-family);
     color:black;
+    font-size: var(--font-size-base);
 }
 
 .suscripcion-contenedor  h3{

@@ -6,7 +6,7 @@
     <title>DreamBooks | Inicio</title>
     <link
       rel="shortcut icon"
-      href="/Frontend/imagenes/favicon-sf.png"
+      href="../imagenes/favicon-sf.png"
       type="image/x-icon"
     />
     <link
@@ -17,10 +17,10 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="/Frontend/css/estilos_inicio.css" />
-    <link rel="stylesheet" href="/Frontend/css/indexLibros.css" />
-    <link rel="stylesheet" href="/Frontend/css/productos.css" />
-    <link rel="stylesheet" href="/Frontend/css/estilos.css" />
+    <link rel="stylesheet" href="../css/estilos_inicio.css" />
+    <link rel="stylesheet" href="../css/indexLibros.css" />
+    <link rel="stylesheet" href="../css/productos.css" />
+    <link rel="stylesheet" href="../css/estilos.css" />
     <script
       src="https://kit.fontawesome.com/0209f1a64b.js"
       crossorigin="anonymous"
@@ -30,31 +30,31 @@
     <header class="header-general">
       <div class="hero">
         <video autoplay loop muted plays-inline class="back-video">
-          <source src="/Frontend/videos/video_hero.mp4" type="video/mp4" />
+          <source src="../videos/video_hero.mp4" type="video/mp4" />
         </video>
         <nav>
           <div class="menu-izq">
             <img
               class="logo"
-              src="/Frontend/imagenes/logo-header.png"
+              src="../imagenes/logo-header.png"
               alt="logo"
             />
           </div>
           <div class="menu-centro">
             <ul>
               <li><a href="index.html">Inicio</a></li>
-              <li><a href="/Frontend/pages/libros.html">Libros</a></li>
+              <li><a href="../pages/libros.html">Libros</a></li>
               <li>
-                <a href="preguntas_frecuentes.html">Preguntas frecuentes</a>
+                <a href="preguntas_frecuentes.html">Preguntas</a>
               </li>
               <li><a href="contacto.html">Contacto</a></li>
-              <li><a href="nosotros.html">Sobre Nosotros</a></li>
+              <li><a href="nosotros.html">Nosotros</a></li>
             </ul>
           </div>
           <div class="menu-der">
             <ul>
               <li id="userInfo" class="user-info" style="display: none">
-                <i class="fa-solid fa-book-open-reader user-icon"></i>
+                <img class="logo-usuario" src="../imagenes/usuario-icono.png" alt="">
                 <span id="userName" class="user-name"></span>
               </li>
               <li id="btnAcceder">
@@ -71,20 +71,14 @@
                   Salir
                 </button>
               </li>
-              <li>
-                <i
-                  class="fa-solid fa-magnifying-glass"
-                  class="icono-buscar"
-                ></i>
-              </li>
-              <a href="../pages/carrito.html"><li><i class="fa-solid fa-cart-shopping"></i></li></a>
-              <a href="../pages/wishlist.html"><li><i class="fa-solid fa-heart"></i></li></a>
+              <li><a href="../pages/carrito.html"><i id="accesoCarrito" class="fa-solid fa-cart-shopping"></i></a></li>
+              <li><a href="../pages/wishlist.html"><i id="accesoWishlist" class="fa-solid fa-heart"></i></a></li>
             </ul>
           </div>
         </nav>
         <div class="content">
           <h1>DreamBooks Librería</h1>
-          <a href="/Frontend/pages/libros.html">Explore</a>
+          <a href="../pages/libros.html">Explorar</a>
         </div>
       </div>
     </header>
@@ -99,29 +93,29 @@
           <div class="categorias-grid">
 
   <div class="categoria-card">
-    <a href="/Frontend/pages/libros.html">
-      <img src="/Frontend/imagenes/libros-icono.png" alt="Libros" />
+    <a href="../pages/libros.html">
+      <img src="../imagenes/libros-icono.png" alt="Libros" />
       <h3>Todos los libros</h3>
     </a>
   </div>
 
   <div class="categoria-card">
-    <a href="/Frontend/pages/libros.html?categoria=Ciencia Ficción">
-      <img src="/Frontend/imagenes/ciencia-ficcion-icono.png" alt="Ciencia Ficción" />
+    <a href="../pages/libros.html?categoria=Ciencia Ficción">
+      <img src="../imagenes/ciencia-ficcion-icono.png" alt="Ciencia Ficción" />
       <h3>Libros de Ciencia Ficción</h3>
     </a>
   </div>
 
   <div class="categoria-card">
-    <a href="/Frontend/pages/libros.html?categoria=Romance">
-      <img src="/Frontend/imagenes/romance-icono.png" alt="Libros Romance" />
+    <a href="../pages/libros.html?categoria=Romance">
+      <img src="../imagenes/romance-icono.png" alt="Libros Romance" />
       <h3>Libros de Romance</h3>
     </a>
   </div>
 
   <div class="categoria-card">
-    <a href="/Frontend/pages/libros.html?categoria=Infantil">
-      <img src="/Frontend/imagenes/infantil-icono.png" alt="Libros infantiles" />
+    <a href="../pages/libros.html?categoria=Infantil">
+      <img src="../imagenes/infantil-icono.png" alt="Libros infantiles" />
       <h3>Libros infantiles</h3>
     </a>
   </div>
@@ -161,13 +155,13 @@
             <div class="swiper-wrapper">
               <!-- Slides -->
               <div class="swiper-slide">
-                <img src="/Frontend/imagenes/slider1.png" alt="" />
+                <img src="../imagenes/slider1.png" alt="" />
               </div>
               <div class="swiper-slide">
-                <img src="/Frontend/imagenes/slider2.png" alt="" />
+                <img src="../imagenes/slider2.png" alt="" />
               </div>
               <div class="swiper-slide">
-                <img src="/Frontend/imagenes/slider3.jpg" alt="" />
+                <img src="../imagenes/slider3.jpg" alt="" />
               </div>
               ...
             </div>
@@ -226,20 +220,25 @@
     <div id="panelAccesibilidad" class="accesibilidad-panel">
       <h2>Accesibilidad</h2>
 
-      <!-- Tema claro/oscuro -->
-      <div class="opcion">
-        <span>Tema:</span>
-        <button id="btnTema" class="tema-btn">
-          <i id="iconTema" class="fa-solid fa-moon"></i>
-        </button>
-      </div>
+    <!-- Tema claro/oscuro -->
+    <div class="opcion">
+      <span>Tema:</span>
+      <button id="btnTema" class="tema-btn">
+        <img id="imgTema" src="../imagenes/luna-icono.png" alt="tema">
+      </button>
+    </div>
 
       <!-- Tamaño de texto -->
       <div class="opcion">
         <span>Tamaño de texto:</span>
         <div class="texto-controles">
-          <button id="textoMenos">A-</button>
-          <button id="textoMas">A+</button>
+          <button id="textoMenos" class="btnTam">
+            <img src="../imagenes/disminuirTam.png" alt="">
+          </button>
+
+          <button id="textoMas" class="btnTam">
+            <img src="../imagenes/aumentarTam.png" alt="">
+          </button>
         </div>
       </div>
     </div>
@@ -251,39 +250,33 @@
             <h2>DreamBooks</h2>
             <p>"Sueña despierto"</p>
             <img
-              src="/Frontend/imagenes/logo-header.png"
+              src="../imagenes/logo-header.png"
               alt="Digital Academy"
             />
           </div>
           <div class="footer-redes">
             <h4>Síguenos en redes sociales</h4>
-            <div class="redes-sociales">
-              <a
-                href="https://www.facebook.com/share/1Li3KJci2q/"
-                class="red-social"
-              >
-                <i class="fa-brands fa-facebook"></i>
-              </a>
-              <a
-                href="https://www.instagram.com/digital.academy.programacion?igsh=enp0Nm4zeXhnZm42"
-                class="red-social"
-              >
-                <i class="fa-brands fa-instagram"></i>
-              </a>
+              <div class="redes-sociales">    
+                <a href="https://www.facebook.com/share/16r15TWkNC/" class="red-social">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/dreambooks_libreria?igsh=aXhmZTdoeWRlZG0w" class="red-social">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
             <div class="info-contacto"></div>
           </div>
           <div class="menu-footer-contenedor">
             <ul class="menu-footer">
               <li><a href="index.html">Inicio</a></li>
-              <li><a href="#">Libros</a></li>
+              <li><a href="libros.html">Libros</a></li>
               <li><a href="preguntas_frecuentes.html">Preguntas</a></li>
               <li><a href="contacto.html">Contacto</a></li>
-              <li><a href="nosotros.html">Sobre Nosotros</a></li>
+              <li><a href="nosotros.html">Nosotros</a></li>
             </ul>
           </div>
           <div class="footer-suscripcion">
-            <form class="form-suscripcion-footer" action="">
+            <form id="form-suscripcion-footer" class="form-suscripcion-footer" action="">
               <div class="suscripcion-contenedor">
                 <h3>Suscríbete</h3>
                 <label for="fname">Correo electrónico:</label><br />
@@ -306,10 +299,11 @@
       </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-    <script src="/Frontend/js/inicio.js"></script>
+    <script src="../js/inicio.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/Frontend/js/manejo-sesion.js"></script>
-    <script src="/Frontend/js/indexLibros.js"></script>
-    <script src="/Frontend/js/app.js"></script>
+    <script src="../js/manejo-sesion.js"></script>
+    <script src="../js/indexLibros.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/subscripcion.js"></script>
   </body>
 </html>

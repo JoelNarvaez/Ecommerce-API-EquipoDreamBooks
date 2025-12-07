@@ -27,7 +27,7 @@
 
 .contacto-content h2{
     font-size: 2.5rem;          /* Tamaño de fuente grande */
-    color: white;           /* Color gris oscuro */
+    color: var(--color-titulos);
     margin-bottom: 10px;        /* Espacio dejado del título */
 }
 
@@ -74,7 +74,7 @@
 }
 
 .contacto-form button{
-    background-color: #333333;  /* Fondo gris oscuro */
+    background: var(--color-boton);  
     color: white;               /* Texto blnaco */
     padding: 10px 20px;           /* Espaciado interno */
     border: none;                 /* Sin borde */

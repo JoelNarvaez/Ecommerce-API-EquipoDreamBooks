@@ -1,8 +1,11 @@
 console.log("detalle-libro.js cargado ✔");
 
-let categoriaActual = null; 
+let categoriaActual = null;
 let idActual = null;
 
+/* ============================
+      CARGAR LIBRO
+============================ */
 async function cargarLibro() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
@@ -23,20 +26,13 @@ async function cargarLibro() {
         }
 
         const libro = data.libro;
-        console.log("📚 Datos recibidos:", data);
-
         categoriaActual = libro.categoria;
 
-        // ======================
-        // IMAGEN
-        // ======================
-        document.getElementById("img-libro").src = libro.imagen
-            ? `http://localhost:3000/uploads/${libro.imagen}`
-            : "/Frontend/assets/no-image.png";
+        document.getElementById("img-libro").src =
+            libro.imagen
+                ? `http://localhost:3000/uploads/${libro.imagen}`
+                : "../assets/no-image.png";
 
-        // ======================
-        // TEXTO
-        // ======================
         document.getElementById("titulo").textContent = libro.nombre;
         document.getElementById("autor").textContent = libro.autor;
         document.getElementById("editorial").textContent = libro.editorial;
@@ -45,12 +41,10 @@ async function cargarLibro() {
         document.getElementById("tipo").textContent = libro.tipo_de_libro;
         document.getElementById("paginas").textContent = libro.paginas;
 
-        // ======================
-        // PRECIO / OFERTA
-        // ======================
         const contPrecio = document.getElementById("precioBox");
         const precio = Number(libro.precio);
         const tieneOferta = libro.oferta_tipo && libro.oferta_valor;
+
         const precioFinal = tieneOferta
             ? (libro.oferta_tipo === "porcentaje"
                 ? precio - precio * (libro.oferta_valor / 100)
@@ -62,22 +56,16 @@ async function cargarLibro() {
                <span class="precio-oferta">$${precioFinal.toFixed(2)}</span>`
             : `<span class="precio-normal">$${precio.toFixed(2)}</span>`;
 
-        // ======================
-        // STOCK
-        // ======================
         document.getElementById("stock").innerHTML =
             libro.stock > 0
                 ? `<span class="stock-disponible">Disponible (${libro.stock})</span>`
                 : `<span class="stock-agotado">Agotado</span>`;
 
-        // ======================
-        // CARGAR LIBROS RECOMENDADOS
-        // ======================
         if (categoriaActual) {
             cargarSlider(
                 `http://localhost:3000/api/products/books/categoria/${categoriaActual}`,
                 "slider-recomendados",
-                idActual // pasamos id para filtrar el libro actual
+                idActual
             );
         }
 
@@ -88,6 +76,10 @@ async function cargarLibro() {
 
 document.addEventListener("DOMContentLoaded", cargarLibro);
 
+
+/* ============================
+      SLIDERS
+============================ */
 async function cargarSlider(endpoint, contenedorId) {
     try {
         const res = await fetch(endpoint);
@@ -101,90 +93,72 @@ async function cargarSlider(endpoint, contenedorId) {
             return;
         }
 
-        // Pintar cada libro
         data.libros.forEach(book => {
             const urlImagen = book.imagen
                 ? `http://localhost:3000/uploads/${book.imagen}`
-                : "/Frontend/assets/no-image.png";
+                : "../assets/no-image.png";
 
             const tieneOferta = book.oferta_tipo && book.oferta_valor;
             const precioNormal = Number(book.precio);
             const precioOferta = tieneOferta
                 ? (book.oferta_tipo === "porcentaje"
                     ? precioNormal - precioNormal * (book.oferta_valor / 100)
-                    : precioNormal - book.oferta_valor
-                  ).toFixed(2)
+                    : precioNormal - book.oferta_valor).toFixed(2)
                 : precioNormal.toFixed(2);
 
             const card = document.createElement("div");
             card.classList.add("product-card", "card-slider");
 
             card.innerHTML = `
-    ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
-    ${book.stock === 0 ? `<span class="badge-agotado">Agotado</span>` : ""}
+                ${tieneOferta ? `<span class="badge-oferta">Oferta</span>` : ""}
+                ${book.stock === 0 ? `<span class="badge-agotado">Agotado</span>` : ""}
 
-    <div class="product-image">
-        <img src="${urlImagen}" alt="${book.nombre}">
-    </div>
+                <div class="product-image">
+                    <img src="${urlImagen}" alt="${book.nombre}">
+                </div>
 
-    <div class="product-info">
-        <h3>${book.nombre}</h3>
-        <p class="autor">${book.autor}</p>
-        <p class="editorial">${book.editorial}</p>
+                <div class="product-info">
+                    <h3>${book.nombre}</h3>
+                    <p class="autor">${book.autor}</p>
+                    <p class="editorial">${book.editorial}</p>
 
-        <div class="precio">
-            ${
-                tieneOferta
-                ? `<span class="precio-original">$${precioNormal.toFixed(2)}</span>
-                   <span class="precio-oferta">$${precioOferta}</span>`
-                : `<span class="precio-normal">$${precioNormal.toFixed(2)}</span>`
-            }
-        </div>
+                    <div class="precio">
+                        ${
+                            tieneOferta
+                                ? `<span class="precio-original">$${precioNormal.toFixed(2)}</span>
+                                   <span class="precio-oferta">$${precioOferta}</span>`
+                                : `<span class="precio-normal">$${precioNormal.toFixed(2)}</span>`
+                        }
+                    </div>
 
-        <p class="${book.stock > 0 ? "stock-disponible" : "stock-agotado"}">
-            ${book.stock > 0 ? `Disponible (${book.stock})` : "Agotado"}
-        </p>
+                    <p class="${book.stock > 0 ? "stock-disponible" : "stock-agotado"}">
+                        ${book.stock > 0 ? `Disponible (${book.stock})` : "Agotado"}
+                    </p>
 
-        <div class="card-actions">
+                    <div class="card-actions">
+                        <button class="btn-card wishlist-btn"
+                            onclick="event.stopPropagation(); agregarWishlist(${book.id})">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
 
-            <button class="btn-card wishlist-btn"
-                onclick="event.stopPropagation(); agregarWishlist(${book.id})">
-                <i class="fa-regular fa-heart"></i>
-            </button>
+                        <button class="btn-card cart-btn"
+                            onclick="event.stopPropagation(); agregarAlCarrito(${book.id})">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
 
-            <button class="btn-card cart-btn"
-                onclick="event.stopPropagation(); agregarCarrito(${book.id})">
-                <i class="fa-solid fa-cart-shopping"></i>
-            </button>
-
-            <button class="btn-card buy-btn"
-                onclick="event.stopPropagation(); comprarAhora(${book.id})">
-                <i class="fa-solid fa-money-check-dollar"></i>
-            </button>
-
-        </div>
-    </div>
-`;
-
+                        <button class="btn-card buy-btn"
+                            onclick="event.stopPropagation(); comprarAhora(${book.id})">
+                            <i class="fa-solid fa-money-check-dollar"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
 
             card.addEventListener("click", () => {
-                window.location.href = `/Frontend/pages/detalle-libro.html?id=${book.id}`;
+                window.location.href = `../pages/detalle-libro.html?id=${book.id}`;
             });
 
             cont.appendChild(card);
-        });
-
-        // Asignar scroll a las flechas después de cargar el slider
-        const buttons = document.querySelectorAll(`.slider-btn[data-target="${contenedorId}"]`);
-        buttons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const scrollAmount = 320; // ancho tarjeta + gap
-                if (btn.classList.contains("left")) {
-                    cont.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-                } else {
-                    cont.scrollBy({ left: scrollAmount, behavior: "smooth" });
-                }
-            });
         });
 
     } catch (error) {
@@ -192,9 +166,184 @@ async function cargarSlider(endpoint, contenedorId) {
     }
 }
 
-
-// ============================
-// SLIDERS GENERALES
-// ============================
 cargarSlider("http://localhost:3000/api/products/books/novedades", "slider-novedades");
 cargarSlider("http://localhost:3000/api/products/books/ofertas", "slider-ofertas");
+
+
+/* ============================
+      BOTÓN AGREGAR AL CARRITO
+============================ */
+const agregarCarritoBtn = document.getElementById("agregarCarrito");
+agregarCarritoBtn.addEventListener("click", () => {
+    agregarAlCarrito(Number(idActual));
+});
+
+
+/* ============================
+      BOTÓN COMPRAR AHORA
+============================ */
+const btnComprarAhora = document.getElementById("btnComprarAhora");
+btnComprarAhora.addEventListener("click", () => {
+    comprarAhora(Number(idActual));
+});
+
+
+/* ============================
+      OBTENER CARRITO
+============================ */
+async function obtenerCarrito() {
+    try {
+        const token = localStorage.getItem("token");
+        if (!token) return null;
+
+        const res = await fetch("http://localhost:3000/api/carts", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+        return res.ok ? data : null;
+
+    } catch (error) {
+        console.error("Error obteniendo carrito:", error);
+        return null;
+    }
+}
+
+
+/* ============================
+      AGREGAR / ACTUALIZAR CARRITO
+============================ */
+async function agregarAlCarrito(idLibro, cantidad = 1) {
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+        return Swal.fire("Inicia sesión", "Debes iniciar sesión para agregar libros al carrito.", "warning");
+    }
+
+    const carrito = await obtenerCarrito();
+
+    const itemExistente = carrito?.itemsCarrito?.find(i => i.ProductoId === idLibro);
+
+    if (itemExistente) {
+        return actualizarItemExistente(itemExistente, cantidad, idLibro, token);
+    }
+
+    return agregarNuevoItem(idLibro, cantidad, token);
+}
+
+
+/* ============================
+      ACTUALIZAR ITEM
+============================ */
+async function actualizarItemExistente(item, cantidad, idLibro, token) {
+
+    const nuevaCantidad = item.Cantidad + cantidad;
+
+    const res = await fetch("http://localhost:3000/api/carts/actualizar", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            productoId: idLibro,
+            cantidad: nuevaCantidad,
+        })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        return Swal.fire("Error", data.message || "Error al actualizar el carrito.", "error");
+    }
+
+    Swal.fire("Actualizado", "Cantidad actualizada correctamente", "success");
+}
+
+
+/* ============================
+      AGREGAR NUEVO ITEM
+============================ */
+async function agregarNuevoItem(idLibro, cantidad, token) {
+
+  const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      productoId: idLibro,
+      cantidad,
+    }),
+  });
+
+  const addData = await addRes.json();
+
+  if (!addRes.ok) {
+    Swal.fire({
+      icon: "error",
+      title: "No se pudo agregar el libro al carrito.",
+      text: addData.message || "",
+    });
+    return;
+  }
+
+  const items = addData.carrito;
+  const itemAdded = items.find((item) => item.detalleProducto.id === idLibro);
+
+
+    Swal.fire("Agregado", "Libro agregado al carrito correctamente.", "success");
+}
+
+
+/* ============================
+      WISHLIST DEL DETALLE
+============================ */
+document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".wishlist");
+    if (!btn) return;
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+        return Swal.fire("Inicia sesión", "Debes iniciar sesión para usar wishlist", "warning");
+    }
+
+    const productoId = Number(idActual);
+
+    const res = await fetch("http://localhost:3000/api/wishlist/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({ productoId })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+        Swal.fire("Agregado ❤️", "Libro guardado en tu lista de deseos", "success");
+    } else {
+        Swal.fire("Ups", data.message, "info");
+    }
+});
+
+
+/* ============================
+      COMPRAR AHORA
+============================ */
+function comprarAhora(idLibro) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        Swal.fire({
+            icon: "warning",
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para comprar este libro.",
+        });
+        return;
+    }
+
+    window.location.href = `../pages/compra.html?id=${idLibro}&cantidad=1`;
+}

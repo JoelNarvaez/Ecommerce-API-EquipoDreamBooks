@@ -14,7 +14,7 @@ if (!token) {
     title: "Token no encontrado",
     text: "El token de restablecimiento no fue encontrado en la URL.",
   }).then((result) => {
-    window.location.href = "http://127.0.0.1:5501/Frontend/pages/index.html";
+    window.location.href = "http://127.0.0.1:5501../pages/index.html";
   });
 } else {
   verifyToken(token);
@@ -35,7 +35,7 @@ async function verifyToken(token) {
         text: "El token de restablecimiento es inválido o ha expirado, intenta de nuevo.",
       }).then((result) => {
         window.location.href =
-          "http://127.0.0.1:5501/Frontend/pages/index.html";
+          "http://127.0.0.1:5501../pages/index.html";
       });
       return;
     }
@@ -121,7 +121,7 @@ form.addEventListener("submit", async (e) => {
       title: "Contraseña actualizada",
       text: "Contraseña actualizada correctamente",
     }).then((result) => {
-      window.location.href = "http://127.0.0.1:5501/Frontend/pages/login.html";
+      window.location.href = "http://127.0.0.1:5501../pages/login.html";
     });
 
     form.reset();
