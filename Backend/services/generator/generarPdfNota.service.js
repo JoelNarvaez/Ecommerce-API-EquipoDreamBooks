@@ -8,24 +8,30 @@ const generarPDFNota = async (
     couponCodigo, cuponDescuento, email
 ) => {
 
-    // ---------- FORMATO DE FECHA PROFESIONAL ----------
+    // =====================================================
+    // 🔥 FORMATO PROFESIONAL DE FECHA Y HORA (MÉXICO)
+    // =====================================================
     const fechaObj = new Date(fecha);
 
     const fechaProfesional = fechaObj.toLocaleDateString("es-MX", {
         day: "2-digit",
         month: "long",
-        year: "numeric"
+        year: "numeric",
+        timeZone: "America/Mexico_City" // 👈 Ajuste real a hora de México
     });
 
     const horaProfesional = fechaObj.toLocaleTimeString("es-MX", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
+        timeZone: "America/Mexico_City" // 👈 También aquí
     });
 
     const fechaCompleta = `${fechaProfesional} – ${horaProfesional} hrs`;
 
-    // ---------- FORMATOS NUMÉRICOS ----------
+    // =====================================================
+    // 🔢 FORMATOS NUMÉRICOS
+    // =====================================================
     const formatoMX = v =>
         Number(v).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
 
@@ -35,7 +41,9 @@ const generarPDFNota = async (
     const totalFormato = formatoMX(total);
     const cuponDescuentoFormato = formatoMX(cuponDescuento);
 
-    // ---------- ITEMS ----------
+    // =====================================================
+    // 🛒 ITEMS DEL PEDIDO
+    // =====================================================
     const stringItems = items.map(it => {
         const precioNormal = formatoMX(it.precioNormal);
         const precioSub = formatoMX(it.Cantidad * it.precioNormal);
@@ -50,19 +58,28 @@ const generarPDFNota = async (
         `;
     }).join("");
 
-    // ---------- LOGO ----------
+    // =====================================================
+    // 🖼️ LOGO EMBEBIDO EN BASE64 (SE VE EN PDF SIEMPRE)
+    // =====================================================
     const logoPath = path.join(__dirname, "../../assets/public/logo-header.png");
     const logoBase64 = fs.readFileSync(logoPath).toString("base64");
     const imageLogo = `data:image/png;base64,${logoBase64}`;
 
-    // ---------- HTML PROFESIONAL ----------
+    // =====================================================
+    // 📝 HTML PROFESIONAL DEL PDF
+    // =====================================================
     const contenidoHTML = `
     <!DOCTYPE html>
     <html lang="es">
     <head>
         <meta charset="UTF-8" />
         <style>
-            body { font-family: Quicksand, Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
+            body { 
+                font-family: Quicksand, Arial, sans-serif; 
+                background:#f4f4f4; 
+                margin:0; 
+                padding:0; 
+            }
             .card {
                 background:#fff;
                 border-radius:12px;
@@ -103,31 +120,39 @@ const generarPDFNota = async (
                     <tr><td>
                         <div class="card">
                             <p style="font-size:16px;">Hola <strong style="color:#703030;">${nombre}</strong>,</p>
-                            <p style="font-size:16px; margin-top:10px;">Gracias por tu compra. Aquí están los detalles de tu pedido:</p>
-                            <p style="font-size:16px; margin-top:10px;"><strong>ID Pedido:</strong> ${idPedido}</p>
+                            <p style="font-size:16px; margin-top:10px;">
+                                Gracias por tu compra. Aquí están los detalles de tu pedido:
+                            </p>
+                            <p style="font-size:16px; margin-top:10px;">
+                                <strong>ID Pedido:</strong> ${idPedido}
+                            </p>
                         </div>
                     </td></tr>
 
-                    <!-- INFO / FECHA -->
+                    <!-- INFO / FECHA / MÉTODO DE PAGO -->
                     <tr><td>
                         <div class="card">
                             <div style="display:flex; justify-content:space-between; gap:20px;">
                                 
                                 <div style="width:50%; border-left:4px solid #c77965; padding-left:14px;">
                                     <p style="color:#737373; font-size:13px; margin:0;">Fecha y hora</p>
-                                    <p style="font-size:16px; font-weight:600; margin:5px 0;">${fechaCompleta}</p>
+                                    <p style="font-size:16px; font-weight:600; margin:5px 0;">
+                                        ${fechaCompleta}
+                                    </p>
                                 </div>
 
                                 <div style="width:50%; border-left:4px solid #c77965; padding-left:14px;">
                                     <p style="color:#737373; font-size:13px; margin:0;">Método de pago</p>
-                                    <p style="font-size:16px; font-weight:600; margin:5px 0;">${metodoPago}</p>
+                                    <p style="font-size:16px; font-weight:600; margin:5px 0;">
+                                        ${metodoPago}
+                                    </p>
                                 </div>
 
                             </div>
                         </div>
                     </td></tr>
 
-                    <!-- ITEMS -->
+                    <!-- ARTÍCULOS -->
                     <tr><td>
                         <div class="card">
                             <div class="title-section">Artículos Comprados</div>
@@ -168,13 +193,17 @@ const generarPDFNota = async (
 
                             <div style="display:flex; justify-content:space-between;">
                                 <span>Cupón: <strong>${couponCodigo}</strong></span>
-                                <strong style="color:#d9534f;">${couponCodigo === "Sin Cupón" ? "" : `- ${cuponDescuentoFormato}`}</strong>
+                                <strong style="color:#d9534f;">
+                                    ${couponCodigo === "Sin Cupón" ? "" : `- ${cuponDescuentoFormato}`}
+                                </strong>
                             </div>
                             <div class="line"></div>
 
                             <div style="display:flex; justify-content:space-between; margin-top:12px;">
                                 <span style="font-size:18px; font-weight:700; color:#703030;">TOTAL</span>
-                                <span style="font-size:18px; font-weight:700; color:#703030;">${totalFormato}</span>
+                                <span style="font-size:18px; font-weight:700; color:#703030;">
+                                    ${totalFormato}
+                                </span>
                             </div>
                         </div>
                     </td></tr>
@@ -183,7 +212,9 @@ const generarPDFNota = async (
                     <tr><td>
                         <div class="card" style="background:#a9806a; text-align:center;">
                             <p style="color:white; margin:0;">© 2025 DreamBooks</p>
-                            <p style="color:white; opacity:0.85; margin:5px 0 0;">Documento generado automáticamente</p>
+                            <p style="color:white; opacity:0.85; margin:5px 0 0;">
+                                Documento generado automáticamente
+                            </p>
                         </div>
                     </td></tr>
 
@@ -195,7 +226,9 @@ const generarPDFNota = async (
     </html>
     `;
 
-    // ---------- GENERAR PDF ----------
+    // =====================================================
+    // 🖨️ GENERAR PDF FINAL
+    // =====================================================
     const nombrePdf = `NotaCompra${idPedido}.pdf`;
     const pathArchivo = await generarPDF(nombrePdf, contenidoHTML);
 
