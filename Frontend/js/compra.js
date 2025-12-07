@@ -393,7 +393,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
         text: '¡Pedido creado exitosamente!',
         confirmButtonText: 'Aceptar'
     }).then(() => {
-        window.location.href = "../pages/index.html";
+        window.location.href = "../index.html";
     });
 });
 

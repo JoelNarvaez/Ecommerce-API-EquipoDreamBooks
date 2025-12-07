@@ -135,7 +135,7 @@ async function moverAlCarrito(e) {
     });
 
     /*await fetch(`http://localhost:3000/api/wishlist/${idProducto}`, {*/
-    await fetch(`http://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/${idProducto}`, {
+    await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/${idProducto}`, {
         method: "DELETE",
         headers: { "Authorization": "Bearer " + token }
     });

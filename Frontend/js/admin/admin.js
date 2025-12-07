@@ -160,7 +160,7 @@ async function cargarLibrosTotales() {
         if (!contenedor) return;
 
         contenedor.innerHTML = `
-            <h2 class="titulo-reporte">📊 Existencias por Categoría</h2>
+            <h2 class="titulo-reporte">Existencias por Categoría</h2>
             <div class="categorias-grid"></div>
         `;
 
