@@ -2,19 +2,45 @@ const generarPDFNota = require('../generator/generarPdfNota.service');
 const enviarCorreo = require('./enviarCorreo');
 const path = require("path");
 
-const enviarNotaDeCompra = async (idPedido, nombre, fecha, metodoPago, items, subtotal, envio, impuestos, total, couponCodigo, cuponDescuento, email) => {
+const enviarNotaDeCompra = async (
+    idPedido,
+    nombre,
+    fecha,
+    metodoPago,
+    items,
+    subtotal,
+    envio,
+    impuestos,
+    total,
+    couponCodigo,
+    cuponDescuento,
+    email
+) => {
 
-    fechaFormato = new Date(fecha).toLocaleDateString("es-MX");
-    subtotalFormato = Number(subtotal).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    envioFormato = Number(envio).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    impuestosFormato = Number(impuestos).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    totalFormato = Number(total+envio).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    cuponDescuentoFormato= Number(cuponDescuento).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
+    // 🔹 Estos valores vienen crudos (números) y aquí solo los formateamos para el correo
+    const fechaFormato = new Date(fecha).toLocaleDateString("es-MX");
+    const subtotalFormato = Number(subtotal).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
+    const envioFormato = Number(envio).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
+    const impuestosFormato = Number(impuestos).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
 
-    const stringItems = items.map(it=>{
+    // ❌ ANTES: Number(total + envio)  → sumaba el envío dos veces
+    // ✅ AHORA: total ya viene calculado (subtotal + iva - descuento + envio)
+    const totalFormato = Number(total).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
 
-        const precioSub = (it.Cantidad * Number(it.precioNormal)).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-        const precioNormal = Number(it.precioNormal).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
+    const cuponDescuentoFormato = Number(cuponDescuento).toLocaleString("es-MX", {
+        style: "currency",
+        currency: "MXN"
+    });
+
+    const stringItems = items.map(it => {
+        const precioSub = (it.Cantidad * Number(it.precioNormal)).toLocaleString("es-MX", {
+            style: "currency",
+            currency: "MXN"
+        });
+        const precioNormal = Number(it.precioNormal).toLocaleString("es-MX", {
+            style: "currency",
+            currency: "MXN"
+        });
 
         return `<tr style="border-bottom:1px solid #f5f5f5;">
                    <td style="padding:18px 0; color:#000; font-size:14px; font-weight:500;">
@@ -29,10 +55,10 @@ const enviarNotaDeCompra = async (idPedido, nombre, fecha, metodoPago, items, su
                    <td align="right" style="padding:18px 0; color:#000; font-size:14px; font-weight:600;">
                        ${precioSub}
                    </td>
-               </tr>`
+               </tr>`;
     }).join("");
 
-    // 👇 CAMBIO NECESARIO: quitamos CID y usamos URL pública
+    // Usamos logo por URL pública (Netlify)
     const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
     const contenidoHTML = `<body style="margin:0; padding:0; width:100%; background-color:#f5f5f5; font-family: Quicksand, Arial, sans-serif;">
@@ -186,15 +212,24 @@ const enviarNotaDeCompra = async (idPedido, nombre, fecha, metodoPago, items, su
 
     </body>`;
 
-    
-    // 🔹 Generación del PDF
+    // 🔹 Generar PDF con los mismos datos numéricos (sin formatear)
     const rutaPdf = await generarPDFNota(
-        idPedido, nombre, fecha, metodoPago, items, subtotal, envio, impuestos, total, couponCodigo, cuponDescuento, email
+        idPedido,
+        nombre,
+        fecha,
+        metodoPago,
+        items,
+        subtotal,
+        envio,
+        impuestos,
+        total,
+        couponCodigo,
+        cuponDescuento,
+        email
     );
 
     if (!rutaPdf) return false;
 
-    // 🔹 Preparar adjunto PDF
     const archivosPdf = [
         {
             filename: path.basename(rutaPdf),
@@ -203,16 +238,16 @@ const enviarNotaDeCompra = async (idPedido, nombre, fecha, metodoPago, items, su
         }
     ];
 
-    // 🔹 Enviar correo (ahora con adjuntos)
+    // OJO 👀: esto solo funciona si tu `enviarCorreo` acepta adjuntos
     const send = await enviarCorreo(
         contenidoHTML,
-        `Gracias por tu compra en DreamBooks 📚 (Transacción #${idPedido})`,
+        `Gracias por tu compra en DreamBooks (Transacción #${idPedido})`,
         email,
         archivosPdf
     );
 
     if (send) return true;
     return false;
-}
+};
 
 module.exports = enviarNotaDeCompra;
