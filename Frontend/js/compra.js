@@ -117,16 +117,42 @@ const libroDirectoCantidad = Number(urlParams.get("cantidad")) || 1;
 /* ========================================================
    OBTENER UN LIBRO INDIVIDUAL PARA COMPRA DIRECTA
 ======================================================== */
+/* ========================================================
+   OBTENER UN LIBRO INDIVIDUAL PARA COMPRA DIRECTA
+======================================================== */
 async function cargarCompraDirecta() {
     if (!libroDirectoId) return null;
 
-    /*const res = await fetch(`http://localhost:3000/api/products/book/${libroDirectoId}`);*/
     const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/book/${libroDirectoId}`);
     const data = await res.json();
 
     if (!data.ok) return null;
 
     const libro = data.libro;
+
+    if (libro.stock <= 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Producto sin stock",
+            text: "Este producto actualmente no está disponible.",
+            confirmButtonText: "Volver",
+        }).then(() => {
+            window.location.href = "../index.html";  // o productos.html si prefieres
+        });
+
+        return null;
+    }
+
+    if (libro.stock < libroDirectoCantidad) {
+        Swal.fire({
+            icon: "warning",
+            title: "Stock insuficiente",
+            text: `Solo hay ${libro.stock} unidades disponibles.`,
+            confirmButtonText: "Entendido",
+        });
+
+        return null;
+    }
 
     return [{
         ProductoId: libroDirectoId,
@@ -210,7 +236,14 @@ async function cargarResumenCompra() {
 
     if (libroDirectoId) {
         items = await cargarCompraDirecta();
-    } else {
+
+        // Si regresar null → detener todo
+        if (!items) {
+            contenedor.innerHTML = "<p>No se puede procesar la compra.</p>";
+            return; 
+        }
+    } 
+    else {
         const carritoData = await obtenerCarrito();
 
         if (!carritoData || carritoData.itemsCarrito.length === 0) {
@@ -221,9 +254,15 @@ async function cargarResumenCompra() {
         items = carritoData.itemsCarrito;
     }
 
+    // =====================================================
+    // GENERAR HTML
+    // =====================================================
     contenedor.innerHTML = items.map(item => generarProductoHTML(item)).join("");
 
-    const subtotal = items.reduce((acc, item) => acc + item.Cantidad * Number(item.precioFinal), 0);
+    const subtotal = items.reduce(
+        (acc, item) => acc + item.Cantidad * Number(item.precioFinal),
+        0
+    );
 
     const iva = subtotal * 0.16;
 
@@ -243,6 +282,7 @@ async function cargarResumenCompra() {
 
     recalcularEnvioYTotales();
 }
+
 
 /* ========================================================
    ACTUALIZAR LOS TOTALES EN PANTALLA
