@@ -23,7 +23,7 @@ exports.verificarUsuario = async (req, res) => {
 
         const faIcono = `https://ecommerce-api-equipodreambooks-production.up.railway.app/imagenes/favicon-sf.png`
         const logo = `https://ecommerce-api-equipodreambooks-production.up.railway.app/imagenes/logo-header.png`
-        const enlace = "https://ecommerce-api-equipodreambooks.netlify.app//pages/login.html";
+        const enlace = "https://ecommerce-api-equipodreambooks.netlify.app/pages/login.html";
 
         const contenidoHTML = `<!DOCTYPE html>
                                 <html lang="es">
