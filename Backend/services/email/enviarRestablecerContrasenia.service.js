@@ -6,7 +6,7 @@ const enviarCorreo = require('./enviarCorreo');
 const enviarCorreoRestablecerContrasenia = async (nombre, email, token) => {
 
     /*const enlace = "http://127.0.0.1:5501../pages/restablecerContrasenia.html?token=" + token;*/
-    const enlace = "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/restablecerContrasenia.html?token=" + token;
+    const enlace = "https://ecommerce-api-equipodreambooks.netlify.app//pages/restablecerContrasenia.html?token=" + token;
 
     const archivosImg = [
         {

@@ -15,7 +15,7 @@ if (!token) {
     text: "El token de restablecimiento no fue encontrado en la URL.",
   }).then((result) => {
     /*window.location.href = "http://127.0.0.1:5501../pages/index.html";*/
-    window.location.href = "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/index.html";
+    window.location.href = "https://ecommerce-api-equipodreambooks.netlify.app/index.html";
   });
 } else {
   verifyToken(token);
