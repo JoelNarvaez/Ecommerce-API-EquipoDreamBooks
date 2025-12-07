@@ -1,5 +1,4 @@
-const chromium = require("@sparticuz/chromium");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 
@@ -11,11 +10,15 @@ async function generarPDF(nombrePDF, contenidoHTML) {
     fs.mkdirSync(path.join(__dirname, "pdfs"));
   }
 
+  // Lanzar navegador compatible con Railway
   const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(), // 👈 AQUÍ ESTÁ LA CORRECCIÓN
-    headless: chromium.headless,
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+    ],
   });
 
   const page = await browser.newPage();
