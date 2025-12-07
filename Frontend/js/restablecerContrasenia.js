@@ -38,7 +38,7 @@ async function verifyToken(token) {
       }).then((result) => {
         window.location.href =
           /*"http://127.0.0.1:5501../pages/index.html";*/
-          "https://ecommerce-api-equipodreambooks.netlify.app//pages/index.html";
+          "https://ecommerce-api-equipodreambooks.netlify.app/pages/index.html";
       });
       return;
     }

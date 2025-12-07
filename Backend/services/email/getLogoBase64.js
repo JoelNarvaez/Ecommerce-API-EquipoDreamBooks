@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = function getLogoBase64() {
-    const imagePath = path.join(__dirname, "../../assets/public/logo-header.png");
+    const imagePath = path.join(__dirname, "imagenes/logo-header.png");
 
     if (!fs.existsSync(imagePath)) {
         console.error("❌ ERROR: No se encontró el logo en:", imagePath);

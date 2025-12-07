@@ -54,7 +54,7 @@ const generarPDFNota = async (
     }).join("");
 
     // ---------- LOGO ----------
-    const logoPath = path.join(__dirname, "../../assets/public/logo-header.png");
+    const logoPath = path.join(__dirname, "/imagenes/logo-header.png");
     const logoBase64 = fs.readFileSync(logoPath).toString("base64");
     const imageLogo = `data:image/png;base64,${logoBase64}`;
 
