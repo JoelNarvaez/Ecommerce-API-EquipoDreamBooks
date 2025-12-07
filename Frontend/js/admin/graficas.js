@@ -13,7 +13,8 @@ async function generarGraficaPedidos() {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("http://localhost:3000/api/admin/pedidos", {
+    /*const res = await fetch("http://localhost:3000/api/admin/pedidos", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/pedidos", {
       headers: { "Authorization": "Bearer " + token }
     });
 
@@ -122,7 +123,8 @@ async function generarGraficaIngresos() {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("http://localhost:3000/api/admin/ingresos", {
+    /*const res = await fetch("http://localhost:3000/api/admin/ingresos", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/ingresos", {
       headers: { "Authorization": "Bearer " + token }
     });
 
@@ -262,7 +264,8 @@ async function generarGraficaExistencias() {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {
+    /*const res = await fetch("http://localhost:3000/api/admin/reporte-existencias", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/admin/reporte-existencias", {
       headers: { "Authorization": "Bearer " + token }
     });
 

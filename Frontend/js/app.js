@@ -1,3 +1,6 @@
+const base = window.location.pathname.includes("/pages/")
+  ? "../" 
+  : "";
 // accesibilidad-por-usuario.js
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -32,12 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const imgTema = document.getElementById("imgTema");
 
-  function setIconToSun() {
-    imgTema.src = "../imagenes/sol-icono.png";
-  }
   function setIconToMoon() {
-    imgTema.src = "../imagenes/luna-icono.png";
+      imgTema.src = base + "imagenes/luna-icono.png";
+  }
 
+  function setIconToSun() {
+      imgTema.src = base + "imagenes/sol-icono.png";
   }
 
   // ============================

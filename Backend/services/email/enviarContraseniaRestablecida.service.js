@@ -1,165 +1,123 @@
-// Modules
-const jwt = require("jsonwebtoken");
-
 const enviarCorreo = require('./enviarCorreo');
 
 const enviarContraseniaRestablecida = async (nombre, email) => {
 
-    const enlace = "http://127.0.0.1:5501../pages/login.html";
+    // URL pública del logo — AJÚSTALA si tu ruta cambia
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
-    const archivosImg = [
-        {
-            filename: "logo-header.png",
-            cid: "logoDreamBooks"
-        }
-    ]
+    const enlace = "https://ecommerce-api-equipodreambooks.netlify.app/pages/login.html";
 
-    const contenidoHTML = `<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
+    const contenidoHTML = `
+    <body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
 
-                                <!-- Wrapper principal -->
-                                <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5; padding:40px 0;">
-                                    <tr>
-                                        <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0; background:#f5f5f5;">
+            <tr>
+                <td align="center">
 
-                                            <!-- Contenedor -->
-                                            <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
+                    <table width="600" cellpadding="0" cellspacing="0">
 
-                                                <!-- Header -->
-                                                <tr>
-                                                    <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
+                        <!-- HEADER -->
+                        <tr>
+                            <td style="background:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
 
-                                                        <table width="100%" cellpadding="0" cellspacing="0">
-                                                            <tr>
-                                                                <td align="center">
-                                                                    <div
-                                                                        style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin-bottom:20px;">
-                                                                        <img src="cid:logoDreamBooks" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                <div style="width:120px; height:120px; background:#703030; border-radius:50%; margin:0 auto 20px;">
+                                    <img src="${logoURL}" style="width:100px; height:35px; margin-top:40px;" alt="DreamBooks Logo">
+                                </div>
 
-                                                            <tr>
-                                                                <td style="text-align:center;">
-                                                                    <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
-                                                                        ¡Tu contraseña ha sido restablecida!
-                                                                    </h1>
-                                                                    <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">
-                                                                        DreamBooks
-                                                                    </p>
-                                                                    <p style="color:#737373; font-size:14px; line-height:0;">
-                                                                        Sueña despierto
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
+                                <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
+                                    ¡Tu contraseña ha sido restablecida!
+                                </h1>
+                                <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">DreamBooks</p>
+                                <p style="color:#737373; font-size:14px; margin:0;">Sueña despierto</p>
 
-                                                        </table>
+                            </td>
+                        </tr>
 
-                                                    </td>
-                                                </tr>
+                        <tr><td style="height:20px"></td></tr>
 
-                                                <tr>
-                                                    <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
-                                                </tr>
+                        <!-- MENSAJE PRINCIPAL -->
+                        <tr>
+                            <td style="background:#fff; padding:30px; border-radius:12px;">
+                                <p style="font-size:16px; margin:0;">
+                                    Hola <strong style="color:#703030;">${nombre}</strong>,
+                                </p>
 
-                                                <!-- Greeting -->
-                                                <tr>
-                                                    <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
-                                                        <p style="margin:0; color:#000; font-size:16px; line-height:1.6;">
-                                                            Hola <strong style="color:#703030;">${nombre}</strong>,
-                                                        </p>
+                                <p style="font-size:16px; margin-top:12px;">
+                                    Te confirmamos que tu contraseña en <strong>DreamBooks</strong> ha sido actualizada correctamente.
+                                    Ya puedes iniciar sesión usando tus nuevas credenciales.
+                                </p>
+                            </td>
+                        </tr>
 
-                                                        <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
-                                                            Te confirmamos que tu contraseña en <strong>DreamBooks</strong> ha sido actualizada de
-                                                            forma correcta y segura. Ya puedes iniciar sesión usando tus nuevas credenciales.
-                                                        </p>
-                                                    </td>
-                                                </tr>
+                        <tr><td style="height:20px"></td></tr>
 
-                                                <tr>
-                                                    <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
-                                                </tr>
+                        <!-- RECOMENDACIONES -->
+                        <tr>
+                            <td style="background:#fff; padding:30px; border-radius:12px;">
+                                <h2 style="margin:0 0 15px; color:#703030; font-size:18px; font-weight:600;">
+                                    Recomendaciones de seguridad
+                                </h2>
 
-                                                <!-- Security Recommendations -->
-                                                <tr>
-                                                    <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
+                                <ul style="padding-left:20px; font-size:15px; color:#000; line-height:1.6;">
+                                    <li>No compartas tu contraseña con nadie</li>
+                                    <li>Usa una contraseña única y difícil de adivinar</li>
+                                    <li>Evita repetir contraseñas en otros sitios</li>
+                                    <li>Cámbiala periódicamente</li>
+                                </ul>
 
-                                                        <h2 style="margin:0 0 15px; color:#703030; font-size:18px; font-weight:600;">
-                                                            Recomendaciones de seguridad
-                                                        </h2>
+                                <p style="margin-top:20px; font-size:16px;">
+                                    Puedes acceder a tu cuenta aquí:
+                                </p>
 
-                                                        <ul style="margin:0; padding-left:20px; color:#000; font-size:15px; line-height:1.6;">
-                                                            <li>No compartas tu contraseña con nadie</li>
-                                                            <li>Usa una contraseña única y difícil de adivinar</li>
-                                                            <li>No uses la misma contraseña en otras plataformas</li>
-                                                            <li>Cámbiala periódicamente por seguridad</li>
-                                                        </ul>
+                                <div style="text-align:center; margin-top:22px;">
+                                    <a href="${enlace}"
+                                        style="background:#c77965; color:#fff; padding:14px 40px; border-radius:6px;
+                                        text-decoration:none; font-size:16px; font-weight:700; display:inline-block;">
+                                        Iniciar sesión
+                                    </a>
+                                </div>
 
-                                                        <p style="margin-top:20px; color:#000; font-size:16px;">
-                                                            Puedes acceder a tu cuenta haciendo clic en el siguiente botón:
-                                                        </p>
+                            </td>
+                        </tr>
 
-                                                        <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 30px;">
-                                                            <tr>
-                                                                <td style="text-align: center;"> 
-                                                                    <a href="${enlace}"
-                                                                        style="background-color:#c77965; color:#ffffff; padding:14px 40px; text-decoration:none; border-radius:6px; font-size:16px; font-weight:700; display:inline-block;">
-                                                                        Iniciar sesión
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                        <tr><td style="height:20px"></td></tr>
 
-                                                    </td>
-                                                </tr>
+                        <!-- ALERTA -->
+                        <tr>
+                            <td style="background:#fff; padding:25px; border-left:4px solid #c77965; border-radius:12px;">
+                                <p style="color:#737373; font-size:14px;">
+                                    Si tú no realizaste esta solicitud, contacta inmediatamente a nuestro equipo de soporte.
+                                </p>
+                            </td>
+                        </tr>
 
+                        <tr><td style="height:20px"></td></tr>
 
-                                                <tr>
-                                                    <td style="height:10px;"></td>
-                                                </tr>
+                        <!-- FOOTER -->
+                        <tr>
+                            <td style="background:#a9806a; padding:30px; text-align:center; border-radius:12px;">
+                                <p style="color:#fff; margin:0; font-size:14px;">© 2025 DreamBooks. Todos los derechos reservados.</p>
+                                <p style="color:#fff; margin:10px 0 0; font-size:12px; opacity:0.9;">
+                                    Recibiste este correo porque solicitaste un restablecimiento de contraseña.
+                                </p>
+                            </td>
+                        </tr>
 
-                                                <!-- Alert -->
-                                                <tr>
-                                                    <td
-                                                        style="background-color:#ffffff; padding:25px; border-radius:12px;border-left:4px solid #c77965;">
-                                                        <p style="margin:0; color:#737373; font-size:14px; line-height:1.6;">
-                                                            Si tú no realizaste esta solicitud de restablecimiento, contacta
-                                                            inmediatamente a nuestro equipo de soporte para proteger tu cuenta.
-                                                        </p>
-                                                    </td>
-                                                </tr>
+                    </table>
 
-                                                <tr>
-                                                    <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
-                                                </tr>
+                </td>
+            </tr>
+        </table>
 
-                                                <!-- Footer -->
-                                                <tr>
-                                                    <td
-                                                        style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center; margin-top:30px;">
-                                                        <p style="margin:0; color:#ffffff; font-size:14px; line-height:1.6;">
-                                                            © 2025 DreamBooks. Todos los derechos reservados.
-                                                        </p>
-                                                        <p style="margin:10px 0 0; color:#ffffff; font-size:12px; opacity:0.9;">
-                                                            Recibiste este mensaje porque solicitaste un restablecimiento de contraseña.
-                                                        </p>
-                                                    </td>
-                                                </tr>
+    </body>`;
 
-                                            </table>
+    const send = await enviarCorreo(
+        contenidoHTML,
+        "Tu contraseña ha sido restablecida - DreamBooks",
+        email
+    );
 
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </body>`
-
-    const send = await enviarCorreo(contenidoHTML, "Tu contraseña ha sido restablecida - DreamBooks", email, archivosImg);
-
-    if (send)
-        return true;
-
-    return false
-
-}
+    return !!send;
+};
 
 module.exports = enviarContraseniaRestablecida;

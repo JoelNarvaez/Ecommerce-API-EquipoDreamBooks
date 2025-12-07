@@ -25,10 +25,11 @@ const wishlistRoutes = require("./routes/wishlist.routes.js");
 app.use(express.json());
 
 const ALLOWED_ORIGINS = [
-  'http://127.0.0.1:5501', 
+  /*'http://127.0.0.1:5501', 
   'http://127.0.0.1:5500', 
   'http://localhost:5500',
-  'http://localhost:5501',
+  'http://localhost:5501',*/
+  'https://ecommerce-api-equipodreambooks.netlify.app',
 ];
 
 app.use(morgan('dev'))
@@ -75,6 +76,7 @@ console.error(' Error al conectar con la base de datos:', error.message);
 }
 
 app.listen(PORT, async () => {
-console.log(`Servidor escuchando en http://localhost:${PORT}`);
+/*console.log(`Servidor escuchando en http://localhost:${PORT}`);*/
+console.log(`Servidor escuchando en https://ecommerce-api-equipodreambooks-production.up.railway.app:${PORT}`);
 await testConnection(); 
 });

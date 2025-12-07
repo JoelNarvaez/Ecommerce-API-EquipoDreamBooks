@@ -117,15 +117,42 @@ const libroDirectoCantidad = Number(urlParams.get("cantidad")) || 1;
 /* ========================================================
    OBTENER UN LIBRO INDIVIDUAL PARA COMPRA DIRECTA
 ======================================================== */
+/* ========================================================
+   OBTENER UN LIBRO INDIVIDUAL PARA COMPRA DIRECTA
+======================================================== */
 async function cargarCompraDirecta() {
     if (!libroDirectoId) return null;
 
-    const res = await fetch(`http://localhost:3000/api/products/book/${libroDirectoId}`);
+    const res = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/book/${libroDirectoId}`);
     const data = await res.json();
 
     if (!data.ok) return null;
 
     const libro = data.libro;
+
+    if (libro.stock <= 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Producto sin stock",
+            text: "Este producto actualmente no está disponible.",
+            confirmButtonText: "Volver",
+        }).then(() => {
+            window.location.href = "../index.html";  // o productos.html si prefieres
+        });
+
+        return null;
+    }
+
+    if (libro.stock < libroDirectoCantidad) {
+        Swal.fire({
+            icon: "warning",
+            title: "Stock insuficiente",
+            text: `Solo hay ${libro.stock} unidades disponibles.`,
+            confirmButtonText: "Entendido",
+        });
+
+        return null;
+    }
 
     return [{
         ProductoId: libroDirectoId,
@@ -146,7 +173,8 @@ async function obtenerCarrito() {
         const token = localStorage.getItem("token");
         if (!token) return null;
 
-        const res = await fetch("http://localhost:3000/api/carts", {
+        /*const res = await fetch("http://localhost:3000/api/carts", {*/
+        const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts", {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -170,7 +198,7 @@ function generarProductoHTML(item) {
     return `
         <div class="productoResumen">
             <div class="imgBox">
-                <img src="${item.imagen ? `http://localhost:3000/uploads/${item.imagen}` : "../assets/no-image.png"}" />
+                <img src="${item.imagen ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${item.imagen}` : "../assets/no-image.png"}" />
             </div>
 
             <div class="infoBox">
@@ -208,7 +236,14 @@ async function cargarResumenCompra() {
 
     if (libroDirectoId) {
         items = await cargarCompraDirecta();
-    } else {
+
+        // Si regresar null → detener todo
+        if (!items) {
+            contenedor.innerHTML = "<p>No se puede procesar la compra.</p>";
+            return; 
+        }
+    } 
+    else {
         const carritoData = await obtenerCarrito();
 
         if (!carritoData || carritoData.itemsCarrito.length === 0) {
@@ -219,9 +254,15 @@ async function cargarResumenCompra() {
         items = carritoData.itemsCarrito;
     }
 
+    // =====================================================
+    // GENERAR HTML
+    // =====================================================
     contenedor.innerHTML = items.map(item => generarProductoHTML(item)).join("");
 
-    const subtotal = items.reduce((acc, item) => acc + item.Cantidad * Number(item.precioFinal), 0);
+    const subtotal = items.reduce(
+        (acc, item) => acc + item.Cantidad * Number(item.precioFinal),
+        0
+    );
 
     const iva = subtotal * 0.16;
 
@@ -241,6 +282,7 @@ async function cargarResumenCompra() {
 
     recalcularEnvioYTotales();
 }
+
 
 /* ========================================================
    ACTUALIZAR LOS TOTALES EN PANTALLA
@@ -286,7 +328,8 @@ document.getElementById("aplicarCupon").addEventListener("click", async () => {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:3000/api/carts/aplicar", {
+    /*const res = await fetch("http://localhost:3000/api/carts/aplicar", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/aplicar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -351,7 +394,8 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
     const cupon = document.getElementById("cuponInput").value.trim() || null;
     const esCompraDirecta = !!libroDirectoId;
 
-    const res = await fetch("http://localhost:3000/api/carts/checkout", {
+    /*const res = await fetch("http://localhost:3000/api/carts/checkout", {*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/checkout", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -389,7 +433,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
         text: '¡Pedido creado exitosamente!',
         confirmButtonText: 'Aceptar'
     }).then(() => {
-        window.location.href = "../pages/index.html";
+        window.location.href = "../index.html";
     });
 });
 

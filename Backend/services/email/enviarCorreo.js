@@ -1,40 +1,52 @@
-// Modules
-const nodemailer = require('nodemailer');
-const path = require("path");
+const brevo = require("@getbrevo/brevo");
 
-const enviarCorreo = async (contenidoHTML, asunto, correo, archivos=[], archivoPdf = []) => {
-    
-    const archivosAdjuntos = archivos.map(item => ({
-        filename: item.filename,
-        path: path.join(__dirname, `../../assets/public/${item.filename}`),
-        cid: item.cid
-    }));
+// Crear instancia del API de correos transaccionales
+const apiInstance = new brevo.TransactionalEmailsApi();
 
-    archivosAdjuntos.push(...archivoPdf);
+// Conectar a la API Key almacenada en Railway
+apiInstance.setApiKey(
+    brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.BREVO_API_KEY
+);
 
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            user: process.env.BUSINESS_EMAIL,
-            pass: process.env.PWD_EMAIL
-        },
-        tls: {
-            rejectUnauthorized: false
+/**
+ * Enviar correo genérico usando Brevo
+ * @param {string} contenidoHTML - cuerpo HTML del correo
+ * @param {string} asunto - asunto del correo
+ * @param {string} correo - correo destino
+ * @param {Array} adjuntos - archivos PDF u otros
+ * @returns {boolean} true si se envió, false si falló
+ */
+const enviarCorreo = async (contenidoHTML, asunto, correo, adjuntos = []) => {
+    try {
+        console.log("📧 Preparando envío de correo con Brevo a:", correo);
+
+        // ✨ Construcción del correo incluyendo adjuntos ✨
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+        sendSmtpEmail.to = [{ email: correo }];
+        sendSmtpEmail.subject = asunto;
+        sendSmtpEmail.htmlContent = contenidoHTML;
+        sendSmtpEmail.sender = { name: "DreamBooks", email: process.env.BUSINESS_EMAIL };
+
+        // 👇 SOLO si hay adjuntos, los agregamos
+        if (adjuntos.length > 0) {
+            sendSmtpEmail.attachment = adjuntos.map(file => ({
+                name: file.filename,
+                content: require("fs").readFileSync(file.path).toString("base64")
+            }));
         }
-    });
 
+        // Enviar
+        await apiInstance.sendTransacEmail(sendSmtpEmail);
+        console.log("📧 Correo enviado correctamente ✔️");
 
-    const info = await transporter.sendMail({
-        from: "DreamBooks <dreambooks5ac@gmail.com>",
-        to: `${correo}`,
-        subject: asunto,
-        html: contenidoHTML,
-        attachments: archivosAdjuntos.length > 0 ? archivosAdjuntos : undefined
-    });
+        return true;
 
-    return info;
-}
+    } catch (error) {
+        console.error("❌ Error enviando correo:", error.message);
+        return false;
+    }
+};
 
 module.exports = enviarCorreo;

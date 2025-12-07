@@ -58,7 +58,8 @@ async function fetchBooks(page = 1, limit = 8) {
     else if (!chkDisp?.checked && chkAgot?.checked) stock = "agotado";
 
     const url =
-      `http://localhost:3000/api/products/books` +
+      /*`http://localhost:3000/api/products/books` +*/
+      `https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/books` +
       `?page=${page}` +
       `&limit=${limit}` +
       `&search=${encodeURIComponent(search)}` +
@@ -99,7 +100,8 @@ function renderBooks(books = []) {
   grid.innerHTML = books
     .map((book) => {
       const urlImagen = book.imagen
-        ? `http://localhost:3000/uploads/${book.imagen}`
+        /*? `http://localhost:3000/uploads/${book.imagen}`*/
+        ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${book.imagen}`
         : "../assets/no-image.png";
 
       const tieneOferta = book.oferta_tipo && book.oferta_valor;
@@ -272,7 +274,8 @@ function limpiarFiltros() {
 // ===========================
 async function cargarCategorias() {
   try {
-    const res = await fetch("http://localhost:3000/api/products/categorias");
+    /*const res = await fetch("http://localhost:3000/api/products/categorias");*/
+    const res = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/products/categorias");
     const data = await res.json();
 
     if (!data.ok) return;
@@ -377,7 +380,8 @@ async function obtenerCarrito() {
       return;
     }
 
-    const carritoRes = await fetch("http://localhost:3000/api/carts", {
+    /*const carritoRes = await fetch("http://localhost:3000/api/carts", {*/
+    const carritoRes = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -456,7 +460,8 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) 
   const nuevaCantidad = itemExistente.Cantidad + cantidad;
 
   const updateRes = await fetch(
-    "http://localhost:3000/api/carts/actualizar",
+    /*"http://localhost:3000/api/carts/actualizar",*/
+    "https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/actualizar",
     {
       method: "PUT",
       headers: {
@@ -496,7 +501,8 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token) 
 //   AGREGAR NUEVO ITEM
 // ============================
 async function agregarNuevoItem(idLibro, cantidad, token) {
-  const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
+  /*const addRes = await fetch("http://localhost:3000/api/carts/agregar", {*/
+  const addRes = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/agregar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -549,7 +555,8 @@ async function agregarAWishlist(idLibro) {
     }
 
     const res = await fetch(
-      "http://localhost:3000/api/wishlist/add",
+      /*"http://localhost:3000/api/wishlist/add",*/
+      "https://ecommerce-api-equipodreambooks-production.up.railway.app/api/wishlist/add",
       {
         method: "POST",
         headers: {

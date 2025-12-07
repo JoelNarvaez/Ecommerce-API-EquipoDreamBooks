@@ -1,148 +1,122 @@
-// Modules
-const jwt = require("jsonwebtoken");
-
-const enviarCorreo = require('./enviarCorreo');
+// services/email/enviarCorreoBienvenido.js
+const enviarCorreo = require("./enviarCorreo");
 
 const enviarCorreoBienvenido = async (nombre, email) => {
+    const enlace = "https://ecommerce-api-equipodreambooks.netlify.app/pages/login.html";
 
-    const enlace = "http://127.0.0.1:5501../pages/login.html";
+    // URL pública del logo en Netlify
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
-    const archivosImg = [
-        {
-            filename: "logo-header.png",
-            cid: "logoDreamBooks"
-        }
-    ]
+    const contenidoHTML = `
+    <body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
 
-    const contenidoHTML = `<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5; padding:40px 0;">
+            <tr>
+                <td align="center">
 
-                            <!-- Wrapper principal -->
-                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5; padding:40px 0;">
-                                <tr>
-                                    <td align="center">
+                    <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
 
-                                        <!-- Contenedor -->
-                                        <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
+                        <!-- Header -->
+                        <tr>
+                            <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
 
-                                            <!-- Header -->
-                                            <tr>
-                                                <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
+                                <div style="width:120px; height:120px; background-color:#703030; 
+                                            border-radius:50%; margin:0 auto 20px auto;">
+                                    <img src="${logoURL}" 
+                                         style="width:100px;height:35px;margin-top:40px;" alt="DreamBooks Logo">
+                                </div>
 
-                                                    <table width="100%" cellpadding="0" cellspacing="0">
-                                                        <tr>
-                                                            <td align="center">
-                                                                <div
-                                                                    style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin-bottom:20px;">
-                                                                    <img src="cid:logoDreamBooks" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                <h1 style="color:#703030; font-size:32px; font-weight:700; margin:0;">
+                                    ¡Tu correo ha sido verificado!
+                                </h1>
 
-                                                        <tr>
-                                                            <td style="text-align:center;">
-                                                                <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
-                                                                    ¡Tu correo ha sido verificado!
-                                                                </h1>
-                                                                <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">
-                                                                    DreamBooks
-                                                                </p>
-                                                                <p style="color:#737373; font-size:14px; line-height:0;">
-                                                                    Sueña despierto
-                                                                </p>
-                                                            </td>
-                                                        </tr>
+                                <p style="color:#703030; font-size:18px; font-weight:600; margin:10px 0 0;">
+                                    DreamBooks
+                                </p>
+                                <p style="color:#737373; font-size:14px; line-height:0;">
+                                    Sueña despierto
+                                </p>
 
-                                                    </table>
+                            </td>
+                        </tr>
 
-                                                </td>
-                                            </tr>
+                        <tr><td style="height:20px;"></td></tr>
 
-                                            <tr>
-                                                <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
-                                            </tr>
+                        <!-- Mensaje principal -->
+                        <tr>
+                            <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
 
-                                            <!-- Bloque principal -->
-                                            <tr>
-                                                <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
-                                                    <p style="margin:0; color:#000; font-size:16px; line-height:1.6; margin-bottom: 20px;">
-                                                        ¡Hola <strong style="color:#703030;">${nombre}</strong>!
-                                                    </p>
+                                <p style="font-size:16px; line-height:1.6;">
+                                    Hola <strong style="color:#703030;">${nombre}</strong>,
+                                </p>
 
-                                                    <p style="margin:0; color:#000; font-size:16px; line-height:1.6;">
-                                                        Hemos confirmado que tu dirección de correo electrónico es válida.  
-                                                        Desde este momento, tu cuenta en <strong style="color:#703030;">DreamBooks</strong> está completamente activa.
-                                                    </p>
+                                <p style="font-size:16px; line-height:1.6; margin-top:10px;">
+                                    Hemos confirmado que tu dirección de correo es válida. 
+                                    Tu cuenta ya está <strong style="color:#703030;">activada</strong>.
+                                </p>
 
-                                                    <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
-                                                        <strong style="color:#703030;">¿Qué puedes hacer ahora?</strong>
-                                                    </p>
+                                <p style="font-size:16px; line-height:1.6; margin-top:12px;">
+                                    <strong style="color:#703030;">¿Qué puedes hacer ahora?</strong>
+                                </p>
 
-                                                    <ul style="margin-top:8px; padding-left:20px; color:#703030; font-size:15px; line-height:1.6;">
-                                                        <li>Acceder a tu panel personal</li>
-                                                        <li>Gestionar tus listas de lectura</li>
-                                                        <li>Comprar libros y revisar tu historial</li>
-                                                        <li>Personalizar tus preferencias</li>
-                                                    </ul>
+                                <ul style="font-size:15px; color:#703030; line-height:1.6;">
+                                    <li>Acceder a tu panel personal</li>
+                                    <li>Comprar libros</li>
+                                    <li>Gestionar tus listas de lectura</li>
+                                    <li>Revisar tu historial de compras</li>
+                                </ul>
 
-                                                    <p style="margin:14px 0 0; color:#000; font-size:16px; line-height:1.6;">
-                                                        Usa el siguiente botón para acceder a tu cuenta:
-                                                    </p>
+                                <div style="text-align:center; margin-top:22px;">
+                                    <a href="${enlace}"
+                                        style="background-color:#c77965; color:#ffffff;
+                                               padding:14px 36px; border-radius:6px; 
+                                               font-size:16px; font-weight:700; text-decoration:none;">
+                                        Acceder a mi cuenta
+                                    </a>
+                                </div>
 
-                                                    <div style="text-align:center; margin-top:22px;">
-                                                        <a href="${enlace}"
-                                                            style="background-color:#c77965; color:#ffffff; padding:14px 36px; border-radius:6px; font-size:16px; text-decoration:none; font-weight:700; display:inline-block;">
-                                                            Acceder a mi cuenta
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                            </td>
+                        </tr>
 
-                                            <tr>
-                                                <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
-                                            </tr>
+                        <tr><td style="height:20px;"></td></tr>
 
-                                            <!-- Mensaje secundario -->
-                                            <tr>
-                                                <td
-                                                    style="background-color:#ffffff; padding:25px; border-radius:12px; border-left:4px solid #c77965;">
-                                                    <p style="margin:0; color:#737373; font-size:14px; line-height:1.6;">
-                                                        Si no solicitaste esta verificación, puedes ignorar este mensaje o contactar a nuestro equipo de soporte inmediatamente.
-                                                    </p>
-                                                </td>
-                                            </tr>
+                        <!-- Mensaje secundario -->
+                        <tr>
+                            <td style="background-color:#ffffff; padding:25px; border-radius:12px;
+                                       border-left:4px solid #c77965;">
+                                <p style="font-size:14px; color:#737373; line-height:1.6; margin:0;">
+                                    Si no solicitaste esta verificación, ignora este mensaje 
+                                    o contacta a soporte de inmediato.
+                                </p>
+                            </td>
+                        </tr>
 
-                                            <tr>
-                                                <td style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
-                                            </tr>
+                        <tr><td style="height:20px;"></td></tr>
 
-                                            <!-- Footer -->
-                                            <tr>
-                                                <td
-                                                    style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center;">
-                                                    <p style="margin:0; color:#ffffff; font-size:14px; line-height:1.6;">
-                                                        © 2025 DreamBooks. Todos los derechos reservados.
-                                                    </p>
-                                                    <p style="margin:10px 0 0; color:#ffffff; font-size:12px; opacity:0.9;">
-                                                        Recibiste este correo porque registraste una cuenta en DreamBooks.
-                                                    </p>
-                                                </td>
-                                            </tr>
+                        <!-- Footer -->
+                        <tr>
+                            <td style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center;">
+                                <p style="color:#fff; font-size:14px; margin:0;">
+                                    © 2025 DreamBooks. Todos los derechos reservados.
+                                </p>
+                                <p style="color:#fff; font-size:12px; opacity:0.9; margin-top:10px;">
+                                    Recibiste este correo porque creaste una cuenta en DreamBooks.
+                                </p>
+                            </td>
+                        </tr>
 
-                                        </table>
+                    </table>
 
-                                    </td>
-                                </tr>
-                            </table>
+                </td>
+            </tr>
+        </table>
 
-                        </body>`
+    </body>
+    `;
 
-    const send = await enviarCorreo(contenidoHTML, "Bienvenid@ a DreamBooks", email, archivosImg);
+    const send = await enviarCorreo(contenidoHTML, "Bienvenid@ a DreamBooks", email);
 
-    if (send)
-        return true;
-
-    return false
-
-}
+    return send ? true : false;
+};
 
 module.exports = enviarCorreoBienvenido;

@@ -29,7 +29,9 @@ async function inicializarCarrito(itemsCarrito = []) {
     carritoContainer.innerHTML = itemsCarrito
         .map(item => {
             const imagen = item.imagen
-                ? `http://localhost:3000/uploads/${item.imagen}`
+                /*? `http://localhost:3000/uploads/${item.imagen}`
+                : "../assets/no-image.png";*/
+                ? `https://ecommerce-api-equipodreambooks-production.up.railway.app/uploads/${item.imagen}`
                 : "../assets/no-image.png";
 
             const precioUnitario = Number(item.precioFinal);
@@ -157,7 +159,8 @@ async function obtenerCarrito() {
             return;
         }
 
-        const carritoRes = await fetch("http://localhost:3000/api/carts", {
+        /*const carritoRes = await fetch("http://localhost:3000/api/carts", {*/
+        const carritoRes = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -232,7 +235,8 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token, 
         ? itemExistente.Cantidad + cantidad
         : itemExistente.Cantidad - cantidad;
 
-    const updateRes = await fetch("http://localhost:3000/api/carts/actualizar", {
+    /*const updateRes = await fetch("http://localhost:3000/api/carts/actualizar", {*/
+    const updateRes = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/actualizar", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -267,7 +271,8 @@ async function actualizarItemExistente(itemExistente, cantidad, idLibro, token, 
 // Agregar nuevo item
 // ============================
 async function agregarNuevoItem(idLibro, cantidad, token) {
-    const addRes = await fetch("http://localhost:3000/api/carts/agregar", {
+    /*const addRes = await fetch("http://localhost:3000/api/carts/agregar", {*/
+    const addRes = await fetch("https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/agregar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -313,7 +318,8 @@ async function EliminarItemCarrito(idItem) {
         return;
     }
 
-    const addRes = await fetch(`http://localhost:3000/api/carts/eliminar/${idItem}`, {
+    /*const addRes = await fetch(`http://localhost:3000/api/carts/eliminar/${idItem}`, {*/
+    const addRes = await fetch(`https://ecommerce-api-equipodreambooks-production.up.railway.app/api/carts/eliminar/${idItem}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

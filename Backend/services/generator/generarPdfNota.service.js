@@ -2,358 +2,237 @@ const fs = require("fs");
 const generarPDF = require('./generarPDF.service');
 const path = require("path");
 
-const generarPDFNota = async (idPedido, nombre, fecha, metodoPago, items, subtotal, envio, impuestos, total, couponCodigo, cuponDescuento, email) => {
+const generarPDFNota = async (
+    idPedido, nombre, fecha, metodoPago,
+    items, subtotal, envio, impuestos, total,
+    couponCodigo, cuponDescuento, email
+) => {
 
+    // =====================================================
+    // 🔥 FORMATO PROFESIONAL DE FECHA Y HORA (MÉXICO)
+    // =====================================================
+    const fechaObj = new Date(fecha);
 
-    fechaFormato = new Date(fecha).toLocaleDateString("es-MX");
-    subtotalFormato = Number(subtotal).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    envioFormato = Number(envio).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    impuestosFormato = Number(impuestos).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    totalFormato = Number(total+envio).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-    cuponDescuentoFormato= Number(cuponDescuento).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
+    const fechaProfesional = fechaObj.toLocaleDateString("es-MX", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        timeZone: "America/Mexico_City" // 👈 Ajuste real a hora de México
+    });
 
-    const stringItems = items.map(it=>{
+    const horaProfesional = fechaObj.toLocaleTimeString("es-MX", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "America/Mexico_City" // 👈 También aquí
+    });
 
-        const precioSub = (it.Cantidad * Number(it.precioNormal)).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
-        const precioNormal = Number(it.precioNormal).toLocaleString("es-MX", {style: "currency",currency: "MXN"});
+    const fechaCompleta = `${fechaProfesional} – ${horaProfesional} hrs`;
 
-        return `<tr style="border-bottom:1px solid #f5f5f5;">
-                   <td
-                       style="padding:18px 0; color:#000; font-size:14px; font-weight:500;">
-                       ${it.nombre}</td>
-                   <td align="center"
-                       style="padding:18px 0; color:#000; font-size:14px;">
-                       ${it.Cantidad}</td>
-                   <td align="right"
-                       style="padding:18px 0; color:#000; font-size:14px;">
-                       ${precioNormal}</td>
-                   <td align="right"
-                       style="padding:18px 0; color:#000; font-size:14px; font-weight:600;">
-                       ${precioSub}</td>
-               </tr>`
+    // =====================================================
+    // 🔢 FORMATOS NUMÉRICOS
+    // =====================================================
+    const formatoMX = v =>
+        Number(v).toLocaleString("es-MX", { style: "currency", currency: "MXN" });
+
+    const subtotalFormato = formatoMX(subtotal);
+    const envioFormato = formatoMX(envio);
+    const impuestosFormato = formatoMX(impuestos);
+    const totalFormato = formatoMX(total);
+    const cuponDescuentoFormato = formatoMX(cuponDescuento);
+
+    // =====================================================
+    // 🛒 ITEMS DEL PEDIDO
+    // =====================================================
+    const stringItems = items.map(it => {
+        const precioNormal = formatoMX(it.precioNormal);
+        const precioSub = formatoMX(it.Cantidad * it.precioNormal);
+
+        return `
+            <tr style="border-bottom:1px solid #eaeaea;">
+                <td style="padding:14px 0; font-size:14px;">${it.nombre}</td>
+                <td align="center" style="padding:14px 0; font-size:14px;">${it.Cantidad}</td>
+                <td align="right" style="padding:14px 0; font-size:14px;">${precioNormal}</td>
+                <td align="right" style="padding:14px 0; font-size:14px; font-weight:600;">${precioSub}</td>
+            </tr>
+        `;
     }).join("");
 
+    // =====================================================
+    // 🖼️ LOGO EMBEBIDO EN BASE64 (SE VE EN PDF SIEMPRE)
+    // =====================================================
     const logoPath = path.join(__dirname, "../../assets/public/logo-header.png");
     const logoBase64 = fs.readFileSync(logoPath).toString("base64");
     const imageLogo = `data:image/png;base64,${logoBase64}`;
-    
 
-    const contenidoHTML = `<!DOCTYPE html>
-                                <html lang="es">
+    // =====================================================
+    // 📝 HTML PROFESIONAL DEL PDF
+    // =====================================================
+    const contenidoHTML = `
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <style>
+            body { 
+                font-family: Quicksand, Arial, sans-serif; 
+                background:#f4f4f4; 
+                margin:0; 
+                padding:0; 
+            }
+            .card {
+                background:#fff;
+                border-radius:12px;
+                padding:28px;
+                margin-top:28px;
+                box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+            }
+            .title-section {
+                font-size:20px;
+                color:#703030;
+                font-weight:700;
+                margin-bottom:15px;
+                text-transform:uppercase;
+                letter-spacing:0.5px;
+            }
+            .line { border-bottom:1px solid #eaeaea; margin:14px 0; }
+        </style>
+    </head>
 
-                                <head>
-                                    <meta charset="UTF-8" />
-                                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                                </head>
+    <body>
+        <table width="100%" cellspacing="0" cellpadding="0" style="padding:40px 0;">
+            <tr><td align="center">
 
-                                <body style="margin:0; padding:0; width:100%; background-color:#f5f5f5; font-family: Quicksand, Arial, sans-serif;">
+                <table width="700" style="max-width:700px;">
 
-                                    <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f5f5f5; padding:40px 0;">
-                                        <tr>
-                                            <td align="center">
+                    <!-- HEADER -->
+                    <tr><td>
+                        <div class="card" style="text-align:center; background:#ebe6db;">
+                            <div style="width:120px; height:120px; background:#703030; border-radius:50%; margin:0 auto;">
+                                <img src="${imageLogo}" style="width:100px; height:35px; margin-top:42px;">
+                            </div>
+                            <h1 style="color:#703030; margin-top:18px;">Nota de Compra</h1>
+                            <p style="color:#737373; margin:0;">DreamBooks · Sueña despierto</p>
+                        </div>
+                    </td></tr>
 
-                                                <!-- Contenedor principal -->
-                                                <table width="672" cellspacing="0" cellpadding="0" border="0"
-                                                    style="background-color:#f5f5f5; width:100%; max-width:672px;">
+                    <!-- SALUDO -->
+                    <tr><td>
+                        <div class="card">
+                            <p style="font-size:16px;">Hola <strong style="color:#703030;">${nombre}</strong>,</p>
+                            <p style="font-size:16px; margin-top:10px;">
+                                Gracias por tu compra. Aquí están los detalles de tu pedido:
+                            </p>
+                            <p style="font-size:16px; margin-top:10px;">
+                                <strong>ID Pedido:</strong> ${idPedido}
+                            </p>
+                        </div>
+                    </td></tr>
 
-                                                    <tr>
-                                                        <td>
+                    <!-- INFO / FECHA / MÉTODO DE PAGO -->
+                    <tr><td>
+                        <div class="card">
+                            <div style="display:flex; justify-content:space-between; gap:20px;">
+                                
+                                <div style="width:50%; border-left:4px solid #c77965; padding-left:14px;">
+                                    <p style="color:#737373; font-size:13px; margin:0;">Fecha y hora</p>
+                                    <p style="font-size:16px; font-weight:600; margin:5px 0;">
+                                        ${fechaCompleta}
+                                    </p>
+                                </div>
 
-                                                            <!-- Header -->
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
-                                                                <tr>
-                                                                    <td>
-                                                                        <div
-                                                                            style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin:0 auto 20px auto;">
-                                                                            <img src="${imageLogo}"
-                                                                                style="width: 100px; height: 35px; margin-top: 40px;" alt="">
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="text-align:center;">
-                                                                        <h1 style="margin:0; color:#703030; font-size:32px; font-weight:700;">
-                                                                            Nota de Compra
-                                                                        </h1>
-                                                                        <p style="margin:10px 0 0; color:#703030; font-size:18px; font-weight:600;">
-                                                                            DreamBooks
-                                                                        </p>
-                                                                        <p style="color:#737373; font-size:14px; line-height:0;">
-                                                                            Sueña despierto
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
+                                <div style="width:50%; border-left:4px solid #c77965; padding-left:14px;">
+                                    <p style="color:#737373; font-size:13px; margin:0;">Método de pago</p>
+                                    <p style="font-size:16px; font-weight:600; margin:5px 0;">
+                                        ${metodoPago}
+                                    </p>
+                                </div>
 
+                            </div>
+                        </div>
+                    </td></tr>
 
-                                                    <!-- Greeting -->
-                                                    <tr>
-                                                        <td>
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                style="background-color:#ffffff; padding:30px; border-radius:12px; margin-top:30px;">
-                                                                <tr>
-                                                                    <td>
+                    <!-- ARTÍCULOS -->
+                    <tr><td>
+                        <div class="card">
+                            <div class="title-section">Artículos Comprados</div>
 
-                                                                        <p style="margin:0; color:#000; font-size:16px; line-height:1.6;">
-                                                                            Hola <strong style="color: #703030;">${nombre}</strong>,
-                                                                        </p>
+                            <table width="100%" style="border-collapse:collapse;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #ebe6db;">
+                                        <th align="left" style="padding:12px 0; font-size:12px;">Artículo</th>
+                                        <th align="center" style="padding:12px 0; font-size:12px;">Cantidad</th>
+                                        <th align="right" style="padding:12px 0; font-size:12px;">Precio</th>
+                                        <th align="right" style="padding:12px 0; font-size:12px;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${stringItems}</tbody>
+                            </table>
+                        </div>
+                    </td></tr>
 
-                                                                        <p style="margin:12px 0 0; color:#000; font-size:16px; line-height:1.6;">
-                                                                            Gracias por tu compra. A continuación encontrarás los detalles de tu pedido (Transacción #${idPedido}).
-                                                                        </p>
+                    <!-- RESUMEN -->
+                    <tr><td>
+                        <div class="card">
+                            <div class="title-section">Resumen de Compra</div>
 
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Subtotal</span> <strong>${subtotalFormato}</strong>
+                            </div>
+                            <div class="line"></div>
 
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Envío</span> <strong>${envioFormato}</strong>
+                            </div>
+                            <div class="line"></div>
 
-                                                    <!-- Order Info -->
-                                                    <tr>
-                                                        <td>
-                                                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:30px;">
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Impuestos</span> <strong>${impuestosFormato}</strong>
+                            </div>
+                            <div class="line"></div>
 
-                                                                <tr>
-                                                                    <td width="50%" style="padding-right:10px;">
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="background-color:#ffffff; padding:25px; border-radius:12px; border-left:4px solid #c77965;">
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <p
-                                                                                        style="margin:0 0 8px; color:#737373; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600;">
-                                                                                        Fecha de Compra
-                                                                                    </p>
-                                                                                    <p style="margin:0; color:#000; font-size:16px; font-weight:600;">
-                                                                                        ${fechaFormato}
-                                                                                    </p>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Cupón: <strong>${couponCodigo}</strong></span>
+                                <strong style="color:#d9534f;">
+                                    ${couponCodigo === "Sin Cupón" ? "" : `- ${cuponDescuentoFormato}`}
+                                </strong>
+                            </div>
+                            <div class="line"></div>
 
-                                                                    <td width="50%" style="padding-left:10px;">
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="background-color:#ffffff; padding:25px; border-radius:12px; border-left:4px solid #c77965;">
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <p
-                                                                                        style="margin:0 0 8px; color:#737373; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600;">
-                                                                                        Método de Pago
-                                                                                    </p>
-                                                                                    <p style="margin:0; color:#000; font-size:16px; font-weight:600;">
-                                                                                        ${metodoPago}
-                                                                                    </p>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
+                            <div style="display:flex; justify-content:space-between; margin-top:12px;">
+                                <span style="font-size:18px; font-weight:700; color:#703030;">TOTAL</span>
+                                <span style="font-size:18px; font-weight:700; color:#703030;">
+                                    ${totalFormato}
+                                </span>
+                            </div>
+                        </div>
+                    </td></tr>
 
-                                                            </table>
-                                                        </td>
-                                                    </tr>
+                    <!-- FOOTER -->
+                    <tr><td>
+                        <div class="card" style="background:#a9806a; text-align:center;">
+                            <p style="color:white; margin:0;">© 2025 DreamBooks</p>
+                            <p style="color:white; opacity:0.85; margin:5px 0 0;">
+                                Documento generado automáticamente
+                            </p>
+                        </div>
+                    </td></tr>
 
+                </table>
 
-                                                    <!-- Items -->
-                                                    <tr>
-                                                        <td>
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                style="background-color:#ffffff; padding:30px; border-radius:12px; margin-top:30px;">
-                                                                <tr>
-                                                                    <td>
+            </td></tr>
+        </table>
+    </body>
+    </html>
+    `;
 
-                                                                        <h2 style="margin:0 0 20px; color:#703030; font-size:18px; font-weight:600;">
-                                                                            Artículos Comprados
-                                                                        </h2>
-
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="border-collapse:collapse;">
-
-                                                                            <thead>
-                                                                                <tr style="border-bottom:2px solid #ebe6db;">
-                                                                                    <th align="left"
-                                                                                        style="padding:12px 0; color:#703030; font-size:12px; text-transform:uppercase; font-weight:600;">
-                                                                                        Artículo</th>
-                                                                                    <th align="center"
-                                                                                        style="padding:12px 0; color:#703030; font-size:12px; text-transform:uppercase; font-weight:600;">
-                                                                                        Cantidad</th>
-                                                                                    <th align="right"
-                                                                                        style="padding:12px 0; color:#703030; font-size:12px; text-transform:uppercase; font-weight:600;">
-                                                                                        Precio</th>
-                                                                                    <th align="right"
-                                                                                        style="padding:12px 0; color:#703030; font-size:12px; text-transform:uppercase; font-weight:600;">
-                                                                                        Subtotal</th>
-                                                                                </tr>
-                                                                            </thead>
-
-                                                                            <tbody>
-                                                                                ${stringItems}
-                                                                            </tbody>
-
-                                                                        </table>
-
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-
-                                                    <!-- Summary -->
-                                                    <tr>
-                                                        <td>
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                style="background-color:#ffffff; padding:30px; border-radius:12px; margin-top:30px;">
-                                                                <tr>
-                                                                    <td>
-
-                                                                        <h2 style="margin:0 0 20px; color:#703030; font-size:18px; font-weight:600;">
-                                                                            Resumen de Compra
-                                                                        </h2>
-
-                                                                        <!-- Subtotal -->
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="border-bottom:1px solid #f5f5f5; padding:12px 0;">
-                                                                            <tr>
-                                                                                <td style="color:#737373; font-size:15px; text-align:left;">
-                                                                                    Subtotal
-                                                                                </td>
-                                                                                <td style="color:#000; font-size:15px; text-align:right;">
-                                                                                    ${subtotalFormato}
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-
-                                                                        <!-- Envío -->
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="border-bottom:1px solid #f5f5f5; padding:12px 0;">
-                                                                            <tr>
-                                                                                <td style="color:#737373; font-size:15px; text-align:left;">
-                                                                                    Envío
-                                                                                </td>
-                                                                                <td style="color:#000; font-size:15px; text-align:right;">
-                                                                                    ${envioFormato}
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-
-                                                                        <!-- Impuestos -->
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="border-bottom:2px solid #ebe6db; padding:12px 0;">
-                                                                            <tr>
-                                                                                <td style="color:#737373; font-size:15px; text-align:left;">
-                                                                                    Impuestos
-                                                                                </td>
-                                                                                <td style="color:#000; font-size:15px; text-align:right;">
-                                                                                    ${impuestosFormato}
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                        
-                                                                        <!-- Cupón de Descuento -->
-                                                                        <table width="100%" cellpadding="0" cellspacing="0"
-                                                                            style="border-bottom:1px solid #f5f5f5; padding:12px 0;">
-                                                                            <tr>
-                                                                                <td style="color:#737373; font-size:15px; text-align:left;">
-                                                                                    Cupón: <strong>${couponCodigo}</strong>
-                                                                                </td>
-                                                                                <td
-                                                                                    style="color:#d9534f; font-size:15px; text-align:right; font-weight:600;">
-                                                                                    ${couponCodigo == "Sin Cupón" ? "" : `- ${cuponDescuentoFormato}`}
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-
-
-                                                                        <!-- Total -->
-                                                                        <table width="100%" cellpadding="0" cellspacing="0" style="padding:18px 0 0;">
-                                                                            <tr>
-                                                                                <td
-                                                                                    style="color:#703030; font-size:18px; font-weight:700; text-align:left;">
-                                                                                    Total
-                                                                                </td>
-                                                                                <td
-                                                                                    style="color:#703030; font-size:18px; font-weight:700; text-align:right;">
-                                                                                    ${totalFormato}
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-
-
-                                                    <!-- Support -->
-                                                    <tr>
-                                                        <td>
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                style="background-color:#ffffff; padding:25px; border-radius:12px; border-left:4px solid #c77965; margin-top:30px;">
-                                                                <tr>
-                                                                    <td>
-
-                                                                        <p style="margin:0; color:#737373; font-size:14px; line-height:1.6;">
-                                                                            Si tienes alguna pregunta o problema con tu pedido, no dudes en contactar a
-                                                                            nuestro equipo de soporte.
-                                                                            Estamos aquí para ayudarte.
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-
-                                                    <!-- Footer -->
-                                                    <tr>
-                                                        <td>
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center; margin-top:30px;">
-                                                                <tr>
-                                                                    <td>
-
-                                                                        <p style="margin:0; color:#fff; font-size:14px; line-height:1.6;">
-                                                                            © 2025 DreamBooks. Todos los derechos reservados.
-                                                                        </p>
-
-                                                                        <p style="margin:10px 0 0; color:#fff; font-size:12px; opacity:0.9;">
-                                                                            Recibiste este documento porque realizaste una compra en nuestra tienda.
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-
-                                                </table>
-
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                </body>
-
-                                </html>`
-
-    const nombrePdf = `NotaCompra${idPedido}.pdf`
-
+    // =====================================================
+    // 🖨️ GENERAR PDF FINAL
+    // =====================================================
+    const nombrePdf = `NotaCompra${idPedido}.pdf`;
     const pathArchivo = await generarPDF(nombrePdf, contenidoHTML);
 
-
     return pathArchivo;
-    
-
-}
+};
 
 module.exports = generarPDFNota;
