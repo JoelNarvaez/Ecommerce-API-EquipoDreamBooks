@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const enviarCorreo = require('./enviarCorreo');
 
 // URL pública del logo en tu frontend (Netlify)
-const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
+const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
 const enviarCorreoVerificacion = async (idUser, nombre, email) => {
     const token = jwt.sign({ idUser }, process.env.JWT_SECRET, { expiresIn: "1d" });

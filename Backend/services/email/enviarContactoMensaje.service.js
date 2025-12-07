@@ -3,7 +3,7 @@ const enviarCorreo = require("./enviarCorreo");
 
 const enviarCorreoContactoMensaje = async (nombre, email) => {
     // URL pública del logo en tu front (ajusta si cambia la ruta)
-    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
     const contenidoHTML = `
     <body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">

@@ -3,7 +3,7 @@ const enviarCorreo = require('./enviarCorreo');
 const enviarContraseniaRestablecida = async (nombre, email) => {
 
     // URL pública del logo — AJÚSTALA si tu ruta cambia
-    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
     const enlace = "https://ecommerce-api-equipodreambooks.netlify.app/pages/login.html";
 

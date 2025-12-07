@@ -1,7 +1,7 @@
 const enviarCorreo = require('./enviarCorreo');
 
 // URL pública del logo en tu frontend (Netlify)
-const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
+const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
 const enviarSubscripcionUsuario = async (nombre, codigoCupon, email) => {
 

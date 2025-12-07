@@ -33,7 +33,7 @@ const enviarNotaDeCompra = async (idPedido, nombre, fecha, metodoPago, items, su
     }).join("");
 
     // 👇 CAMBIO NECESARIO: quitamos CID y usamos URL pública
-    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
     const contenidoHTML = `<body style="margin:0; padding:0; width:100%; background-color:#f5f5f5; font-family: Quicksand, Arial, sans-serif;">
 

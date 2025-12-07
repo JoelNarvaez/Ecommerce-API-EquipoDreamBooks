@@ -5,7 +5,7 @@ const enviarCorreoBienvenido = async (nombre, email) => {
     const enlace = "https://ecommerce-api-equipodreambooks.netlify.app/pages/login.html";
 
     // URL pública del logo en Netlify
-    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/imagenes/logo-header.png";
 
     const contenidoHTML = `
     <body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
