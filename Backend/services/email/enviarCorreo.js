@@ -1,42 +1,49 @@
-// Modules
-const nodemailer = require('nodemailer');
-const path = require("path");
+// services/email/enviarCorreo.js
 
-const enviarCorreo = async (contenidoHTML, asunto, correo, archivos = [], archivoPdf = []) => {
+const brevo = require("@getbrevo/brevo");
+
+// Crear instancia del API de correos transaccionales
+const apiInstance = new brevo.TransactionalEmailsApi();
+
+// Conectar a la API Key almacenada en Railway
+apiInstance.setApiKey(
+    brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.BREVO_API_KEY
+);
+
+/**
+ * Enviar correo genérico usando Brevo
+ * @param {string} contenidoHTML - cuerpo HTML del correo
+ * @param {string} asunto - asunto del correo
+ * @param {string} correo - correo destino
+ * @returns {boolean} true si se envió, false si falló
+ */
+const enviarCorreo = async (contenidoHTML, asunto, correo) => {
     try {
-        console.log("📧 Preparando envío de correo a:", correo);
+        console.log("📧 Preparando envío de correo con Brevo a:", correo);
 
-        const archivosAdjuntos = archivos.map(item => ({
-            filename: item.filename,
-            path: path.join(__dirname, `../../assets/public/${item.filename}`),
-            cid: item.cid
-        }));
-
-        archivosAdjuntos.push(...archivoPdf);
-
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.BUSINESS_EMAIL,
-                pass: process.env.PWD_EMAIL
-            }
-        });
-
-        console.log("🔌 Conectando a Gmail SMTP...");
-
-        const info = await transporter.sendMail({
-            from: `DreamBooks <${process.env.BUSINESS_EMAIL}>`,
-            to: correo,
+        // Crear estructura del correo
+        const emailData = {
+            sender: {
+                name: "DreamBooks",
+                email: process.env.BUSINESS_EMAIL   // correo remitente
+            },
+            to: [
+                { email: correo }  // destinatario
+            ],
             subject: asunto,
-            html: contenidoHTML,
-            attachments: archivosAdjuntos.length > 0 ? archivosAdjuntos : undefined
-        });
+            htmlContent: contenidoHTML  // contenido HTML
+        };
 
-        console.log("Correo enviado exitosamente:", info.messageId);
+        // Enviar correo vía API Brevo
+        const response = await apiInstance.sendTransacEmail(emailData);
+
+        console.log("📩 Correo enviado correctamente con Brevo →", correo);
         return true;
 
     } catch (error) {
-        console.error("ERROR enviando correo:", error);
+        console.error("❌ ERROR enviando correo con Brevo:");
+        console.error(error.response?.data || error);
         return false;
     }
 };
