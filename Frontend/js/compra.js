@@ -367,7 +367,7 @@ document.getElementById("confirmarOrdenBtn").addEventListener("click", async () 
             iva,
             descuento,
             envio,
-            totalFinal: total,
+            total,
             cupon,
             items,
             metodoPago,

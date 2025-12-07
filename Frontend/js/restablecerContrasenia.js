@@ -38,7 +38,7 @@ async function verifyToken(token) {
       }).then((result) => {
         window.location.href =
           /*"http://127.0.0.1:5501../pages/index.html";*/
-          "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/index.html";
+          "https://ecommerce-api-equipodreambooks.netlify.app//pages/index.html";
       });
       return;
     }
@@ -126,7 +126,7 @@ form.addEventListener("submit", async (e) => {
       text: "Contraseña actualizada correctamente",
     }).then((result) => {
       /*window.location.href = "http://127.0.0.1:5501../pages/login.html";*/
-      window.location.href = "https://ecommerce-api-equipodreambooks-production.up.railway.app../pages/login.html";
+      window.location.href = "https://ecommerce-api-equipodreambooks.netlify.app//pages/login.html";
     });
 
     form.reset();

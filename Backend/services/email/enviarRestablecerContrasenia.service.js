@@ -8,12 +8,8 @@ const enviarCorreoRestablecerContrasenia = async (nombre, email, token) => {
     /*const enlace = "http://127.0.0.1:5501../pages/restablecerContrasenia.html?token=" + token;*/
     const enlace = "https://ecommerce-api-equipodreambooks.netlify.app//pages/restablecerContrasenia.html?token=" + token;
 
-    const archivosImg = [
-        {
-            filename: "logo-header.png",
-            cid: "logoDreamBooks"
-        }
-    ]
+    // 🔹 AHORA USAMOS URL PÚBLICA DEL LOGO (SIN CID)
+    const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
 
     const contenidoHTML = `<body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
 
@@ -34,7 +30,7 @@ const enviarCorreoRestablecerContrasenia = async (nombre, email, token) => {
                                                             <td align="center">
                                                                 <div
                                                                     style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin-bottom:20px;">
-                                                                    <img src="cid:logoDreamBooks" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
+                                                                    <img src="${logoURL}" style="width: 100px; height: 35px; margin-top: 40px;" alt="">
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -134,7 +130,8 @@ const enviarCorreoRestablecerContrasenia = async (nombre, email, token) => {
 
                         </body>`;
 
-    const send = await enviarCorreo(contenidoHTML, "Restablecer contraseña dreamBooks", email, archivosImg);
+    // 👇 Ya no mandamos archivosImg, solo los 3 argumentos
+    const send = await enviarCorreo(contenidoHTML, "Restablecer contraseña dreamBooks", email);
 
     if (send)
         return true;

@@ -1,9 +1,9 @@
 const enviarCorreo = require('./enviarCorreo');
-const getLogoBase64 = require("./getLogoBase64");
+
+// URL pública del logo en tu frontend (Netlify)
+const logoURL = "https://ecommerce-api-equipodreambooks.netlify.app/assets/logo-header.png";
 
 const enviarSubscripcionUsuario = async (nombre, codigoCupon, email) => {
-
-    const logoBase64 = getLogoBase64();
 
     const contenidoHTML = `
 <body style="margin:0; padding:0; background-color:#f5f5f5; font-family:'Quicksand', sans-serif;">
@@ -14,11 +14,12 @@ const enviarSubscripcionUsuario = async (nombre, codigoCupon, email) => {
 
 <table width="600" cellpadding="0" cellspacing="0" style="background-color:#f5f5f5;">
 
+<!-- HEADER -->
 <tr>
 <td style="background-color:#ebe6db; padding:40px; border-radius:12px; text-align:center;">
 
 <div style="width:120px; height:120px; background-color:#703030; border-radius:50%; margin:0 auto 20px auto;">
-    <img src="${logoBase64}" style="width:100px; height:35px; margin-top:40px;">
+    <img src="${logoURL}" style="width:100px; height:35px; margin-top:40px;">
 </div>
 
 <h1 style="color:#703030; font-size:32px; margin:0;">¡Bienvenido a DreamBooks!</h1>
@@ -30,6 +31,7 @@ const enviarSubscripcionUsuario = async (nombre, codigoCupon, email) => {
 
 <tr><td style="height:20px"></td></tr>
 
+<!-- MENSAJE PRINCIPAL -->
 <tr>
 <td style="background-color:#ffffff; padding:30px; border-radius:12px;">
 <p style="font-size:16px; margin:0;">Hola <strong style="color:#703030;">${nombre}</strong>,</p>
@@ -41,6 +43,7 @@ Gracias por suscribirte a nuestras novedades. Aquí tienes un cupón especial:
 
 <tr><td style="height:20px"></td></tr>
 
+<!-- CUPÓN -->
 <tr>
 <td style="background-color:#ffffff; padding:30px; border-radius:12px; text-align:center;">
 <h2 style="color:#703030; font-size:22px;">Tu cupón de bienvenida</h2>
@@ -63,6 +66,7 @@ ${codigoCupon}
 
 <tr><td style="height:20px"></td></tr>
 
+<!-- MENSAJE SECUNDARIO -->
 <tr>
 <td style="background-color:#ffffff; padding:25px; border-radius:12px; border-left:4px solid #c77965;">
 <p style="color:#737373; font-size:14px;">
@@ -73,6 +77,7 @@ Si tienes dudas sobre cómo utilizar tu cupón, estamos aquí para ayudarte.
 
 <tr><td style="height:20px"></td></tr>
 
+<!-- FOOTER -->
 <tr>
 <td style="background-color:#a9806a; padding:30px; border-radius:12px; text-align:center;">
 <p style="color:#fff; margin:0;">© 2025 DreamBooks. Todos los derechos reservados.</p>
@@ -91,7 +96,7 @@ Si tienes dudas sobre cómo utilizar tu cupón, estamos aquí para ayudarte.
 
     const send = await enviarCorreo(
         contenidoHTML,
-        "¡Te damos la bienvenida a DreamBooks! Usa tu cupón en tu próxima compra",
+        "¡Bienvenido a DreamBooks! 🎉 Aquí está tu cupón de bienvenida",
         email
     );
 
